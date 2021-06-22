@@ -1,0 +1,26 @@
+NEWDEAL:
+  API:
+    BASE:
+      URL: ${NEWDEAL_API_BASE_URL}
+
+logging:
+  file: ./logs/infraFront.log
+  file.max-history: 5
+  level:
+    kr:
+      co:
+        broadwave: DEBUG
+    org:
+      hibernate: INFO
+    root: INFO
+
+server:
+  port: 8010
+  servlet:
+    session:
+      timeout: 480m
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
