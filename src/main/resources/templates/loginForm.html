@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>로그인</title>
+
+	<!-- 공통으로 쓰이는 css파일을넣는다.-->
+<!--	<link rel="stylesheet" href="/assets/css/main.css" />-->
+<!--	<link rel="stylesheet" href="/assets/css/component.css" />-->
+<!--	<link rel="stylesheet" href="/assets/css/common.css" />-->
+<!--	<link rel="stylesheet" href="/assets/js/c3/c3.css" />-->
+
+	<!-- 공통으로 쓰이는 js파일을넣는다.-->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery-ui.min.js"></script>
+	<script src="/assets/js/broadwave.common.js"></script>
+	<script src="/assets/js/common-pc.js"></script>
+	<script src="/assets/js/broadwave.ajax.js"></script>
+
+	<!-- Minkyu가 등록한 파일들 -->
+	<link rel="stylesheet" href="/assets/js/min_js_dir/alert/min_alert.css" />
+	<script src="/assets/js/min_js_dir/alert/min_alert.js"></script>
+	<script src="/assets/js/min_js_dir/token_js/jwtToken.js"></script>
+	<script src="/assets/js/min_js_dir/yaml.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(function(){
+			// accessTokenCookieGet();
+		});
+
+		function loginActive() {
+
+			var $userid = $("#userid");
+			var $password = $("#password");
+
+			if ($userid.val().trim() === '') {
+				alert("아이디를 입력하세요.");
+				$userid.trigger('focus');
+				return false;
+			}
+			if ($password.val().trim() === '') {
+				alert("비밀번호을 입력하세요.");
+				$password.trigger('focus');
+				return false;
+			}
+
+			var params = {
+				userid : $userid.val(),
+				password : $password.val()
+			};
+
+			var jsonString = JSON.stringify(params);
+
+			console.log("로그인 실행");
+			var url = "http://localhost:8012/auth/login";
+			$.ajax({
+				url: url,
+				type: 'post',
+				data: jsonString,
+				contentType: 'application/json',
+				cache: false,
+				error: function () {
+					console.log("로그인 에러");
+					alertCaution("아이디 또는 비밀번호를 확인해주세요.",1);
+				},
+				success: function (res) {
+					// console.log("로그인 되었습니다.");
+					// alertSuccess("로그인 되었습니다.");
+
+					// console.log("accessToken : "+res.data.token.accessToken);
+					// console.log("refreshToken : "+res.data.token.refreshToken);
+					// document.getElementById("username").value = "";
+					// document.getElementById("password").value = "";
+
+					// setCookie(변수이름, 변수값, 유효시간);
+					setCookie("JwtAccessToken",res.data.token.accessToken, 10); // 테스트겸 발행시간은 1분으로설정
+					setCookie("JwtRefreshToken",res.data.token.refreshToken, 10); // 테스트겸 발행시간은 1분으로설정
+
+					location.href="/index"
+				}
+			});
+		}
+
+		function mps_Add_test(){
+			var settings = {
+				"url": "http://ec2-3-37-19-235.ap-northeast-2.compute.amazonaws.com:9910/add_Test/add",
+				"method": "POST",
+				"timeout": 0,
+				"headers": {
+					"Content-Type": "application/json"
+				},
+				"data": JSON.stringify(
+						{
+							"nargout":1,
+							"rhs":[1.1,2.1]
+						}
+				),
+			};
+
+			$.ajax(settings).done(function (response) {
+				console.log(response);
+			});
+		}
+
+		function yaml_test(){
+			YAML.load('/application.yml', function(result) {
+				var nativeObject = YAML.load('application.yml');
+				console.log("nativeObject : "+nativeObject);
+			});
+		}
+
+	</script>
+
+</head>
+
+<div class="container">
+	<h2 class="form-signin-heading"> 인프라 로그인 </h2>
+	<p>
+		<label for="userid" class="sr-only">아이디 : </label>
+		<input type="text" id="userid" name="userid" class="form-control" placeholder="아이디를 입력하세요." required="" autofocus="">
+	</p>
+	<p>
+		<label for="password" class="sr-only">비밀번호 : </label>
+		<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요." required="">
+	</p>
+	<button class="btn btn-lg btn-primary btn-block" onclick="loginActive()" >로그인</button>
+	<button class="btn btn-lg btn-primary btn-block" onclick="accessTokenCookieGet()" >쿠키가져오기</button>
+	<button class="btn btn-lg btn-primary btn-block" onclick="mps_Add_test()" >MPS더하기 테스트</button>
+	<button class="btn btn-lg btn-primary btn-block" onclick="yaml_test()" >YAML 파일 받아오기</button>
+</div>
+
+<div id='alertpop'>
+</div>

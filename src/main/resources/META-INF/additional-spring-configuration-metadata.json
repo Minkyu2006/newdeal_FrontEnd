@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "newdeal.aws.api.baseurl",
+      "type": "java.lang.String",
+      "description": "Description for newdeal.aws.api.baseurl."
+  }
+] }

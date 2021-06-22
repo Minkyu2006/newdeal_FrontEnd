@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+
+<header th:fragment="headerFragment" class="header">
+	<div class="header__inner">
+		<div class="nav-icon" sec:authorize="isAuthenticated()">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<!-- <a href="/" class="logo">
+			<img src="/assets/images/logo_sky.gif" alt="" />
+			<span>노후인프라 평가 시스템</span>
+		</a> -->
+		<a href="/" class="logo"><span>LTDAP</span></a>
+
+		<nav class="nav" sec:authorize="isAuthenticated()">
+			<h2 class="nav__heading">
+				<!-- <a href="/" class="logo">
+					<img src="/assets/images/logo_sky.gif" alt="" />
+					<span>노후인프라 평가 시스템</span>
+				</a> -->
+				<a href="/" class="logo"><span>LTDAP</span></a>
+			</h2>
+			<ul class="nav__list">
+<!--				<li class="nav__item" sec:authorize="hasRole('ROLE_ADMIN')">-->
+				<li class="nav__item">
+					<a href="javascript:void(0)" class="nav__link">기초정보</a>
+					<ul class="nav__list-depth">
+						<li class="nav__item"><a href="/admin/platform" class="nav__link">중장기데이터 플랫폼</a></li>
+						<li class="nav__item"><a href="/admin/teamreg" class="nav__link">부서등록</a></li>
+						<li class="nav__item"><a href="/admin/accountreg" class="nav__link">사용자등록</a></li>
+						<li class="nav__item"><a href="/admin/sensorreg" class="nav__link">센서등록</a></li>
+					</ul>
+				</li>
+				<li class="nav__item">
+					<a href="javascript:void(0)" class="nav__link">대표시설물 중장기 데이터</a>
+					<ul class="nav__list-depth">
+						<li class="nav__item"><a href="/facility/repreg" class="nav__link">대표시설물 등록</a></li>
+						<li class="nav__item"><a href="/facility/replist" class="nav__link">대표시설물 조회</a></li>
+						<li class="nav__item"><a href="/facility/repdamagereg" class="nav__link">대표시설물 손상등록</a></li>
+						<li class="nav__item"><a href="/facility/repdamagelist" class="nav__link">대표시설물 손상조회</a></li>
+						<li class="nav__item"><a href="/admin/sensorsearch" class="nav__link">IoT 센서 데이터 조회</a></li>
+					</ul>
+				</li>
+
+				<li class="nav__item"><a href="/link" class="nav__link">IoT 실시간 계측 서버 연결</a></li>
+
+				<li class="nav__item">
+					<a href="javascript:void(0)" class="nav__link">중장기 데이터 공유 서비스</a>
+					<ul class="nav__list-depth">
+						<li class="nav__item"><a href="/ltd/datasearch" class="nav__link">장기조사실험체 계측 데이터 공유 서비스</a></li>
+						<li class="nav__item"><a href="/env/envsearch" class="nav__link">환경정보 조회 서비스</a></li>
+						<li class="nav__item"><a href="/env/bridgecurve" class="nav__link">실험정보 및 강교량 조사 정보</a></li>
+					</ul>
+				</li>
+				<li class="nav__item">
+					<a href="javascript:void(0)" class="nav__link">정보 분석 서비스</a>
+					<ul class="nav__list-depth">
+<!--						<li name=readyPage class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">유사교량 조회 서비스</a></li>-->
+						<li class="nav__item"><a href="/eva/similarbridge" class="nav__link">유사교량 조회 서비스</a></li>
+						<li class="nav__item"><a href="/eva/evareg" class="nav__link">노후도평가 서비스</a></li>
+						<li class="nav__item"><a href="/admin/algorithm" class="nav__link">사용자 정의 알고리즘 설정</a></li>
+						<li class="nav__item"><a href="/eva/curve" class="nav__link">열화곡선정보 조회</a></li>
+					</ul>
+				</li>
+				<li class="nav__item"><a href="/question" class="nav__link">사용자의견접수</a></li>
+			</ul>
+
+		</nav>
+		
+		<div class="outlink">
+			<ul>
+				<li><a href="https://www.kict.re.kr/0213_01" target="_blank" class="outlink__link">SIRC</a></li>
+				<li><a href="https://www.kict.re.kr/" target="_blank" class="outlink__link"><img src="/assets/images/logo--KICT.png" alt="KICT 한국건설기술연구원 바로가기" /></a></li>
+			</ul>
+		</div>
+
+		<div class="info" sec:authorize="isAuthenticated()">
+			<ul>
+				<li class="user__name">
+<!--					<a href="/mypage" class="info__btn"><span th:text="${session.username}"></span></a>-->
+					<a href="/mypage" class="info__btn"><div sec:authentication="name"></div></a>
+
+				</li>
+				<li>
+					<form th:action="@{/logout}" method="post">
+				        <input type="submit" class="info__btn" value="로그아웃"/>
+				    </form>
+				</li>
+				
+			</ul>
+		</div>
+		<div class="info" sec:authorize="!isAuthenticated()">
+			<ul>
+				<li>
+					<a href="/login" class="info__btn">로그인</a>
+				</li>
+			</ul>
+		</div>
+		<input id="checkId" type="hidden" th:value="${session.userid}" />
+	</div>
+</header>
+
+</html>
