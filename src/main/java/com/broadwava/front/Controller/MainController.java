@@ -13,4 +13,10 @@ public class MainController {
         return "index";
     }
 
+    // 새로운페이지 작업할수있는 공간?
+    @RequestMapping("newpage")
+    public String newpage1(){
+        return "page/newpage";
+    }
+
 }
