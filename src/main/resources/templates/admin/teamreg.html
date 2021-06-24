@@ -8,7 +8,6 @@
 	<script type="text/javascript">
 
 		$(function(){
-			accessTokenCookieGet();
 
 			$("#btnSave").on('click',function(){
 				save();
@@ -118,7 +117,7 @@
 			$.ajax({
 				// url:'/api/team/list?size='+ perPage + '&page=' + page,
 				url:url+'?size='+perPage+ '&page=' + page,
-				type : 'get',
+				type : 'GET',
 				data : params,
 				cache:false,
 				error:function(request){
@@ -127,7 +126,7 @@
 				success: function(res){
 					console.log("리스트출력");
 					//화면 출력
-					totCnt = res.data.total_rows;
+					totCnt = res.total_rows;
 					$("#paging1").jqueryPager({pageSize: perPage,
 						pageBlock: perArea,
 						currentPage: page + 1,
@@ -142,7 +141,7 @@
 					$totalCnt.text(totCnt);
 
 					var html = '';
-					$.each(res.data.datalist, function(key, value){
+					$.each(res.datalist, function(key, value){
 						html += '<tr onclick="callinfo(\''+ echoNull2Blank(value.teamcode) +'\');">';
 						html += '<td >'+ echoNull2Blank(value.teamcode) +'</td>';
 						html += '<td >'+ echoNull2Blank(value.teamname) +'</td>';
@@ -170,20 +169,20 @@
 
 			init();
 
-			var url = "http://192.168.0.144:8010/teamreg:8011/api/team/team"; // 호출할 백엔드 API
+			var url = "http://192.168.0.144:8011/api/team/team"; // 호출할 백엔드 API
 			$.ajax({
 				// url:'/api/team/team',
 				url: url,
-				type : 'post',
+				type : 'GET',
 				data : params,
 				cache:false,
 				error:function(request){
 					ajaxErrorMsg(request);
 				},
 				success: function(res){
-					$("#teamcode").val(res.data.datarow.teamcode).attr("readonly",true);
-					$("#teamname").val(res.data.datarow.teamname);
-					$("#remark").val(res.data.datarow.remark);
+					$("#teamcode").val(res.sendData.sendTeamData.teamcode).attr("readonly",true);
+					$("#teamname").val(res.sendData.sendTeamData.teamname);
+					$("#remark").val(res.sendData.sendTeamData.remark);
 					$("#mode").val('U');
 				}
 			});

@@ -7,115 +7,236 @@
 <th:block layout:fragment="script">
 	<script type="text/javascript">
 		$(function() {
-			// logreg(1);
-			//
-			// $("#btnSearchP1").on('click',function(){
-			// 	callListPopup();
-			// });
-			//
-			// $("#btnSearch").on('click',function(){
-			// 	callList(1);
-			// });
-			// $("#btnClear").click(function(){
-			// 	searchclear();
-			// });
-			//
-			// $("#btnSave").on('click',function(){
-			// 	save();
-			// });
-			// $("#btnNew").on('click',function(){
-			// 	init();
-			// });
-			//
-			// $("#btnDel").on('click',function(){
-			// 	del();
-			// });
-			//
-			// $('#btn-search').on('click', function(e) {
-			// 	$('#pop-search').addClass('open');
-			// 	e.preventDefault();
-			// });
-			//
-			// $('.l-popup__close').on('click', function(e) {
-			// 	$('.l-popup').removeClass('open');
-			// 	e.preventDefault();
-			// });
 
-			test();
+			$("#btnSave").on('click',function(){
+				save();
+			});
+
+			$('#btn_search').on('click', function(e) {
+				$('#pop_search').addClass('open');
+				e.preventDefault();
+			});
+
+			$('.l-popup__close').on('click', function(e) {
+				$('.l-popup').removeClass('open');
+				e.preventDefault();
+			});
+
+			$("#btnTeamSearch").on('click',function(){
+				callTeamListPopup(1);
+			});
+
+			$("#btnNew").on('click',function(){
+				init();
+			});
+
+			$("#btnSearch").on('click',function(){
+				callList(1);
+			});
+
+			$("#btnClear").click(function(){
+				searchclear();
+			});
+
+			$("#btnDel").on('click',function(){
+				del();
+			});
+
+			// logreg(1);
 
 		})
 
-		// JWT ajax 테스트
-		function test() {
-			console.log("JWT ajax 테스트")
-			let url;
-			const token = getCookie("JwtAccessToken");
-			const refreshToken = getCookie("JwtRefreshToken");
-			if (token==null && refreshToken==null) {
-				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-			}else if(token==null){
-				refreshTokenCookie();
-			}else{
-				url = "http://192.168.0.144:8011/api/account/test"; // 호출할 백엔드 API
+		// 기존 인프라 save()
+		// function save(){
+		//
+		// 	var $form = $('form[name="frmreg"]');
+		//
+		// 	var params = $form.serialize();
+		//
+		// 	var token = $("meta[name='_csrf']").attr("content");
+		// 	var header = $("meta[name='_csrf_header']").attr("content");
+		// 	$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+		//
+		// 	$.ajax({
+		// 		url:'/api/account/reg',
+		// 		type : 'post',
+		// 		//dataType: 'html',
+		// 		data : params,
+		// 		cache:false,
+		// 		error:function(request,status,error){
+		// 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		// 		},
+		// 		success: function(res){
+		// 			if (!Ajax.checkResult(res)) {
+		// 				return;
+		// 			}
+		// 			alertSuccess('저장되었습니다. ');
+		// 			init();
+		// 			callList(1);
+		// 		}
+		// 	});
+		// }
 
-				console.log("JWT token : "+token)
+		// NEWDEAL JWT활용 Ajax 사용자등록
+		function save() {
+
+			const $userid = $("#userid");
+			if ($userid.val().trim() === '') {
+				alertCaution("아이디를 입력하세요.<br> 아이디는 중복되지 않도록 확인 후 입력하세요",1);
+				$userid.trigger('focus');
+				return false;
+			}
+
+			const $username = $("#username");
+			if ($username.val().trim() === '') {
+				alertCaution("부서명을 입력하세요.",1);
+				$username.trigger('focus');
+				return false;
+			}
+
+			const $password = $("#password");
+			if ($password.val().trim() === '') {
+				alertCaution("패스워드를 입력하세요.",1);
+				$password.trigger('focus');
+				return false;
+			}
+
+			if ($("#teamcode").val().trim() === '') {
+				alertCaution("부서를 선택하세요",1);
+				return false;
+			}
+
+			console.log("JWT활용 Ajax 사용자등록")
+			let url;
+			const accessToken = getCookie("JwtAccessToken");
+			const refreshToken = getCookie("JwtRefreshToken");
+			const insert_id = getCookie("insert_id");
+
+			if (accessToken==null && refreshToken==null && insert_id==null) {
+				console.log("save()함수 : 토큰&리플레시&로그인한아이디 Null");
+				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+			}else if(accessToken==null){
+				const refreshCheck = refreshTokenCookie();
+				console.log("save()함수 : refreshCheck : "+refreshCheck);
+				if(refreshCheck===1){
+					save();
+				}
+			}else{
+				const $form = $('form[name="frmreg"]');
+				const params = $form.serialize();
+
+				url = "http://192.168.0.144:8011/api/account/save"; // 호출할 백엔드 API
 				$.ajax({
-					type: "post",
-					cache:false,
-					processData: false,
-					contentType: false,
 					url: url,
+					type: "post",
+					data : params,
+					cache:false,
 					beforeSend: function (xhr) {
-						xhr.setRequestHeader("JWT_AccessToken",token);
+						xhr.setRequestHeader("JWT_AccessToken",accessToken);
+						xhr.setRequestHeader("insert_id",insert_id);
+					},
+					error:function(request){
+						ajaxErrorMsg(request);
 					},
 					success: function (res) {
-						console.log(res);
+						let status = res.status;
+						if(status===200){
+							alertSuccess("사용자등록이 완료되었습니다.")
+							init();
+							callList(1);
+						}else{
+							if(res.err_msg2===null){
+								alertCaution(res.err_msg,1);
+							}else{
+								alertCaution(res.err_msg+"<br>"+res.err_msg2,1);
+							}
+						}
 					}
 				});
 			}
 		}
 
-		function del(){
+		// NEWDEAL 부서선택
+		function selectTeam(code,name){
+			$("#teamcode").val(code);
+			$("#teamname").val(name);
+			$('.l-popup').removeClass('open');
+		}
+		// NEWDEAL 부서리스트 불러오는 팝업
+		function callTeamListPopup(page){
 
-			if ($("#userid").attr("readonly") != "readonly"){
-				alertCaution("삭제하고자하는 사용자를 하단에서<br> 선택 후 삭제하세요.");
-				return false;
-			}
-			if ($("#userid").val().trim() == '') {
-				alertCaution("삭제하고자하는 사용자를를 하단에서<br> 선택 후 삭제하세요.");
-				$("#userid").trigger('focus');
-				return false;
-			}
+			let url;
+			const accessToken = getCookie("JwtAccessToken");
+			const refreshToken = getCookie("JwtRefreshToken");
+			const insert_id = getCookie("insert_id");
 
-			var params = {
-				userid:$("#userid").val()
-			};
-
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
-
-			$.ajax({
-				url:'/api/account/del',
-				type : 'post',
-				//dataType: 'html',
-				data : params,
-				cache:false,
-				error:function(request,status,error){
-					ajaxErrorMsg(request);
-					//alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				},
-				success: function(res){
-					if (!Ajax.checkResult(res)) {
-						return;
-					}
-					alertSuccess('삭제되었습니다.');
-					init();
-					callList(1);
+			if (accessToken==null && refreshToken==null && insert_id==null) {
+				console.log("callTeamListPopup(1)함수 : 토큰&리플레시&로그인한아이디 Null");
+				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+			}else if(accessToken==null){
+				const refreshCheck = refreshTokenCookie();
+				console.log("callTeamListPopup(1)함수 : efreshCheck : "+refreshCheck);
+				if(refreshCheck===1){
+					callTeamListPopup(1);
 				}
-			});
+			}else {
+				page = page - 1;
+				if (page < 0) page = 0;
+
+				const perPage = 10;
+				const perArea = 5;
+				let totCnt = 0;
+
+				const $schTeamList = $('#schTeamList');
+				const $totalTeamCnt = $('#totalTeamCnt');
+				const params = {
+					teamcode:$("#p_teamcode").val(),
+					teamname:$("#p_teamname").val()
+				};
+				$schTeamList.empty().append('<tr ><td colspan="3" align="center">조회 중</td></tr>');
+				$totalTeamCnt.text('0');
+
+				url = "http://192.168.0.144:8011/api/team/list"; // 호출할 백엔드 API
+
+				$.ajax({
+					url : url+'?size='+ perPage + '&page=' + page,
+					type : 'GET',
+					data : params,
+					cache : false,
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader("JWT_AccessToken",accessToken);
+					},
+					error:function(request){
+						ajaxErrorMsg(request);
+					},
+					success: function(res){
+						// 화면 출력
+						totCnt = res.total_rows;
+						$("#teamPaging").jqueryPager({pageSize: perPage,
+							pageBlock: perArea,
+							currentPage: page + 1,
+							pageTotal: totCnt,
+							clickEvent: 'callTeamListPopup'});
+						if (totCnt === 0) {
+							$schTeamList.empty().append('<tr class="t-c"><td colspan="3" align="center">조회된 데이터가 없습니다.</td></tr>');
+							return;
+						}
+						$totalTeamCnt.text(totCnt);
+						let html = '';
+						$.each(res.datalist, function(key, value){
+							html += '<tr >';
+							html += '<td >'+ echoNull2Blank(value.teamcode) +'</td>';
+							html += '<td >'+ echoNull2Blank(value.teamname) +'</td>';
+							html += '<td ><button class="c-button c-button--small c-button--point" onclick="selectTeam(\''+ echoNull2Blank(value.teamcode) +'\',\''+ echoNull2Blank(value.teamname) +'\');">선택</button></td>';
+							html += '</tr>';
+						});
+						$schTeamList.html(html);
+					}
+				});
+			}
 		}
 
+		// NEWDEAL 저장후 초기화, 신규버튼
 		function init(){
 			//화면 초기화
 			$("#userid").val('');
@@ -129,275 +250,245 @@
 			$("#userid").removeAttr("readonly");
 		}
 
-		function save(){
-
-			if ($("#userid").val().trim() == '') {
-				alertCaution("아이디를 입력하세요.<br> 아이디는 중복되지 않도록 확인 후 입력하세요");
-				$("#userid").trigger('focus');
-				return false;
-			}
-
-			if ($("#username").val().trim() == '') {
-				alertCaution("부서명을 입력하세요.");
-				$("#username").trigger('focus');
-				return false;
-			}
-
-			if ($("#password").val().trim() == '') {
-				alertCaution("패스워드를 입력하세요.");
-				$("#password").trigger('focus');
-				return false;
-			}
-
-			if ($("#teamcode").val().trim() == '') {
-				alertCaution("부서를 선택하세요");
-				return false;
-			}
-
-			var $form = $('form[name="frmreg"]');
-
-			var params = $form.serialize();
-
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
-
-			$.ajax({
-				url:'/api/account/reg',
-				type : 'post',
-				//dataType: 'html',
-				data : params,
-				cache:false,
-				error:function(request,status,error){
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				},
-				success: function(res){
-					if (!Ajax.checkResult(res)) {
-						return;
-					}
-					alertSuccess('저장되었습니다. ');
-					init();
-					callList(1);
-				}
-			});
-		}
-
+		// NEWDEAL 조건초기화 버튼
 		function searchclear(){
 			$("#s_userid").val('');
 			$("#s_username").val('');
 			$("#s_teamname").val('');
 		}
 
-		function selectpopup1(code,name){
-			$("#teamcode").val(code);
-			$("#teamname").val(name);
-			$('.l-popup').removeClass('open');
-		}
-
+		// NEWDEAL 사용자조회 버튼
 		function callList(page){
 
-			page = page - 1;
-			if (page < 0) page = 0
+			let url;
+			const accessToken = getCookie("JwtAccessToken");
+			const refreshToken = getCookie("JwtRefreshToken");
+			const insert_id = getCookie("insert_id");
 
-			var perPage = 10;
-			var perArea = 5;
-			var totCnt = 0;
-
-			var $schList = $('#schList');
-			var $totalCnt = $('#totalCnt');
-			var params = {
-				userid:$("#s_userid").val(),
-				username:$("#s_username").val(),
-				teamname:$("#s_teamname").val()
-			};
-
-			$schList.empty().append('<tr ><td colspan="6" align = "center">조회 중</td></tr>');
-			$totalCnt.text('0');
-
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
-
-
-			$.ajax({
-				url:'/api/account/list?size='+ perPage + '&page=' + page,
-				type : 'post',
-				//dataType: json,
-				data : params,
-				cache:false,
-				error:function(request,status,error){
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				},
-				success: function(res){
-					//화면 출력
-					totCnt = res.data.total_rows;
-					$("#paging1").jqueryPager({pageSize: perPage,
-						pageBlock: perArea,
-						currentPage: page + 1,
-						pageTotal: totCnt,
-						clickEvent: 'callList'});
-
-					if (totCnt == 0) {
-						$schList.empty().append('<tr class="t-c"><td colspan="6" align="center">조회된 데이터가 없습니다.</td></tr>');
-						return;
-					}
-
-					$totalCnt.text(totCnt);
-
-
-					var html = '';
-					$.each(res.data.datalist, function(key, value){
-						html += '<tr onclick="javascript:callinfo(\''+ echoNull2Blank(value.userid) +'\');">';
-						html += '<td >'+ echoNull2Blank(value.userid) +'</td>';
-						html += '<td >'+ echoNull2Blank(value.username) +'</td>';
-						html += '<td >'+ echoNull2Blank(value.email) +'</td>';
-						html += '<td >'+ echoNull2Blank(value.role) +'</td>';
-						html += '<td >'+ echoNull2Blank(value.teamcode) +'</td>';
-						html += '<td >'+ echoNull2Blank(value.teamname) +'</td>';
-
-						html += '</tr>';
-					});
-					$schList.html(html);
+			if (accessToken==null && refreshToken==null && insert_id==null) {
+				console.log("callList(1)함수 : 토큰&리플레시&로그인한아이디 Null");
+				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+			}else if(accessToken==null){
+				const refreshCheck = refreshTokenCookie();
+				console.log("callList(1)함수 : refreshCheck : "+refreshCheck);
+				if(refreshCheck===1){
+					callList(1);
 				}
-			});
-		}
+			}else {
+				page = page - 1;
+				if (page < 0) page = 0
 
-		function callinfo(userid) {
+				const perPage = 10;
+				const perArea = 5;
+				let totCnt = 0;
 
-			var params = {
-				userid:userid
-			};
+				const $schList = $('#schList');
+				const $totalCnt = $('#totalCnt');
 
-			init();
-
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
-
-			$.ajax({
-				url:'/api/account/account',
-				type : 'post',
-				//dataType: 'html',
-				data : params,
-				cache:false,
-				error:function(request,status,error){
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				},
-				success: function(res){
-
-					$("#userid").val(res.data.datarow.userid);
-					$("#username").val(res.data.datarow.username);
-					$("#password").val('');
-					$("#email").val(res.data.datarow.email);
-					$("#role").val(res.data.datarow.role);
-					$("#teamcode").val(res.data.datarow.team.teamcode);
-					$("#teamname").val(res.data.datarow.team.teamname);
-					$("#mode").val('U');
-					$("#userid").attr("readonly",true);
-				}
-			});
-		}
-
-		function logreg(num) {
-			var typeName;
-			if(num===1){
-				typeName = "open";
-			}else{
-				typeName = "search";
-			}
-
-			var params = {
-				menuName1: "기초정보",
-				menuName2: "사용자등록",
-				useType: typeName
-			};
-
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$(document).ajaxSend(function(e, xhr) { xhr.setRequestHeader(header, token); });
-
-			$.ajax({
-				url: '/api/userLog/logreg',
-				type: 'post',
-				data: params,
-				cache:false,
-				error:function(request){
-					ajaxErrorMsg(request);
-				},
-				success: function(res){
-					if (!Ajax.checkResult(res)) {
-						return;
-					}
-				}
-			});
-		}
-
-		function callListPopup(page){
-
-			page = page - 1;
-			if (page < 0) page = 0
-
-			var perPage = 10;
-			var perArea = 5;
-			var totCnt = 0;
-
-			var $schList = $('#schListP1');
-			var $totalCnt = $('#totalCntP1');
-			var params = {
-				  teamcode:$("#p_teamcode").val()
-				, teamname:$("#p_teamname").val()
+				const params = {
+					userid: $("#s_userid").val(),
+					username: $("#s_username").val(),
+					teamname: $("#s_teamname").val()
 				};
 
-			$schList.empty().append('<tr ><td colspan="3" align = "center">조회 중</td></tr>');
-			$totalCnt.text('0');
+				$schList.empty().append('<tr ><td colspan="6" align = "center">조회 중</td></tr>');
+				$totalCnt.text('0');
 
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+				url = "http://192.168.0.144:8011/api/account/list"; // 호출할 백엔드 API
+				$.ajax({
+					url : url+'?size='+ perPage + '&page=' + page,
+					type : 'GET',
+					data : params,
+					cache:false,
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader("JWT_AccessToken",accessToken);
+					},
+					error:function(request){
+						ajaxErrorMsg(request);
+					},
+					success: function(res){
+						//화면 출력
+						totCnt = res.total_rows;
+						$("#accountPaging").jqueryPager({pageSize: perPage,
+							pageBlock: perArea,
+							currentPage: page + 1,
+							pageTotal: totCnt,
+							clickEvent: 'callList'});
 
+						if (totCnt === 0) {
+							$schList.empty().append('<tr class="t-c"><td colspan="6" align="center">조회된 데이터가 없습니다.</td></tr>');
+							return;
+						}
 
-			$.ajax({
-				url:'/api/team/list?size='+ perPage + '&page=' + page,
-				type : 'post',
-				//dataType: json,
-				data : params,
-				cache:false,
-				error:function(request,status,error){
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				},
-				success: function(res){
-					//화면 출력
-					totCnt = res.data.total_rows;
-					$("#pagingP1").jqueryPager({pageSize: perPage,
-						pageBlock: perArea,
-						currentPage: page + 1,
-						pageTotal: totCnt,
-						clickEvent: 'callListPopup'});
+						$totalCnt.text(totCnt);
 
-					if (totCnt === 0) {
-						$schList.empty().append('<tr class="t-c"><td colspan="3" align="center">조회된 데이터가 없습니다.</td></tr>');
-						return;
+						let html = '';
+						$.each(res.datalist, function(key, value){
+							html += '<tr onclick="callinfo(\''+echoNull2Blank(value.userid)+'\');">';
+							html += '<td >'+ echoNull2Blank(value.userid) +'</td>';
+							html += '<td >'+ echoNull2Blank(value.username) +'</td>';
+							html += '<td >'+ echoNull2Blank(value.email) +'</td>';
+							html += '<td >'+ echoNull2Blank(value.role) +'</td>';
+							html += '<td >'+ echoNull2Blank(value.teamcode) +'</td>';
+							html += '<td >'+ echoNull2Blank(value.teamname) +'</td>';
+							html += '</tr>';
+						});
+						$schList.html(html);
 					}
-
-					$totalCnt.text(totCnt);
-
-					var html = '';
-					$.each(res.data.datalist, function(key, value){
-						html += '<tr>';
-						html += '<td >'+ echoNull2Blank(value.teamcode) +'</td>';
-						html += '<td >'+ echoNull2Blank(value.teamname) +'</td>';
-						html += '<td >';
-						html += '   <button class="c-button c-button--small c-button--point" ';
-						html += '   onclick="javascript:selectpopup1(\''+ echoNull2Blank(value.teamcode) +'\',\''+ echoNull2Blank(value.teamname) +'\');">';
-						html += '  선택</button> ';
-						html += ' </td>';
-
-						html += '</tr>';
-					});
-					$schList.html(html);
-				}
-			})
+				});
+			}
 		}
+
+		// NEWDEAL 사용자정보 조회 버튼
+		function callinfo(userid) {
+
+			let url;
+			const accessToken = getCookie("JwtAccessToken");
+			const refreshToken = getCookie("JwtRefreshToken");
+			const insert_id = getCookie("insert_id");
+
+			if (accessToken == null && refreshToken == null && insert_id == null) {
+				console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+			} else if (accessToken == null) {
+				const refreshCheck = refreshTokenCookie();
+				console.log("callinfo(userid)함수 : refreshCheck : " + refreshCheck);
+				if (refreshCheck === 1) {
+					callinfo(userid);
+				}
+			} else {
+
+				const params = {
+					userid: userid
+				};
+
+				init();
+
+				url = "http://192.168.0.144:8011/api/account/account"; // 호출할 백엔드 API
+				$.ajax({
+					url: url,
+					type: 'POST',
+					data: params,
+					cache: false,
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader("JWT_AccessToken", accessToken);
+					},
+					error: function (request) {
+						ajaxErrorMsg(request);
+					},
+					success: function (res) {
+						$("#userid").val(res.sendData.accountData.userid);
+						$("#username").val(res.sendData.accountData.username);
+						$("#password").val('');
+						$("#email").val(res.sendData.accountData.email);
+						$("#role").val(res.sendData.accountData.role);
+						$("#teamcode").val(res.sendData.accountData.team.teamcode);
+						$("#teamname").val(res.sendData.accountData.team.teamname);
+						$("#mode").val('U');
+						$("#userid").attr("readonly", true);
+					}
+				});
+			}
+		}
+
+		// NEWDEAL 사용자삭제 버튼
+		function del(){
+
+			let url;
+			const accessToken = getCookie("JwtAccessToken");
+			const refreshToken = getCookie("JwtRefreshToken");
+			const insert_id = getCookie("insert_id");
+
+			if (accessToken == null && refreshToken == null && insert_id == null) {
+				console.log("del()함수 : 토큰&리플레시&로그인한아이디 Null");
+				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+			} else if (accessToken == null) {
+				const refreshCheck = refreshTokenCookie();
+				console.log("del()함수 : refreshCheck : " + refreshCheck);
+				if (refreshCheck === 1) {
+					del();
+				}
+			} else {
+				const $userid = $("#userid");
+				if ($userid.attr("readonly") !== "readonly"){
+					alertCaution("삭제하고자하는 사용자를 하단에서<br> 선택 후 삭제하세요.");
+					return false;
+				}
+				if ($userid.val().trim() === '') {
+					alertCaution("삭제하고자하는 사용자를를 하단에서<br> 선택 후 삭제하세요.");
+					$("#userid").trigger('focus');
+					return false;
+				}
+
+				var params = {
+					userid : $userid.val()
+				};
+
+				url = "http://192.168.0.144:8011/api/account/del"; // 호출할 백엔드 API
+				$.ajax({
+					url : url,
+					type : 'POST',
+					data : params,
+					cache:false,
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader("JWT_AccessToken", accessToken);
+					},
+					error: function (request) {
+						ajaxErrorMsg(request);
+					},
+					success: function(res){
+						let status = res.status;
+						if(status===200){
+							alertSuccess("사용자삭제가 완료되었습니다.")
+							init();
+							callList(1);
+						}else{
+							if(res.err_msg2===null){
+								alertCaution(res.err_msg,1);
+							}else{
+								alertCaution(res.err_msg+"<br>"+res.err_msg2,1);
+							}
+						}
+					}
+				});
+			}
+		}
+
+		// logreg
+		//
+		// function logreg(num) {
+		// 	var typeName;
+		// 	if(num===1){
+		// 		typeName = "open";
+		// 	}else{
+		// 		typeName = "search";
+		// 	}
+		//
+		// 	var params = {
+		// 		menuName1: "기초정보",
+		// 		menuName2: "사용자등록",
+		// 		useType: typeName
+		// 	};
+		//
+		// 	var token = $("meta[name='_csrf']").attr("content");
+		// 	var header = $("meta[name='_csrf_header']").attr("content");
+		// 	$(document).ajaxSend(function(e, xhr) { xhr.setRequestHeader(header, token); });
+		//
+		// 	$.ajax({
+		// 		url: '/api/userLog/logreg',
+		// 		type: 'post',
+		// 		data: params,
+		// 		cache:false,
+		// 		error:function(request){
+		// 			ajaxErrorMsg(request);
+		// 		},
+		// 		success: function(res){
+		// 			if (!Ajax.checkResult(res)) {
+		// 				return;
+		// 			}
+		// 		}
+		// 	});
+		// }
 
 	</script>
 </th:block>
@@ -419,7 +510,7 @@
 							<th>아이디</th>
 							<td>
 								<input type="hidden" class="c-text__input" id="mode" name="mode" value = "N"/>
-								<div class="c-text"><input type="text" class="c-text__input" id="userid" name="userid" /></div>
+								<div class="c-text"><input type="text" class="c-text__input" id="userid" name="userid" value="admin" /></div>
 							</td>
 							<th>패스워드</th>
 							<td>
@@ -444,7 +535,6 @@
 										<option th:each ="role : ${roles}"
 												th:value="${role.getCode()}"
 												th:text="${role.getDesc()}"></option>
-
 									</select>
 								</div>
 							</td>
@@ -453,7 +543,7 @@
 								<div class="c-text c-text--duo">
 									<input type="text" class="c-text__input" readonly placeholder="부서코드" id="teamcode" name="teamcode"/>
 									<input type="text" class="c-text__input" readonly placeholder="부서명" id="teamname" name="teamname"/>
-									<button class="c-text__button" id="btn-search">검색</button>
+									<button class="c-text__button" id="btn_search">검색</button>
 								</div>
 							</td>
 						</tr>
@@ -537,7 +627,7 @@
 				</tbody>
 			</table>
 			<div class="c-pager">
-				<div class="c-paging" id ="paging1">
+				<div class="c-paging" id ="accountPaging">
 					<!-- 페이징 처리되는곳   -->
 				</div>
 				<div class="c-paging__total">
@@ -550,7 +640,8 @@
 		</article>
 	</section>
 
-    <div class="l-popup" id="pop-search">
+
+    <div class="l-popup" id="pop_search">
     	<div class="l-popup__container">
     		<div class="l-popup__head">
     			<div class="l-popup__heading">부서 검색</div>
@@ -576,7 +667,7 @@
     								<div class="c-text"><input type="text" class="c-text__input" id="p_teamname" /></div>
     							</td>
     							<td>
-    								<button class="c-button c-button--point" id="btnSearchP1">조회</button>
+    								<button class="c-button c-button--point" id="btnTeamSearch">조회</button>
     							</td>
     						</tr>
     					</tbody>
@@ -596,20 +687,20 @@
     							<th></th>
     						</tr>
     					</thead>
-    					<tbody id ="schListP1">
+    					<tbody id ="schTeamList">
 
 
     					</tbody>
     				</table>
 					<div class="c-pager">
-						<div class="c-paging" id="pagingP1">
+						<div class="c-paging" id="teamPaging">
 							<!-- 페이징 처리되는곳   -->
 						</div>
 						<div class="c-paging__total">
 							<div class="c-paging__total-group">
 								Total
 							</div>
-							<div class="c-paging__total-group" id ="totalCntP1">0</div>
+							<div class="c-paging__total-group" id ="totalTeamCnt">0</div>
 						</div>
 					</div>
     			</div>
@@ -617,10 +708,6 @@
     		<a href="#" class="l-popup__close">팝업닫기</a>
     	</div>
     </div>
-
-</div>
-
-<div id='alertpop'>
 </div>
 
 </html>

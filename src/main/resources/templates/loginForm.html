@@ -42,19 +42,18 @@
 					alertCaution("아이디 또는 비밀번호를 확인해주세요.",1);
 				},
 				success: function (res) {
-					// console.log("로그인 되었습니다.");
-					// alertSuccess("로그인 되었습니다.");
+					console.log("로그인 되었습니다.");
 
-					// console.log("accessToken : "+res.data.token.accessToken);
-					// console.log("refreshToken : "+res.data.token.refreshToken);
-					// document.getElementById("username").value = "";
-					// document.getElementById("password").value = "";
+					console.log("accessToken : "+res.data.token.accessToken)
+					console.log("refreshToken : "+res.data.token.refreshToken)
+					console.log("insert_id : "+res.data.token.insert_id)
 
 					// setCookie(변수이름, 변수값, 유효시간);
-					setCookie("JwtAccessToken",res.data.token.accessToken, 10); // 테스트겸 발행시간은 1분으로설정
-					setCookie("JwtRefreshToken",res.data.token.refreshToken, 10); // 테스트겸 발행시간은 1분으로설정
+					setCookie("JwtAccessToken",res.data.token.accessToken, 30); // 테스트겸 발행시간은 10분으로설정
+					setCookie("JwtRefreshToken",res.data.token.refreshToken, 30); // 테스트겸 발행시간은 10분으로설정
+					setCookie("insert_id",res.data.token.insert_id, 30); // 테스트겸 발행시간은 10분으로설정
 
-					location.href="/index"
+					// location.href="/index"
 				}
 			});
 		}

@@ -52,6 +52,14 @@ $(function() {
 
 });
 
+//Ajax 호출시 에러가났을경우의 메세지 함수
+function ajaxErrorMsg(request) {
+    if (request.status === "403") {
+        alertCaution("로그인 정보가 만료되었거나 <br> 권한이 없습니다. <br>다시 로그인 하세요",2);
+    } else {
+        alertCancel("데이터 에러");
+    }
+}
 
 function alertSuccess(text) { //성공창(삭제성공시),저장성공시
 
