@@ -44,38 +44,13 @@
 
 			// logreg(1);
 
+			test();
 		})
 
-		// 기존 인프라 save()
-		// function save(){
-		//
-		// 	var $form = $('form[name="frmreg"]');
-		//
-		// 	var params = $form.serialize();
-		//
-		// 	var token = $("meta[name='_csrf']").attr("content");
-		// 	var header = $("meta[name='_csrf_header']").attr("content");
-		// 	$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
-		//
-		// 	$.ajax({
-		// 		url:'/api/account/reg',
-		// 		type : 'post',
-		// 		//dataType: 'html',
-		// 		data : params,
-		// 		cache:false,
-		// 		error:function(request,status,error){
-		// 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		// 		},
-		// 		success: function(res){
-		// 			if (!Ajax.checkResult(res)) {
-		// 				return;
-		// 			}
-		// 			alertSuccess('저장되었습니다. ');
-		// 			init();
-		// 			callList(1);
-		// 		}
-		// 	});
-		// }
+		function test(){
+			console.log("테스트시작");
+
+		}
 
 		// NEWDEAL JWT활용 Ajax 사용자등록
 		function save() {
@@ -172,10 +147,11 @@
 
 			if (accessToken==null && refreshToken==null && insert_id==null) {
 				console.log("callTeamListPopup(1)함수 : 토큰&리플레시&로그인한아이디 Null");
+				$('.l-popup').removeClass('open');
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
 			}else if(accessToken==null){
 				const refreshCheck = refreshTokenCookie();
-				console.log("callTeamListPopup(1)함수 : efreshCheck : "+refreshCheck);
+				console.log("callTeamListPopup(1)함수 : refreshCheck : "+refreshCheck);
 				if(refreshCheck===1){
 					callTeamListPopup(1);
 				}
@@ -510,7 +486,7 @@
 							<th>아이디</th>
 							<td>
 								<input type="hidden" class="c-text__input" id="mode" name="mode" value = "N"/>
-								<div class="c-text"><input type="text" class="c-text__input" id="userid" name="userid" value="admin" /></div>
+								<div class="c-text"><input type="text" class="c-text__input" id="userid" name="userid" /></div>
 							</td>
 							<th>패스워드</th>
 							<td>
