@@ -1,0 +1,28 @@
+newdeal:
+  api:
+    backend:
+    backend_url: ${NEWDEAL_API_BACKEND_URL}
+    front_url: ${NEWDEAL_API_FRONT_URL}
+    security_url: ${NEWDEAL_API_SECURITY_URL}
+
+logging:
+  file: ./logs/infraFront.log
+  file.max-history: 5
+  level:
+    kr:
+      co:
+        broadwave: DEBUG
+    org:
+      hibernate: INFO
+    root: INFO
+
+server:
+  port: 8010
+  servlet:
+    session:
+      timeout: 480m
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
