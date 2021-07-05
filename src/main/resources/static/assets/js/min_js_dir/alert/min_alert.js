@@ -54,13 +54,9 @@ $(function() {
 
 //Ajax 호출시 에러가났을경우의 메세지 함수
 function ajaxErrorMsg(request) {
-    if (request.status == "403") {
-        console.log(request.status+" : 403에러");
-        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-    } else {
-        console.log(request.status+" : 500에러");
-        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-    }
+    console.log(request.status+" : 403에러");
+    $('.l-popup').removeClass('open');
+    alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
 }
 
 function alertSuccess(text) { //성공창(삭제성공시),저장성공시

@@ -6,6 +6,20 @@ var deleteCookie = function(name) {
     //	deleteCookie('name');
 }
 
+// 전역변수로 JWT토큰 가져오는 함수
+let accessToken;
+let refreshToken;
+let insert_id;
+function JWT_Get(){
+    accessToken = getCookie("JwtAccessToken");
+    refreshToken = getCookie("JwtRefreshToken");
+    insert_id = getCookie("insert_id");
+
+    console.log("accessToken : "+accessToken);
+    console.log("refreshToken : "+refreshToken);
+    console.log("insert_id : "+insert_id);
+}
+
 // 쿠키 값 넣기
 var setCookie = function(name, value, exp) {
     var date = new Date();
@@ -34,39 +48,37 @@ function accessTokenCookieGet(){
 // 토큰 Refresh하기
 function refreshTokenCookie(){
 
-    console.log("새로고침이 시작됩니다.");
+    console.log("JWT토큰 새로고침이 시작됩니다.");
 
     const accessToken = getCookie("JwtRefreshAccessToken");
     const refreshToken = getCookie("JwtRefreshToken");
-    const insert_id = getCookie("insert_id");
-    console.log("insert_id : "+insert_id);
     console.log("refreshAccessToken : "+accessToken);
     console.log("refreshToken : "+refreshToken);
 
-    let url = "http://192.168.0.144:8012/auth/reissue"; // 호출할 백엔드 API
+    // let url = "http://192.168.0.144:8012/auth/reissue"; // 호출할 백엔드 API
+
+    let url = $("#security_url").val() + "/auth/reissue"; // 호출할 백엔드 API
 
     const params = {
-        insert_id : insert_id,
         accessToken : accessToken,
         refreshToken : refreshToken
     };
+
     const jsonString = JSON.stringify(params);
 
-    let result;
     $.ajax({
         url: url,
         type: 'post',
         data: jsonString,
         contentType: 'application/json',
         cache: false,
-        error:function(){
-            ajaxErrorMsg();
+        error:function(request){
+            ajaxErrorMsg(request);
         },
         success: function (res) {
             if(res.status===500){
                 console.log("토큰 새로고침 에러");
                 alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-                result = 0;
             }else{
                 // setCookie(변수이름, 변수값, 유효시간);
                 setCookie("JwtAccessToken", res.data.token.accessToken, 1); // 발행시간은 30분으로설정
@@ -78,9 +90,7 @@ function refreshTokenCookie(){
                 const refreshToken = getCookie("JwtRefreshToken");
                 console.log("새로받은 test_token : " + test_token);
                 console.log("새로받은 refreshToken : " + refreshToken);
-                result = 1;
             }
         }
     });
-    return result;
 }

@@ -84,14 +84,13 @@
 </th:block>
 
 <div layout:fragment="content" class="login-wrap">
-
+	<input type="hidden" id="security_url" th:value="${security_url}" />
 	<div class="login">
 		<h1 class="login__logo">
 			<a href="/login" class="logo">
 				<span>LTDAP Login</span>
 			</a>
 		</h1>
-		<input type="hidden" id="security_url" th:value="${security_url}" />
 		<div class="login__form-box">
 				<div>
 					<label><input type="text" class="login__input"  id="userid" name="userid" placeholder="아이디를 입력하세요." required ></label>

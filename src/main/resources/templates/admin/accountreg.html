@@ -10,6 +10,7 @@
 
 			$("#btnSave").on('click',function(){
 				save();
+				// test();
 			});
 
 			$('#btn_search').on('click', function(e) {
@@ -42,15 +43,17 @@
 				del();
 			});
 
-			// logreg(1);
-
-			test();
+			JWT_Get();
 		})
 
-		function test(){
-			console.log("테스트시작");
-
-		}
+		// function test(){
+		// 	refreshTokenCookie();
+		//
+		// }
+		//
+		// function test2(){
+		//
+		// }
 
 		// NEWDEAL JWT활용 Ajax 사용자등록
 		function save() {
@@ -81,26 +84,25 @@
 				return false;
 			}
 
-			console.log("JWT활용 Ajax 사용자등록")
+			JWT_Get();
+
+			console.log("JWT Ajax 사용자등록")
 			let url;
-			const accessToken = getCookie("JwtAccessToken");
-			const refreshToken = getCookie("JwtRefreshToken");
-			const insert_id = getCookie("insert_id");
+			// const accessToken = getCookie("JwtAccessToken");
+			// const refreshToken = getCookie("JwtRefreshToken");
+			// const insert_id = getCookie("insert_id");
 
 			if (accessToken==null && refreshToken==null && insert_id==null) {
 				console.log("save()함수 : 토큰&리플레시&로그인한아이디 Null");
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
 			}else if(accessToken==null){
-				const refreshCheck = refreshTokenCookie();
-				console.log("save()함수 : refreshCheck : "+refreshCheck);
-				if(refreshCheck===1){
-					save();
-				}
+				refreshTokenCookie();
+				save();
 			}else{
 				const $form = $('form[name="frmreg"]');
 				const params = $form.serialize();
 
-				url = "http://192.168.0.144:8011/api/account/save"; // 호출할 백엔드 API
+				url = $("#backend_url").val() + "/api/account/save"; // 호출할 백엔드 API
 				$.ajax({
 					url: url,
 					type: "post",
@@ -140,21 +142,20 @@
 		// NEWDEAL 부서리스트 불러오는 팝업
 		function callTeamListPopup(page){
 
+			JWT_Get();
+
 			let url;
-			const accessToken = getCookie("JwtAccessToken");
-			const refreshToken = getCookie("JwtRefreshToken");
-			const insert_id = getCookie("insert_id");
+			// const accessToken = getCookie("JwtAccessToken");
+			// const refreshToken = getCookie("JwtRefreshToken");
+			// const insert_id = getCookie("insert_id");
 
 			if (accessToken==null && refreshToken==null && insert_id==null) {
 				console.log("callTeamListPopup(1)함수 : 토큰&리플레시&로그인한아이디 Null");
 				$('.l-popup').removeClass('open');
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
 			}else if(accessToken==null){
-				const refreshCheck = refreshTokenCookie();
-				console.log("callTeamListPopup(1)함수 : refreshCheck : "+refreshCheck);
-				if(refreshCheck===1){
-					callTeamListPopup(1);
-				}
+				refreshTokenCookie();
+				callTeamListPopup(1);
 			}else {
 				page = page - 1;
 				if (page < 0) page = 0;
@@ -172,7 +173,7 @@
 				$schTeamList.empty().append('<tr ><td colspan="3" align="center">조회 중</td></tr>');
 				$totalTeamCnt.text('0');
 
-				url = "http://192.168.0.144:8011/api/team/list"; // 호출할 백엔드 API
+				url = $("#backend_url").val() + "/api/team/list"; // 호출할 백엔드 API
 
 				$.ajax({
 					url : url+'?size='+ perPage + '&page=' + page,
@@ -236,20 +237,20 @@
 		// NEWDEAL 사용자조회 버튼
 		function callList(page){
 
+			JWT_Get();
+
 			let url;
-			const accessToken = getCookie("JwtAccessToken");
-			const refreshToken = getCookie("JwtRefreshToken");
-			const insert_id = getCookie("insert_id");
+			// const accessToken = getCookie("JwtAccessToken3");
+			// const refreshToken = getCookie("JwtRefreshToken");
+			// const insert_id = getCookie("insert_id");
 
 			if (accessToken==null && refreshToken==null && insert_id==null) {
 				console.log("callList(1)함수 : 토큰&리플레시&로그인한아이디 Null");
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
 			}else if(accessToken==null){
-				const refreshCheck = refreshTokenCookie();
-				console.log("callList(1)함수 : refreshCheck : "+refreshCheck);
-				if(refreshCheck===1){
-					callList(1);
-				}
+				refreshTokenCookie();
+				// callList(1);
+				// return false;
 			}else {
 				page = page - 1;
 				if (page < 0) page = 0
@@ -270,7 +271,8 @@
 				$schList.empty().append('<tr ><td colspan="6" align = "center">조회 중</td></tr>');
 				$totalCnt.text('0');
 
-				url = "http://192.168.0.144:8011/api/account/list"; // 호출할 백엔드 API
+				url = $("#backend_url").val() + "/api/account/list"; // 호출할 백엔드 API
+
 				$.ajax({
 					url : url+'?size='+ perPage + '&page=' + page,
 					type : 'GET',
@@ -317,21 +319,19 @@
 
 		// NEWDEAL 사용자정보 조회 버튼
 		function callinfo(userid) {
+			JWT_Get();
 
 			let url;
-			const accessToken = getCookie("JwtAccessToken");
-			const refreshToken = getCookie("JwtRefreshToken");
-			const insert_id = getCookie("insert_id");
+			// const accessToken = getCookie("JwtAccessToken");
+			// const refreshToken = getCookie("JwtRefreshToken");
+			// const insert_id = getCookie("insert_id");
 
 			if (accessToken == null && refreshToken == null && insert_id == null) {
 				console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
 			} else if (accessToken == null) {
-				const refreshCheck = refreshTokenCookie();
-				console.log("callinfo(userid)함수 : refreshCheck : " + refreshCheck);
-				if (refreshCheck === 1) {
-					callinfo(userid);
-				}
+				refreshTokenCookie();
+				callinfo(userid);
 			} else {
 
 				const params = {
@@ -340,7 +340,7 @@
 
 				init();
 
-				url = "http://192.168.0.144:8011/api/account/account"; // 호출할 백엔드 API
+				url = $("#backend_url").val() + "/api/account/account"; // 호출할 백엔드 API
 				$.ajax({
 					url: url,
 					type: 'POST',
@@ -369,21 +369,19 @@
 
 		// NEWDEAL 사용자삭제 버튼
 		function del(){
+			JWT_Get();
 
 			let url;
-			const accessToken = getCookie("JwtAccessToken");
-			const refreshToken = getCookie("JwtRefreshToken");
-			const insert_id = getCookie("insert_id");
+			// const accessToken = getCookie("JwtAccessToken");
+			// const refreshToken = getCookie("JwtRefreshToken");
+			// const insert_id = getCookie("insert_id");
 
 			if (accessToken == null && refreshToken == null && insert_id == null) {
 				console.log("del()함수 : 토큰&리플레시&로그인한아이디 Null");
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
 			} else if (accessToken == null) {
-				const refreshCheck = refreshTokenCookie();
-				console.log("del()함수 : refreshCheck : " + refreshCheck);
-				if (refreshCheck === 1) {
-					del();
-				}
+				refreshTokenCookie();
+				del();
 			} else {
 				const $userid = $("#userid");
 				if ($userid.attr("readonly") !== "readonly"){
@@ -400,7 +398,7 @@
 					userid : $userid.val()
 				};
 
-				url = "http://192.168.0.144:8011/api/account/del"; // 호출할 백엔드 API
+				url = $("#backend_url").val() + "/api/account/del"; // 호출할 백엔드 API
 				$.ajax({
 					url : url,
 					type : 'POST',
@@ -470,6 +468,8 @@
 </th:block>
 
 <div layout:fragment="content" class="content">
+	<input type="hidden" id="backend_url" th:value="${backend_url}" />
+	<input type="hidden" id="security_url" th:value="${security_url}" />
 	<section class="section">
 		<article class="article">
 			<h3 class="article__head">사용자등록</h3>
