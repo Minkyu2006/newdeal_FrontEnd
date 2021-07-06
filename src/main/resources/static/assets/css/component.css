@@ -216,11 +216,11 @@
 }
 
 /* radio-group */
-.c-radio-gorup:before {
+.c-radio-group:before {
     content: " ";
     display: table;
 }
-.c-radio-gorup:after {
+.c-radio-group:after {
     content: " ";
     display: table;
     clear: both;
@@ -713,10 +713,14 @@ a.c-button {
     cursor: no-drop;
 }
 .c-button.c-button--point {
-    border-color: #3e4046;
-    background-color: #3e4046;
+    border-color: #456296;
+    background-color: #456296;
     color: #fff;
     font-weight: 700;
+}
+.c-button.c-button--point:hover {
+	background-color: ##1e3868;
+	border-color: #1e3868;
 }
 .c-button.c-button--small {
     padding: 2px 5px;

@@ -14,12 +14,110 @@
 
 
 	<script type="text/javascript">
-
+		function movePage(url) {
+			var ajaxOption = {
+					url : url,
+					type : "POST",
+	                dataType : "html"
+			}
+			
+			$.ajax(ajaxOption).done(function(data){
+	            $('#performance').children().remove();
+	            $('#performance').html(data);
+	        });
+		}
 	</script>
 
 </th:block>
 
 <div layout:fragment="content" class="content">
-
+	<h2 class="content__heading">성능 개선 사업 평가 서비스</h2>
+	<div class="performance" id="performance">
+		<div class="talk">
+			<div class="talk__box">
+				<div class="talk__header">
+					<h3>Step 1. 성능개선 기준 적용 대상 여부 확인</h3>
+				</div>
+				<div class="talk__contents">
+					<ul>
+						<li>
+							<h4>1. 총 사업비 50억 이상의 사업입니까?</h4>
+							<ul class="c-radio-group">
+								<li class="c-radio-group__item">
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" name="group1" id="group1-1" />
+										<label for="group1-1" class="c-radio__label">Yes</label>
+									</div>
+								</li>
+								<li class="c-radio-group__item">
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" name="group1" id="group1-2" />
+										<label for="group1-2" class="c-radio__label">No</label>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h4>2. 해당 사업이 교량, 보도육교, 터널, 지하차도, 절토사면, 옹벽을 대상으로 합니까?</h4>
+							<ul class="c-radio-group">
+								<li class="c-radio-group__item">
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" name="group2" id="group2-1" />
+										<label for="group2-1" class="c-radio__label">Yes</label>
+									</div>
+								</li>
+								<li class="c-radio-group__item">
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" name="group2" id="group2-2" />
+										<label for="group2-2" class="c-radio__label">No</label>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h4>3. 해당 사업이 주요구조부나 시설 자체의 개량, 확장, 개축을 목적으로 합니까?</h4>
+							<ul class="c-radio-group">
+								<li class="c-radio-group__item">
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" name="group3" id="group3-1" />
+										<label for="group3-1" class="c-radio__label">Yes</label>
+									</div>
+								</li>
+								<li class="c-radio-group__item">
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" name="group3" id="group3-2" />
+										<label for="group3-2" class="c-radio__label">No</label>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h4>4. 관계법령에 의한 별도의 사업 타당성 조사를 시행하지 않는 사업입니까?</h4>
+							<ul class="c-radio-group">
+								<li class="c-radio-group__item">
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" name="group4" id="group4-1" />
+										<label for="group4-1" class="c-radio__label">Yes</label>
+									</div>
+								</li>
+								<li class="c-radio-group__item">
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" name="group4" id="group4-2" />
+										<label for="group4-2" class="c-radio__label">No</label>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="talk__console">
+				<ul>
+					<li><button class="c-button c-button--point" onclick="movePage('/performance1')">NEXT</button></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 </html>

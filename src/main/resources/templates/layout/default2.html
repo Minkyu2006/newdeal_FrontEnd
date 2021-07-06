@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head th:replace="fragments/config :: configFragment"></head>
+<head th:replace="fragments/config2 :: configFragment"></head>
 
 <div class="wrap">
-	<div class="wrapper">
-		<div layout:fragment="content"></div>
-	</div>
+	<header th:replace="fragments/loginheader :: headerFragment"></header>
+	
+	<div layout:fragment="content"></div>
+
 </div>
 
 <div id='alertpop'>

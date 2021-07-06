@@ -19,4 +19,8 @@ public class MainController {
         return "page/newpage";
     }
 
+    @RequestMapping("performance1")
+    public String performance1(){
+        return "page/performance1";
+    }
 }

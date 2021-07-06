@@ -108,11 +108,6 @@ $(document).ready(function(){
         yearSuffix: '년'
     });
 
-    // nav icon animation
-    $('.nav-icon').click(function(){
-        $(this).toggleClass('open');
-        $(this).parents('.wrapper').toggleClass('nav--open');
-    });
 
     // nav accordion
     $('.toggle').click(function(e) {
