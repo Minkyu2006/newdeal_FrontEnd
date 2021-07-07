@@ -30,7 +30,7 @@
 			const jsonString = JSON.stringify(params);
 
 			console.log("로그인 실행");
-			const url = $("#security_url").val() + "/auth/login";
+			const url = "http://"+$("#security_url").val() + "/auth/login";
 			$.ajax({
 				url: url,
 				type: 'post',
