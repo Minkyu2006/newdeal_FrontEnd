@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LoginController {
 
-    // 호스트링크주입
+//     호스트링크주입
     @Value("${newdeal.api.security_url}")
     private String security_url;
 
