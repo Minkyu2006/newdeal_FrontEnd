@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate ="~{layout/default}">
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script>
+        $(function() {
+            JWT_Get();
+            callinfo(insert_id);
+            // $("#btnSaveEmail").on('click',function(){
+            // 	callsaveEmail();
+            // });ㄷ22
+            $("#btnSavePassword").on('click',function(){
+                callsavePassword();
+            });
+        });
+        // NEWDEAL 사용자정보 조회 버튼
+        function callinfo(insert_id) {
+            let url;
+            if (accessToken == null && refreshToken == null && insert_id == null) {
+                console.log("callinfo(insert_id)함수 : 토큰&리플레시&로그인한아이디 Null");
+                alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+            } else if (accessToken == null) {
+                refreshTokenCookie();
+            } else {
+                const params = {
+                    userid: insert_id
+                };
+                url = $("#backend_url").val() + "/api/account/account"; // 호출할 백엔드 API
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: params,
+                    cache: false,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                    },
+                    error: function (request) {
+                        ajaxErrorMsg(request);
+                    },
+                    success: function (res) {
+                        $("#userid").val(res.sendData.accountData.userid);
+                        $("#username").val(res.sendData.accountData.username);
+                        $("#email").val(res.sendData.accountData.email);
+                    }
+                });
+            }
+        }
+        // function callsaveEmail(){
+        //
+        // 	if ($("#userid").val().trim() === '') {
+        // 		alertCaution("회원정보가 존재하지않습니다.<br> 로그인 후 다시 시도하세요");
+        // 		return false;
+        // 	}
+        //
+        // 	var $form = $('form[name="frmreg"]');
+        // 	var params = $form.serialize();
+        //
+        // 	var token = $("meta[name='_csrf']").attr("content");
+        // 	var header = $("meta[name='_csrf_header']").attr("content");
+        // 	$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+        //
+        // 	$.ajax({
+        // 		url:'/api/account/modifyemail',
+        // 		type : 'post',
+        // 		//dataType: 'html',
+        // 		data : params,
+        // 		cache:false,
+        // 		error:function(request,status,error){
+        // 			ajaxErrorMsg(request);
+        // 		},
+        // 		success: function(res){
+        // 			if (!Ajax.checkResult(res)) {
+        // 				return;
+        // 			}
+        // 			alertSuccess('저장되었습니다. ');
+        // 		}
+        // 	});
+        // }
+        // NEWDEAL 비밀번호 변경 함수
+        function callsavePassword(){
+            if ($("#userid").val().trim() === '') {
+                alertCaution("회원정보가 존재하지않습니다.<BR> 로그인 후 다시 시도하세요",1);
+                return false;
+            }
+            let url;
+            if (accessToken == null && refreshToken == null && insert_id == null) {
+                console.log("callinfo(insert_id)함수 : 토큰&리플레시&로그인한아이디 Null");
+                alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+            } else if (accessToken == null) {
+                refreshTokenCookie();
+            } else {
+                const params = {
+                    userid: $("#userid").val(),
+                    oldPassword: $("#oldPassword").val(),
+                    changePassword: $("#changePassword").val(),
+                    confirmPassword: $("#confirmPassword").val()
+                };
+                url = $("#backend_url").val() + "/api/account/modifypassword"; // 호출할 백엔드 API
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: params,
+                    cache: false,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                    },
+                    error: function (request) {
+                        ajaxErrorMsg(request);
+                    },
+                    success: function (res) {
+                        let status = res.status;
+                        if(status===200){
+                            alertSuccess('저장되었습니다. ');
+                            $("#oldPassword").val('');
+                            $("#changePassword").val('');
+                            $("#confirmPassword").val('');
+                        }else{
+                            if(res.err_msg2===null){
+                                alertCaution(res.err_msg,1);
+                            }else{
+                                alertCaution(res.err_msg+"<br>"+res.err_msg2,1);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</th:block>
+<div layout:fragment="content" class="content">
+    <input type="hidden" id="backend_url" th:value="${backend_url}" />
+    <section class="section">
+        <article class="article">
+            <h3 class="article__head">회원 정보</h3>
+            <form id="frmreg" name="frmreg" action="">
+                <table class="c-table">
+                    <colgroup>
+                        <col style="width: 150px;" />
+                        <col />
+                        <col style="width: 150px;" />
+                        <col />
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>아이디</th>
+                        <td>
+                            <div class="c-text"><input type="text" class="c-text__input" id="userid" readonly="readonly"/></div>
+                        </td>
+                        <th>이름</th>
+                        <td>
+                            <div class="c-text"><input type="text" class="c-text__input" id="username" readonly="readonly"/></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>현재비밀번호</th>
+                        <td>
+                            <div class="c-text"><input type="password" class="c-text__input" id="oldPassword" /></div>
+                        </td>
+                        <th>신규비밀번호</th>
+                        <td>
+                            <div class="c-flex">
+                                <div class="c-flex__input">
+                                    <div class="c-text"><input type="password" class="c-text__input" id="changePassword" placeholder="새 비밀 번호" /></div>
+                                </div>
+                                <div class="c-flex__input">
+                                    <div class="c-text"><input type="password" class="c-text__input" id="confirmPassword" placeholder="새 비밀 번호 확인" /></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td colspan="3">
+                            <div class="c-text"><input type="email" class="c-text__input" id="email" readonly="readonly"/></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+            <div class="c-function">
+                <div class="c-function__group c-function__group--right">
+                    <!--					<div class="c-function__item"><button class="c-button c-button&#45;&#45;point" id="btnSaveEmail">이메일변경</button></div>-->
+                    <div class="c-function__item"><button class="c-button c-button--point" id="btnSavePassword">비밀번호변경</button></div>
+                </div>
+            </div>
+        </article>
+    </section>
+    <div id='alertpop'>
+    </div>
+</div>
+</html>
