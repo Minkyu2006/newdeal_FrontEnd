@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
     // 호스트링크주입
-    //@Value("${newdeal.api.backend_url}")
-    //private String backend_url;
+    @Value("${newdeal.api.backend_url}")
+    private String backend_url;
 
     @RequestMapping("index")
     public String index(){
@@ -27,10 +27,7 @@ public class MainController {
 
     @RequestMapping("/mypage")
     public String mypage(Model model){
-       //model.addAttribute("backend_url", backend_url);
-//        String userid = CommonUtils.getCurrentuser(request);
-//        Account account = accountService.findByUserid(userid).get();
-//        model.addAttribute("account",account);
+       model.addAttribute("backend_url", backend_url);
         return "mypage";
     }
 
