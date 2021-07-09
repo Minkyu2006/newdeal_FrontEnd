@@ -338,7 +338,7 @@ table {
 /* content */
 .content {
     width: 100%;
-    min-width: 1024px;
+    min-width: 1120px;
     min-height: calc(100vh - 110px);
     padding: 50px 20px;
     margin: 0 auto;
@@ -364,8 +364,18 @@ table {
 	font-size: 24px;
 	font-weight: 700;
 }
+.content__inner {
+	width: 100%;
+	max-width: 1080px;
+	margin: 0 auto;
+}
 
 /* talk */
+.talk + .talk {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #888;
+}
 .talk__box {
 	width: 100%;
 	background-color: #fff;
@@ -374,6 +384,7 @@ table {
 	-moz-border-radius: 10px;;
 	border-radius: 10px;;
 }
+.talk__box + .content__heading,
 .talk__box + .talk__box {
 	margin-top: 20px;
 }
@@ -420,4 +431,111 @@ table {
 .talk__console > ul li + li {
 	margin-left: 20px;
 }
+.talk__guide {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #666;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.talk__guide h4 {
+	font-weight: 700;
+}
+.talk__guide ul {
+	margin-top: 10px;
+}
+.talk__guide li + li {
+	margin-top: 5px;
+}
+.talk__file {
+	margin-top: 10px;
+}
+.talk__file ul:before {
+	content: " ";
+	display: table;
+}
+.talk__file ul:after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+.talk__file li:first-child {
+	float: left;
+	width: 165px;
+}
+.talk__file li:last-child {
+	float: left;
+	width: calc(100% - 185px);
+	margin-left: 20px;
+}
+.talk__select-pop {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 500px;
+	padding: 20px;
+	background-color: #fff;
+	border: 1px solid #333;
+	-webkit-border-radius: 10px;;
+	-moz-border-radius: 10px;;
+	border-radius: 10px;;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .4);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.talk__select-pop.open {
+	display: block;
+}
+.talk__select-heading {
+	margin-bottom: 10px;
+	font-size: 18px;
+	font-weight: 700;
+}
+.talk__select-comment {
+	margin-top: 10px;
+	color: #666;
+	font-size: 14px;
+	text-align: left;
+}
+.talk__select-pop >.c-button {
+	display: block;
+	margin: 10px auto 0;
+}
+
+.performance-output__comment {
+	width: 100%;
+	padding: 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+} 
+.performance-output__comment span {
+	color: #a30000;
+	font-weight: 700;
+}
+.performance-output {
+	padding: 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.performance-output h3 {
+	margin-bottom: 10px;
+	font-size: 18px;
+	font-weight: 700;
+}
+
 

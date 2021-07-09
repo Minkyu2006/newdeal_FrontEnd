@@ -10,7 +10,7 @@
     box-sizing: border-box;
     text-align: left;
     color: #222;
-    font-size: 14px;
+    font-size: 16px;
     border-top: 2px solid #181a1f;
     border-bottom: 2px solid #181a1f;
 }
@@ -21,8 +21,6 @@
     padding: 10px 5px;
     border-bottom: 1px solid #efefef;
     vertical-align: middle;
-    font-size: 14px;
-    /* font-weight: 700; */
     word-break: break-all;
     word-wrap: break-word;
 }
@@ -103,6 +101,10 @@
 .c-table.c-table--border th,
 .c-table.c-table--border td {
 	border: 1px solid #ccc;
+}
+.c-table.c-table--in-border {
+	border-top: 0 none;
+	border-bottom: 0 none;
 }
 
 .c-table-caption {

@@ -1,8 +1,8 @@
 newdeal:
   api:
-    backend_url: 192.168.0.144
-    front_url: 192.168.0.144
-    security_url: 192.168.0.144
+    backend_url: ${NEWDEAL_API_BACKEND_URL}
+    front_url: ${NEWDEAL_API_FRONT_URL}
+    security_url: ${NEWDEAL_API_SECURITY_URL}
 
 logging:
   file: ./logs/infraFront.log

@@ -30,9 +30,29 @@ public class MainController {
        model.addAttribute("backend_url", backend_url);
         return "mypage";
     }
+    
+    @RequestMapping("input")
+    public String input(){
+        return "performance/input";
+    }
+    
+    @RequestMapping("output")
+    public String output(){
+        return "performance/output";
+    }
 
     @RequestMapping("performance1")
     public String performance1(){
-        return "page/performance1";
+        return "performance/performance1";
+    }
+    
+    @RequestMapping("performance2")
+    public String performance2(){
+        return "performance/performance2";
+    }
+    
+    @RequestMapping("performance3")
+    public String performance3(){
+        return "performance/performance3";
     }
 }

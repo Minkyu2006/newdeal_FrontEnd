@@ -1,0 +1,57 @@
+<div class="talk">
+	<div class="talk__box">
+		<div class="talk__header">
+			<h3>Step 2. 추진하실 사업의 정보를 입력합니다.</h3>
+		</div>
+		<div class="talk__contents">
+			<div class="talk__upload">
+				<div class="talk__guide">
+					<h4>*입력파일 작성 가이드</h4>
+					<ul>
+						<li>1. 작성법1</li>
+						<li>2. 작성법2</li>
+						<li>3. 작성법3</li>
+						<li>4. 없으면 입력하지 않습니다.</li>
+						<li>5. 대안 추가도 가능합니다</li>
+					</ul>
+				</div>
+				<div class="talk__file">
+					<ul>
+						<li>
+							<!-- href에 다운로드 할 파일 경로 삽입 -->
+							<a href="#" class="talk__download c-button">입력 파일 양식 다운로드</a>
+						</li>
+						<li>
+							<div class="c-file">
+								<input type="text" class="c-file__input" />
+								<label class="c-file__button">upload
+									<input type="file" id="file" />
+								</label>
+							</div>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+
+	
+	<div class="talk__console">
+		<ul>
+			<li><button class="c-button" onclick="movePage('/performance1')">BEFORE</button></li>
+			<li><button class="c-button c-button--point">완료</button></li>
+		</ul>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$('#file').change(function() {
+			var file = $(this).val().split('\\').pop();
+			
+			$('.c-file__input').val(file);
+		})
+	})
+</script>
