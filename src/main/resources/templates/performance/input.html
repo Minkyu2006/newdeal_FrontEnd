@@ -6,62 +6,18 @@
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
-
+	<style>
+		/* .popup__box 클래스의 widh값을 400으로 바꿔줄껄 이 페이지에서만 해당. */
+	</style>
 </th:block>
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-
-
-	<script type="text/javascript">
-		$(function() {
-			$("#nextBtn").on('click', function() {
-				popOpen();
-			})
-		})
-			
-		function popOpen(){
-			console.log("팝업열기");
-			//$('.talk__select-pop').addClass('open');
-			$('#popId').css("display","block");
-		}
-		
-		function movePage(url) {
-			var ajaxOption = {
-					url : url,
-					type : "POST",
-	                dataType : "html"
-			}
-			
-			$.ajax(ajaxOption).done(function(data){
-	            $('#performance').children().remove();
-	            $('#performance').html(data);
-	        });
-		};
-		
-		function selectMovePage() {
-			var url = $('input:radio[name="talk-select"]:checked').val();
-			var ajaxOption = {
-					url : url,
-					type : "POST",
-	                dataType : "html"
-			}
-			
-			$.ajax(ajaxOption).done(function(data){
-	            $('#performance').children().remove();
-	            $('#performance').html(data);
-	        });
-			
-			//$('.talk__select-pop').removeClass('open');
-			$('#popId').css("display","none");
-		
-		};
-
-	</script>
-
+	<script src="/assets/js/min_js_dir/newdeal/performance.js"></script>
 </th:block>
 
 <div layout:fragment="content" class="content">
+	<input type="hidden" id="backend_url" th:value="${backend_url}" />
 	<div class="content__inner">
 		<h2 class="content__heading">성능 개선 사업 평가 서비스</h2>
 		<div class="performance" id="performance">
@@ -147,7 +103,7 @@
 				<div class="talk__console">
 					<ul>
 						<li>
-							<button id="nextBtn" class="c-button c-button--point talk__select-pop-btn">NEXT</button>
+							<button onclick="popOpen()" class="c-button c-button--point talk__select-pop-btn">NEXT</button>
 						</li>
 					</ul>
 				</div>
@@ -156,19 +112,19 @@
 			
 		</div>
 		
-		<div id="popId" class="talk__select-pop">
+		<div class="talk__select-pop">
 			<h4 class="talk__select-heading">추진하실 사업의 정보 입력 방식을 선택해주세요.</h4>
 			<div class="talk__select-radio">
 				<ul class="c-radio-group">
 					<li class="c-radio-group__item">
 						<div class="c-radio">
-							<input type="radio" name="talk-select" class="c-radio__input" id="talk-select01" value="/performance2" />
+							<input type="radio" name="talk-select" class="c-radio__input" id="talk-select01" value="/performance/performance2" />
 							<label for="talk-select01" class="c-radio__label">입력파일(엑셀) 업로드</label>
 						</div>
 					</li>
 					<li class="c-radio-group__item">
 						<div class="c-radio">
-							<input type="radio" name="talk-select" class="c-radio__input" id="talk-select02" value="/performance3" />
+							<input type="radio" name="talk-select" class="c-radio__input" id="talk-select02" value="/performance/performance3" />
 							<label for="talk-select02" class="c-radio__label">직접 작성</label>
 						</div>
 					</li>

@@ -102,7 +102,7 @@
 				const $form = $('form[name="frmreg"]');
 				const params = $form.serialize();
 
-				url = $("#backend_url").val() + "/api/account/save"; // 호출할 백엔드 API
+				url = "http://"+$("#backend_url").val() + "/api/account/save"; // 호출할 백엔드 API
 				$.ajax({
 					url: url,
 					type: "post",
@@ -173,7 +173,7 @@
 				$schTeamList.empty().append('<tr ><td colspan="3" align="center">조회 중</td></tr>');
 				$totalTeamCnt.text('0');
 
-				url = $("#backend_url").val() + "/api/team/list"; // 호출할 백엔드 API
+				url = "http://"+$("#backend_url").val() + "/api/team/list"; // 호출할 백엔드 API
 
 				$.ajax({
 					url : url+'?size='+ perPage + '&page=' + page,
@@ -271,7 +271,7 @@
 				$schList.empty().append('<tr ><td colspan="6" align = "center">조회 중</td></tr>');
 				$totalCnt.text('0');
 
-				url = $("#backend_url").val() + "/api/account/list"; // 호출할 백엔드 API
+				url = "http://"+$("#backend_url").val() + "/api/account/list"; // 호출할 백엔드 API
 
 				$.ajax({
 					url : url+'?size='+ perPage + '&page=' + page,
@@ -340,7 +340,7 @@
 
 				init();
 
-				url = $("#backend_url").val() + "/api/account/account"; // 호출할 백엔드 API
+				url = "http://"+$("#backend_url").val() + "/api/account/account"; // 호출할 백엔드 API
 				$.ajax({
 					url: url,
 					type: 'POST',
@@ -398,7 +398,7 @@
 					userid : $userid.val()
 				};
 
-				url = $("#backend_url").val() + "/api/account/del"; // 호출할 백엔드 API
+				url = "http://"+$("#backend_url").val() + "/api/account/del"; // 호출할 백엔드 API
 				$.ajax({
 					url : url,
 					type : 'POST',

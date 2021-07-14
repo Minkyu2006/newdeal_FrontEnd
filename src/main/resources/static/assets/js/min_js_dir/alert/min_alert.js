@@ -10,7 +10,7 @@ $(function() {
     });
 
     $(document).on("click","#cautionBtn2",function(){
-        location.href="http://192.168.0.144:8010/login";
+        location.href="/login";
         $('#popupId').remove();
     });
 
@@ -18,16 +18,16 @@ $(function() {
         $('#popupId').remove();
     });
 
-    $(document).on("click","#continueSuccessBtn",function(){
-        continueSaveCheck()
-    });
-
-    $(document).on("click","#checkYesBtn",function(){
-        startYesorNo(true)
-    });
-    $(document).on("click","#checkNoBtn",function(){
-        startYesorNo(false)
-    });
+    // $(document).on("click","#continueSuccessBtn",function(){
+    //     continueSaveCheck()
+    // });
+    //
+    // $(document).on("click","#checkYesBtn",function(){
+    //     startYesorNo(true)
+    // });
+    // $(document).on("click","#checkNoBtn",function(){
+    //     startYesorNo(false)
+    // });
 
     // $('#success').on('click', function() {
     //     //console.log("성공버튼 실행");
@@ -60,9 +60,7 @@ function ajaxErrorMsg(request) {
 }
 
 function alertSuccess(text) { //성공창(삭제성공시),저장성공시
-
-    var html = '';
-
+    let html = '';
     html +='<div id="popupId" class="popup popup--dim">';
         html +='<div class="popup__box">';
             html +='<div class="popup__content">';
@@ -81,7 +79,7 @@ function alertSuccess(text) { //성공창(삭제성공시),저장성공시
 
 function alertCancel(text) { //에러창(로그인만료),오류
 
-    var html = '';
+    let html = '';
 
     html +='<div id="popupId" class="popup popup--dim">';
         html +='<div class="popup__box">';
@@ -100,8 +98,8 @@ function alertCancel(text) { //에러창(로그인만료),오류
 }
 
 function alertCaution(text,type) { //경고창
-    var cau = "!";
-    var html = '';
+    let cau = "!";
+    let html = '';
 
     html +='<div id="popupId" class="popup popup--dim">';
         html +='<div class="popup__box">';
@@ -124,7 +122,7 @@ function alertCaution(text,type) { //경고창
 }
 
 function alertSaveCheck(text) { // 정말삭제할껀지확인하는창,계속저장할껀지확인
-    var html = '';
+    let html = '';
 
     html +='<div id="popupId" class="popup popup--dim">';
     html +='<div class="popup__box">';

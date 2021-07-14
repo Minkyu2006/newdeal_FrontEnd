@@ -15,9 +15,25 @@
 
 	<script type="text/javascript">
 		$(function() {
-			
-		})
-			
+			JWT_Get();
+			const autoNum = $("#autoNum").val();
+			call_performance(autoNum);
+		});
+
+		function call_performance(autoNum){
+			console.log("사업평가정보 함수호추 ");
+			console.log("autoNum : "+autoNum);
+			if(autoNum==null){
+				location.href="/404";
+			}
+
+
+
+
+
+
+		}
+
 		
 
 	</script>
@@ -25,6 +41,7 @@
 </th:block>
 
 <div layout:fragment="content" class="content">
+	<input type="hidden" id="autoNum" th:value="${autoNum}" />
 	<div class="content__inner">
 		<div class="performance" id="performance">
 			<div class="talk">
@@ -46,8 +63,8 @@
 							<thead>
 								<tr>
 									<th></th>
-									<th>성능개선 대안</th>
-									<th>유지보수 대안</th>
+									<th id="pi_business_type_1">성능개선 대안</th>
+									<th id="pi_business_type_2">유지보수 대안</th>
 								</tr>
 							</thead>
 							<tbody>

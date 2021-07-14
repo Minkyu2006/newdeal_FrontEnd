@@ -11,7 +11,7 @@
             callinfo(insert_id);
             // $("#btnSaveEmail").on('click',function(){
             // 	callsaveEmail();
-            // });ㄷ22
+            // });
             $("#btnSavePassword").on('click',function(){
                 callsavePassword();
             });
@@ -28,7 +28,7 @@
                 const params = {
                     userid: insert_id
                 };
-                url = $("#backend_url").val() + "/api/account/account"; // 호출할 백엔드 API
+                url = "http://"+$("#backend_url").val() + "/api/account/account"; // 호출할 백엔드 API
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -48,6 +48,7 @@
                 });
             }
         }
+
         // function callsaveEmail(){
         //
         // 	if ($("#userid").val().trim() === '') {
@@ -80,6 +81,7 @@
         // 	});
         // }
         // NEWDEAL 비밀번호 변경 함수
+
         function callsavePassword(){
             if ($("#userid").val().trim() === '') {
                 alertCaution("회원정보가 존재하지않습니다.<BR> 로그인 후 다시 시도하세요",1);
@@ -98,7 +100,7 @@
                     changePassword: $("#changePassword").val(),
                     confirmPassword: $("#confirmPassword").val()
                 };
-                url = $("#backend_url").val() + "/api/account/modifypassword"; // 호출할 백엔드 API
+                url = "http://"+$("#backend_url").val() + "/api/account/modifypassword"; // 호출할 백엔드 API
                 $.ajax({
                     url: url,
                     type: 'POST',

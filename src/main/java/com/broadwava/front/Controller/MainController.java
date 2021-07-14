@@ -14,45 +14,21 @@ public class MainController {
     @Value("${newdeal.api.backend_url}")
     private String backend_url;
 
+    // 새로운페이지 작업할수있는 공간?
+    @RequestMapping("newpage")
+    public String newpage(){
+        return "page/newpage";
+    }
+
+
     @RequestMapping("index")
     public String index(){
         return "index";
-    }
-
-    // 새로운페이지 작업할수있는 공간?
-    @RequestMapping("newpage")
-    public String newpage1(){
-        return "page/newpage";
     }
 
     @RequestMapping("/mypage")
     public String mypage(Model model){
        model.addAttribute("backend_url", backend_url);
         return "mypage";
-    }
-    
-    @RequestMapping("input")
-    public String input(){
-        return "performance/input";
-    }
-    
-    @RequestMapping("output")
-    public String output(){
-        return "performance/output";
-    }
-
-    @RequestMapping("performance1")
-    public String performance1(){
-        return "performance/performance1";
-    }
-    
-    @RequestMapping("performance2")
-    public String performance2(){
-        return "performance/performance2";
-    }
-    
-    @RequestMapping("performance3")
-    public String performance3(){
-        return "performance/performance3";
     }
 }

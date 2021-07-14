@@ -33,15 +33,13 @@
 		// 부서저장 함수
 		var jwt_token;
 		function save() {
-			jwt_token = getCookie("JwtAccessToken");
-			if(jwt_token==null){
-				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.",2);
-				console.log("토큰값이 널 입니다.");
-				return false;
-			}
 
-			var $teamcode = $("#teamcode");
-			var $teamname = $("#teamname");
+			JWT_Get();
+
+			let url;
+
+			const $teamcode = $("#teamcode");
+			const $teamname = $("#teamname");
 
 			if ($teamcode.val().trim() === '') {
 				alert("부서코드를 입력하세요.");
@@ -58,9 +56,8 @@
 			// var $form = $('form[name="frmreg"]');
 			// var params = $form.serialize();
 
-			var formData = new FormData(document.getElementById('frmreg'));
-
-			var url = "http://192.168.0.144:8011/api/team/reg"; // 호출할 백엔드 API
+			const formData = new FormData(document.getElementById('frmreg'));
+			url = "http://"+$("#backend_url").val() + "/api/team/reg"; // 호출할 백엔드 API
 			$.ajax({
 				url :  url,
 				type : 'post',
@@ -84,24 +81,22 @@
 
 		// 부서 리스트조회
 		function callList(page){
-			jwt_token = getCookie("JwtAccessToken");
-			if(jwt_token==null){
-				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.",2);
-				console.log("토큰값이 널 입니다.");
-				return false;
-			}
+
+			JWT_Get();
+
+			let url;
 
 			page = page - 1;
 			if (page < 0) page = 0
 
-			var perPage = 10;
-			var perArea = 5;
-			var totCnt = 0;
+			const perPage = 10;
+			const perArea = 5;
+			const totCnt = 0;
 
-			var $schList = $('#schList');
-			var $totalCnt = $('#totalCnt');
+			const $schList = $('#schList');
+			const $totalCnt = $('#totalCnt');
 
-			var params = {
+			const params = {
 				teamcode:$("#s_teamcode").val(),
 				teamname:$("#s_teamname").val()
 			};
@@ -113,7 +108,8 @@
 			// var header = $("meta[name='_csrf_header']").attr("content");
 			// $(document).ajaxSend(function(e, xhr) { xhr.setRequestHeader(header, token); });
 
-			var url = "http://192.168.0.144:8011/api/team/list"; // 호출할 백엔드 API
+			url = "http://"+$("#backend_url").val() + "/api/team/list"; // 호출할 백엔드 API
+
 			$.ajax({
 				// url:'/api/team/list?size='+ perPage + '&page=' + page,
 				url:url+'?size='+perPage+ '&page=' + page,
@@ -156,20 +152,18 @@
 
 		// 부서정보 조회
 		function callinfo(teamcode) {
-			jwt_token = getCookie("JwtAccessToken");
-			if(jwt_token==null){
-				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.",2);
-				console.log("토큰값이 널 입니다.");
-				return false;
-			}
+			JWT_Get();
 
-			var params = {
-				teamcode:teamcode
+			let url;
+
+			const params = {
+				teamcode: teamcode
 			};
 
 			init();
 
-			var url = "http://192.168.0.144:8011/api/team/team"; // 호출할 백엔드 API
+			url = "http://"+$("#backend_url").val() + "/api/team/team"; // 호출할 백엔드 API
+
 			$.ajax({
 				// url:'/api/team/team',
 				url: url,
@@ -190,12 +184,10 @@
 
 		// 부서삭제
 		function del(){
-			jwt_token = getCookie("JwtAccessToken");
-			if(jwt_token==null){
-				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.",2);
-				console.log("토큰값이 널 입니다.");
-				return false;
-			}
+
+			JWT_Get();
+
+			let url;
 
 			if ($("#teamcode").attr("readonly") !== "readonly"){
 				alert("삭제하고자하는 부서를 하단에서 선택 후 삭제하세요.");
@@ -208,15 +200,16 @@
 				return false;
 			}
 
-			var params = {
-				teamcode:$("#teamcode").val()
+			const params = {
+				teamcode: $("#teamcode").val()
 			};
 
 			// var token = $("meta[name='_csrf']").attr("content");
 			// var header = $("meta[name='_csrf_header']").attr("content");
 			// $(document).ajaxSend(function(e, xhr) { xhr.setRequestHeader(header, token); });
 
-			var url = "http://192.168.0.144:8011/api/team/del"; // 호출할 백엔드 API
+			url = "http://"+$("#backend_url").val() + "/api/team/del"; // 호출할 백엔드 API
+
 			$.ajax({
 				// url:'/api/team/del',
 				url: url,
@@ -244,6 +237,10 @@
 
 		// 엑셀파일다운로드
 		function exceldown(){
+			JWT_Get();
+
+			let url;
+
 			jwt_token = getCookie("JwtAccessToken");
 			if(jwt_token==null){
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.",2);
@@ -251,15 +248,16 @@
 				return false;
 			}
 
-			var teamcode = $("#s_teamcode").val();
-			var teamname = $("#s_teamname").val();
+			const teamcode = $("#s_teamcode").val();
+			const teamname = $("#s_teamname").val();
 
-			var params = {
-				teamcode:teamcode,
-				teamname:teamname
+			const params = {
+				teamcode: teamcode,
+				teamname: teamname
 			};
 
-			var url = "http://192.168.0.144:8011/team/excelDownload"; // 호출할 백엔드 API
+			url = "http://"+$("#backend_url").val() + "/team/excelDownload"; // 호출할 백엔드 API
+
 			$.ajax({
 				url : url,
 				type : 'post',
@@ -281,10 +279,12 @@
 </th:block>
 
 <div layout:fragment="content" class="content">
+	<input type="hidden" id="backend_url" th:value="${backend_url}" />
+	<input type="hidden" id="security_url" th:value="${security_url}" />
 	<section class="section">
 		<article class="article">
 			<h3 class="article__head">부서 등록</h3>
-			<form id="frmreg" name="frmreg" enctype="multipart/form-data">
+			<form id="frmreg" enctype="multipart/form-data">
 				<table class="c-table c-table--non-border">
 					<colgroup>
 						<col style="width: 130px;" />

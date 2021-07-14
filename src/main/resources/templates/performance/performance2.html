@@ -23,9 +23,11 @@
 						</li>
 						<li>
 							<div class="c-file">
-								<input type="text" class="c-file__input" />
+								<input type="text" class="c-file__input" readonly="readonly" />
 								<label class="c-file__button">upload
-									<input type="file" id="file" />
+									<form id="fileSendForm" enctype="multipart/form-data">
+										<input type="file" id="excelfile" name="excelfile"  />
+									</form>
 								</label>
 							</div>
 						</li>
@@ -40,18 +42,17 @@
 	
 	<div class="talk__console">
 		<ul>
-			<li><button class="c-button" onclick="movePage('/performance1')">BEFORE</button></li>
-			<li><button class="c-button c-button--point">완료</button></li>
+			<li><button class="c-button" onclick="movePage('/performance/performance1')">BEFORE</button></li>
+			<li><button onclick="filesend()" class="c-button c-button--point">완료</button></li>
 		</ul>
 	</div>
 </div>
 
 <script>
-	$(document).ready(function() {
-		$('#file').change(function() {
-			var file = $(this).val().split('\\').pop();
-			
+	$(function() {
+		$('#excelfile').change(function() {
+			const file = $(this).val().split('\\').pop();
 			$('.c-file__input').val(file);
 		})
-	})
+	});
 </script>
