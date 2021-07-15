@@ -50,6 +50,7 @@ public class PerformanceController{
     @RequestMapping("output/{autoNum}")
     public String output(Model model,@PathVariable String autoNum){
         model.addAttribute("autoNum", autoNum);
+        model.addAttribute("backend_url", backend_url);
         return "performance/output";
     }
 

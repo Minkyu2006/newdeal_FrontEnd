@@ -11,37 +11,18 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-
-
+	<script src="/assets/js/min_js_dir/newdeal/performance.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			JWT_Get();
 			const autoNum = $("#autoNum").val();
 			call_performance(autoNum);
 		});
-
-		function call_performance(autoNum){
-			console.log("사업평가정보 함수호추 ");
-			console.log("autoNum : "+autoNum);
-			if(autoNum==null){
-				location.href="/404";
-			}
-
-
-
-
-
-
-		}
-
-		
-
 	</script>
-
 </th:block>
 
 <div layout:fragment="content" class="content">
 	<input type="hidden" id="autoNum" th:value="${autoNum}" />
+	<input type="hidden" id="backend_url" th:value="${backend_url}" />
 	<div class="content__inner">
 		<div class="performance" id="performance">
 			<div class="talk">
@@ -308,29 +289,34 @@
 							</thead>
 							<tbody>
 								<tr>
-									<th>교량 노후도</th>
-									<td>90</td>
-									<td>90</td>
+									<th></th>
+									<td>평가등급 / 평가점수</td>
+									<td>평가등급 / 평가점수</td>
 								</tr>
 								<tr>
-									<th>안정성</th>
-									<td>80</td>
-									<td>80</td>
+									<th>안전성</th>
+									<td id="safetyRankScroe1">N/A</td>
+									<td id="safetyRankScroe2">N/A</td>
 								</tr>
 								<tr>
-									<th>하중 위험성</th>
-									<td>80</td>
-									<td>80</td>
+									<th>노후도</th>
+									<td id="oldRankScroe1">N/A</td>
+									<td id="oldRankScroe2">N/A</td>
 								</tr>
 								<tr>
-									<th>목표 성능 확보 가능성</th>
-									<td>100</td>
-									<td>0</td>
+									<th>시급성</th>
+									<td id="urgencyRankScroe1">N/A</td>
+									<td id="urgencyRankScroe2">N/A</td>
 								</tr>
 								<tr>
-									<th>유지관리 시급성</th>
-									<td>0</td>
-									<td>0</td>
+									<th>목표성능 달성도</th>
+									<td id="goalRankScroe1">N/A</td>
+									<td id="goalRankScroe2">N/A</td>
+								</tr>
+								<tr>
+									<th>기술성 종합점수</th>
+									<td id="te_allRankScroe1">N/A</td>
+									<td id="te_allRankScroe2">N/A</td>
 								</tr>
 							</tbody>
 						</table>

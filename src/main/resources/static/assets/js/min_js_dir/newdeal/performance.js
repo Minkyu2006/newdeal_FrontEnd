@@ -125,9 +125,83 @@ function excelSend() {
     }
 }
 
+// 성공알림창 버튼 누르면 화면이동하는 함수
 function alertLink(autoNum) {
     $(document).on("click","#successBtn",function(){
         location.href = "/performance/output/" + autoNum;
         $('#popupId').remove();
     });
 }
+
+// Output 값 함수호출
+function call_performance(autoNum){
+
+    console.log("사업평가정보 함수호추 ");
+    console.log("autoNum : "+autoNum);
+    if(autoNum==null){
+        location.href="/404";
+    }
+
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else if (accessToken == null) {
+        refreshTokenCookie();
+    } else {
+        const params = {
+            autoNum: autoNum
+        };
+
+        url = "http://" + $("#backend_url").val() + "/api/performance/output"; // 호출할 백엔드 API
+        console.log("url : " + url);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: params,
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 1);
+                } else {
+                    console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 1);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                console.log("status : " + status);
+                if (status === 200) {
+                    console.log("아웃풋 성공");
+                    console.log("technicalityScroeList : "+request.sendData.technicalityScroeList);
+                    console.log("technicalityRankList : "+request.sendData.technicalityRankList);
+                    console.log("technicalityAllScore : "+request.sendData.technicalityAllScore);
+                    console.log("technicalityAllRank : "+request.sendData.technicalityAllRank);
+
+                    $("#safetyRankScroe1").text(request.sendData.technicalityRankList[0]+' / '+request.sendData.technicalityScroeList[0]);
+                    $("#oldRankScroe1").text(request.sendData.technicalityRankList[1]+' / '+request.sendData.technicalityScroeList[1]);
+                    $("#urgencyRankScroe1").text(request.sendData.technicalityRankList[2]+' / '+request.sendData.technicalityScroeList[2]);
+                    $("#goalRankScroe1").text(request.sendData.technicalityRankList[3]+' / '+request.sendData.technicalityScroeList[3]);
+                    $("#te_allRankScroe1").text(request.sendData.technicalityAllRank+' / '+request.sendData.technicalityAllScore);
+
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
+
+
