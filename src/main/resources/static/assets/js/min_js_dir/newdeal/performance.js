@@ -1,6 +1,3 @@
-$(function() {
-
-});
 
 // 선택팝업열기
 function popOpen(){
@@ -53,7 +50,6 @@ function checkFileType(filePath) {
 // 엑셀 파일 올렸는지 확인
 function filesend() {
     const excelfile = $("#excelfile").val();
-    console.log("excelfile : "+excelfile);
     if (excelfile === "" || excelfile == null) {
         //파일이 선택되지 않은 경우
         alertCaution("파일을 선택해주세요.",1);
@@ -64,6 +60,19 @@ function filesend() {
         return false;
     }else{
         excelSend();
+    }
+}
+
+// 가중치를 수정하시겠습니까?(Yes,no 라디오버튼)
+function weightRadioBtn(value){
+    if(value==="yes"){
+        $('#group1').prop("checked", true);
+        $('#group2').prop("checked", false);
+        $('.weight__contents input').attr('readonly', false);
+    }else{
+        $("#group1").prop("checked", false);
+        $("#group2").prop("checked", true);
+        $('.weight__contents input').attr('readonly', true);
     }
 }
 
@@ -79,7 +88,50 @@ function excelSend() {
     } else if (accessToken == null) {
         refreshTokenCookie();
     } else {
+
+        const $piWeightSafe = $("#piWeightSafe");
+        if($piWeightSafe.val()===""){
+            $piWeightSafe.val("0.6")
+        }
+        const $piWeightOld = $("#piWeightOld");
+        if($piWeightOld.val()===""){
+            $piWeightOld.val("0.1")
+        }
+        const $piWeightUrgency = $("#piWeightUrgency");
+        if($piWeightUrgency.val()===""){
+            $piWeightUrgency.val("0.1")
+        }
+        const $piWeightGoal = $("#piWeightGoal");
+        if($piWeightGoal.val()===""){
+            $piWeightGoal.val("0.2")
+        }
+        const $piWeightSafeUtility = $("#piWeightSafeUtility");
+        if($piWeightSafeUtility.val()===""){
+            $piWeightSafeUtility.val("0.7")
+        }
+        const $piWeightCostUtility = $("#piWeightCostUtility");
+        if($piWeightCostUtility.val()===""){
+            $piWeightCostUtility.val("0.3")
+        }
+        const $piWeightBusiness = $("#piWeightBusiness");
+        if($piWeightBusiness.val()===""){
+            $piWeightBusiness.val("0.7")
+        }
+        const $piWeightComplaint = $("#piWeightComplaint");
+        if($piWeightComplaint.val()===""){
+            $piWeightComplaint.val("0.1")
+        }
+        const $piWeightBusinessEffect = $("#piWeightBusinessEffect");
+        if($piWeightBusinessEffect.val()===""){
+            $piWeightBusinessEffect.val("0.2")
+        }
+        const $piWeightCriticalScore = $("#piWeightCriticalScore");
+        if($piWeightCriticalScore.val()===""){
+            $piWeightCriticalScore.val("50")
+        }
+
         const formData = new FormData(document.getElementById('fileSendForm'));
+
         url = "http://" + $("#backend_url").val() + "/api/performance/excelUpload"; // 호출할 백엔드 API
         console.log("url : " + url);
         $.ajax({
@@ -189,7 +241,7 @@ function call_performance(autoNum){
                     $("#oldRankScroe1").text(request.sendData.technicalityRankList[1]+' / '+request.sendData.technicalityScroeList[1]);
                     $("#urgencyRankScroe1").text(request.sendData.technicalityRankList[2]+' / '+request.sendData.technicalityScroeList[2]);
                     $("#goalRankScroe1").text(request.sendData.technicalityRankList[3]+' / '+request.sendData.technicalityScroeList[3]);
-                    $("#te_allRankScroe1").text(request.sendData.technicalityRankList[4]+' / '+request.sendData.technicalityScroeList[4]);
+                    $("#te_allRankScroe1").text(request.sendData.technicalityAllRank+' / '+request.sendData.technicalityAllScore);
 
                 } else {
                     if (request.err_msg2 === null) {

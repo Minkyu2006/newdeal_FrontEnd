@@ -1,4 +1,5 @@
 <div class="talk">
+	<form id="fileSendForm" enctype="multipart/form-data">
 	<div class="talk__box">
 		<div class="talk__header">
 			<h3>Step 2. 추진하실 사업의 정보를 입력합니다.</h3>
@@ -25,9 +26,9 @@
 							<div class="c-file">
 								<input type="text" class="c-file__input" readonly="readonly" />
 								<label class="c-file__button">upload
-									<form id="fileSendForm" enctype="multipart/form-data">
-										<input type="file" id="excelfile" name="excelfile"  />
-									</form>
+<!--									<form id="fileSendForm" enctype="multipart/form-data">-->
+										<input type="file" id="excelfile"  name="excelfile" />
+<!--									</form>-->
 								</label>
 							</div>
 						</li>
@@ -45,14 +46,14 @@
 					<ul class="c-radio-group">
 						<li class="c-radio-group__item">
 							<div class="c-radio">
-								<input type="radio" class="c-radio__input" name="group1" id="group1-1" value="yes" />
-								<label for="group1-1" class="c-radio__label">Yes</label>
+								<input type="radio" class="c-radio__input" onclick="weightRadioBtn(value)" id="group1" value="yes" />
+								<label for="group1" class="c-radio__label">Yes</label>
 							</div>
 						</li>
 						<li class="c-radio-group__item">
 							<div class="c-radio">
-								<input type="radio" class="c-radio__input" name="group1" id="group1-2" value="no" checked />
-								<label for="group1-2" class="c-radio__label">No</label>
+								<input type="radio" class="c-radio__input" onclick="weightRadioBtn(value)" id="group2" value="no"  />
+								<label for="group2" class="c-radio__label">No</label>
 							</div>
 						</li>
 					</ul>
@@ -78,7 +79,7 @@
 								<th>안정성</th>
 								<td>
 									<div class="c-text">
-										<input type="number" class="c-text__input" placeholder="0.6" />
+										<input type="number"  id="piWeightSafe" name="piWeightSafe" class="c-text__input" placeholder="0.6" readonly="readonly" />
 									</div>
 								</td>
 							</tr>
@@ -86,7 +87,7 @@
 								<th>노후도</th>
 								<td>
 									<div class="c-text">
-										<input type="number" class="c-text__input" placeholder="0.1" />
+										<input type="number" id="piWeightOld"  name="piWeightOld" class="c-text__input" placeholder="0.1" readonly="readonly" />
 									</div>
 								</td>
 							</tr>
@@ -94,7 +95,7 @@
 								<th>시급성</th>
 								<td>
 									<div class="c-text">
-										<input type="number" class="c-text__input" placeholder="0.1" />
+										<input type="number" id="piWeightUrgency"  name="piWeightUrgency" class="c-text__input" placeholder="0.1" readonly="readonly" />
 									</div>
 								</td>
 							</tr>
@@ -102,7 +103,7 @@
 								<th>목표달성도</th>
 								<td>
 									<div class="c-text">
-										<input type="number" class="c-text__input" placeholder="0.2" />
+										<input type="number" id="piWeightGoal"  name="piWeightGoal" class="c-text__input" placeholder="0.2" readonly="readonly" />
 									</div>
 								</td>
 							</tr>
@@ -112,7 +113,7 @@
 								<th>안전효용 개선 효율성</th>
 								<td>
 									<div class="c-text">
-										<input type="number" class="c-text__input" placeholder="0.7" />
+										<input type="number" id="piWeightSafeUtility"  name="piWeightSafeUtility" class="c-text__input" placeholder="0.7" readonly="readonly" />
 									</div>
 								</td>
 							</tr>
@@ -120,7 +121,7 @@
 								<th>자산가치 개선 효율성</th>
 								<td>
 									<div class="c-text">
-										<input type="number" class="c-text__input" placeholder="0.3" />
+										<input type="number" id="piWeightCostUtility"  name="piWeightCostUtility" class="c-text__input" placeholder="0.3" readonly="readonly" />
 									</div>
 								</td>
 							</tr>
@@ -130,7 +131,7 @@
 								<th>사업추진 타당성</th>
 								<td>
 									<div class="c-text">
-										<input type="number" class="c-text__input" placeholder="0.7" />
+										<input type="number" id="piWeightBusiness"  name="piWeightBusiness" class="c-text__input" placeholder="0.7" readonly="readonly" />
 									</div>
 								</td>
 							</tr>
@@ -138,7 +139,7 @@
 								<th>민원 및 사고 대응성</th>
 								<td>
 									<div class="c-text">
-										<input type="number" class="c-text__input" placeholder="0.1" />
+										<input type="number" id="piWeightComplaint"  name="piWeightComplaint" class="c-text__input" placeholder="0.1" readonly="readonly" />
 									</div>
 								</td>
 							</tr>
@@ -146,7 +147,7 @@
 								<th>사업효과 범용성</th>
 								<td>
 									<div class="c-text">
-										<input type="number" class="c-text__input" placeholder="0.2" />
+										<input type="number" id="piWeightBusinessEffect"  name="piWeightBusinessEffect" class="c-text__input" placeholder="0.2" readonly="readonly" />
 									</div>
 								</td>
 							</tr>
@@ -170,7 +171,7 @@
 							<tr>
 								<th>사업성 판단기준</th>
 								<td>
-									<input type="number" class="c-text__input" placeholder="50" />
+									<input type="number" id="piWeightCriticalScore" name="piWeightCriticalScore" class="c-text__input" placeholder="50" readonly="readonly" />
 								</td>
 							</tr>
 						</tbody>
@@ -179,9 +180,8 @@
 			</div>
 		</div>
 	</div>
-	
+	</form>
 
-	
 	<div class="talk__console">
 		<ul>
 			<li><button class="c-button" onclick="movePage('/performance/performance1')">BEFORE</button></li>
@@ -197,14 +197,7 @@
 			const file = $(this).val().split('\\').pop();
 			$('.c-file__input').val(file);
 		});
-		
-		// 가중치 수정 선택 시 input 활성화
-		$('input:radio[name=group1]').on('click', function() {
-			if($('input:radio[name=group1]:checked').val() == 'yes') {
-				$('.weight__contents input').attr('disabled', false);
-			} else if($('input:radio[name=group1]:checked').val() == 'no') {
-				$('.weight__contents input').attr('disabled', true);
-			}
-		})
+
+		$('#group2').prop("checked", true);
 	});
 </script>
