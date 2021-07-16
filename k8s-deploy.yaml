@@ -18,7 +18,7 @@ spec:
         - name: newdeal-frontend
           image: CONTAINER_IMAGE_TAG
           ports:
-            - containerPort: 8011
+            - containerPort: 8010
               name: frontend-port
               protocol: TCP
           resources:
