@@ -189,7 +189,7 @@ function call_performance(autoNum){
                     $("#oldRankScroe1").text(request.sendData.technicalityRankList[1]+' / '+request.sendData.technicalityScroeList[1]);
                     $("#urgencyRankScroe1").text(request.sendData.technicalityRankList[2]+' / '+request.sendData.technicalityScroeList[2]);
                     $("#goalRankScroe1").text(request.sendData.technicalityRankList[3]+' / '+request.sendData.technicalityScroeList[3]);
-                    $("#te_allRankScroe1").text(request.sendData.technicalityAllRank+' / '+request.sendData.technicalityAllScore);
+                    $("#te_allRankScroe1").text(request.sendData.technicalityRankList[4]+' / '+request.sendData.technicalityScroeList[4]);
 
                 } else {
                     if (request.err_msg2 === null) {
