@@ -567,6 +567,33 @@ table {
 	width: calc(100% - 150px);
 }
 
+.weight {
+	
+}
+.weight__head {
+	margin-bottom: 20px;
+}
+.weight__head:before {
+	content: " ";
+	display: table;
+}
+.weight__head:after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+.weight__heading {
+	float: left;
+	line-height: 18px;
+}
+.weight__heading + .c-radio-group {
+	float: right;
+	margin-top: 0;
+}
+.weight__contents + .weight__contents {
+	margin-top: 10px;
+}
+
 .performance-output__comment {
 	width: 100%;
 	padding: 10px;

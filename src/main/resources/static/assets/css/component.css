@@ -102,6 +102,14 @@
 .c-table.c-table--border td {
 	border: 1px solid #ccc;
 }
+.c-table.c-table--border th:first-child,
+.c-table.c-table--border td:first-child {
+	border-left: 0 none;
+}
+.c-table.c-table--border th:last-child,
+.c-table.c-table--border td:last-child {
+	border-right: 0 none;
+}
 .c-table.c-table--in-border {
 	border-top: 0 none;
 	border-bottom: 0 none;

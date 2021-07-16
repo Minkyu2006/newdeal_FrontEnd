@@ -34,9 +34,148 @@
 					</ul>
 				</div>				
 			</div>
-			
+		</div>
+	</div>
+	
+	<div class="talk__box">
+		<div class="talk__contents">
 			<div class="weight">
+				<div class="weight__head">
+					<h4 class="weight__heading">가중치를 수정하시겠습니까?</h4>
+					<ul class="c-radio-group">
+						<li class="c-radio-group__item">
+							<div class="c-radio">
+								<input type="radio" class="c-radio__input" name="group1" id="group1-1" value="yes" />
+								<label for="group1-1" class="c-radio__label">Yes</label>
+							</div>
+						</li>
+						<li class="c-radio-group__item">
+							<div class="c-radio">
+								<input type="radio" class="c-radio__input" name="group1" id="group1-2" value="no" checked />
+								<label for="group1-2" class="c-radio__label">No</label>
+							</div>
+						</li>
+					</ul>
+				</div>
 				
+				<div class="weight__contents">
+					<table class="c-table c-table--border">
+						<colgroup>
+							<col />
+							<col />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>평가지표</th>
+								<th>항목</th>
+								<th>가중치</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th rowspan="4">기술성</th>
+								<th>안정성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" class="c-text__input" placeholder="0.6" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>노후도</th>
+								<td>
+									<div class="c-text">
+										<input type="number" class="c-text__input" placeholder="0.1" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>시급성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" class="c-text__input" placeholder="0.1" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>목표달성도</th>
+								<td>
+									<div class="c-text">
+										<input type="number" class="c-text__input" placeholder="0.2" />
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<th rowspan="2">경제성</th>
+								<th>안전효용 개선 효율성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" class="c-text__input" placeholder="0.7" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>자산가치 개선 효율성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" class="c-text__input" placeholder="0.3" />
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<th rowspan="3">정책성</th>
+								<th>사업추진 타당성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" class="c-text__input" placeholder="0.7" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>민원 및 사고 대응성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" class="c-text__input" placeholder="0.1" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>사업효과 범용성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" class="c-text__input" placeholder="0.2" />
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<div class="weight__contents">
+					<table class="c-table c-table--border">
+						<colgroup>
+							<col />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>항목</th>
+								<th>사업추진 임계점수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>사업성 판단기준</th>
+								<td>
+									<input type="number" class="c-text__input" placeholder="50" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -53,9 +192,19 @@
 
 <script>
 	$(function() {
+		// 업로드할 파일명 불러오기
 		$('#excelfile').change(function() {
 			const file = $(this).val().split('\\').pop();
 			$('.c-file__input').val(file);
+		});
+		
+		// 가중치 수정 선택 시 input 활성화
+		$('input:radio[name=group1]').on('click', function() {
+			if($('input:radio[name=group1]:checked').val() == 'yes') {
+				$('.weight__contents input').attr('disabled', false);
+			} else if($('input:radio[name=group1]:checked').val() == 'no') {
+				$('.weight__contents input').attr('disabled', true);
+			}
 		})
 	});
 </script>
