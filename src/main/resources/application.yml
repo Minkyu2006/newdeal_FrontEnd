@@ -5,6 +5,10 @@ newdeal:
     security_url: ${NEWDEAL_API_SECURITY_URL}
 
 logging:
+  pattern:
+    console: '[NewDeal-Frond] %d{yyyy-MM-dd HH:mm:ss.SSS} %clr(%-5p){faint}
+              %clr(${PID}){faint} %clr(---){faint} %clr([%8.15t]){faint} %clr(%-40.40logger{0}){faint}
+              %clr(:){faint} %clr(%m){faint}%n'
   file: ./logs/infraFront.log
   file.max-history: 5
   level:
@@ -32,4 +36,3 @@ spring:
     cache: false
   thymeleaf:
     cache: false
-    
