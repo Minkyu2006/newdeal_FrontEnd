@@ -402,7 +402,7 @@ table {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.talk__contents > ul > li + li {
+.talk__question > li + li {
 	margin-top: 10px;
 }
 .talk__contents h4 + .c-radio-group {
@@ -513,6 +513,58 @@ table {
 .talk__select-pop >.c-button {
 	display: block;
 	margin: 10px auto 0;
+}
+.talk__list.talk__list--split:before {
+	content: " ";
+	display: table;
+}
+.talk__list.talk__list--split:after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+.talk__list.talk__list--split li {
+	float: left;
+	position: relative;
+	width: calc(50% - 10px);
+}
+.talk__list.talk__list--split li:nth-child(2n) {
+	margin-left:  20px;
+}
+.talk__list.talk__list--split li:nth-child(2n-1):after {
+	content: " ";
+	position: absolute;
+	top: -5px;
+	right: -10px;
+	width: 1px;
+	height: 40px;
+	background-color: #cfcfcf;
+}
+.talk__list.talk__list--split li {
+	margin-top: 10px;
+}
+.talk__list.talk__list--split li:first-child,
+.talk__list.talk__list--split li:nth-child(2) {
+	margin-top: 0;
+}
+.talk__input-item:before {
+	content: " ";
+	display: table;
+}
+.talk__input-item:after {
+	content: " ";
+	display: talbe;
+	clear: both;
+}
+.talk__input-heading {
+	float: left;
+	width: 150px;
+	height: 30px;
+	line-height: 30px;
+}
+.talk__input {
+	float: left;
+	width: calc(100% - 150px);
 }
 
 .performance-output__comment {

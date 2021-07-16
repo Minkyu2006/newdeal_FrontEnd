@@ -52,10 +52,25 @@
 		<div class="talk__contents">
 			<ul class="talk__list talk__list--split">
 				<li>
+                    <div class="talk__input-item">
+                        <div class="talk__input-heading">시설명</div>
+                        <div class="talk__input">
+                            <div class="c-text"><input type="text" class="c-text__input" /></div>
+                        </div>
+                    </div>
+                </li>
+				<li>
 					<div class="talk__input-item">
 						<div class="talk__input-heading">종별구분</div>
 						<div class="talk__input">
-							selectbox
+							<div class="c-select">
+								<select class="c-select__input">
+									<option>1종</option>
+									<option>2종</option>
+									<option>3종</option>
+									<option>기타</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</li>
@@ -63,13 +78,13 @@
 					<div class="talk__input-item">
 						<div class="talk__input-heading">준공연도</div>
 						<div class="talk__input">
-							selectbox
+							<div class="c-text"><input type="text" class="c-text__input" /></div>
 						</div>
 					</div>
 				</li>
 				<li>
 					<div class="talk__input-item">
-						<div class="talk__input-heading">형식</div>
+						<div class="talk__input-heading">공용연수</div>
 						<div class="talk__input">
 							<div class="c-text"><input type="text" class="c-text__input" /></div>
 						</div>
@@ -77,7 +92,15 @@
 				</li>
 				<li>
 					<div class="talk__input-item">
-						<div class="talk__input-heading">건설비용</div>
+						<div class="talk__input-heading">형식구분</div>
+						<div class="talk__input">
+							<div class="c-text"><input type="text" class="c-text__input" /></div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="talk__input-item">
+						<div class="talk__input-heading">취득원가</div>
 						<div class="talk__input">
 							<div class="c-text"><input type="text" class="c-text__input" /></div>
 						</div>
@@ -87,7 +110,31 @@
 					<div class="talk__input-item">
 						<div class="talk__input-heading">안전등급</div>
 						<div class="talk__input">
-							<div class="c-text"><input type="text" class="c-text__input" /></div>
+							<div class="c-select">
+								<select class="c-select__input">
+									<option>A</option>
+									<option>B</option>
+									<option>C</option>
+									<option>D</option>
+									<option>E</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="talk__input-item">
+						<div class="talk__input-heading">목표등급</div>
+						<div class="talk__input">
+							<div class="c-select">
+								<select class="c-select__input">
+									<option>A</option>
+									<option>B</option>
+									<option>C</option>
+									<option>D</option>
+									<option>E</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</li>
@@ -102,14 +149,6 @@
 				<li>
 					<div class="talk__input-item">
 						<div class="talk__input-heading">AADT</div>
-						<div class="talk__input">
-							<div class="c-text"><input type="text" class="c-text__input" /></div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">트럭비율</div>
 						<div class="talk__input">
 							<div class="c-text"><input type="text" class="c-text__input" /></div>
 						</div>
