@@ -4,6 +4,230 @@ function popOpen(){
     $('.talk__select-pop').addClass('open');
 }
 
+// 현재 로그인한 아이디에서 입력중에 중간에 저장한 대안이 있는지 확인하기
+function inputMiddleSaveCheck(){
+
+    // 1. 계속작성할건지 여부를 묻고 하겠다고하면 해당페이지로 이동 대안의 일련번호를 던져준다.
+    // 2. 일련번호는 한번저장되면 무조건 입력이되어있어야한다.
+    // 3. 안하겠다고하면 해당 게시물삭제 후 새로 저장하는 performance3으로 이동
+
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else if (accessToken == null) {
+        refreshTokenCookie();
+    } else {
+        url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/middleCheck"; // 호출할 백엔드 API
+        console.log("url : " + url);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                console.log("status : " + status);
+                if (status === 200) {
+                    if(request.sendData.middleSave===1){
+                        console.log("중간저장 게시물이 존재함");
+                        $("#autoNum").val(request.sendData.piAutoNum);
+                        alertMiddleSaveCheck("작성중 완료되지 않은 대안이 존재합니다.<BR>계속 작성하시겠습니까?");
+                    }else{
+                        console.log("중간저장 게시물이 존재하지 않음");
+                    }
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
+// 중간저장 데이터 호출하기
+function middleData(autoNum){
+
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else if (accessToken == null) {
+        refreshTokenCookie();
+    } else {
+
+        console.log("호출할 일련번호 : "+autoNum);
+
+        const params = {
+            autoNum: autoNum
+        };
+
+        url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/middleData"; // 호출할 백엔드 API
+        console.log("url : " + url);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data : params,
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                console.log("status : " + status);
+                if (status === 200) {
+                    if(request.sendData.performanceData.piFacilityType==="교량"){
+                        $('#group1-1').prop("checked", true);
+                    }else if(request.sendData.performanceData.piFacilityType==="보도육교"){
+                        $('#group1-2').prop("checked", true);
+                    }else if(request.sendData.performanceData.piFacilityType==="터널"){
+                        $('#group1-3').prop("checked", true);
+                    }else if(request.sendData.performanceData.piFacilityType==="지하차도"){
+                        $('#group1-4').prop("checked", true);
+                    }else if(request.sendData.performanceData.piFacilityType==="절토사면"){
+                        $('#group1-5').prop("checked", true);
+                    }else{
+                        $('#group1-6').prop("checked", true);
+                    }
+                    $("#piFacilityName").val(request.sendData.performanceData.piFacilityName);
+                    $("#piCompletionYear").val(request.sendData.performanceData.piCompletionYear);
+                    $("#piPublicYear").val(request.sendData.performanceData.piPublicYear);
+                    $("#piType").val(request.sendData.performanceData.piType);
+                    $("#piErectionCost").val(request.sendData.performanceData.piErectionCost);
+
+                    if(request.sendData.performanceData.piSafetyLevel==="A"){
+                        $('#piSafetyLevel').val('A').prop("selected",true);
+                    }else if(request.sendData.performanceData.piSafetyLevel==="B"){
+                        $('#piSafetyLevel').val('B').prop("selected",true);
+                    }else if(request.sendData.performanceData.piSafetyLevel==="C"){
+                        $('#piSafetyLevel').val('C').prop("selected",true);
+                    }else if(request.sendData.performanceData.piSafetyLevel==="D"){
+                        $('#piSafetyLevel').val('D').prop("selected",true);
+                    }else{
+                        $('#piSafetyLevel').val('E').prop("selected",true);
+                    }
+
+                    if(request.sendData.performanceData.piGoalLevel==="A"){
+                        $('#piGoalLevel').val('A').prop("selected",true);
+                    }else if(request.sendData.performanceData.piGoalLevel==="B"){
+                        $('#piGoalLevel').val('B').prop("selected",true);
+                    }else{
+                        $('#piGoalLevel').val('C').prop("selected",true);
+                    }
+
+                    $("#piMaintenanceDelay").val(request.sendData.performanceData.piMaintenanceDelay);
+                    $("#piAADT").val(request.sendData.performanceData.piAADT);
+                    $("#piManagement").val(request.sendData.performanceData.piManagement);
+                    $("#piAgency").val(request.sendData.performanceData.piAgency);
+
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
+// 중간저장 계속할껀지 안할껀지 여부묻고 페이지이동 or 게시물삭제후 새로저장
+function startYesorNo(check){
+    $('#popupId').remove();
+    if(check){
+        movePage('/performance/performance3')
+    }else{
+
+        JWT_Get();
+
+        let url;
+
+        if (accessToken == null && refreshToken == null && insert_id == null) {
+            console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+            alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+        } else if (accessToken == null) {
+            refreshTokenCookie();
+        } else {
+
+            //삭제하는 함수 한다음 페이지이동
+            const  autoNum = $("#autoNum").val();
+            console.log("삭제할 일련번호 : "+autoNum);
+
+            const params = {
+                autoNum: autoNum
+            };
+
+            url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/middleDataDel"; // 호출할 백엔드 API
+            console.log("url : " + url);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data : params,
+                cache: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                    xhr.setRequestHeader("insert_id", insert_id);
+                },
+                error: function (request) {
+                    if (request.status === 500) {
+                        console.log("request.status : " + request.status + " => 500에러");
+                        alertCaution("500에러 재로그인 해주세요.", 2);
+                    } else {
+                        console.log("request.status : " + request.status + " => 404에러");
+                        alertCaution("404에러 재로그인 해주세요.", 2);
+                    }
+                },
+                success: function (request) {
+                    let status = request.status;
+                    console.log("status : " + status);
+                    if (status === 200) {
+                        $("#autoNum").val("");
+                        movePage('/performance/performance1')
+                    } else {
+                        if (request.err_msg2 === null) {
+                            alertCaution(request.err_msg, 1);
+                        } else {
+                            alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                        }
+                    }
+                }
+            });
+        }
+    }
+}
+
 // 페이지 이동
 function movePage(url) {
     const ajaxOption = {

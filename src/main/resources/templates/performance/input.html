@@ -6,17 +6,24 @@
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
-	<style>
-		/* .popup__box 클래스의 widh값을 400으로 바꿔줄껄 이 페이지에서만 해당. */
-	</style>
 </th:block>
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
 	<script src="/assets/js/min_js_dir/newdeal/performance.js"></script>
+ 	<script>
+		$(function() {
+			const  autoNum = $("#autoNum").val();
+			console.log("autoNum : "+autoNum);
+			if(autoNum===""){
+				inputMiddleSaveCheck();
+			}
+		});
+	</script>
 </th:block>
 
 <div layout:fragment="content" class="content">
+	<input type="hidden" id="autoNum" th:value="${autoNum}" />
 	<input type="hidden" id="backend_url" th:value="${backend_url}" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
 	<div class="content__inner">

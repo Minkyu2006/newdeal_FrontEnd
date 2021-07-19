@@ -69,6 +69,15 @@ public class PerformanceController{
         return "performance/performance-business";
     }
 
+//    // 성능개선사업평가 input 중간저장 불러오기
+//    @RequestMapping("input/{autoNum}")
+//    public String inputMiddleSave(Model model,@PathVariable String autoNum){
+//        model.addAttribute("autoNum", autoNum);
+//        model.addAttribute("backend_url", backend_url);
+//        model.addAttribute("backend_protocol", backend_protocol);
+//        return "performance/input";
+//    }
+
     // 성능개선사업평가 Output
     @RequestMapping("output/{autoNum}")
     public String output(Model model,@PathVariable String autoNum){
