@@ -28,7 +28,7 @@
                 const params = {
                     userid: insert_id
                 };
-                url = "http://"+$("#backend_url").val() + "/api/account/account"; // 호출할 백엔드 API
+                url = $("#backend_protocol").val()+"://"+$("#backend_url").val() + "/api/account/account"; // 호출할 백엔드 API
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -100,7 +100,8 @@
                     changePassword: $("#changePassword").val(),
                     confirmPassword: $("#confirmPassword").val()
                 };
-                url = "http://"+$("#backend_url").val() + "/api/account/modifypassword"; // 호출할 백엔드 API
+
+                url = $("#backend_protocol").val()+"://"+$("#backend_url").val() + "/api/account/modifypassword"; // 호출할 백엔드 API
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -134,6 +135,7 @@
 </th:block>
 <div layout:fragment="content" class="content">
     <input type="hidden" id="backend_url" th:value="${backend_url}" />
+    <input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
     <section class="section">
         <article class="article">
             <h3 class="article__head">회원 정보</h3>

@@ -3,6 +3,9 @@ newdeal:
     backend_url: ${NEWDEAL_API_BACKEND_URL}
     front_url: ${NEWDEAL_API_FRONT_URL}
     security_url: ${NEWDEAL_API_SECURITY_URL}
+    backend_protocol: ${NEWDEAL_API_BACKEND_PROTOCOL}
+    front_protocol: ${NEWDEAL_API_FRONT_PROTOCOL}
+    security_protocol: ${NEWDEAL_API_SECURITY_PROTOCOL}
 
 logging:
   pattern:

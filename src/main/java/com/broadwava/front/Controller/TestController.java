@@ -12,10 +12,15 @@ public class TestController {
     @Value("${newdeal.api.backend_url}")
     private String backend_url;
 
+    // 호스트링크주입
+    @Value("${newdeal.api.backend_protocol}")
+    private String backend_protocol;
+
     // 테스트페이지
     @RequestMapping("testpage")
     public String testpage(Model model) {
         model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "page/testpage";
     }
 
@@ -23,6 +28,7 @@ public class TestController {
     @RequestMapping("exceltest")
     public String execltext(Model model) {
         model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "page/exceltest";
     }
 

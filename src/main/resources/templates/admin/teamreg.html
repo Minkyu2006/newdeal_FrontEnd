@@ -31,7 +31,7 @@
 		});
 
 		// 부서저장 함수
-		var jwt_token;
+		let jwt_token;
 		function save() {
 
 			JWT_Get();
@@ -57,7 +57,7 @@
 			// var params = $form.serialize();
 
 			const formData = new FormData(document.getElementById('frmreg'));
-			url = "http://"+$("#backend_url").val() + "/api/team/reg"; // 호출할 백엔드 API
+			url = $("#backend_protocol").val()+"://"+$("#backend_url").val() + "/api/team/reg"; // 호출할 백엔드 API
 			$.ajax({
 				url :  url,
 				type : 'post',
@@ -91,7 +91,7 @@
 
 			const perPage = 10;
 			const perArea = 5;
-			const totCnt = 0;
+			let totCnt = 0;
 
 			const $schList = $('#schList');
 			const $totalCnt = $('#totalCnt');
@@ -108,7 +108,7 @@
 			// var header = $("meta[name='_csrf_header']").attr("content");
 			// $(document).ajaxSend(function(e, xhr) { xhr.setRequestHeader(header, token); });
 
-			url = "http://"+$("#backend_url").val() + "/api/team/list"; // 호출할 백엔드 API
+			url = $("#backend_protocol").val()+"://"+$("#backend_url").val() + "/api/team/list"; // 호출할 백엔드 API
 
 			$.ajax({
 				// url:'/api/team/list?size='+ perPage + '&page=' + page,
@@ -162,7 +162,7 @@
 
 			init();
 
-			url = "http://"+$("#backend_url").val() + "/api/team/team"; // 호출할 백엔드 API
+			url = $("#backend_protocol").val()+"://"+$("#backend_url").val() + "/api/team/team"; // 호출할 백엔드 API
 
 			$.ajax({
 				// url:'/api/team/team',
@@ -204,11 +204,7 @@
 				teamcode: $("#teamcode").val()
 			};
 
-			// var token = $("meta[name='_csrf']").attr("content");
-			// var header = $("meta[name='_csrf_header']").attr("content");
-			// $(document).ajaxSend(function(e, xhr) { xhr.setRequestHeader(header, token); });
-
-			url = "http://"+$("#backend_url").val() + "/api/team/del"; // 호출할 백엔드 API
+			url = $("#backend_protocol").val()+"://"+$("#backend_url").val() + "/api/team/del"; // 호출할 백엔드 API
 
 			$.ajax({
 				// url:'/api/team/del',
@@ -256,7 +252,7 @@
 				teamname: teamname
 			};
 
-			url = "http://"+$("#backend_url").val() + "/team/excelDownload"; // 호출할 백엔드 API
+			url = $("#backend_protocol").val()+"://"+$("#backend_url").val() + "/team/excelDownload"; // 호출할 백엔드 API
 
 			$.ajax({
 				url : url,
@@ -280,7 +276,7 @@
 
 <div layout:fragment="content" class="content">
 	<input type="hidden" id="backend_url" th:value="${backend_url}" />
-	<input type="hidden" id="security_url" th:value="${security_url}" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
 	<section class="section">
 		<article class="article">
 			<h3 class="article__head">부서 등록</h3>

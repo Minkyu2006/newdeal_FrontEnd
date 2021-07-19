@@ -21,10 +21,15 @@ public class PerformanceController{
     @Value("${newdeal.api.backend_url}")
     private String backend_url;
 
+    // 호스트링크주입
+    @Value("${newdeal.api.backend_protocol}")
+    private String backend_protocol;
+
     // 성능개선사업평가 Iutput-1
     @RequestMapping("input")
     public String input(Model model){
         model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "performance/input";
     }
 
@@ -46,11 +51,30 @@ public class PerformanceController{
         return "performance/performance3";
     }
 
+    // 성능개선사업평가 Iutput-5
+    @RequestMapping("performance4")
+    public String performance4(){
+        return "performance/performance4";
+    }
+
+    // 성능개선사업평가 Iutput-6
+    @RequestMapping("performance5")
+    public String performance5(){
+        return "performance/performance5";
+    }
+
+    // 성능개선사업평가 비교대안
+    @RequestMapping("performance-business")
+    public String performanceBusiness(){
+        return "performance/performance-business";
+    }
+
     // 성능개선사업평가 Output
     @RequestMapping("output/{autoNum}")
     public String output(Model model,@PathVariable String autoNum){
         model.addAttribute("autoNum", autoNum);
         model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "performance/output";
     }
 
