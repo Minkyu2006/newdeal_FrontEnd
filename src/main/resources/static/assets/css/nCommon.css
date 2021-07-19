@@ -523,15 +523,15 @@ table {
 	display: table;
 	clear: both;
 }
-.talk__list.talk__list--split li {
+.talk__list.talk__list--split > li {
 	float: left;
 	position: relative;
 	width: calc(50% - 10px);
 }
-.talk__list.talk__list--split li:nth-child(2n) {
+.talk__list.talk__list--split > li:nth-child(2n) {
 	margin-left:  20px;
 }
-.talk__list.talk__list--split li:nth-child(2n-1):after {
+.talk__list.talk__list--split > li:nth-child(2n-1):after {
 	content: " ";
 	position: absolute;
 	top: -5px;
@@ -540,11 +540,11 @@ table {
 	height: 40px;
 	background-color: #cfcfcf;
 }
-.talk__list.talk__list--split li {
+.talk__list.talk__list--split > li {
 	margin-top: 10px;
 }
-.talk__list.talk__list--split li:first-child,
-.talk__list.talk__list--split li:nth-child(2) {
+.talk__list.talk__list--split > li:first-child,
+.talk__list.talk__list--split > li:nth-child(2) {
 	margin-top: 0;
 }
 .talk__input-item:before {
@@ -558,13 +558,47 @@ table {
 }
 .talk__input-heading {
 	float: left;
-	width: 150px;
+	width: 250px;
 	height: 30px;
 	line-height: 30px;
 }
 .talk__input {
 	float: left;
-	width: calc(100% - 150px);
+	width: calc(100% - 250px);
+}
+.talk__input .c-radio-group {
+	margin-top: 6px;
+}
+
+.performance-business {
+	position: relative;
+	margin-top: 10px;
+	padding: 20px;
+	border: 1px solid #303030;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.performance-business + .performance-business {
+	margin-top: 20px;
+}
+.performance-business__heading {
+	position: absolute;
+	top: -8px;
+	padding: 0 10px;
+	background-color: #fff;
+	font-size: 18px;
+	font-weight: 700;
+}
+.performance-business__contents + .performance-business__contents {
+	margin-top: 20px;
+}
+.performance-business__add {
+	display: block;
+	margin: 10px auto 0;
 }
 
 .weight {

@@ -1,0 +1,193 @@
+<div class="talk">	
+	<div class="talk__box">
+		<div class="talk__header">
+			<h3>Step 6. 시설물의 유형을 선택해주세요.</h3>
+		</div>
+		<div class="talk__contents">
+			<ul class="talk__list talk__list--split">
+				<li>
+                    <div class="talk__input-item">
+                        <div class="talk__input-heading">평가 기준년도</div>
+                        <div class="talk__input">
+                            <div class="c-text"><input type="text" class="c-text__input" /></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="talk__input-item">
+                        <div class="talk__input-heading">평가자</div>
+                        <div class="talk__input">
+                            <div class="c-text"><input type="text" class="c-text__input" /></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="talk__input-item">
+                        <div class="talk__input-heading">평가자 소속</div>
+                        <div class="talk__input">
+                            <div class="c-text"><input type="text" class="c-text__input" /></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="talk__input-item">
+                        <div class="talk__input-heading">평가자 연락처</div>
+                        <div class="talk__input">
+                            <div class="c-text"><input type="text" class="c-text__input" /></div>
+                        </div>
+                    </div>
+                </li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="talk__box">
+		<div class="talk__contents">
+			<div class="weight">
+				<div class="weight__head">
+					<h4 class="weight__heading">가중치를 수정하시겠습니까?</h4>
+					<ul class="c-radio-group">
+						<li class="c-radio-group__item">
+							<div class="c-radio">
+								<input type="radio" class="c-radio__input" onclick="weightRadioBtn(value)" id="group1" value="yes" />
+								<label for="group1" class="c-radio__label">Yes</label>
+							</div>
+						</li>
+						<li class="c-radio-group__item">
+							<div class="c-radio">
+								<input type="radio" class="c-radio__input" onclick="weightRadioBtn(value)" id="group2" value="no"  />
+								<label for="group2" class="c-radio__label">No</label>
+							</div>
+						</li>
+					</ul>
+				</div>
+				
+				<div class="weight__contents">
+					<table class="c-table c-table--border">
+						<colgroup>
+							<col />
+							<col />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>평가지표</th>
+								<th>항목</th>
+								<th>가중치</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th rowspan="4">기술성</th>
+								<th>안정성</th>
+								<td>
+									<div class="c-text">
+										<input type="number"  id="piWeightSafe" name="piWeightSafe" class="c-text__input" placeholder="0.6" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>노후도</th>
+								<td>
+									<div class="c-text">
+										<input type="number" id="piWeightOld"  name="piWeightOld" class="c-text__input" placeholder="0.1" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>시급성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" id="piWeightUrgency"  name="piWeightUrgency" class="c-text__input" placeholder="0.1" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>목표달성도</th>
+								<td>
+									<div class="c-text">
+										<input type="number" id="piWeightGoal"  name="piWeightGoal" class="c-text__input" placeholder="0.2" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<th rowspan="2">경제성</th>
+								<th>안전효용 개선 효율성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" id="piWeightSafeUtility"  name="piWeightSafeUtility" class="c-text__input" placeholder="0.7" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>자산가치 개선 효율성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" id="piWeightCostUtility"  name="piWeightCostUtility" class="c-text__input" placeholder="0.3" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<th rowspan="3">정책성</th>
+								<th>사업추진 타당성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" id="piWeightBusiness"  name="piWeightBusiness" class="c-text__input" placeholder="0.7" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>민원 및 사고 대응성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" id="piWeightComplaint"  name="piWeightComplaint" class="c-text__input" placeholder="0.1" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>사업효과 범용성</th>
+								<td>
+									<div class="c-text">
+										<input type="number" id="piWeightBusinessEffect"  name="piWeightBusinessEffect" class="c-text__input" placeholder="0.2" readonly="readonly" />
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<div class="weight__contents">
+					<table class="c-table c-table--border">
+						<colgroup>
+							<col />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>항목</th>
+								<th>사업추진 임계점수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>사업성 판단기준</th>
+								<td>
+									<input type="number" id="piWeightCriticalScore" name="piWeightCriticalScore" class="c-text__input" placeholder="50" readonly="readonly" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="talk__console">
+		<ul>
+			<li><button class="c-button" onclick="movePage('/performance/performance4')">BEFORE</button></li>
+			<li><button class="c-button c-button--point"onclick="movePage('/performance/output')">완료</button></li>
+		</ul>
+	</div>
+</div>
