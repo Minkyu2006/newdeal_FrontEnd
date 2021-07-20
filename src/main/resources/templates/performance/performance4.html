@@ -374,8 +374,9 @@
 				</div>
 			</div>
 			
-			<button class="performance-business__add c-button c-button--point">비교대안 추가</button>
+			
 		</div>
+		<button class="performance-business__add c-button c-button--point" id="addBusiness" onclick="addBusiness('/performance/performance-business')">비교대안 추가</button>
 	</div>
 	
 	<div class="talk__console">
@@ -385,3 +386,37 @@
 		</ul>
 	</div>
 </div>
+
+<script>
+	let businessMaxAdd = 0;
+	function addBusiness(url) {
+		const ajaxOption = {
+				url: url,
+				type: "POST",
+				dataType: "html"
+		};
+		
+		businessMaxAdd++;
+		
+		if ( businessMaxAdd >= 2) {
+			$.ajax(ajaxOption).done(function(data){
+		        const $btn = $('#addBusiness');
+		        $btn.parent().find('.talk__contents').append(data);
+		        
+		        $btn.remove();
+		    });
+		} else {
+			$.ajax(ajaxOption).done(function(data){
+		        const $btn = $('#addBusiness');
+		        $btn.parent().find('.talk__contents').append(data);
+		    });
+		}
+	};
+	
+	function businessRemove() {
+		//$(this).parents('.performance-business').remove();
+		console.log($(this).attr('class'));
+		
+	}
+	
+</script>

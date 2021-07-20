@@ -598,7 +598,19 @@ table {
 }
 .performance-business__add {
 	display: block;
-	margin: 10px auto 0;
+	margin: 0 auto 10px;
+}
+.performance-business__close {
+	position: absolute;
+	top: 0;
+	right:0;
+	width: 30px;
+	height: 30px;
+	background: #fff url(/assets/images/icon__close.svg) no-repeat;
+	-webkit-background-size: 30px 30px;
+	background-size: 30px 30px;
+	background-position: center center;
+	text-indent: -9999px;
 }
 
 .weight {
