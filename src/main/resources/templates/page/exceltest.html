@@ -9,9 +9,11 @@
 </head>
 <script>
     console.log("backend_url : "+$("#backend_url").val());
+    console.log("backend_protocol : "+$("#backend_protocol").val());
 </script>
 <body>
 <h1>엑셀데이터 OutPut</h1>
-<input type="text" id="backend_url" th:value="${backend_url}" />
+    <input type="text" id="backend_url" th:value="${backend_url}" />
+    <input type="text" id="backend_protocol" th:value="${backend_protocol}" />
 </body>
 </html>

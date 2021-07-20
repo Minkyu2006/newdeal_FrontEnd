@@ -14,6 +14,10 @@ public class MainController {
     @Value("${newdeal.api.backend_url}")
     private String backend_url;
 
+    // 호스트링크주입
+    @Value("${newdeal.api.backend_protocol}")
+    private String backend_protocol;
+
     // 새로운페이지 작업할수있는 공간?
     @RequestMapping("newpage")
     public String newpage(){
@@ -28,7 +32,8 @@ public class MainController {
 
     @RequestMapping("/mypage")
     public String mypage(Model model){
-       model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "mypage";
     }
 }

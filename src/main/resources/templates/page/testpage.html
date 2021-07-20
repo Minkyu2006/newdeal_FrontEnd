@@ -6,13 +6,14 @@
 
 <th:block layout:fragment="script">
 	<script type="text/javascript">
-
+		console.log("backend_url : "+$("#backend_url").val());
+		console.log("backend_protocol : "+$("#backend_protocol").val());
 	</script>
 </th:block>
 
 <div layout:fragment="content" class="content">
 	<input type="hidden" id="backend_url" th:value="${backend_url}" />
-
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
 </div>
 
 </html>

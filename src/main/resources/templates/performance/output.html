@@ -23,6 +23,7 @@
 <div layout:fragment="content" class="content">
 	<input type="hidden" id="autoNum" th:value="${autoNum}" />
 	<input type="hidden" id="backend_url" th:value="${backend_url}" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
 	<div class="content__inner">
 		<div class="performance" id="performance">
 			<div class="talk">
@@ -35,239 +36,79 @@
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>시설 정보</h3>
-						<table class="c-table c-table--in-border">
-							<colgroup>
-								<col />
-								<col />
-								<col />
-							</colgroup>
-							<thead>
-								<tr>
-									<th></th>
-									<th id="pi_business_type_1">성능개선 대안</th>
-									<th id="pi_business_type_2">유지보수 대안</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>시설유형</th>
-									<td>교량</td>
-									<td>교량</td>
-								</tr>
-								<tr>
-									<th>종별구분</th>
-									<td>1종</td>
-									<td>1종</td>
-								</tr>
-								<tr>
-									<th>준공연도</th>
-									<td>2000</td>
-									<td>2000</td>
-								</tr>
-								<tr>
-									<th>형식구분</th>
-									<td>라멘교</td>
-									<td>라멘교</td>
-								</tr>
-								<tr>
-									<th>건설비용</th>
-									<td> 100,000,000,000</td>
-									<td> 100,000,000,000</td>
-								</tr>
-								<tr>
-									<th>안전등급</th>
-									<td>C</td>
-									<td>C</td>
-								</tr>
-								<tr>
-									<th>유지보수 지연기간</th>
-									<td>0</td>
-									<td>0</td>
-								</tr>
-								<tr>
-									<th>관리주체</th>
-									<td>고양시</td>
-									<td>고양시</td>
-								</tr>
-								<tr>
-									<th>관리감독기관</th>
-									<td>경기도</td>
-									<td>경기도</td>
-								</tr>
-							</tbody>
-						</table>
+						<table id="outputTableFacility" class="c-table c-table--in-border"></table>
 					</div>
 				</div>
 				
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>이용 정보</h3>
-						<table class="c-table c-table--in-border">
-							<colgroup>
-								<col />
-								<col />
-								<col />
-							</colgroup>
-							<thead>
-								<tr>
-									<th></th>
-									<th>성능개선 대안</th>
-									<th>유지보수 대안</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>AADT</th>
-									<td>30000</td>
-									<td>30000</td>
-								</tr>
-								<tr>
-									<th>트럭비율</th>
-									<td>25</td>
-									<td>25</td>
-								</tr>
-							</tbody>
-						</table>
+						<table id="outputTableUsage" class="c-table c-table--in-border"></table>
 					</div>
 				</div>
 				
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>사업 정보</h3>
-						<table class="c-table c-table--in-border">
-							<colgroup>
-								<col />
-								<col />
-								<col />
-							</colgroup>
-							<thead>
-								<tr>
-									<th></th>
-									<th>성능개선 대안</th>
-									<th>유지보수 대안</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>사업구분</th>
-									<td>노후화 유형</td>
-									<td>노후화 유형</td>
-								</tr>
-								<tr>
-									<th>사업유형</th>
-									<td>성능개선</td>
-									<td>유지보수</td>
-								</tr>
-								<tr>
-									<th>사업분류</th>
-									<td>개축</td>
-									<td>보수</td>
-								</tr>
-								<tr>
-									<th>사업내용</th>
-									<td>교각 전면개축</td>
-									<td>균열보수</td>
-								</tr>
-								<tr>
-									<th>사업비용</th>
-									<td>6,000,000,000</td>
-									<td>20,000,000</td>
-								</tr>
-								<tr>
-									<th>사업전 부재 안전등급</th>
-									<td>D</td>
-									<td>D</td>
-								</tr>
-								<tr>
-									<th>사업후 부재 안전등급</th>
-									<td>A</td>
-									<td>C</td>
-								</tr>
-							</tbody>
-						</table>
+						<table id="outputTableBusiness" class="c-table c-table--in-border"></table>
 					</div>
 				</div>
 				
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>여건 정보</h3>
-						<table class="c-table c-table--in-border">
-							<colgroup>
-								<col />
-								<col />
-								<col />
-							</colgroup>
-							<thead>
-								<tr>
-									<th></th>
-									<th>성능개선 대안</th>
-									<th>유지보수 대안</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>법에 따른 의무사업</th>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-								<tr>
-									<th>법정계획에 따른 의무사업</th>
-									<td>0</td>
-									<td>0</td>
-								</tr>
-								<tr>
-									<th>자체계획 사업</th>
-									<td>0</td>
-									<td>0</td>
-								</tr>
-								<tr>
-									<th>민원발생 여부</th>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-							</tbody>
-						</table>
+						<table id="outputTableCondition" class="c-table c-table--in-border"></table>
 					</div>
 				</div>
-				
+
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>평가 정보</h3>
+						<table id="outputTableEvaluation" class="c-table c-table--in-border"></table>
+					</div>
+				</div>
+			</div>
+
+			<div class="talk">
+				<h2 class="content__heading">평가적용 가중치</h2>
+				<div class="talk__box">
+					<div class="performance-output">
+						<h3>정책성</h3>
 						<table class="c-table c-table--in-border">
-							<colgroup>
-								<col />
-								<col />
-								<col />
-							</colgroup>
 							<thead>
-								<tr>
-									<th></th>
-									<th>성능개선 대안</th>
-									<th>유지보수 대안</th>
-								</tr>
+							<tr>
+								<th></th>
+								<th>성능개선 대안</th>
+								<th>유지보수 대안</th>
+							</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<th>평가자</th>
-									<td>한대석</td>
-									<td>한대석</td>
-								</tr>
-								<tr>
-									<th>평가자 소속</th>
-									<td>KICT</td>
-									<td>KICT</td>
-								</tr>
-								<tr>
-									<th>평가자 연락처</th>
-									<td>010-4415-2892</td>
-									<td>010-4415-2892</td>
-								</tr>
+							<tr>
+								<th>국가 시설관리 목표 충족성</th>
+								<td>100</td>
+								<td>0</td>
+							</tr>
+							<tr>
+								<th>시설 이용성</th>
+								<td>80</td>
+								<td>80</td>
+							</tr>
+							<tr>
+								<th>시설 만족성</th>
+								<td>80</td>
+								<td>80</td>
+							</tr>
+							<tr>
+								<th>국가 법, 정책 부합성</th>
+								<td>66</td>
+								<td>66</td>
+							</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="talk">
 				<h2 class="content__heading">성능개선 사업평가 정보</h2>
 				
@@ -407,9 +248,10 @@
 					</div>
 				</div>
 			</div>
-			
+
+
 			<div class="talk">
-				<h2 class="content__heading">사업평가 결과</h2>
+				<h2 class="content__heading">사업 종합평가 결과</h2>
 				
 				<div class="talk__box">
 					<div class="performance-output">

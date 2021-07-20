@@ -22,12 +22,12 @@ $(function() {
     //     continueSaveCheck()
     // });
     //
-    // $(document).on("click","#checkYesBtn",function(){
-    //     startYesorNo(true)
-    // });
-    // $(document).on("click","#checkNoBtn",function(){
-    //     startYesorNo(false)
-    // });
+    $(document).on("click","#checkYesBtn",function(){
+        startYesorNo(true)
+    });
+    $(document).on("click","#checkNoBtn",function(){
+        startYesorNo(false)
+    });
 
     // $('#success').on('click', function() {
     //     //console.log("성공버튼 실행");
@@ -121,7 +121,7 @@ function alertCaution(text,type) { //경고창
 
 }
 
-function alertSaveCheck(text) { // 정말삭제할껀지확인하는창,계속저장할껀지확인
+function alertMiddleSaveCheck(text) { // 정말작성할껀지 확인하는창
     let html = '';
 
     html +='<div id="popupId" class="popup popup--dim">';

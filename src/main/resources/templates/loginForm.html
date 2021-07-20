@@ -30,7 +30,7 @@
 			const jsonString = JSON.stringify(params);
 
 			console.log("로그인 실행");
-			const url = "http://"+$("#security_url").val() + "/auth/login";
+			const url = $("#security_protocol").val()+"://"+$("#security_url").val() + "/auth/login";
 			$.ajax({
 				url: url,
 				type: 'post',
@@ -85,6 +85,7 @@
 
 <div layout:fragment="content" class="login-wrap">
 	<input type="hidden" id="security_url" th:value="${security_url}" />
+	<input type="hidden" id="security_protocol" th:value="${security_protocol}" />
 	<div class="login">
 		<h1 class="login__logo">
 			<a href="/login" class="logo">

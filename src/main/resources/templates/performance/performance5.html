@@ -1,41 +1,43 @@
-<div class="talk">
-	<form id="fileSendForm" enctype="multipart/form-data">
+<div class="talk">	
 	<div class="talk__box">
 		<div class="talk__header">
-			<h3>Step 2. 추진하실 사업의 정보를 입력합니다.</h3>
+			<h3>Step 6. 시설물의 유형을 선택해주세요.</h3>
 		</div>
 		<div class="talk__contents">
-			<div class="talk__upload">
-				<div class="talk__guide">
-					<h4>* 엑셀파일 입력 작성 가이드</h4>
-					<ul>
-						<li>1. 업로드 할 파일은 제공해드린 파일만 업로드해주시길 바랍니다.(파일양식은 하단에 양식 다운로드)</li>
-						<li>2. 대안1,대안2에 각각 업로드할 대안들을 작성해주세요.</li>
-						<li>3. 작성하실 대안의 열에 파랑색으로 칠해져 있는 셀은 필수적으로 입력하셔야 합니다.</li>
-						<li>4. 대안은 최대 4개까지만 등록 가능합니다.</li>
-						<li>5. 숫자를 문자로 작성하시면 업로드할 수 없습니다.</li>
-						<li>6. 각 셀은 I열을 참고하여 작성해주길 바랍니다. 그렇지 않을 경우 업로드할 수 없습니다.</li>
-						<li>7. 6번이 이해가 안되시면 2번시트를 참고하여 작성해주시길 바랍니다.</li>
-						<li>8. 제공해드린 양식파일이 아닌 파일은 업로드할 수 없습니다.</li>
-					</ul>
-				</div>
-				<div class="talk__file">
-					<ul>
-						<li>
-							<!-- href에 다운로드 할 파일 경로 삽입 -->
-							<a href="#" class="talk__download c-button">입력 파일 양식 다운로드</a>
-						</li>
-						<li>
-							<div class="c-file">
-								<input type="text" class="c-file__input" readonly="readonly" />
-								<label class="c-file__button" style="text-align: center;" >업로드
-										<input type="file" id="excelfile"  name="excelfile" />
-								</label>
-							</div>
-						</li>
-					</ul>
-				</div>				
-			</div>
+			<ul class="talk__list talk__list--split">
+				<li>
+                    <div class="talk__input-item">
+                        <div class="talk__input-heading">평가 기준년도</div>
+                        <div class="talk__input">
+                            <div class="c-text"><input type="text" class="c-text__input" /></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="talk__input-item">
+                        <div class="talk__input-heading">평가자</div>
+                        <div class="talk__input">
+                            <div class="c-text"><input type="text" class="c-text__input" /></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="talk__input-item">
+                        <div class="talk__input-heading">평가자 소속</div>
+                        <div class="talk__input">
+                            <div class="c-text"><input type="text" class="c-text__input" /></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="talk__input-item">
+                        <div class="talk__input-heading">평가자 연락처</div>
+                        <div class="talk__input">
+                            <div class="c-text"><input type="text" class="c-text__input" /></div>
+                        </div>
+                    </div>
+                </li>
+			</ul>
 		</div>
 	</div>
 	
@@ -181,24 +183,11 @@
 			</div>
 		</div>
 	</div>
-	</form>
-
+	
 	<div class="talk__console">
 		<ul>
-			<li><button class="c-button" onclick="movePage('/performance/performance1')">BEFORE</button></li>
-			<li><button onclick="filesend()" class="c-button c-button--point">완료</button></li>
+			<li><button class="c-button" onclick="movePage('/performance/performance4')">BEFORE</button></li>
+			<li><button class="c-button c-button--point"onclick="movePage('/performance/output')">완료</button></li>
 		</ul>
 	</div>
 </div>
-
-<script>
-	$(function() {
-		// 업로드할 파일명 불러오기
-		$('#excelfile').change(function() {
-			const file = $(this).val().split('\\').pop();
-			$('.c-file__input').val(file);
-		});
-
-		$('#group2').prop("checked", true);
-	});
-</script>
