@@ -8,10 +8,9 @@
 <th:block layout:fragment="css">
 	<style>
 		.popup__box {
-			width: 400px;
+			width: 350px;
 		}
 	</style>
-	
 </th:block>
 
 <!-- 사용자 스크립트 추가 -->
@@ -20,8 +19,8 @@
  	<script>
 		$(function() {
 			const  autoNum = $("#autoNum").val();
-			console.log("autoNum : "+autoNum);
 			if(autoNum===""){
+				console.log("autoNum : "+autoNum);
 				inputMiddleSaveCheck();
 			}
 		});
@@ -29,7 +28,7 @@
 </th:block>
 
 <div layout:fragment="content" class="content">
-	<input type="hidden" id="autoNum" th:value="${autoNum}" />
+	<input type="text" id="autoNum" th:value="${autoNum}" />
 	<input type="hidden" id="backend_url" th:value="${backend_url}" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
 	<div class="content__inner">

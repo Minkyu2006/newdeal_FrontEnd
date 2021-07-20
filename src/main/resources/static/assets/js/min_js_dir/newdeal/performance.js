@@ -11,19 +11,61 @@ function inputPerformanceNext1(){
     let url;
 
     if (accessToken == null || refreshToken == null || insert_id == null) {
-        console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else {
+
+        const $piSafetyLevel = $("#piSafetyLevel").val();
+        const $piGoalLevel = $("#piGoalLevel").val();
+
+        if($piSafetyLevel==="A"){
+            if($piGoalLevel==="B" || $piGoalLevel==="C"){
+                alertCaution("안전등급보다 목표등급이 낮을 수 없습니다.",1);
+                return false;
+            }
+        }else if($piSafetyLevel==="B"){
+            if($piGoalLevel==="C"){
+                alertCaution("안전등급보다 목표등급이 낮을 수 없습니다.",1);
+                return false;
+            }
+        }
+
+        const $piCompletionYear = $("#piCompletionYear").val();
+        if($piCompletionYear===""){
+            alertCaution("준공연도를 입력해주세요.",1);
+            return false;
+        }
+        const $piErectionCost = $("#piErectionCost").val();
+        if($piErectionCost===""){
+            alertCaution("취득원가를 입력해주세요.",1);
+            return false;
+        }
+        const $piMaintenanceDelay = $("#piMaintenanceDelay").val();
+        if($piMaintenanceDelay===""){
+            alertCaution("유지보수 지연기간를 입력해주세요.",1);
+            return false;
+        }
+        const $piAADT = $("#piAADT").val();
+        if($piAADT===""){
+            alertCaution("연평균일교통량(AADT)를 입력해주세요.",1);
+            return false;
+        }
+        const $piRaterBaseYear = $("#piRaterBaseYear").val();
+        if($piRaterBaseYear===""){
+            alertCaution("평가 기준년도를 입력해주세요.",1);
+            return false;
+        }
+
         const  autoNum = $("#autoNum").val();
         const formData = new FormData(document.getElementById('performance1'));
 
-        console.log("중간저장 autoNum : "+autoNum);
+        // console.log("중간저장 autoNum : "+autoNum);
         if(autoNum===""){
             url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/middleSaveUpdate/"+"null"; // 호출할 백엔드 API
         }else{
             url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/middleSaveUpdate/"+autoNum; // 호출할 백엔드 API
         }
-        console.log("url : "+url);
+        // console.log("url : "+url);
 
         $.ajax({
             url: url,
@@ -39,18 +81,18 @@ function inputPerformanceNext1(){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
+                    // console.log("request.status : " + request.status + " => 500에러");
                     alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
+                    // console.log("request.status : " + request.status + " => 404에러");
                     alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
-                    console.log("autoNum : "+request.sendData.autoNum);
+                    // console.log("autoNum : "+request.sendData.autoNum);
                     $("#autoNum").val(request.sendData.autoNum)
                     movePage('/performance/performance4');
                 } else {
@@ -77,13 +119,13 @@ function inputMiddleSaveCheck(){
     let url;
 
     if (accessToken == null && refreshToken == null && insert_id == null) {
-        console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else if (accessToken == null) {
         refreshTokenCookie();
     } else {
         url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/middleCheck"; // 호출할 백엔드 API
-        console.log("url : " + url);
+        // console.log("url : " + url);
         $.ajax({
             url: url,
             type: 'POST',
@@ -94,19 +136,19 @@ function inputMiddleSaveCheck(){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
+                    // console.log("request.status : " + request.status + " => 500에러");
                     alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
+                    // console.log("request.status : " + request.status + " => 404에러");
                     alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
                     if(request.sendData.middleSave===1){
-                        console.log("중간저장 게시물이 존재함");
+                        // console.log("중간저장 게시물이 존재함");
                         $("#autoNum").val(request.sendData.piAutoNum);
                         alertMiddleSaveCheck("작성중 완료되지 않은 대안이 존재합니다.<BR>계속 작성하시겠습니까?");
                     }else{
@@ -132,20 +174,20 @@ function middleData(autoNum){
     let url;
 
     if (accessToken == null && refreshToken == null && insert_id == null) {
-        console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else if (accessToken == null) {
         refreshTokenCookie();
     } else {
 
-        console.log("호출할 일련번호 : "+autoNum);
+        // console.log("호출할 일련번호 : "+autoNum);
 
         const params = {
             autoNum: autoNum
         };
 
         url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/middleData"; // 호출할 백엔드 API
-        console.log("url : " + url);
+        // console.log("url : " + url);
         $.ajax({
             url: url,
             type: 'POST',
@@ -157,16 +199,16 @@ function middleData(autoNum){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
+                    // console.log("request.status : " + request.status + " => 500에러");
                     alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
+                    // console.log("request.status : " + request.status + " => 404에러");
                     alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
                     if(request.sendData.performanceData.piFacilityType==="교량"){
                         $('#group1-1').prop("checked", true);
@@ -241,7 +283,7 @@ function startYesorNo(check){
         let url;
 
         if (accessToken == null && refreshToken == null && insert_id == null) {
-            console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+            // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
             alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
         } else if (accessToken == null) {
             refreshTokenCookie();
@@ -249,14 +291,14 @@ function startYesorNo(check){
 
             //삭제하는 함수 한다음 페이지이동
             const  autoNum = $("#autoNum").val();
-            console.log("삭제할 일련번호 : "+autoNum);
+            // console.log("삭제할 일련번호 : "+autoNum);
 
             const params = {
                 autoNum: autoNum
             };
 
             url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/middleDataDel"; // 호출할 백엔드 API
-            console.log("url : " + url);
+            // console.log("url : " + url);
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -268,16 +310,16 @@ function startYesorNo(check){
                 },
                 error: function (request) {
                     if (request.status === 500) {
-                        console.log("request.status : " + request.status + " => 500에러");
+                        // console.log("request.status : " + request.status + " => 500에러");
                         alertCaution("500에러 재로그인 해주세요.", 2);
                     } else {
-                        console.log("request.status : " + request.status + " => 404에러");
+                        // console.log("request.status : " + request.status + " => 404에러");
                         alertCaution("404에러 재로그인 해주세요.", 2);
                     }
                 },
                 success: function (request) {
                     let status = request.status;
-                    console.log("status : " + status);
+                    // console.log("status : " + status);
                     if (status === 200) {
                         $("#autoNum").val("");
                         movePage('/performance/performance1')
@@ -373,7 +415,7 @@ function excelSend() {
     let url;
 
     if (accessToken == null && refreshToken == null && insert_id == null) {
-        console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else if (accessToken == null) {
         refreshTokenCookie();
@@ -423,7 +465,7 @@ function excelSend() {
         const formData = new FormData(document.getElementById('fileSendForm'));
 
         url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/excelUpload"; // 호출할 백엔드 API
-        console.log("url : " + url);
+        // console.log("url : " + url);
         $.ajax({
             url: url,
             type: 'post',
@@ -438,21 +480,21 @@ function excelSend() {
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
+                    // console.log("request.status : " + request.status + " => 500에러");
                     alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
+                    // console.log("request.status : " + request.status + " => 404에러");
                     alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
                     $("#excelfile").val('');
                     $('.c-file__input').val('');
                     // console.log("엑셀 데이터 전송 성공");
-                    console.log("autoNum : "+request.sendData.autoNum)
+                    // console.log("autoNum : "+request.sendData.autoNum)
                     alertLink(request.sendData.autoNum);
                     alertSuccess("업로드를 완료했습니다.");
                 } else {

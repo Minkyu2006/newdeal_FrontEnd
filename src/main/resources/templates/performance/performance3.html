@@ -79,7 +79,7 @@
 						<div class="talk__input-item">
 							<div class="talk__input-heading">준공연도</div>
 							<div class="talk__input">
-								<div class="c-text"><input name="piCompletionYear" id="piCompletionYear" type="number" class="c-text__input" /></div>
+								<div class="c-text"><input name="piCompletionYear" id="piCompletionYear" type="text" class="c-text__input" numberOnly placeholder="1900~2100"/></div>
 							</div>
 						</div>
 					</li>
@@ -87,7 +87,7 @@
 						<div class="talk__input-item">
 							<div class="talk__input-heading">공용연수</div>
 							<div class="talk__input">
-								<div class="c-text"><input  name="piPublicYear" id="piPublicYear" type="number" class="c-text__input" /></div>
+								<div class="c-text"><input  name="piPublicYear" id="piPublicYear" type="text" class="c-text__input" numberOnly readonly="readonly" placeholder="준공연도를 통해 자동으로 계산됩니다." style="color: black" /></div>
 							</div>
 						</div>
 					</li>
@@ -103,7 +103,7 @@
 						<div class="talk__input-item">
 							<div class="talk__input-heading">취득원가</div>
 							<div class="talk__input">
-								<div class="c-text"><input name="piErectionCost" id="piErectionCost" type="number" class="c-text__input" /></div>
+								<div class="c-text"><input name="piErectionCost" id="piErectionCost" type="text" class="c-text__input" numberOnly /></div>
 							</div>
 						</div>
 					</li>
@@ -141,15 +141,15 @@
 						<div class="talk__input-item">
 							<div class="talk__input-heading">유지보수 지연기간</div>
 							<div class="talk__input">
-								<div class="c-text"><input name="piMaintenanceDelay" id="piMaintenanceDelay" type="number" class="c-text__input" /></div>
+								<div class="c-text"><input name="piMaintenanceDelay" id="piMaintenanceDelay" type="text" class="c-text__input" numberOnly placeholder="1~100"/></div>
 							</div>
 						</div>
 					</li>
 					<li>
 						<div class="talk__input-item">
-							<div class="talk__input-heading">AADT</div>
+							<div class="talk__input-heading">연평균일교통량(AADT)</div>
 							<div class="talk__input">
-								<div class="c-text"><input name="piAADT" id="piAADT" type="number" class="c-text__input" /></div>
+								<div class="c-text"><input name="piAADT" id="piAADT" type="text" class="c-text__input" numberOnly placeholder="1~300000"/></div>
 							</div>
 						</div>
 					</li>
@@ -183,7 +183,7 @@
 						<div class="talk__input-item">
 							<div class="talk__input-heading">평가 기준년도</div>
 							<div class="talk__input">
-								<div class="c-text"><input type="number" name="piRaterBaseYear" id="piRaterBaseYear" class="c-text__input" /></div>
+								<div class="c-text"><input type="text" name="piRaterBaseYear" id="piRaterBaseYear" class="c-text__input" numberOnly placeholder="1900~2100" /></div>
 							</div>
 						</div>
 					</li>
@@ -231,5 +231,20 @@
 			console.log("중긴저장된 데이터 호출하기");
 			middleData(autoNum);
 		}
+
+		// 공용연수 계산하기
+		$('#piCompletionYear').focusout(function() {
+			const date = new Date();
+			const nowdate = date.getFullYear();
+			const a = $('#piCompletionYear').val();
+			const publicDay = nowdate - a;
+			$('#piPublicYear').val(publicDay);
+		})
+
+		// 오직 숫자만 입력할수있게하는 제이쿼리
+		$("input:text[numberOnly]").on("keyup", function() {
+			$(this).val($(this).val().replace(/[^0-9]/g,""));
+		});
+
 	});
 </script>
