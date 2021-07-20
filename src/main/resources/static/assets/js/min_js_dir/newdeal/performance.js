@@ -4,6 +4,67 @@ function popOpen(){
     $('.talk__select-pop').addClass('open');
 }
 
+// Input 첫번째 NEXT버튼 구간(중간저장)
+function inputPerformanceNext1(){
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null || refreshToken == null || insert_id == null) {
+        console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else {
+        const  autoNum = $("#autoNum").val();
+        const formData = new FormData(document.getElementById('performance1'));
+
+        console.log("중간저장 autoNum : "+autoNum);
+        if(autoNum===""){
+            url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/middleSaveUpdate/"+"null"; // 호출할 백엔드 API
+        }else{
+            url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/middleSaveUpdate/"+autoNum; // 호출할 백엔드 API
+        }
+        console.log("url : "+url);
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                console.log("status : " + status);
+                if (status === 200) {
+                    console.log("autoNum : "+request.sendData.autoNum);
+                    $("#autoNum").val(request.sendData.autoNum)
+                    movePage('/performance/performance4');
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
 // 현재 로그인한 아이디에서 입력중에 중간에 저장한 대안이 있는지 확인하기
 function inputMiddleSaveCheck(){
 
@@ -150,6 +211,11 @@ function middleData(autoNum){
                     $("#piAADT").val(request.sendData.performanceData.piAADT);
                     $("#piManagement").val(request.sendData.performanceData.piManagement);
                     $("#piAgency").val(request.sendData.performanceData.piAgency);
+
+                    $("#piRaterBaseYear").val(request.sendData.performanceData.piRaterBaseYear);
+                    $("#piRater").val(request.sendData.performanceData.piRater);
+                    $("#piRaterBelong").val(request.sendData.performanceData.piRaterBelong);
+                    $("#piRaterPhone").val(request.sendData.performanceData.piRaterPhone);
 
                 } else {
                     if (request.err_msg2 === null) {
@@ -385,10 +451,10 @@ function excelSend() {
                 if (status === 200) {
                     $("#excelfile").val('');
                     $('.c-file__input').val('');
-                    console.log("엑셀 데이터 전송 성공");
+                    // console.log("엑셀 데이터 전송 성공");
                     console.log("autoNum : "+request.sendData.autoNum)
                     alertLink(request.sendData.autoNum);
-                    alertSuccess("엑셀 데이터전송 성공");
+                    alertSuccess("업로드를 완료했습니다.");
                 } else {
                     if (request.err_msg2 === null) {
                         alertCaution(request.err_msg, 1);
@@ -414,8 +480,6 @@ function call_performance(autoNum){
 
     console.log("사업평가정보 함수호추 ");
     console.log("autoNum : "+autoNum);
-    console.log("backend_url : "+$("#backend_url").val());
-    console.log("backend_protocol : "+$("#backend_protocol").val());
 
     if(autoNum==null){
         location.href="/404";
