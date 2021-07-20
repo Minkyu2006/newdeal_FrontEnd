@@ -1,181 +1,225 @@
 <div class="talk">
-	<div class="talk__box">
-		<div class="talk__header">
-			<h3>Step 2. 시설물의 유형을 선택해주세요.</h3>
+	<form id="performance1" enctype="multipart/form-data">
+		<div class="talk__box">
+			<div class="talk__header">
+				<h3>Step 2. 시설물의 유형을 선택해주세요.</h3>
+			</div>
+			<div class="talk__contents">
+				<ul class="c-radio-group">
+					<li class="c-radio-group__item">
+						<div class="c-radio">
+							<input type="radio" class="c-radio__input" value="교량" name="piFacilityType" id="group1-1" />
+							<label for="group1-1" class="c-radio__label">교량</label>
+						</div>
+					</li>
+					<li class="c-radio-group__item">
+						<div class="c-radio">
+							<input type="radio" class="c-radio__input" value="보도육교" name="piFacilityType" id="group1-2" />
+							<label for="group1-2" class="c-radio__label">보도육교</label>
+						</div>
+					</li>
+					<li class="c-radio-group__item">
+						<div class="c-radio">
+							<input type="radio" class="c-radio__input" value="터널" name="piFacilityType" id="group1-3" />
+							<label for="group1-3" class="c-radio__label">터널</label>
+						</div>
+					</li>
+					<li class="c-radio-group__item">
+						<div class="c-radio">
+							<input type="radio" class="c-radio__input" value="지하차도" name="piFacilityType" id="group1-4" />
+							<label for="group1-4" class="c-radio__label">지하차도</label>
+						</div>
+					</li>
+					<li class="c-radio-group__item">
+						<div class="c-radio">
+							<input type="radio" class="c-radio__input" value="절토사면" name="piFacilityType" id="group1-5" />
+							<label for="group1-5" class="c-radio__label">절토사면</label>
+						</div>
+					</li>
+					<li class="c-radio-group__item">
+						<div class="c-radio">
+							<input type="radio" class="c-radio__input" value="옹벽" name="piFacilityType" id="group1-6" />
+							<label for="group1-6" class="c-radio__label">옹벽</label>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div class="talk__contents">
-			<ul class="c-radio-group">
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-1" />
-						<label for="group1-1" class="c-radio__label">교량</label>
-					</div>
-				</li>
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-2" />
-						<label for="group1-2" class="c-radio__label">보도육교</label>
-					</div>
-				</li>
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-3" />
-						<label for="group1-3" class="c-radio__label">터널</label>
-					</div>
-				</li>
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-4" />
-						<label for="group1-4" class="c-radio__label">지하차도</label>
-					</div>
-				</li>
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-5" />
-						<label for="group1-5" class="c-radio__label">절토사면</label>
-					</div>
-				</li>
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-6" />
-						<label for="group1-6" class="c-radio__label">옹벽</label>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-	
-	<div class="talk__box">
-		<div class="talk__header">
-			<h3>Step 3. 시설물 기본정보</h3>
-		</div>
-		<div class="talk__contents">
-			<ul class="talk__list talk__list--split">
-				<li>
-                    <div class="talk__input-item">
-                        <div class="talk__input-heading">시설명</div>
-                        <div class="talk__input">
-                            <div class="c-text"><input type="text" id="piFacilityName" class="c-text__input" /></div>
-                        </div>
-                    </div>
-                </li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">종별구분</div>
-						<div class="talk__input">
-							<div class="c-select">
-								<select id="piKind" class="c-select__input">
-									<option value="1">1종</option>
-									<option value="2">2종</option>
-									<option value="3">3종</option>
-									<option value="기타">기타</option>
-								</select>
+
+		<div class="talk__box">
+			<div class="talk__header">
+				<h3>Step 3. 시설물 기본정보</h3>
+			</div>
+			<div class="talk__contents">
+				<ul class="talk__list talk__list--split">
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">시설명</div>
+							<div class="talk__input">
+								<div class="c-text"><input type="text" name="piFacilityName" id="piFacilityName" class="c-text__input" /></div>
 							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">준공연도</div>
-						<div class="talk__input">
-							<div class="c-text"><input id="piCompletionYear" type="text" class="c-text__input" /></div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">공용연수</div>
-						<div class="talk__input">
-							<div class="c-text"><input  id="piPublicYear" type="text" class="c-text__input" /></div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">형식구분</div>
-						<div class="talk__input">
-							<div class="c-text"><input id="piType" type="text" class="c-text__input" /></div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">취득원가</div>
-						<div class="talk__input">
-							<div class="c-text"><input id="piErectionCost" type="text" class="c-text__input" /></div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">안전등급</div>
-						<div class="talk__input">
-							<div class="c-select">
-								<select id="piSafetyLevel" class="c-select__input">
-									<option value="A">A</option>
-									<option value="B">B</option>
-									<option value="C">C</option>
-									<option value="D">D</option>
-									<option value="E">E</option>
-								</select>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">종별구분</div>
+							<div class="talk__input">
+								<div class="c-select">
+									<select name="piKind" id="piKind" class="c-select__input">
+										<option value="1">1종</option>
+										<option value="2">2종</option>
+										<option value="3">3종</option>
+										<option value="기타">기타</option>
+									</select>
+								</div>
 							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">목표등급</div>
-						<div class="talk__input">
-							<div class="c-select">
-								<select id="piGoalLevel" class="c-select__input">
-									<option value="A">A</option>
-									<option value="B">B</option>
-									<option value="C">C</option>
-								</select>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">준공연도</div>
+							<div class="talk__input">
+								<div class="c-text"><input name="piCompletionYear" id="piCompletionYear" type="number" class="c-text__input" /></div>
 							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">유지보수 지연기간</div>
-						<div class="talk__input">
-							<div class="c-text"><input id="piMaintenanceDelay" type="text" class="c-text__input" /></div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">공용연수</div>
+							<div class="talk__input">
+								<div class="c-text"><input  name="piPublicYear" id="piPublicYear" type="number" class="c-text__input" /></div>
+							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">AADT</div>
-						<div class="talk__input">
-							<div class="c-text"><input id="piAADT" type="text" class="c-text__input" /></div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">형식구분</div>
+							<div class="talk__input">
+								<div class="c-text"><input name="piType" id="piType" type="text" class="c-text__input" /></div>
+							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">관리주체</div>
-						<div class="talk__input">
-							<div class="c-text"><input id="piManagement" type="text" class="c-text__input" /></div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">취득원가</div>
+							<div class="talk__input">
+								<div class="c-text"><input name="piErectionCost" id="piErectionCost" type="number" class="c-text__input" /></div>
+							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="talk__input-item">
-						<div class="talk__input-heading">관리감독기관</div>
-						<div class="talk__input">
-							<div class="c-text"><input id="piAgency" type="text" class="c-text__input" /></div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">안전등급</div>
+							<div class="talk__input">
+								<div class="c-select">
+									<select name="piSafetyLevel" id="piSafetyLevel" class="c-select__input">
+										<option value="A">A</option>
+										<option value="B">B</option>
+										<option value="C">C</option>
+										<option value="D">D</option>
+										<option value="E">E</option>
+									</select>
+								</div>
+							</div>
 						</div>
-					</div>
-				</li>
-			</ul>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">목표등급</div>
+							<div class="talk__input">
+								<div class="c-select">
+									<select name="piGoalLevel" id="piGoalLevel" class="c-select__input">
+										<option value="A">A</option>
+										<option value="B">B</option>
+										<option value="C">C</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">유지보수 지연기간</div>
+							<div class="talk__input">
+								<div class="c-text"><input name="piMaintenanceDelay" id="piMaintenanceDelay" type="number" class="c-text__input" /></div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">AADT</div>
+							<div class="talk__input">
+								<div class="c-text"><input name="piAADT" id="piAADT" type="number" class="c-text__input" /></div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">관리주체</div>
+							<div class="talk__input">
+								<div class="c-text"><input name="piManagement" id="piManagement" type="text" class="c-text__input" /></div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">관리감독기관</div>
+							<div class="talk__input">
+								<div class="c-text"><input name="piAgency" id="piAgency" type="text" class="c-text__input" /></div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</div>
-	</div>
-	
+
+		<div class="talk__box">
+			<div class="talk__header">
+				<h3>Step 4. 시설물의 유형을 선택해주세요.</h3>
+			</div>
+			<div class="talk__contents">
+				<ul class="talk__list talk__list--split">
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">평가 기준년도</div>
+							<div class="talk__input">
+								<div class="c-text"><input type="number" name="piRaterBaseYear" id="piRaterBaseYear" class="c-text__input" /></div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">평가자</div>
+							<div class="talk__input">
+								<div class="c-text"><input type="text" name="piRater" id="piRater" class="c-text__input" /></div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">평가자 소속</div>
+							<div class="talk__input">
+								<div class="c-text"><input type="text" name="piRaterBelong" id="piRaterBelong" class="c-text__input" /></div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="talk__input-item">
+							<div class="talk__input-heading">평가자 연락처</div>
+							<div class="talk__input">
+								<div class="c-text"><input type="text" name="piRaterPhone" id="piRaterPhone" class="c-text__input" /></div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</form>
 	<div class="talk__console">
 		<ul>
 			<li><button class="c-button" onclick="movePage('/performance/performance1')">BEFORE</button></li>
-			<li><button class="c-button c-button--point"onclick="movePage('/performance/performance4')">NEXT</button></li>
+			<li><button class="c-button c-button--point"onclick="inputPerformanceNext1()">NEXT</button></li>
 		</ul>
 	</div>
 </div>

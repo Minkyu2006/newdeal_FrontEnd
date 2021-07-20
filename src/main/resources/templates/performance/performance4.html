@@ -1,7 +1,7 @@
 <div class="talk">
 	<div class="talk__box">
 		<div class="talk__header">
-			<h3>Step 4. 사업구분</h3>
+			<h3>Step 5. 사업구분</h3>
 		</div>
 		<div class="talk__contents">
 			<ul class="c-radio-group">
@@ -35,7 +35,7 @@
 	
 	<div class="talk__box">
 		<div class="talk__header">
-			<h3>Step 5. 사업정보 입력</h3>
+			<h3>Step 6. 사업정보 입력</h3>
 		</div>
 		<div class="talk__contents">
 			<div class="performance-business">
@@ -374,8 +374,9 @@
 				</div>
 			</div>
 			
-			<button class="performance-business__add c-button c-button--point">비교대안 추가</button>
+			
 		</div>
+		<button class="performance-business__add c-button c-button--point" id="addBusiness" onclick="addBusiness('/performance/performance-business')">비교대안 추가</button>
 	</div>
 	
 	<div class="talk__console">
@@ -385,3 +386,37 @@
 		</ul>
 	</div>
 </div>
+
+<script>
+	let businessMaxAdd = 0;
+	function addBusiness(url) {
+		const ajaxOption = {
+				url: url,
+				type: "POST",
+				dataType: "html"
+		};
+		
+		businessMaxAdd++;
+		
+		if ( businessMaxAdd >= 2) {
+			$.ajax(ajaxOption).done(function(data){
+		        const $btn = $('#addBusiness');
+		        $btn.parent().find('.talk__contents').append(data);
+		        
+		        $btn.remove();
+		    });
+		} else {
+			$.ajax(ajaxOption).done(function(data){
+		        const $btn = $('#addBusiness');
+		        $btn.parent().find('.talk__contents').append(data);
+		    });
+		}
+	};
+	
+	function businessRemove() {
+		//$(this).parents('.performance-business').remove();
+		console.log($(this).attr('class'));
+		
+	}
+	
+</script>
