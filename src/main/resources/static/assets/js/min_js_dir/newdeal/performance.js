@@ -1,4 +1,3 @@
-
 // 선택팝업열기
 function popOpen(){
     $('.talk__select-pop').addClass('open');

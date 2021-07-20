@@ -97,7 +97,7 @@ public class PerformanceController{
     // 엑셀파일 다운로드
     @Autowired
     ResourceLoader resourceLoader;
-    @GetMapping("/{fileName}")
+    @GetMapping("/download/{fileName}")
     public ResponseEntity<Resource> resouceFileDownload(@PathVariable String fileName) {
         log.info("fileName : "+fileName);
         try {

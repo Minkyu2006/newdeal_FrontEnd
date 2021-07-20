@@ -397,7 +397,8 @@
 		};
 		
 		businessMaxAdd++;
-		
+
+		console.log("businessMaxAdd : "+businessMaxAdd)
 		if ( businessMaxAdd >= 2) {
 			$.ajax(ajaxOption).done(function(data){
 		        const $btn = $('#addBusiness');
@@ -411,12 +412,10 @@
 		        $btn.parent().find('.talk__contents').append(data);
 		    });
 		}
-	};
+	}
 	
 	function businessRemove() {
 		//$(this).parents('.performance-business').remove();
 		console.log($(this).attr('class'));
-		
 	}
-	
 </script>

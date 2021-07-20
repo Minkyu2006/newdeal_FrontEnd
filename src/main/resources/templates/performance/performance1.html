@@ -85,3 +85,12 @@
 		</ul>
 	</div>
 </div>
+
+<script>
+	$(function() {
+		const  autoNum = $("#autoNum").val();
+		if(autoNum!==""){
+			alertMiddleSaveCheck("작성중 완료되지 않은 대안이 존재합니다.<BR>계속 작성하시겠습니까?");
+		}
+	});
+</script>
