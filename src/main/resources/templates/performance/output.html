@@ -73,38 +73,20 @@
 				<h2 class="content__heading">평가적용 가중치</h2>
 				<div class="talk__box">
 					<div class="performance-output">
+						<h3>기술성</h3>
+						<table id="outputTableWeightT" class="c-table c-table--in-border"></table>
+					</div>
+				</div>
+				<div class="talk__box">
+					<div class="performance-output">
+						<h3>경제성</h3>
+						<table id="outputTableWeightE" class="c-table c-table--in-border"></table>
+					</div>
+				</div>
+				<div class="talk__box">
+					<div class="performance-output">
 						<h3>정책성</h3>
-						<table class="c-table c-table--in-border">
-							<thead>
-							<tr>
-								<th></th>
-								<th>성능개선 대안</th>
-								<th>유지보수 대안</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr>
-								<th>국가 시설관리 목표 충족성</th>
-								<td>100</td>
-								<td>0</td>
-							</tr>
-							<tr>
-								<th>시설 이용성</th>
-								<td>80</td>
-								<td>80</td>
-							</tr>
-							<tr>
-								<th>시설 만족성</th>
-								<td>80</td>
-								<td>80</td>
-							</tr>
-							<tr>
-								<th>국가 법, 정책 부합성</th>
-								<td>66</td>
-								<td>66</td>
-							</tr>
-							</tbody>
-						</table>
+						<table id="outputTableWeightP" class="c-table c-table--in-border"></table>
 					</div>
 				</div>
 			</div>
@@ -115,59 +97,14 @@
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>기술성</h3>
-						<table class="c-table c-table--in-border">
-							<colgroup>
-								<col />
-								<col />
-								<col />
-							</colgroup>
-							<thead>
-								<tr>
-									<th></th>
-									<th>성능개선 대안</th>
-									<th>유지보수 대안</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th></th>
-									<td>평가등급 / 평가점수</td>
-									<td>평가등급 / 평가점수</td>
-								</tr>
-								<tr>
-									<th>안전성</th>
-									<td id="safetyRankScroe1">N/A</td>
-									<td id="safetyRankScroe2">N/A</td>
-								</tr>
-								<tr>
-									<th>노후도</th>
-									<td id="oldRankScroe1">N/A</td>
-									<td id="oldRankScroe2">N/A</td>
-								</tr>
-								<tr>
-									<th>시급성</th>
-									<td id="urgencyRankScroe1">N/A</td>
-									<td id="urgencyRankScroe2">N/A</td>
-								</tr>
-								<tr>
-									<th>목표성능 달성도</th>
-									<td id="goalRankScroe1">N/A</td>
-									<td id="goalRankScroe2">N/A</td>
-								</tr>
-								<tr>
-									<th>기술성 종합점수</th>
-									<td id="te_allRankScroe1">N/A</td>
-									<td id="te_allRankScroe2">N/A</td>
-								</tr>
-							</tbody>
-						</table>
+						<table id="technicalityTable" class="c-table c-table--in-border"></table>
 					</div>
 				</div>
-				
+
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>경제성</h3>
-						<table class="c-table c-table--in-border">
+						<table id="economyTable" class="c-table c-table--in-border">
 							<colgroup>
 								<col />
 								<col />
@@ -209,7 +146,7 @@
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>정책성</h3>
-						<table class="c-table c-table--in-border">
+						<table id="policyTable" class="c-table c-table--in-border">
 							<colgroup>
 								<col />
 								<col />
@@ -247,6 +184,7 @@
 						</table>
 					</div>
 				</div>
+
 			</div>
 
 
