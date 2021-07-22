@@ -663,4 +663,67 @@ table {
 	font-weight: 700;
 }
 
+/* section */
+.section {
+	width: 100%;
+	padding: 10px;
+	-webkit-background-size: #fff;
+	background-color: #fff;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.section + .section {
+	margin-top: 20px;
+}
 
+/* article */
+.article {
+	position: relative;
+}
+.article + .article {
+	margin-top: 20px;
+	border-top: 2px dotted #303030;
+	padding-top: 20px;
+}
+.article__head {
+	margin-bottom: 10px;
+}
+.article__heading {
+	font-size: 18px;
+	font-weight: 700;
+}
+.article__head-caption {
+	font-size: 12px;
+	font-weight: 400;
+	color: #888;
+}
+
+/* float-heading */
+.l-float-heading {
+	margin-bottom: 10px;
+}
+.l-float-heading:before {
+	content: " ";
+	display: table;
+}
+.l-float-heading:after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+.l-float-heading .l-float-heading--left {
+	float: left;
+	line-height: 24px;
+}
+.l-float-heading .l-float-heading--right {
+	float: right;
+}
+.l-float-heading--left .article__head {
+	margin-bottom: 0;
+	font-size: 14px;
+	line-height: 24px;
+}
+.l-float-heading--left .article__head-caption {
+	line-height: 24px;
+}

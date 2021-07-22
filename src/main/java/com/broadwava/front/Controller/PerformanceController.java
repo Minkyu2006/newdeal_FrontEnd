@@ -92,6 +92,12 @@ public class PerformanceController{
         model.addAttribute("backend_protocol", backend_protocol);
         return "performance/output";
     }
+    
+    // price
+    @RequestMapping("price")
+    public String price(){
+        return "performance/price";
+    }
 
 
     // 엑셀파일 다운로드
