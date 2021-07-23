@@ -549,6 +549,7 @@ function call_performance(autoNum){
             cache: false,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id",insert_id);
             },
             error: function (request) {
                 if (request.status === 500) {
@@ -998,9 +999,9 @@ function call_performance(autoNum){
                     html9 += '</tr>';
 
                     html9 += '<tr>';
-                    html9 += '<th>'+'기술성 종합점수'+'</th>';
+                    html9 += '<th style="color: red">'+'기술성 종합점수'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html9 += '<td>'+request.sendData.technicalityRank[j][4]+" / "+request.sendData.technicalityScore[j][4]+'</td>';
+                        html9 += '<td style="color: red">'+request.sendData.technicalityRank[j][4]+" / "+request.sendData.technicalityScore[j][4]+'</td>';
                     }
                     html9 += '</tr>';
 
@@ -1011,10 +1012,46 @@ function call_performance(autoNum){
                     const $economyTable = $('#economyTable');
                     let html10 = '';
 
+                    html10 += '<thead>';
+                    html10 += '<tr>';
+                    html10 += '<th></th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html10 += '<td>'+request.sendData.performanceList[j].piBusinessType+' 대안'+'</td>';
+                    }
+                    html10 += '</tr>';
+                    html10 += '</thead>';
 
+                    html10 += '<tbody>';
 
+                    html10 += '<tr>';
+                    html10 += '<th></th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html10 += '<td>'+'평가등급 / 평가점수'+'</td>';
+                    }
+                    html10 += '</tr>';
 
+                    html10 += '<tr>';
+                    html10 += '<th>'+'자산가치 개선 효율성'+'</th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html10 += '<td>'+request.sendData.economyRank[j][0]+" / "+request.sendData.economyScore[j][0]+'</td>';
+                    }
+                    html10 += '</tr>';
 
+                    html10 += '<tr>';
+                    html10 += '<th>'+'안전효용 개선 효율성'+'</th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html10 += '<td>'+request.sendData.economyRank[j][1]+" / "+request.sendData.economyScore[j][1]+'</td>';
+                    }
+                    html10 += '</tr>';
+
+                    html10 += '<tr>';
+                    html10 += '<th style="color: red">'+'경제성 종합점수'+'</th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html10 += '<td style="color: red">'+request.sendData.economyRank[j][2]+" / "+request.sendData.economyScore[j][2]+'</td>';
+                    }
+                    html10 += '</tr>';
+
+                    html10 += '</tbody>';
 
                     $economyTable.html(html10);
 
@@ -1061,9 +1098,9 @@ function call_performance(autoNum){
                     html11 += '</tr>';
 
                     html11 += '<tr>';
-                    html11 += '<th>'+'정책성 종합점수'+'</th>';
+                    html11 += '<th style="color: red">'+'정책성 종합점수'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html11 += '<td>'+request.sendData.policyRank[j][3]+" / "+request.sendData.policyScore[j][3]+'</td>';
+                        html11 += '<td style="color: red">'+request.sendData.policyRank[j][3]+" / "+request.sendData.policyScore[j][3]+'</td>';
                     }
                     html11 += '</tr>';
 
@@ -1071,13 +1108,54 @@ function call_performance(autoNum){
 
                     $policyTable.html(html11);
 
+                    // 종합평가표 테이블
+                    const $allScoreRankTable = $('#allScoreRankTable');
+                    let html12 = '';
+                    html12 += '<thead>';
+                    html12 += '<tr>';
+                    html12 += '<th></th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html12 += '<td>'+request.sendData.performanceList[j].piBusinessType+' 대안'+'</td>';
+                    }
+                    html12 += '</tr>';
+                    html12 += '</thead>';
+
+                    html12 += '<tbody>';
+
+                    html12 += '<tr>';
+                    html12 += '<th style="color: red">'+'사업대안별 종합등급'+'</th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html12 += '<td style="color: red">'+request.sendData.allScroeMap[j][0]+'</td>';
+                    }
+                    html12 += '</tr>';
+
+                    html12 += '<tr>';
+                    html12 += '<th style="color: red">'+'사업대안별 종합점수'+'</th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html12 += '<td style="color: red">'+request.sendData.allRankMap[j][0]+'</td>';
+                    }
+                    html12 += '</tr>';
+
+                    html12 += '<tr>';
+                    html12 += '<th style="color: red">'+'사업 추진 가능여부 평가'+'</th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html12 += '<td style="color: red">'+request.sendData.allBusinessMap[j][0]+'</td>';
+                    }
+                    html12 += '</tr>';
+
+                    html12 += '<tr>';
+                    html12 += '<th style="color: red">'+'사업 우수대안 평가'+'</th>';
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        html12 += '<td style="color: red">'+request.sendData.allGreate[j]+'</td>';
+                    }
+                    html12 += '</tr>';
+
+                    html12 += '</tbody>';
+
+                    $allScoreRankTable.html(html12);
 
 
-                    // $("#safetyRankScroe1").text(request.sendData.technicalityRankList[0]+' / '+request.sendData.technicalityScroeList[0]);
-                    // $("#oldRankScroe1").text(request.sendData.technicalityRankList[1]+' / '+request.sendData.technicalityScroeList[1]);
-                    // $("#urgencyRankScroe1").text(request.sendData.technicalityRankList[2]+' / '+request.sendData.technicalityScroeList[2]);
-                    // $("#goalRankScroe1").text(request.sendData.technicalityRankList[3]+' / '+request.sendData.technicalityScroeList[3]);
-                    // $("#te_allRankScroe1").text(request.sendData.technicalityAllRank+' / '+request.sendData.technicalityAllScore);
+
 
                 } else {
                     if (request.err_msg2 === null) {

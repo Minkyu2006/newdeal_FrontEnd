@@ -93,9 +93,11 @@ public class PerformanceController{
         return "performance/output";
     }
     
-    // price
+    // 관리자전용 물가배수 등록및조회 페이지
     @RequestMapping("price")
-    public String price(){
+    public String price(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "performance/price";
     }
 

@@ -17,6 +17,10 @@
 			const autoNum = $("#autoNum").val();
 			call_performance(autoNum);
 		});
+
+		function devReady(){
+			alertCaution("해당 기능은 현재개발중 입니다.",1)
+		}
 	</script>
 </th:block>
 
@@ -26,12 +30,36 @@
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
 	<div class="content__inner">
 		<div class="performance" id="performance">
+
 			<div class="talk">
 				<div class="talk__box">
 					<p class="performance-output__comment">본 사업은 사업비용, 시설유형, 적용대상, 중복평가, 의무사업, 확정사업 요건을 보두 충족하는 <span>평가대상 사업</span>입니다.</p>
 				</div>
-				
-				<h2 class="content__heading">성능개선 사업 개요</h2>
+			</div>
+
+			<div class="talk">
+				<h2 class="content__heading">1. 성능개선 사업성 평가 개요</h2>
+
+				<div class="talk__box">
+					<div class="performance-output">
+						<div class="performance-output__result">
+							가. 본 사업은 법정계획/설계기준에 따른 의무사업으로써, 성능개선 사업 유형 중 노후화 유형 사업에 해당
+							<br />
+							나. 국토부 성능개선 기준에 따라, 성능개선 대안과 유지보수 대안을 설정하고 대안별 기술성, 경제성, 정책성을 평가하여, 사업의 추진여부 및 최적대안을 선정
+						</div>
+					</div>
+				</div>
+
+				<h2 class="content__heading">2. 성능개선 대상시설 및 사업 추진대안 정보</h2>
+				<div class="talk__box">
+					<div class="performance-output">
+						<div class="performance-output__result">
+							대상 시설은 교량(신응교)으로, 평가에 활용된 시설정보, 이용정보, 사업정보, 여건정보, 평가정보는 이하와 같음
+						</div>
+					</div>
+				</div>
+
+				<h2 class="content__heading">표 1. 성능개선 사업 정보</h2>
 				
 				<div class="talk__box">
 					<div class="performance-output">
@@ -70,7 +98,21 @@
 			</div>
 
 			<div class="talk">
-				<h2 class="content__heading">평가적용 가중치</h2>
+
+				<h2 class="content__heading">3. 성능개선 사업성 평가 내용</h2>
+				<div class="talk__box">
+					<div class="performance-output">
+						<div class="performance-output__result">
+							가. 본 성능개선 사업성 평가는 스마트 교량 유지관리 플랫폼에서 제공하는 "성능개선사업 간소화 평가 서비스(한국건설기술연구원, 2021)"를
+							<br />
+							적용하여 자동화 평가 시행
+							<br />
+							나. 이용자가 정의한 각 평가지표별 가중치 및 평가결과표는 다음과 같음
+						</div>
+					</div>
+				</div>
+
+				<h2 class="content__heading">표 2. 이용자 적용 가중치 표</h2>
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>기술성</h3>
@@ -92,7 +134,7 @@
 			</div>
 
 			<div class="talk">
-				<h2 class="content__heading">성능개선 사업평가 정보</h2>
+				<h2 class="content__heading">표 3. 사업성 평가결과 부분별 요약 표</h2>
 				
 				<div class="talk__box">
 					<div class="performance-output">
@@ -187,76 +229,30 @@
 
 			</div>
 
-
 			<div class="talk">
-				<h2 class="content__heading">사업 종합평가 결과</h2>
-				
+				<h2 class="content__heading">표 3. 사업성 평가결과 종합 표</h2>
 				<div class="talk__box">
 					<div class="performance-output">
 						<h3>결과</h3>
-						<table class="c-table c-table--in-border">
-							<colgroup>
-								<col />
-								<col />
-								<col />
-							</colgroup>
-							<thead>
-								<tr>
-									<th></th>
-									<th>성능개선 대안</th>
-									<th>유지보수 대안</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>기술성</th>
-									<td>95</td>
-									<td>35</td>
-								</tr>
-								<tr>
-									<th>경제성</th>
-									<td>75</td>
-									<td>90</td>
-								</tr>
-								<tr>
-									<th>정책성</th>
-									<td>66</td>
-									<td>50</td>
-								</tr>
-								<tr>
-									<th>종합 사업점수</th>
-									<td>88.1</td>
-									<td>47.5</td>
-								</tr>
-								<tr>
-									<th>사업 후 교량의 안전등급</th>
-									<td>B</td>
-									<td>C</td>
-								</tr>
-								<tr>
-									<th>비고</th>
-									<td>노후화 대응 사업으로 기술성 70%, 경제성 20%, 정책성 10% 반영</td>
-									<td></td>
-								</tr>
-							</tbody>
-						</table>
+						<table id="allScoreRankTable" class="c-table c-table--in-border"></table>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="talk">
-				<h2 class="content__heading">사업 평가결과의 해설</h2>
-				
+				<h2 class="content__heading">4. 성능개선 사업성 평가레포트</h2>
 				<div class="talk__box">
 					<div class="performance-output">
 						<div class="performance-output__result">
-							본 성능사업은 교량의 노후화 대응형 사업으로써, 시설물안전법에 의한 점검진단 결과 주요구조부인 교각에 중대한 손상이 발생하여 안전등급 D로 평가된 교량을 A등급으로 상향하기 위한 사업임
+							가. 대안별 사업추진 타당성 평가
 							<br />
-							성능개선 간소화 기준에 의거한 사업평가 결과 성능개선 대안 88.1점, 유지보수 대안 47.5점으로 성능개선 사업 추진의 타당성이 인정됨
+							- 성능개선 대안은 B0(60.3)으로 사업성 충족
 							<br />
-							유지보수 대안은 사업후 안전등급 B등급 이상으로 상향이 불가하므로 결격사유에 해당
+							- 유지보수 대안은 C+(56.9)으로 사업성 충족
 							<br />
-							유지보수 대안은 사업후 종합점수 50점 이하로 사업 추진 기술점수에 미달하므로 결격사유에 해당
+							나. 우수 사업대안 선정
+							<br />
+							- 성능개선 대안이 우수
 						</div>
 					</div>
 				</div>
@@ -265,34 +261,12 @@
 			<div class="talk__console">
 					<ul>
 						<li>
-							<button class="c-button c-button--point">Download</button>
+							<button class="c-button c-button--point" onclick="devReady()">PDF 다운로드</button>
 						</li>
 					</ul>
 				</div>
 		</div>
-		
-		<div id="popId" class="talk__select-pop">
-			<h4 class="talk__select-heading">추진하실 사업의 정보 입력 방식을 선택해주세요.</h4>
-			<div class="talk__select-radio">
-				<ul class="c-radio-group">
-					<li class="c-radio-group__item">
-						<div class="c-radio">
-							<input type="radio" name="talk-select" class="c-radio__input" id="talk-select01" value="/performance2" />
-							<label for="talk-select01" class="c-radio__label">입력파일(엑셀) 업로드</label>
-						</div>
-					</li>
-					<li class="c-radio-group__item">
-						<div class="c-radio">
-							<input type="radio" name="talk-select" class="c-radio__input" id="talk-select02" value="/performance3" />
-							<label for="talk-select02" class="c-radio__label">직접 작성</label>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<p class="talk__select-comment">파일 업로드 선택시 양식 다운로드를 제공합니다.</p>
-			<button class="c-button c-button--point" onclick="selectMovePage()">선택 완료</button>
-		</div>
-		
+
 	</div>
 	
 </div>
