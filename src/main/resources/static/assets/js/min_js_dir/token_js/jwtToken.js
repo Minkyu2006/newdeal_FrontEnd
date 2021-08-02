@@ -15,9 +15,9 @@ function JWT_Get(){
     refreshToken = getCookie("JwtRefreshToken");
     insert_id = getCookie("insert_id");
 
-    console.log("accessToken : "+accessToken);
-    console.log("refreshToken : "+refreshToken);
-    console.log("insert_id : "+insert_id);
+    // console.log("accessToken : "+accessToken);
+    // console.log("refreshToken : "+refreshToken);
+    // console.log("insert_id : "+insert_id);
 }
 
 // 쿠키 값 넣기
@@ -39,7 +39,7 @@ const getCookie = function(name) {
 function accessTokenCookieGet(){
     // setCookie(변수이름);
     const accessToken = getCookie("JwtAccessToken");
-    console.log("현재 쿠키 JwtAccessToken변수에 저장된 값: "+accessToken);
+    // console.log("현재 쿠키 JwtAccessToken변수에 저장된 값: "+accessToken);
     if(accessToken==null){
         refreshTokenCookie();
     }

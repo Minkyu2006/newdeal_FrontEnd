@@ -7,6 +7,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
 /**
  * @author Minkyu
  * Date : 2021-07-09
@@ -63,21 +78,6 @@ public class PerformanceController{
         return "performance/performance5";
     }
 
-    // 성능개선사업평가 비교대안
-    @RequestMapping("performance-business")
-    public String performanceBusiness(){
-        return "performance/performance-business";
-    }
-
-//    // 성능개선사업평가 input 중간저장 불러오기
-//    @RequestMapping("input/{autoNum}")
-//    public String inputMiddleSave(Model model,@PathVariable String autoNum){
-//        model.addAttribute("autoNum", autoNum);
-//        model.addAttribute("backend_url", backend_url);
-//        model.addAttribute("backend_protocol", backend_protocol);
-//        return "performance/input";
-//    }
-
     // 성능개선사업평가 Output
     @RequestMapping("output/{autoNum}")
     public String output(Model model,@PathVariable String autoNum){
@@ -86,6 +86,48 @@ public class PerformanceController{
         model.addAttribute("backend_protocol", backend_protocol);
         return "performance/output";
     }
+    
+    // 관리자전용 물가배수 등록및조회 페이지
+    @RequestMapping("price")
+    public String price(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "performance/price";
+    }
+
+    //  세부별 등록 조회 페이지
+    @RequestMapping("performancelist")
+    public String performancelist(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "performance/performancelist";
+    }
+
+    // 엑셀파일 다운로드
+    @Autowired
+    ResourceLoader resourceLoader;
+    @GetMapping("/download/{fileName}")
+    public ResponseEntity<Resource> resouceFileDownload(@PathVariable String fileName) {
+        log.info("fileName : "+fileName);
+        try {
+            Resource resource = resourceLoader.getResource("classpath:static/assets/files/"+ fileName);
+            log.info("resource : "+resource.getURI());
+            File file = resource.getFile();	//파일이 없는 경우 fileNotFoundException error가 난다.
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,file.getName())	//다운 받아지는 파일 명 설정
+                    .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))	//파일 사이즈 설정
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString())	//바이너리 데이터로 받아오기 설정
+                    .body(resource);	//파일 넘기기
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(null);
+        } catch (Exception e ) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 
 //    @Value("${base.securityfiles.directory}")
 //    private String securityfile;

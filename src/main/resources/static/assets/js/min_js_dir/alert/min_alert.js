@@ -159,3 +159,8 @@ function alertContinueSuccess(text) { //성공창(삭제성공시),저장성공�
     $('#alertpop').html(html);
 
 }
+
+function readyPage() {
+    alertCaution("아직 준비중인 페이지입니다.",1);
+    return false;
+}
