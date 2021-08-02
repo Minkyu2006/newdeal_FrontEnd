@@ -1,9 +1,92 @@
+// 시설물 유형을 통해 형식구분의 대한 select box
+function piTypeClick(idVal,data){
+
+    // console.log("호출 : "+idVal);
+    // console.log("받은 데이터 호출 : "+data);
+    const $piUsabilityLevel = $("#piUsabilityLevel");
+    const $piGoalLevel = $("#piGoalLevel");
+    const $gitaOp = $("#gitaOp");
+    const $piType = $("#piType");
+
+    if(idVal==="1" || idVal==="2"){
+        if(idVal==="1"){
+            $piUsabilityLevel.val("A");
+            $piGoalLevel.val("B");
+            $gitaOp.css("display","none");
+        }else{
+            $piUsabilityLevel.val("기타");
+            $piGoalLevel.val("C");
+            $gitaOp.css("display","block");
+        }
+
+        let html = "";
+        html += "<option value='슬래브교'>"+"슬래브교"+"</option>";
+        html += "<option value='거더교'>"+"거더교"+"</option>";
+        html += "<option value='라멘교'>"+"라멘교"+"</option>";
+        html += "<option value='사장교'>"+"사장교"+"</option>";
+        html += "<option value='사장교'>"+"사장교"+"</option>";
+        html += "<option value='엑스트라도즈드교'>"+"엑스트라도즈드교"+"</option>";
+        html += "<option value='보도육교'>"+"보도육교"+"</option>";
+        $piType.html(html);
+    }else if(idVal==="3" || idVal==="4"){
+        if(idVal==="3"){
+            $piUsabilityLevel.val("A");
+            $piGoalLevel.val("B");
+            $gitaOp.css("display","none");
+        }else{
+            $piUsabilityLevel.val("기타");
+            $piGoalLevel.val("C");
+            $gitaOp.css("display","block");
+        }
+
+        let html = "";
+        html += "<option value='ASSM터널'>"+"ASSM터널"+"</option>";
+        html += "<option value='NATM터널'>"+"NATM터널"+"</option>";
+        html += "<option value='개착식터널'>"+"개착식 터널"+"</option>";
+        html += "<option value='TBM터널'>"+"TBM터널"+"</option>";
+        html += "<option value='실드터널'>"+"실드터널"+"</option>";
+        html += "<option value='침매터널'>"+"침매터널"+"</option>";
+        html += "<option value='지하차도'>"+"지하차도"+"</option>";
+        $piType.html(html);
+
+    }else if(idVal==="5"){
+        $piUsabilityLevel.val("기타");
+        $piGoalLevel.val("C");
+        $gitaOp.css("display","block");
+
+        let html = "";
+        html += "<option value='암반사면'>"+"암반사면"+"</option>";
+        html += "<option value='토사사면'>"+"토사사면"+"</option>";
+        html += "<option value='혼합사면'>"+"혼합사면"+"</option>";
+        html += "<option value='기타'>"+"기타"+"</option>";
+        $piType.html(html);
+    }else{
+        $piUsabilityLevel.val("기타");
+        $piGoalLevel.val("C");
+        $gitaOp.css("display","block");
+
+        let html = "";
+        html += "<option value='콘크리트옹벽'>"+"콘크리트옹벽"+"</option>";
+        html += "<option value='보강토옹벽'>"+"보강토옹벽"+"</option>";
+        html += "<option value='돌쌓기옹벽'>"+"돌쌓기옹벽(석축)"+"</option>";
+        html += "<option value='동망태옹벽'>"+"동망태옹벽"+"</option>";
+        html += "<option value='기대기옹벽'>"+"기대기옹벽"+"</option>";
+        html += "<option value='기타'>"+"기타"+"</option>";
+        $piType.html(html);
+    }
+
+    if(data!==null){
+        $piType.val(data);
+    }
+
+}
+
 // 선택팝업열기
 function popOpen(){
     $('.talk__select-pop').addClass('open');
 }
 
-// Input 첫번째 NEXT버튼 구간(중간저장)
+// Input 첫번째 NEXT버튼 첫번째 구간(중간저장)
 function inputPerformanceNext1(){
     JWT_Get();
 
@@ -17,6 +100,16 @@ function inputPerformanceNext1(){
         const $piSafetyLevel = $("#piSafetyLevel").val();
         const $piGoalLevel = $("#piGoalLevel").val();
 
+        const $piType = $("#piType").val();
+        if($piType===""){
+            alertCaution("시설물 유형을 선택해주세요.",1);
+            return false;
+        }
+        const $piFacilityName = $("#piFacilityName").val();
+        if($piFacilityName===""){
+            alertCaution("시설명을 입력해주세요.",1);
+            return false;
+        }
         if($piSafetyLevel==="A"){
             if($piGoalLevel==="B" || $piGoalLevel==="C"){
                 alertCaution("안전등급보다 목표등급이 낮을 수 없습니다.",1);
@@ -92,8 +185,284 @@ function inputPerformanceNext1(){
                 // console.log("status : " + status);
                 if (status === 200) {
                     // console.log("autoNum : "+request.sendData.autoNum);
-                    $("#autoNum").val(request.sendData.autoNum)
+                    $("#autoNum").val(request.sendData.autoNum);
                     movePage('/performance/performance4');
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
+// Input 첫번째 NEXT버튼 두번째 구간(중간저장)
+function inputPerformanceNext2(){
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null || refreshToken == null || insert_id == null) {
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else {
+
+        const  autoNum = $("#autoNum").val();
+        const formData = new FormData(document.getElementById('performance2'));
+
+        console.log("두번째 중간저장 autoNum : "+autoNum);
+        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/middleSaveUpdateBusiness/"+autoNum; // 호출할 백엔드 API
+        console.log("url : "+url);
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                // console.log("status : " + status);
+                if (status === 200) {
+                    console.log("autoNum : "+request.sendData.autoNum);
+                    console.log("again : "+request.sendData.again);
+                    if(request.sendData.again==="again"){
+                        inputPerformanceNext2();
+                    }else{
+                        $("#autoNum").val(request.sendData.autoNum);
+                        movePage('/performance/performance5');
+                    }
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
+// Input 첫번째 NEXT버튼 마지막 구간 저장
+function inputPerformanceNext3(){
+
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else {
+
+        const  autoNum = $("#autoNum").val();
+        console.log("마지막 저장 autoNum : "+autoNum);
+
+        let technologyAdd;
+        let economyAdd;
+        let policyAdd;
+
+        const  piWeightSafe = $("#piWeightSafe");
+        const  piWeightUsability = $("#piWeightUsability");
+        const  piWeightOld = $("#piWeightOld");
+        const  piWeightUrgency = $("#piWeightUrgency");
+        const  piWeightGoal = $("#piWeightGoal");
+
+        const  piWeightSafeUtility = $("#piWeightSafeUtility");
+        const  piWeightCostUtility = $("#piWeightCostUtility");
+
+        const  piWeightBusiness = $("#piWeightBusiness");
+        const  piWeightComplaint = $("#piWeightComplaint");
+        const  piWeightBusinessEffect = $("#piWeightBusinessEffect");
+
+        if(piWeightSafe.val()===""){
+            piWeightSafe.val("0.65")
+        }else if(piWeightSafe.val()<=0.64){
+            alertCaution("안정성 최소 가중치보다 낮습니다.",1);
+            return false;
+        }else if(piWeightSafe.val()>0.89){
+            alertCaution("안정성 최대 가중치보다 높습니다.",1);
+            return false;
+        }
+        // console.log("안정성 : "+piWeightSafe.val());
+        if(piWeightOld.val()===""){
+            piWeightOld.val("0.2")
+        }else if(piWeightOld.val()<=0.19){
+            alertCaution("노후도 최소 가중치보다 낮습니다.",1);
+            return false;
+        }else if(piWeightOld.val()>0.49){
+            alertCaution("노후도 최대 가중치보다 높습니다.",1);
+            return false;
+        }
+        // console.log("노후도 : "+piWeightOld.val());
+        if(piWeightUrgency.val()===""){
+            piWeightUrgency.val("0.05")
+        }else if(piWeightUrgency.val()>0.19){
+            alertCaution("시급성 최대 가중치보다 높습니다.",1);
+            return false;
+        }
+        // console.log("시급성 : "+piWeightUrgency.val());
+        if(piWeightGoal.val()===""){
+            piWeightGoal.val("0.05")
+        }else if(piWeightGoal.val()>0.19){
+            alertCaution("목표달성도 최대 가중치보다 높습니다.",1);
+            return false;
+        }
+        // console.log("목표달성도 : "+piWeightGoal.val());
+
+        if(piWeightSafeUtility.val()===""){
+            piWeightSafeUtility.val("0.7")
+        }else if(piWeightSafeUtility.val()<0.59){
+            alertCaution("안전효용 개선 효율성<Br> 최소 가중치보다 낮습니다.",1);
+            return false;
+        }else if(piWeightSafeUtility.val()>0.79){
+            alertCaution("안전효용 개선 효율성 <Br>최대 가중치보다 높습니다.",1);
+            return false;
+        }
+        // console.log("안전효용 개선 효율성 : "+piWeightSafeUtility.val());
+        if(piWeightCostUtility.val()===""){
+            piWeightCostUtility.val("0.3")
+        }else if(piWeightCostUtility.val()<0.19){
+            alertCaution("자산가치 개선 효율성 <Br> 최소 가중치보다 낮습니다.",1);
+            return false;
+        }else if(piWeightCostUtility.val()>0.39){
+            alertCaution("자산가치 개선 효율성 <Br> 최대 가중치보다 높습니다.",1);
+            return false;
+        }
+        // console.log("자산가치 개선 효율성 : "+piWeightCostUtility.val());
+
+        if(piWeightBusiness.val()===""){
+            piWeightBusiness.val("0.7")
+        }else if(piWeightBusiness.val()<0.59){
+            alertCaution("사업추진 타당성 최소 가중치보다 낮습니다.",1);
+            return false;
+        }else if(piWeightBusiness.val()>0.79){
+            alertCaution("사업추진 타당성 최대 가중치보다 높습니다.",1);
+            return false;
+        }
+        // console.log("사업추진 타당성 : "+piWeightBusiness.val());
+        if(piWeightComplaint.val()===""){
+            piWeightComplaint.val("0.2")
+        }else if(piWeightComplaint.val()<0.09){
+            alertCaution("민원 및 사고 대응성 최소 가중치보다 낮습니다.",1);
+            return false;
+        }else if(piWeightComplaint.val()>0.29){
+            alertCaution("민원 및 사고 대응성 최대 가중치보다 높습니다.",1);
+            return false;
+        }
+        // console.log("민원 및 사고 대응성 : "+piWeightComplaint.val());
+        if(piWeightBusinessEffect.val()===""){
+            piWeightBusinessEffect.val("0.1")
+        }else if(piWeightBusinessEffect.val()<0.04){
+            alertCaution("사업효과 범용성 최소 가중치보다 낮습니다.",1);
+            return false;
+        }else if(piWeightBusinessEffect.val()>0.19){
+            alertCaution("사업효과 범용성 최대 가중치보다 높습니다.",1);
+            return false;
+        }
+        // console.log("사업효과 범용성 : "+piWeightBusinessEffect.val());
+
+        if($("#useTh").css('display')==='none'){
+            piWeightUsability.val("0");
+            technologyAdd = parseFloat(piWeightSafe.val())+parseFloat(piWeightOld.val())+parseFloat(piWeightUrgency.val())+parseFloat(piWeightGoal.val());
+        }else{
+            if(piWeightUsability.val()===""){
+                piWeightUsability.val("0.05")
+            }else if(piWeightUsability>0.09){
+                alertCaution("사용성 최대 가중치보다 높습니다.",1);
+                return false;
+            }
+            // console.log("사용성 : "+piWeightUsability.val());
+            technologyAdd = parseFloat(piWeightSafe.val())+parseFloat(piWeightUsability.val())+parseFloat(piWeightOld.val())+parseFloat(piWeightUrgency.val())+parseFloat(piWeightGoal.val());
+        }
+        economyAdd =parseFloat(piWeightSafeUtility.val())+parseFloat(piWeightCostUtility.val());
+        policyAdd = parseFloat(piWeightBusiness.val())+parseFloat(piWeightComplaint.val())+parseFloat(piWeightBusinessEffect.val());
+
+        // console.log("기술성 가중치 : "+technologyAdd);
+        // console.log("경제성 가중치 : "+economyAdd);
+        // console.log("정책성 가중치 : "+policyAdd);
+
+        // console.log("Math.round(technologyAdd) : "+Math.round(technologyAdd))
+        if(Math.round(technologyAdd) !== 1){
+            alertCaution("기술성의 표준 가중치의<Br>합이 '1'이여야 합니다.",1);
+            return false;
+        }
+        // console.log("Math.round(economyAdd) : "+Math.round(economyAdd))
+        if(Math.round(economyAdd) !== 1){
+            alertCaution("경제성의 표준 가중치의<Br>합이 '1'이여야 합니다.",1);
+            return false;
+        }
+        // console.log("Math.round(policyAdd) : "+Math.round(policyAdd))
+        if(Math.round(policyAdd) !== 1){
+            alertCaution("정책성의 표준 가중치의<Br>합이 '1'이여야 합니다.",1);
+            return false;
+        }
+
+        const allAdd = parseFloat($("#piWeightTechnicality").val())+parseFloat($("#piWeightEconomy").val())+parseFloat($("#piWeightPolicy").val());
+        // console.log("allAdd : "+allAdd)
+        if(allAdd !== 1){
+            alertCaution("성능개선 유형 기본 가중치의<Br>합이 '1'이여야 합니다.",1);
+            return false;
+        }
+
+        const $piWeightCriticalScore = $("#piWeightCriticalScore");
+        if($piWeightCriticalScore.val()===""){
+            $piWeightCriticalScore.val("50")
+        }else if(Number($piWeightCriticalScore.val())>100){
+            alertCaution("사업추진 임계점수는 <Br>'100'이하여야 합니다.",1);
+        }
+
+        const formData = new FormData(document.getElementById('weightSendForm'));
+
+        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/weightSave/"+autoNum; // 호출할 백엔드 API
+        console.log("url : " + url);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data : formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    // console.log("500에러 재로그인 해주세요.");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    // console.log("404에러 재로그인 해주세요.");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                console.log("status : " + status);
+                if (status === 200) {
+                    // console.log("저장완료");
+                    alertLink(request.sendData.autoNum);
+                    alertSuccess("작성을 완료했습니다.");
                 } else {
                     if (request.err_msg2 === null) {
                         alertCaution(request.err_msg, 1);
@@ -165,7 +534,7 @@ function inputMiddleSaveCheck(){
     }
 }
 
-// 중간저장 데이터 호출하기
+// 중간저장 데이터 호출하기1
 function middleData(autoNum){
 
     JWT_Get();
@@ -209,25 +578,32 @@ function middleData(autoNum){
                 let status = request.status;
                 // console.log("status : " + status);
                 if (status === 200) {
-                    if(request.sendData.performanceData.piFacilityType==="교량"){
+                    const piFacilityType = request.sendData.performanceData.piFacilityType;
+                    const piType = request.sendData.performanceData.piType;
+                    if(piFacilityType==="교량"){
                         $('#group1-1').prop("checked", true);
-                    }else if(request.sendData.performanceData.piFacilityType==="보도육교"){
+                        piTypeClick("1",piType);
+                    }else if(piFacilityType==="보도육교"){
                         $('#group1-2').prop("checked", true);
-                    }else if(request.sendData.performanceData.piFacilityType==="터널"){
+                        piTypeClick("2",piType);
+                    }else if(piFacilityType==="터널"){
                         $('#group1-3').prop("checked", true);
-                    }else if(request.sendData.performanceData.piFacilityType==="지하차도"){
+                        piTypeClick("3",piType);
+                    }else if(piFacilityType==="지하차도"){
                         $('#group1-4').prop("checked", true);
-                    }else if(request.sendData.performanceData.piFacilityType==="절토사면"){
+                        piTypeClick("4",piType);
+                    }else if(piFacilityType==="절토사면"){
                         $('#group1-5').prop("checked", true);
+                        piTypeClick("5",piType);
                     }else{
                         $('#group1-6').prop("checked", true);
+                        piTypeClick("6",piType);
                     }
                     $("#piFacilityName").val(request.sendData.performanceData.piFacilityName);
                     $("#piCompletionYear").val(request.sendData.performanceData.piCompletionYear);
                     $("#piPublicYear").val(request.sendData.performanceData.piPublicYear);
-                    $("#piType").val(request.sendData.performanceData.piType);
                     $("#piErectionCost").val(request.sendData.performanceData.piErectionCost);
-
+                    $("#piKind").val(request.sendData.performanceData.piKind);
                     if(request.sendData.performanceData.piSafetyLevel==="A"){
                         $('#piSafetyLevel').val('A').prop("selected",true);
                     }else if(request.sendData.performanceData.piSafetyLevel==="B"){
@@ -240,6 +616,18 @@ function middleData(autoNum){
                         $('#piSafetyLevel').val('E').prop("selected",true);
                     }
 
+                    if(request.sendData.performanceData.piUsabilityLevel==="A"){
+                        $('#piUsabilityLevel').val('A').prop("selected",true);
+                    }else if(request.sendData.performanceData.piUsabilityLevel==="B"){
+                        $('#piUsabilityLevel').val('B').prop("selected",true);
+                    }else if(request.sendData.performanceData.piUsabilityLevel==="C"){
+                        $('#piUsabilityLevel').val('C').prop("selected",true);
+                    }else if(request.sendData.performanceData.piUsabilityLevel==="D"){
+                        $('#piUsabilityLevel').val('D').prop("selected",true);
+                    }else{
+                        $('#piUsabilityLevel').val('기타').prop("selected",true);
+                    }
+
                     if(request.sendData.performanceData.piGoalLevel==="A"){
                         $('#piGoalLevel').val('A').prop("selected",true);
                     }else if(request.sendData.performanceData.piGoalLevel==="B"){
@@ -248,7 +636,20 @@ function middleData(autoNum){
                         $('#piGoalLevel').val('C').prop("selected",true);
                     }
 
-                    $("#piMaintenanceDelay").val(request.sendData.performanceData.piMaintenanceDelay);
+                    const piMaintenanceDelay = request.sendData.performanceData.piMaintenanceDelay;
+                    console.log("piMaintenanceDelay : "+piMaintenanceDelay)
+                    if(piMaintenanceDelay<1){
+                        $("#piMaintenanceDelay").val("0");
+                    }else if(piMaintenanceDelay===1){
+                        $("#piMaintenanceDelay").val("1");
+                    }else if(piMaintenanceDelay===2){;
+                        $("#piMaintenanceDelay").val("2");
+                    }else if(piMaintenanceDelay===3){
+                        $("#piMaintenanceDelay").val("3");
+                    }else{
+                        $("#piMaintenanceDelay").val("4");
+                    }
+
                     $("#piAADT").val(request.sendData.performanceData.piAADT);
                     $("#piManagement").val(request.sendData.performanceData.piManagement);
                     $("#piAgency").val(request.sendData.performanceData.piAgency);
@@ -258,6 +659,215 @@ function middleData(autoNum){
                     $("#piRaterBelong").val(request.sendData.performanceData.piRaterBelong);
                     $("#piRaterPhone").val(request.sendData.performanceData.piRaterPhone);
 
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
+// 중간저장 데이터 호출하기2
+function middleDataBusiness(autoNum){
+
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else if (accessToken == null) {
+        refreshTokenCookie();
+    } else {
+
+        console.log("호출할 일련번호 : "+autoNum);
+
+        const params = {
+            autoNum: autoNum
+        };
+
+        url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/middleDataBusiness"; // 호출할 백엔드 API
+        console.log("url : " + url);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data : params,
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                console.log("status : " + status);
+                if (status === 200) {
+
+                    const piBusiness = request.sendData.piBusiness;
+                    const size = request.sendData.size;
+                    console.log("piBusiness : "+piBusiness);
+                    console.log("size : "+size);
+
+                    if(piBusiness!==null){
+                        if(piBusiness==="노후화"){
+                            $('#piBusiness-1').prop("checked", true);
+                        }else if(piBusiness==="기준변화"){
+                            $('#piBusiness-2').prop("checked", true);
+                        }else{
+                            $('#piBusiness-3').prop("checked", true);
+                        }
+
+                        let j=1;
+                        let x=1;
+                        let y=2;
+                        for(let i=0; i<size; i++){
+                            $("#piBusinessType"+j).val(request.sendData.performance[i].piBusinessType);
+                            $("#piTargetAbsence"+j).val(request.sendData.performance[i].piTargetAbsence);
+                            $("#piBusinessClassification"+j).val(request.sendData.performance[i].piBusinessClassification);
+                            $("#piBusinessExpenses"+j).val(request.sendData.performance[i].piBusinessExpenses);
+                            $("#piBeforeSafetyRating"+j).val(request.sendData.performance[i].piBeforeSafetyRating);
+                            $("#piAfterSafetyRating"+j).val(request.sendData.performance[i].piAfterSafetyRating);
+
+                            const piBusinessObligatory = request.sendData.performance[i].piBusinessObligatory;
+                            if(piBusinessObligatory===1){
+                                $("#piBusinessObligatory"+x).prop("checked", true);
+                            }else{
+                                $("#piBusinessObligatory"+y).prop("checked", true);
+                            }
+
+                            const piBusinessMandatory = request.sendData.performance[i].piBusinessMandatory;
+                            if(piBusinessMandatory===1){
+                                $("#piBusinessMandatory"+x).prop("checked", true);
+                            }else{
+                                $("#piBusinessMandatory"+y).prop("checked", true);
+                            }
+
+                            const piBusinessPlanned = request.sendData.performance[i].piBusinessPlanned;
+                            if(piBusinessPlanned===1){
+                                $("#piBusinessPlanned"+x).prop("checked", true);
+                            }else{
+                                $("#piBusinessPlanned"+y).prop("checked", true);
+                            }
+
+                            $("#piWhether"+j).val(request.sendData.performance[i].piWhether);
+
+                            j++
+                            x=x+2;
+                            y=y+2;
+                        }
+
+                        if(size===3){
+                            $("#businessCount").val(size);
+                            $("#addBusiness1").css('display', 'block');
+                        }else if(size===4){
+                            $("#businessCount").val(size);
+                            $("#addBusiness1").css('display', 'block');
+                            $("#addBusiness2").css('display', 'block');
+                            $("#addBusinessBtn").css("display","none");
+                        }
+
+                    }
+
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
+// 성능개선 유형 호출하기
+function weightBusiness(autoNum){
+
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else if (accessToken == null) {
+        refreshTokenCookie();
+    } else {
+
+        console.log("호출할 일련번호 : "+autoNum);
+
+        const params = {
+            autoNum: autoNum
+        };
+
+        url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/weightBusiness"; // 호출할 백엔드 API
+        console.log("url : " + url);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data : params,
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                console.log("status : " + status);
+                if (status === 200) {
+
+                    const weightBusiness = request.sendData.weightBusiness;
+                    const facilityType = request.sendData.facilityType;
+                    // console.log("facilityType : "+facilityType);
+                    if(facilityType==="보도육교" ||facilityType==="절토사면" ||facilityType==="옹벽"){
+                        $("#piWeightUsability").val("0");
+                        $("#techTh").attr("rowspan",4);
+                        $("#useTh").css("display","none");
+                    }
+
+                    // console.log("weightBusiness : "+weightBusiness);
+                    const $choseCategory = $("#choseCategory");
+                    const $piWeightTechnicality = $("#piWeightTechnicality");
+                    const $piWeightEconomy = $("#piWeightEconomy");
+                    const $piWeightPolicy = $("#piWeightPolicy");
+
+                    if(weightBusiness.indexOf("노후화") !== -1){
+                        // console.log("노후화대응 입니다.");
+                        $choseCategory.text("노후화 대응");
+                        $piWeightTechnicality.val(0.8);
+                        $piWeightEconomy.val(0.1);
+                        $piWeightPolicy.val(0.1);
+                    }else if(weightBusiness.indexOf("기준") !== -1){
+                        // console.log("기준변화 입니다.");
+                        $choseCategory.text("기준 변화");
+                        $piWeightTechnicality.val(0.2);
+                        $piWeightEconomy.val(0.7);
+                        $piWeightPolicy.val(0.1);
+                    }else{
+                        // console.log("사용성변화 입니다.");
+                        $choseCategory.text("사용성 유형");
+                        $piWeightTechnicality.val(0.1);
+                        $piWeightEconomy.val(0.6);
+                        $piWeightPolicy.val(0.3);
+                    }
                 } else {
                     if (request.err_msg2 === null) {
                         alertCaution(request.err_msg, 1);
@@ -399,11 +1009,11 @@ function weightRadioBtn(value){
     if(value==="yes"){
         $('#group1').prop("checked", true);
         $('#group2').prop("checked", false);
-        $('.weight__contents input').attr('readonly', false);
+        $('.weight__contents input[type="number"]').attr('readonly', false);
     }else{
         $("#group1").prop("checked", false);
         $("#group2").prop("checked", true);
-        $('.weight__contents input').attr('readonly', true);
+        $('.weight__contents input[type="number"]').attr('readonly', true);
     }
 }
 
@@ -420,21 +1030,31 @@ function excelSend() {
         refreshTokenCookie();
     } else {
 
+        const $weight_Category = $("#weight_Category");
+        if($weight_Category.val()===""){
+            alertCaution("성능개선 유형을 선택해주세요.",1)
+            return false;
+        }
+
         const $piWeightSafe = $("#piWeightSafe");
         if($piWeightSafe.val()===""){
-            $piWeightSafe.val("0.6")
+            $piWeightSafe.val("0.65")
+        }
+        const $piWeightUsability = $("#piWeightUsability");
+        if($piWeightUsability.val()===""){
+            $piWeightUsability.val("0.05")
         }
         const $piWeightOld = $("#piWeightOld");
         if($piWeightOld.val()===""){
-            $piWeightOld.val("0.1")
+            $piWeightOld.val("0.2")
         }
         const $piWeightUrgency = $("#piWeightUrgency");
         if($piWeightUrgency.val()===""){
-            $piWeightUrgency.val("0.1")
+            $piWeightUrgency.val("0.05")
         }
         const $piWeightGoal = $("#piWeightGoal");
         if($piWeightGoal.val()===""){
-            $piWeightGoal.val("0.2")
+            $piWeightGoal.val("0.05")
         }
         const $piWeightSafeUtility = $("#piWeightSafeUtility");
         if($piWeightSafeUtility.val()===""){
@@ -450,11 +1070,11 @@ function excelSend() {
         }
         const $piWeightComplaint = $("#piWeightComplaint");
         if($piWeightComplaint.val()===""){
-            $piWeightComplaint.val("0.1")
+            $piWeightComplaint.val("0.2")
         }
         const $piWeightBusinessEffect = $("#piWeightBusinessEffect");
         if($piWeightBusinessEffect.val()===""){
-            $piWeightBusinessEffect.val("0.2")
+            $piWeightBusinessEffect.val("0.1")
         }
         const $piWeightCriticalScore = $("#piWeightCriticalScore");
         if($piWeightCriticalScore.val()===""){
@@ -630,6 +1250,20 @@ function call_performance(autoNum){
                     }
                     html += '</tr>';
 
+                    if(request.sendData.typeName==="교량" || request.sendData.typeName==="터널" ){
+                        html += '<tr>';
+                        html += '<th>'+'사용성등급'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html += '<td>'+request.sendData.performanceList[j].piUsabilityLevel+'</td>';
+                        }
+                        html += '</tr>';
+                    }else{
+                        html += '<tr>';
+                        html += '<th>'+'사용성등급'+'</th>';
+                        html += '<td>'+'-'+'</td>';
+                        html += '</tr>';
+                    }
+
                     html += '<tr>';
                     html += '<th>'+'목표등급'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
@@ -721,13 +1355,6 @@ function call_performance(autoNum){
                     html3 += '<th>'+'사업분류'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
                         html3 += '<td>'+request.sendData.performanceList[j].piBusinessClassification+'</td>';
-                    }
-                    html3 += '</tr>';
-
-                    html3 += '<tr>';
-                    html3 += '<th>'+'사업내용'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html3 += '<td>'+request.sendData.performanceList[j].piBusinessInformation+'</td>';
                     }
                     html3 += '</tr>';
 
@@ -863,25 +1490,39 @@ function call_performance(autoNum){
                     html6 += '<tr>';
                     html6 += '<th>'+'안전성'+'</th>';
                     html6 += '<td>'+request.sendData.weightList.piWeightSafe+'</td>';
-                    html6 += '<td>'+'0.6'+'</td>';
+                    html6 += '<td>'+'0.65'+'</td>';
                     html6 += '</tr>';
+
+                    if(request.sendData.typeName==="교량" || request.sendData.typeName==="터널" ){
+                        html6 += '<tr>';
+                        html6 += '<th>'+'사용성'+'</th>';
+                        html6 += '<td>'+request.sendData.weightList.piWeightUsability+'</td>';
+                        html6 += '<td>'+'0.05'+'</td>';
+                        html6 += '</tr>';
+                    }else{
+                        html6 += '<tr>';
+                        html6 += '<th>'+'사용성'+'</th>';
+                        html6 += '<td>'+'-'+'</td>';
+                        html6 += '<td>'+'-'+'</td>';
+                        html6 += '</tr>';
+                    }
 
                     html6 += '<tr>';
                     html6 += '<th>'+'노후도'+'</th>';
                     html6 += '<td>'+request.sendData.weightList.piWeightOld+'</td>';
-                    html6 += '<td>'+'0.1'+'</td>';
+                    html6 += '<td>'+'0.2'+'</td>';
                     html6 += '</tr>';
 
                     html6 += '<tr>';
                     html6 += '<th>'+'시급성'+'</th>';
                     html6 += '<td>'+request.sendData.weightList.piWeightUrgency+'</td>';
-                    html6 += '<td>'+'0.1'+'</td>';
+                    html6 += '<td>'+'0.05'+'</td>';
                     html6 += '</tr>';
 
                     html6 += '<tr>';
                     html6 += '<th>'+'목표달성도'+'</th>';
                     html6 += '<td>'+request.sendData.weightList.piWeightGoal+'</td>';
-                    html6 += '<td>'+'0.2'+'</td>';
+                    html6 += '<td>'+'0.05'+'</td>';
                     html6 += '</tr>';
 
                     html6 += '</tbody>';
@@ -937,13 +1578,13 @@ function call_performance(autoNum){
                     html8 += '<tr>';
                     html8 += '<th>'+'자산가치 개선 효율성'+'</th>';
                     html8 += '<td>'+request.sendData.weightList.piWeightComplaint+'</td>';
-                    html8 += '<td>'+'0.1'+'</td>';
+                    html8 += '<td>'+'0.2'+'</td>';
                     html8 += '</tr>';
 
                     html8 += '<tr>';
                     html8 += '<th>'+'자산가치 개선 효율성'+'</th>';
                     html8 += '<td>'+request.sendData.weightList.piWeightBusinessEffect+'</td>';
-                    html8 += '<td>'+'0.2'+'</td>';
+                    html8 += '<td>'+'0.1'+'</td>';
                     html8 += '</tr>';
 
                     html8 += '</tbody>';
@@ -977,33 +1618,76 @@ function call_performance(autoNum){
                     }
                     html9 += '</tr>';
 
-                    html9 += '<tr>';
-                    html9 += '<th>'+'노후도'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html9 += '<td>'+request.sendData.technicalityRank[j][1]+" / "+request.sendData.technicalityScore[j][1]+'</td>';
-                    }
-                    html9 += '</tr>';
+                    if(request.sendData.typeName==="교량" || request.sendData.typeName==="터널" ){
+                        html9 += '<tr>';
+                        html9 += '<th>'+'사용성'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][1]+" / "+request.sendData.technicalityScore[j][1]+'</td>';
+                        }
+                        html9 += '</tr>';
 
-                    html9 += '<tr>';
-                    html9 += '<th>'+'시급성'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html9 += '<td>'+request.sendData.technicalityRank[j][2]+" / "+request.sendData.technicalityScore[j][2]+'</td>';
-                    }
-                    html9 += '</tr>';
+                        html9 += '<tr>';
+                        html9 += '<th>'+'노후도'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][2]+" / "+request.sendData.technicalityScore[j][2]+'</td>';
+                        }
+                        html9 += '</tr>';
 
-                    html9 += '<tr>';
-                    html9 += '<th>'+'목표성능 달성도'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html9 += '<td>'+request.sendData.technicalityRank[j][3]+" / "+request.sendData.technicalityScore[j][3]+'</td>';
-                    }
-                    html9 += '</tr>';
+                        html9 += '<tr>';
+                        html9 += '<th>'+'시급성'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][3]+" / "+request.sendData.technicalityScore[j][3]+'</td>';
+                        }
+                        html9 += '</tr>';
 
-                    html9 += '<tr>';
-                    html9 += '<th style="color: red">'+'기술성 종합점수'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html9 += '<td style="color: red">'+request.sendData.technicalityRank[j][4]+" / "+request.sendData.technicalityScore[j][4]+'</td>';
+                        html9 += '<tr>';
+                        html9 += '<th>'+'목표성능 달성도'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][4]+" / "+request.sendData.technicalityScore[j][4]+'</td>';
+                        }
+                        html9 += '</tr>';
+
+                        html9 += '<tr>';
+                        html9 += '<th style="color: red">'+'기술성 종합점수'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td style="color: red">'+request.sendData.technicalityRank[j][5]+" / "+request.sendData.technicalityScore[j][5]+'</td>';
+                        }
+                        html9 += '</tr>';
+                    }else{
+                        html9 += '<tr>';
+                        html9 += '<th>'+'사용성'+'</th>';
+                        html9 += '<td>'+'-'+'</td>';
+                        html9 += '<td>'+'-'+'</td>';
+                        html9 += '</tr>';
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'노후도'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][1]+" / "+request.sendData.technicalityScore[j][1]+'</td>';
+                        }
+                        html9 += '</tr>';
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'시급성'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][2]+" / "+request.sendData.technicalityScore[j][2]+'</td>';
+                        }
+                        html9 += '</tr>';
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'목표성능 달성도'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][3]+" / "+request.sendData.technicalityScore[j][3]+'</td>';
+                        }
+                        html9 += '</tr>';
+
+                        html9 += '<tr>';
+                        html9 += '<th style="color: red">'+'기술성 종합점수'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td style="color: red">'+request.sendData.technicalityRank[j][4]+" / "+request.sendData.technicalityScore[j][4]+'</td>';
+                        }
+                        html9 += '</tr>';
                     }
-                    html9 += '</tr>';
 
                     html9 += '</tbody>';
                     $technicalityTable.html(html9);
@@ -1146,7 +1830,11 @@ function call_performance(autoNum){
                     html12 += '<tr>';
                     html12 += '<th style="color: red">'+'사업 우수대안 평가'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html12 += '<td style="color: red">'+request.sendData.allGreate[j]+'</td>';
+                        if(request.sendData.allGreate[j]===undefined){
+                            html12 += '<td style="color: red">'+'-'+'</td>';
+                        }else{
+                            html12 += '<td style="color: red">'+request.sendData.allGreate[j]+'</td>';
+                        }
                     }
                     html12 += '</tr>';
 

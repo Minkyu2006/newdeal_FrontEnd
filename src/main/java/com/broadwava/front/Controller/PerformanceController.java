@@ -78,12 +78,6 @@ public class PerformanceController{
         return "performance/performance5";
     }
 
-    // 성능개선사업평가 비교대안
-    @RequestMapping("performance-business")
-    public String performanceBusiness(){
-        return "performance/performance-business";
-    }
-
     // 성능개선사업평가 Output
     @RequestMapping("output/{autoNum}")
     public String output(Model model,@PathVariable String autoNum){
@@ -101,6 +95,13 @@ public class PerformanceController{
         return "performance/price";
     }
 
+    //  세부별 등록 조회 페이지
+    @RequestMapping("performancelist")
+    public String performancelist(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "performance/performancelist";
+    }
 
     // 엑셀파일 다운로드
     @Autowired

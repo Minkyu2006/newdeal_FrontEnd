@@ -20,7 +20,6 @@
 		$(function() {
 			const  autoNum = $("#autoNum").val();
 			if(autoNum===""){
-				console.log("autoNum : "+autoNum);
 				inputMiddleSaveCheck();
 			}
 		});
@@ -28,9 +27,9 @@
 </th:block>
 
 <div layout:fragment="content" class="content">
-	<input type="text" id="autoNum" th:value="${autoNum}" />
-	<input type="hidden" id="backend_url" th:value="${backend_url}" />
-	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
+	<input type="hidden" id="autoNum" readonly="readonly" />
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="content__inner">
 		<h2 class="content__heading">성능 개선 사업 평가 서비스</h2>
 		<div class="performance" id="performance">

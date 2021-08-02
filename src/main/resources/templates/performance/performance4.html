@@ -1,4 +1,8 @@
+
 <div class="talk">
+
+	<form id="performance2" enctype="multipart/form-data">
+	<input type="hidden" id="businessCount" name="businessCount" value="2" />
 	<div class="talk__box">
 		<div class="talk__header">
 			<h3>Step 5. 사업구분</h3>
@@ -7,37 +11,38 @@
 			<ul class="c-radio-group">
 				<li class="c-radio-group__item">
 					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-1" />
-						<label for="group1-1" class="c-radio__label">노후화</label>
+						<input type="radio" class="c-radio__input" value="노후화대응" name="piBusiness" id="piBusiness-1" />
+						<label for="piBusiness-1" class="c-radio__label">노후화대응</label>
 					</div>
 				</li>
 				<li class="c-radio-group__item">
 					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-2" />
-						<label for="group1-2" class="c-radio__label">기준변화</label>
+						<input type="radio" class="c-radio__input" value="기준변화" name="piBusiness" id="piBusiness-2" />
+						<label for="piBusiness-2" class="c-radio__label">기준변화</label>
 					</div>
 				</li>
 				<li class="c-radio-group__item">
 					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-3" />
-						<label for="group1-3" class="c-radio__label">사용성변화</label>
-					</div>
-				</li>
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" name="group1" id="group1-4" />
-						<label for="group1-4" class="c-radio__label">기타</label>
+						<input type="radio" class="c-radio__input" value="사용성변화" name="piBusiness" id="piBusiness-3" />
+						<label for="piBusiness-3" class="c-radio__label">사용성변화</label>
 					</div>
 				</li>
 			</ul>
 		</div>
 	</div>
-	
+
+
 	<div class="talk__box">
 		<div class="talk__header">
 			<h3>Step 6. 사업정보 입력</h3>
 		</div>
+
+
+
 		<div class="talk__contents">
+
+			<!--############################# 첫번째 대안 #########################-->
+
 			<div class="performance-business">
 				<h4 class="performance-business__heading">기준대안</h4>
 				<div class="performance-business__contents">
@@ -47,9 +52,10 @@
 		                        <div class="talk__input-heading">사업유형</div>
 		                        <div class="talk__input">
 		                        	<div class="c-select">
-										<select class="c-select__input">
-											<option>성능개선</option>
-											<option>유지보수</option>
+										<select id="piBusinessType1" name="piBusinessType" class="c-select__input">
+											<option value="">유형을 선택해주세요.</option>
+											<option value="성능개선">성능개선</option>
+											<option value="유지보수">유지보수</option>
 										</select>
 									</div>
 		                        </div>
@@ -59,10 +65,8 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">대상부재</div>
 								<div class="talk__input">
-									<div class="c-select">
-										<select class="c-select__input">
-											<option>바닥판</option>
-										</select>
+									<div class="c-text">
+										<input type="text" name="piTargetAbsence" id="piTargetAbsence1" class="c-text__input" />
 									</div>
 								</div>
 							</div>
@@ -72,22 +76,15 @@
 								<div class="talk__input-heading">사업분류</div>
 								<div class="talk__input">
 									<div class="c-select">
-										<select class="c-select__input">
-											<option>개량</option>
-											<option>확장</option>
-											<option>일부개축</option>
-											<option>전면개축</option>
-											<option>보수보강</option>
+										<select id="piBusinessClassification1" name="piBusinessClassification" class="c-select__input">
+											<option value="">사업분류를 선택해주세요.</option>
+											<option value="개량">개량</option>
+											<option value="확장">확장</option>
+											<option value="일부개축">일부개축</option>
+											<option value="전면개축">전면개축</option>
+											<option value="단순보수보강">단순보수보강</option>
 										</select>
 									</div>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="talk__input-item">
-								<div class="talk__input-heading">사업내용</div>
-								<div class="talk__input">
-									<div class="c-text"><input type="text" class="c-text__input" /></div>
 								</div>
 							</div>
 						</li>
@@ -95,19 +92,22 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="number" class="c-text__input" /></div>
+									<div class="c-text">
+										<input type="text" name="piBusinessExpenses" id="piBusinessExpenses1" class="c-text__input" numberOnly />
+									</div>
 								</div>
 							</div>
 						</li>
 						<li>
 							<div class="talk__input-item">
-								<div class="talk__input-heading">사업전 교량 안전등급</div>
+								<div class="talk__input-heading">사업전 종합 안전등급</div>
 								<div class="talk__input">
 									<div class="c-select">
-										<select class="c-select__input">
-											<option>A</option>
-											<option>B</option>
-											<option>C</option>
+										<select name="piBeforeSafetyRating" id="piBeforeSafetyRating1" class="c-select__input">
+											<option value="">사업전 종합 안전등급을 선택해주세요.</option>
+											<option value="A">A</option>
+											<option value="B">B</option>
+											<option value="C">C</option>
 										</select>
 									</div>
 								</div>
@@ -115,13 +115,14 @@
 						</li>
 						<li>
 							<div class="talk__input-item">
-								<div class="talk__input-heading">사업후 교량 안전등급</div>
+								<div class="talk__input-heading">사업후 종합 안전등급</div>
 								<div class="talk__input">
 									<div class="c-select">
-										<select class="c-select__input">
-											<option>A</option>
-											<option>B</option>
-											<option>C</option>
+										<select name="piAfterSafetyRating" id="piAfterSafetyRating1" class="c-select__input">
+											<option value="">사업후 종합 안전등급을 선택해주세요.</option>
+											<option value="A">A</option>
+											<option value="B">B</option>
+											<option value="C">C</option>
 										</select>
 									</div>
 								</div>
@@ -138,14 +139,14 @@
 		                        	<ul class="c-radio-group">
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group2" id="group2-1" />
-												<label for="group2-1" class="c-radio__label">Yes</label>
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessObligatory1" id="piBusinessObligatory1" />
+												<label for="piBusinessObligatory1" class="c-radio__label">Yes</label>
 											</div>
 										</li>
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group2" id="group2-2" />
-												<label for="group2-2" class="c-radio__label">No</label>
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessObligatory1" id="piBusinessObligatory2" />
+												<label for="piBusinessObligatory2" class="c-radio__label">No</label>
 											</div>
 										</li>
 									</ul>
@@ -159,14 +160,14 @@
 		                        	<ul class="c-radio-group">
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group3" id="group3-1" />
-												<label for="group3-1" class="c-radio__label">Yes</label>
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessMandatory1" id="piBusinessMandatory1" />
+												<label for="piBusinessMandatory1" class="c-radio__label">Yes</label>
 											</div>
 										</li>
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group3" id="group3-2" />
-												<label for="group3-2" class="c-radio__label">No</label>
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessMandatory1" id="piBusinessMandatory2" />
+												<label for="piBusinessMandatory2" class="c-radio__label">No</label>
 											</div>
 										</li>
 									</ul>
@@ -180,14 +181,14 @@
 		                        	<ul class="c-radio-group">
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group4" id="group4-1" />
-												<label for="group4-1" class="c-radio__label">Yes</label>
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessPlanned1" id="piBusinessPlanned1" />
+												<label for="piBusinessPlanned1" class="c-radio__label">Yes</label>
 											</div>
 										</li>
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group4" id="group4-2" />
-												<label for="group4-2" class="c-radio__label">No</label>
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessPlanned1" id="piBusinessPlanned2" />
+												<label for="piBusinessPlanned2" class="c-radio__label">No</label>
 											</div>
 										</li>
 									</ul>
@@ -198,39 +199,40 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">최근 1년 간 민원 및 사고발생 건수</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="number" class="c-text__input" /></div>
+									<div class="c-text"><input type="text" id="piWhether1" name="piWhether" class="c-text__input" numberOnly /></div>
 								</div>
 							</div>
 						</li>
 					</ul>
 				</div>
 			</div>
-			
+
+			<!--############################ 두번째 대안 ##########################################-->
+
 			<div class="performance-business">
 				<h4 class="performance-business__heading">비교대안</h4>
 				<div class="performance-business__contents">
 					<ul class="talk__list talk__list--split">
 						<li>
-		                    <div class="talk__input-item">
-		                        <div class="talk__input-heading">사업유형</div>
-		                        <div class="talk__input">
-		                        	<div class="c-select">
-										<select class="c-select__input">
-											<option>성능개선</option>
-											<option>유지보수</option>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업유형</div>
+								<div class="talk__input">
+									<div class="c-select">
+										<select id="piBusinessType2" name="piBusinessType" class="c-select__input">
+											<option value="">유형을 선택해주세요.</option>
+											<option value="성능개선">성능개선</option>
+											<option value="유지보수">유지보수</option>
 										</select>
 									</div>
-		                        </div>
-		                    </div>
-		                </li>
+								</div>
+							</div>
+						</li>
 						<li>
 							<div class="talk__input-item">
 								<div class="talk__input-heading">대상부재</div>
 								<div class="talk__input">
-									<div class="c-select">
-										<select class="c-select__input">
-											<option>바닥판</option>
-										</select>
+									<div class="c-text">
+										<input type="text" name="piTargetAbsence" id="piTargetAbsence2" class="c-text__input" />
 									</div>
 								</div>
 							</div>
@@ -240,22 +242,15 @@
 								<div class="talk__input-heading">사업분류</div>
 								<div class="talk__input">
 									<div class="c-select">
-										<select class="c-select__input">
-											<option>개량</option>
-											<option>확장</option>
-											<option>일부개축</option>
-											<option>전면개축</option>
-											<option>보수보강</option>
+										<select id="piBusinessClassification2" name="piBusinessClassification" class="c-select__input">
+											<option value="">사업분류를 선택해주세요.</option>
+											<option value="개량">개량</option>
+											<option value="확장">확장</option>
+											<option value="일부개축">일부개축</option>
+											<option value="전면개축">전면개축</option>
+											<option value="단순보수보강">단순보수보강</option>
 										</select>
 									</div>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="talk__input-item">
-								<div class="talk__input-heading">사업내용</div>
-								<div class="talk__input">
-									<div class="c-text"><input type="text" class="c-text__input" /></div>
 								</div>
 							</div>
 						</li>
@@ -263,19 +258,20 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="number" class="c-text__input" /></div>
+									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses2" class="c-text__input" numberOnly /></div>
 								</div>
 							</div>
 						</li>
 						<li>
 							<div class="talk__input-item">
-								<div class="talk__input-heading">사업전 교량 안전등급</div>
+								<div class="talk__input-heading">사업전 종합 안전등급</div>
 								<div class="talk__input">
 									<div class="c-select">
-										<select class="c-select__input">
-											<option>A</option>
-											<option>B</option>
-											<option>C</option>
+										<select name="piBeforeSafetyRating" id="piBeforeSafetyRating2" class="c-select__input">
+											<option value="">사업전 종합 안전등급을 선택해주세요.</option>
+											<option value="A">A</option>
+											<option value="B">B</option>
+											<option value="C">C</option>
 										</select>
 									</div>
 								</div>
@@ -283,13 +279,14 @@
 						</li>
 						<li>
 							<div class="talk__input-item">
-								<div class="talk__input-heading">사업후 교량 안전등급</div>
+								<div class="talk__input-heading">사업후 종합 안전등급</div>
 								<div class="talk__input">
 									<div class="c-select">
-										<select class="c-select__input">
-											<option>A</option>
-											<option>B</option>
-											<option>C</option>
+										<select name="piAfterSafetyRating" id="piAfterSafetyRating2" class="c-select__input">
+											<option value="">사업후 종합 안전등급을 선택해주세요.</option>
+											<option value="A">A</option>
+											<option value="B">B</option>
+											<option value="C">C</option>
 										</select>
 									</div>
 								</div>
@@ -300,122 +297,496 @@
 				<div class="performance-business__contents">
 					<ul class="talk__list talk__list--split">
 						<li>
-		                    <div class="talk__input-item">
-		                        <div class="talk__input-heading">법에 따른 의무사업</div>
-		                        <div class="talk__input">
-		                        	<ul class="c-radio-group">
+							<div class="talk__input-item">
+								<div class="talk__input-heading">법에 따른 의무사업</div>
+								<div class="talk__input">
+									<ul class="c-radio-group">
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group2" id="group2-1" />
-												<label for="group2-1" class="c-radio__label">Yes</label>
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessObligatory2" id="piBusinessObligatory3" />
+												<label for="piBusinessObligatory3" class="c-radio__label">Yes</label>
 											</div>
 										</li>
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group2" id="group2-2" />
-												<label for="group2-2" class="c-radio__label">No</label>
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessObligatory2" id="piBusinessObligatory4" />
+												<label for="piBusinessObligatory4" class="c-radio__label">No</label>
 											</div>
 										</li>
 									</ul>
-		                        </div>
-		                    </div>
-		                </li>
+								</div>
+							</div>
+						</li>
 						<li>
 							<div class="talk__input-item">
 								<div class="talk__input-heading">법정계획/설계기준에 따른 의무사업</div>
 								<div class="talk__input">
-		                        	<ul class="c-radio-group">
+									<ul class="c-radio-group">
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group3" id="group3-1" />
-												<label for="group3-1" class="c-radio__label">Yes</label>
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessMandatory2" id="piBusinessMandatory3" />
+												<label for="piBusinessMandatory3" class="c-radio__label">Yes</label>
 											</div>
 										</li>
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group3" id="group3-2" />
-												<label for="group3-2" class="c-radio__label">No</label>
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessMandatory2" id="piBusinessMandatory4" />
+												<label for="piBusinessMandatory4" class="c-radio__label">No</label>
 											</div>
 										</li>
 									</ul>
-		                        </div>
+								</div>
 							</div>
 						</li>
 						<li>
 							<div class="talk__input-item">
 								<div class="talk__input-heading">자체계획/의결에 따른 사업</div>
 								<div class="talk__input">
-		                        	<ul class="c-radio-group">
+									<ul class="c-radio-group">
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group4" id="group4-1" />
-												<label for="group4-1" class="c-radio__label">Yes</label>
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessPlanned2" id="piBusinessPlanned3" />
+												<label for="piBusinessPlanned3" class="c-radio__label">Yes</label>
 											</div>
 										</li>
 										<li class="c-radio-group__item">
 											<div class="c-radio">
-												<input type="radio" class="c-radio__input" name="group4" id="group4-2" />
-												<label for="group4-2" class="c-radio__label">No</label>
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessPlanned2" id="piBusinessPlanned4" />
+												<label for="piBusinessPlanned4" class="c-radio__label">No</label>
 											</div>
 										</li>
 									</ul>
-		                        </div>
+								</div>
 							</div>
 						</li>
 						<li>
 							<div class="talk__input-item">
 								<div class="talk__input-heading">최근 1년 간 민원 및 사고발생 건수</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="number" class="c-text__input" /></div>
+									<div class="c-text"><input type="text" id="piWhether2" name="piWhether" class="c-text__input" numberOnly /></div>
 								</div>
 							</div>
 						</li>
 					</ul>
 				</div>
 			</div>
-			
-			
+
+			<!--############################# 세번째 대안 ##########################################-->
+
+			<div class="performance-business" id="addBusiness1" style="display: none">
+				<h4 class="performance-business__heading">비교대안</h4>
+				<div class="performance-business__contents">
+					<ul class="talk__list talk__list--split">
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업유형</div>
+								<div class="talk__input">
+									<div class="c-select">
+										<select id="piBusinessType3" name="piBusinessType" class="c-select__input">유
+											<option value="">유형을 선택해주세요.</option>
+											<option value="성능개선">성능개선</option>
+											<option value="유지보수">유지보수</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">대상부재</div>
+								<div class="talk__input">
+									<div class="c-text">
+										<input type="text" name="piTargetAbsence" id="piTargetAbsence3" class="c-text__input" />
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업분류</div>
+								<div class="talk__input">
+									<div class="c-select">
+										<select id="piBusinessClassification3" name="piBusinessClassification" class="c-select__input">
+											<option value="">사업분류를 선택해주세요.</option>
+											<option value="개량">개량</option>
+											<option value="확장">확장</option>
+											<option value="일부개축">일부개축</option>
+											<option value="전면개축">전면개축</option>
+											<option value="보수보강">보수보강</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업비용</div>
+								<div class="talk__input">
+									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses3" class="c-text__input" numberOnly /></div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업전 종합 안전등급</div>
+								<div class="talk__input">
+									<div class="c-select">
+										<select name="piBeforeSafetyRating" id="piBeforeSafetyRating3" class="c-select__input">
+											<option value="">사업전 종합 안전등급을 선택해주세요.</option>
+											<option value="A">A</option>
+											<option value="B">B</option>
+											<option value="C">C</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업후 종합 안전등급</div>
+								<div class="talk__input">
+									<div class="c-select">
+										<select name="piAfterSafetyRating" id="piAfterSafetyRating3" class="c-select__input">
+											<option value="">사업후 종합 안전등급을 선택해주세요.</option>
+											<option value="A">A</option>
+											<option value="B">B</option>
+											<option value="C">C</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="performance-business__contents">
+					<ul class="talk__list talk__list--split">
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">법에 따른 의무사업</div>
+								<div class="talk__input">
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessObligatory3" id="piBusinessObligatory5" />
+												<label for="piBusinessObligatory5" class="c-radio__label">Yes</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessObligatory3" id="piBusinessObligatory6" />
+												<label for="piBusinessObligatory6" class="c-radio__label">No</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">법정계획/설계기준에 따른 의무사업</div>
+								<div class="talk__input">
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessMandatory3" id="piBusinessMandatory5" />
+												<label for="piBusinessMandatory5" class="c-radio__label">Yes</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessMandatory3" id="piBusinessMandatory6" />
+												<label for="piBusinessMandatory6" class="c-radio__label">No</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">자체계획/의결에 따른 사업</div>
+								<div class="talk__input">
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessPlanned3" id="piBusinessPlanned5" />
+												<label for="piBusinessPlanned5" class="c-radio__label">Yes</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessPlanned3" id="piBusinessPlanned6" />
+												<label for="piBusinessPlanned6" class="c-radio__label">No</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">최근 1년 간 민원 및 사고발생 건수</div>
+								<div class="talk__input">
+									<div class="c-text"><input type="text" id="piWhether3" name="piWhether" class="c-text__input" numberOnly /></div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="performance-business__close" onclick="businessRemove(1);">대안 삭제</a>
+			</div>
+
+			<!--############################# 네번째 대안 #######################################-->
+
+			<div class="performance-business" id="addBusiness2" style="display: none">
+				<h4 class="performance-business__heading">비교대안</h4>
+				<div class="performance-business__contents">
+					<ul class="talk__list talk__list--split">
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업유형</div>
+								<div class="talk__input">
+									<div class="c-select">
+										<select id="piBusinessType4" name="piBusinessType" class="c-select__input">
+											<option value="">유형을 선택해주세요.</option>
+											<option value="성능개선">성능개선</option>
+											<option value="유지보수">유지보수</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">대상부재</div>
+								<div class="talk__input">
+									<div class="c-text">
+										<input type="text" name="piTargetAbsence" id="piTargetAbsence4" class="c-text__input" />
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업분류</div>
+								<div class="talk__input">
+									<div class="c-select">
+										<select id="piBusinessClassification4" name="piBusinessClassification" class="c-select__input">
+											<option value="">사업분류를 선택해주세요.</option>
+											<option value="개량">개량</option>
+											<option value="확장">확장</option>
+											<option value="일부개축">일부개축</option>
+											<option value="전면개축">전면개축</option>
+											<option value="보수보강">보수보강</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업비용</div>
+								<div class="talk__input">
+									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses4" class="c-text__input" numberOnly /></div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업전 종합 안전등급</div>
+								<div class="talk__input">
+									<div class="c-select">
+										<select name="piBeforeSafetyRating" id="piBeforeSafetyRating4" class="c-select__input">
+											<option value="">사업전 종합 안전등급을 선택해주세요.</option>
+											<option value="A">A</option>
+											<option value="B">B</option>
+											<option value="C">C</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">사업후 종합 안전등급</div>
+								<div class="talk__input">
+									<div class="c-select">
+										<select name="piAfterSafetyRating" id="piAfterSafetyRating4" class="c-select__input">
+											<option value="">사업후 종합 안전등급을 선택해주세요.</option>
+											<option value="A">A</option>
+											<option value="B">B</option>
+											<option value="C">C</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="performance-business__contents">
+					<ul class="talk__list talk__list--split">
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">법에 따른 의무사업</div>
+								<div class="talk__input">
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessObligatory4" id="piBusinessObligatory7" />
+												<label for="piBusinessObligatory7" class="c-radio__label">Yes</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessObligatory4" id="piBusinessObligatory8" />
+												<label for="piBusinessObligatory8" class="c-radio__label">No</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">법정계획/설계기준에 따른 의무사업</div>
+								<div class="talk__input">
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessMandatory4" id="piBusinessMandatory7" />
+												<label for="piBusinessMandatory7" class="c-radio__label">Yes</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessMandatory4" id="piBusinessMandatory8" />
+												<label for="piBusinessMandatory8" class="c-radio__label">No</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">자체계획/의결에 따른 사업</div>
+								<div class="talk__input">
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="1" name="piBusinessPlanned4" id="piBusinessPlanned7" />
+												<label for="piBusinessPlanned7" class="c-radio__label">Yes</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="0" name="piBusinessPlanned4" id="piBusinessPlanned8" />
+												<label for="piBusinessPlanned8" class="c-radio__label">No</label>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="talk__input-item">
+								<div class="talk__input-heading">최근 1년 간 민원 및 사고발생 건수</div>
+								<div class="talk__input">
+									<div class="c-text"><input type="text" id="piWhether4" name="piWhether" class="c-text__input" numberOnly /></div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="performance-business__close" onclick="businessRemove(2);">대안 삭제</a>
+			</div>
+
 		</div>
-		<button class="performance-business__add c-button c-button--point" id="addBusiness" onclick="addBusiness('/performance/performance-business')">비교대안 추가</button>
+
+
+
 	</div>
-	
+	</form>
+
+	<button style="top: 8px; position: relative;" class="performance-business__add c-button c-button--point" id="addBusinessBtn" onclick="addBtn()">비교대안 추가</button>
+
 	<div class="talk__console">
 		<ul>
 			<li><button class="c-button" onclick="movePage('/performance/performance3')">BEFORE</button></li>
-			<li><button class="c-button c-button--point"onclick="movePage('/performance/performance5')">NEXT</button></li>
+			<li><button class="c-button c-button--point" onclick="inputPerformanceNext2()">NEXT</button></li>
 		</ul>
 	</div>
 </div>
 
 <script>
-	let businessMaxAdd = 0;
-	function addBusiness(url) {
-		const ajaxOption = {
-				url: url,
-				type: "POST",
-				dataType: "html"
-		};
-		
-		businessMaxAdd++;
 
-		console.log("businessMaxAdd : "+businessMaxAdd)
-		if ( businessMaxAdd >= 2) {
-			$.ajax(ajaxOption).done(function(data){
-		        const $btn = $('#addBusiness');
-		        $btn.parent().find('.talk__contents').append(data);
-		        
-		        $btn.remove();
-		    });
-		} else {
-			$.ajax(ajaxOption).done(function(data){
-		        const $btn = $('#addBusiness');
-		        $btn.parent().find('.talk__contents').append(data);
-		    });
+	$(function() {
+
+		const  autoNum = $("#autoNum").val();
+		if(autoNum!==""){
+			console.log("중간 저장된 데이터 호출하기2");
+			middleDataBusiness(autoNum);
+		}
+
+		// 오직 숫자만 입력할수있게하는 제이쿼리
+		$("input:text[numberOnly]").on("keyup", function() {
+			$(this).val($(this).val().replace(/[^0-9]/g,""));
+		});
+
+	});
+
+	function addBtn(){
+		const $businessCount = $("#businessCount");
+		const $addBusiness1 = $("#addBusiness1");
+		if($businessCount.val()==="2")	{
+			// console.log("$businessCount : "+$businessCount.val());
+			if($addBusiness1.css('display')==='none'){
+				// console.log("addBusiness1 -> 열렸습니다.")
+				$addBusiness1.css('display', 'block');
+				$businessCount.val("3");
+			}else{
+				// console.log("addBusiness2 -> 열렸습니다.")
+				$("#addBusiness2").css('display', 'block');
+				$businessCount.val("3");
+			}
+		}else if($businessCount.val()==="3"){
+			// console.log("$businessCount : "+$businessCount.val());
+			$("#addBusinessBtn").css("display","none");
+			if($addBusiness1.css('display')==='none'){
+				// console.log("addBusiness1 -> 열렸습니다.")
+				$addBusiness1.css('display', 'block');
+				$businessCount.val("4");
+			}else{
+				// console.log("addBusiness2 -> 열렸습니다.")
+				$("#addBusiness2").css('display', 'block');
+				$businessCount.val("4");
+			}
 		}
 	}
-	
-	function businessRemove() {
-		//$(this).parents('.performance-business').remove();
-		console.log($(this).attr('class'));
+
+	function businessRemove(val){
+		const $businessCount = $("#businessCount");
+		// console.log("val : "+val);
+		// console.log("$businessCount : "+$businessCount.val());
+		if(val===1){
+			$("#addBusiness1").css("display","none");
+			if($businessCount.val()==="4"){
+				$("#addBusinessBtn").css("display","block");
+				$businessCount.val("3");
+			}else{
+				$("#addBusinessBtn").css("display","block");
+				$businessCount.val("2");
+			}
+		}else{
+			if($businessCount.val()==="4"){
+				$("#addBusinessBtn").css("display","block");
+				$businessCount.val("3");
+			}else{
+				$("#addBusinessBtn").css("display","block");
+				$businessCount.val("2");
+			}
+			$("#addBusiness2").css("display","none");
+		}
 	}
+
 </script>
