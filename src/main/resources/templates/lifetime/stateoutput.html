@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script type="text/javascript">
+		$(function() {
+			
+		});
+	</script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<div class="content__inner">
+		<div class="lifetime" id="lifetime">
+			<div class="talk">
+				<h2 class="content__heading">총 LCC</h2>
+				<div class="talk__box">
+					
+				</div>
+			</div>
+
+			<div class="talk">
+			
+			</div>
+		</div>
+
+	</div>
+	
+</div>
+</html>

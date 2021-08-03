@@ -405,8 +405,8 @@ table {
 .talk__question > li + li {
 	margin-top: 10px;
 }
-.talk__contents h4 + .c-radio-group {
-	margin-top: 5px;
+.talk__contents h4 {
+	margin-bottom: 5px;
 }
 .talk__console {
 	margin-top: 20px;
