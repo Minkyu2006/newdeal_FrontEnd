@@ -2,13 +2,14 @@
 <html lang="ko"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="layout/default">
+	  layout:decorate="layout/default2">
 
 <th:block layout:fragment="script">
 	<script type="text/javascript">
 
 		$(function(){
 
+			logreg(1,"기초정보","부서 등록",null);
 			$("#btnSave").on('click',function(){
 				save();
 			});
@@ -18,6 +19,7 @@
 			});
 
 			$("#btnSearch").on('click',function(){
+				logreg(0,"기초정보","부서 등록",null);
 				callList(1);
 			});
 

@@ -13,217 +13,196 @@
 <th:block layout:fragment="script">
  	<script>
 		$(function() {
-			$("input:text[numberOnly]").on("keyup", function() {
-				$(this).val($(this).val().replace(/[^0-9]/g,""));
-			});
+			// $("input:text[numberOnly]").on("keyup", function() {
+			// 	$(this).val($(this).val().replace(/[^0-9]/g,""));
+			// });
 
-			// $("#saveBtn").on('click',function(){
-			// 	save();
-			// });
-			//
-			// callList(1);
-			// $("#searchBtn").on('click',function(){
-			// 	callList(1);
-			// });
+			logreg(1,"의사결정 시스템","세부별 등록리스트 조회",null);
+
+			callList(1);
+			$("#searchBtn").on('click',function(){
+				logreg(0,"의사결정 시스템","세부별 등록리스트 조회",null);
+				callList(1);
+			});
 
 		});
 
-		// 저장
-		// function save(){
-		// 	JWT_Get();
-		//
-		// 	if (accessToken == null && refreshToken == null && insert_id == null) {
-		// 		alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-		// 	} else if (accessToken == null) {
-		// 		refreshTokenCookie();
-		// 	} else {
-		//
-		// 		let url;
-		//
-		// 		const params = {
-		// 			piYear: $("#piYear").val(),
-		// 			piPrice: $("#piPrice").val()
-		// 		};
-		//
-		// 		url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/price/save"; // 호출할 백엔드 API
-		//
-		// 		$.ajax({
-		// 			url: url,
-		// 			type: 'post',
-		// 			data: params,
-		// 			cache: false,
-		// 			beforeSend: function (xhr) {
-		// 				xhr.setRequestHeader("JWT_AccessToken", accessToken);
-		// 				xhr.setRequestHeader("insert_id",insert_id);
-		// 			},
-		// 			error: function (request) {
-		// 				if (request.status === 500) {
-		// 					// console.log("request.status : " + request.status + " => 500에러");
-		// 					alertCaution("500에러 재로그인 해주세요.", 2);
-		// 				} else {
-		// 					// console.log("request.status : " + request.status + " => 404에러");
-		// 					alertCaution("404에러 재로그인 해주세요.", 2);
-		// 				}
-		// 			},
-		// 			success: function (res) {
-		// 				if (res.status === 200) {
-		// 					$("#piYear").val("");
-		// 					$("#piPrice").val("");
-		// 					alertSuccess("물가배수를 등록했습니다.");
-		// 					callList(1);
-		// 				}else{
-		// 					if (request.err_msg2 === null) {
-		// 						alertCaution(request.err_msg, 1);
-		// 					} else {
-		// 						alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
-		// 					}
-		// 				}
-		// 			}
-		// 		});
-		// 	}
-		// }
-
 		// 조회
-		// function callList(page){
-		// 	JWT_Get();
-		//
-		// 	if (accessToken == null && refreshToken == null && insert_id == null) {
-		// 		// console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
-		// 		alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-		// 	} else if (accessToken == null) {
-		// 		refreshTokenCookie();
-		// 	} else {
-		//
-		// 		let url;
-		//
-		// 		page = page - 1;
-		// 		if (page < 0) page = 0
-		//
-		// 		const perPage = 10;
-		// 		const perArea = 5;
-		// 		let totCnt = 0;
-		//
-		// 		const $tableListYearCost = $('#tableListYearCost');
-		// 		const $totalCnt = $('#totalCnt');
-		//
-		// 		const params = {
-		// 			piYearSearch: $("#piYearSearch").val(),
-		// 			piPriceSearch: $("#piPriceSearch").val()
-		// 		};
-		//
-		// 		$tableListYearCost.empty().append('<tr ><td colspan="3" align = "center">조회 중</td></tr>');
-		// 		$totalCnt.text('0');
-		//
-		// 		url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/price/list"; // 호출할 백엔드 API
-		//
-		// 		$.ajax({
-		// 			url: url + '?size=' + perPage + '&page=' + page,
-		// 			type: 'GET',
-		// 			data: params,
-		// 			cache: false,
-		// 			error: function (request) {
-		// 				ajaxErrorMsg(request);
-		// 			},
-		// 			success: function (res) {
-		// 				console.log("리스트출력");
-		// 				if (res.status === 200) {
-		// 					//화면 출력
-		// 					totCnt = res.total_rows;
-		// 					$("#pricePaging").jqueryPager({
-		// 						pageSize: perPage,
-		// 						pageBlock: perArea,
-		// 						currentPage: page + 1,
-		// 						pageTotal: totCnt,
-		// 						clickEvent: 'callList'
-		// 					});
-		//
-		// 					if (totCnt === 0) {
-		// 						$tableListYearCost.empty().append('<tr class="t-c"><td colspan="3" align="center">조회된 데이터가 없습니다.</td></tr>');
-		// 						return;
-		// 					}
-		//
-		// 					$totalCnt.text(totCnt);
-		// 					let html = '';
-		// 					$.each(res.datalist, function (key, value) {
-		// 						html += '<tr>';
-		// 							html += '<td >' + echoNull2Blank(value.piYear) + '</td>';
-		// 							html += '<td >' + echoNull2Blank(value.piPrice) + '</td>';
-		// 							html += '<td ><button class="c-button" onclick="del(\'' + echoNull2Blank(value.id) + '\');">삭제</button></td>';
-		// 						html += '</tr>';
-		// 					});
-		// 					$tableListYearCost.html(html);
-		// 				}
-		// 			}
-		// 		});
-		// 	}
-		// }
-		//
-		// function del(id){
-		// 	JWT_Get();
-		//
-		// 	if (accessToken == null && refreshToken == null && insert_id == null) {
-		// 		alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-		// 	} else if (accessToken == null) {
-		// 		refreshTokenCookie();
-		// 	} else {
-		//
-		// 		let url;
-		//
-		// 		const params = {
-		// 			id: id
-		// 		};
-		//
-		// 		url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/price/del"; // 호출할 백엔드 API
-		//
-		// 		$.ajax({
-		// 			url: url,
-		// 			type: 'post',
-		// 			data: params,
-		// 			cache: false,
-		// 			error: function (request) {
-		// 				ajaxErrorMsg(request);
-		// 			},
-		// 			success: function (res) {
-		// 				console.log("리스트출력");
-		// 				if (res.status === 200) {
-		// 					alertSuccess("삭제가 완료되었습니다.");
-		// 					callList(1);
-		// 				}
-		// 			}
-		// 		});
-		// 	}
-		// }
+		function callList(page){
+			JWT_Get();
 
-		// 한글을 지우는 함수
-		function delHangle(evt){
-			var objTarget = evt.srcElement || evt.target;
-			var _value = event.srcElement.value;
-			if(/[ㄱ-ㅎㅏ-ㅡ가-핳]/g.test(_value)) {
-				objTarget.value = null;
+			if (accessToken == null && refreshToken == null && insert_id == null) {
+				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+			}else {
+
+				console.log("성능개선사업평가 조회");
+
+				page = page - 1;
+				if (page < 0) page = 0
+
+				const perPage = 10;
+				const perArea = 5;
+				let totCnt = 0;
+
+				const $tablePerformanceList = $('#tablePerformanceList');
+				const $totalCnt = $('#totalCnt');
+
+				const params = {
+					piFacilityType : $("#piFacilityType").val(),
+					piKind : $("#piKind").val(),
+					piFacilityName : $("#piFacilityName").val()
+				};
+
+				$tablePerformanceList.empty().append('<tr ><td colspan="9" align="center">조회 중</td></tr>');
+				$totalCnt.text('0');
+
+				let url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/list"; // 호출할 백엔드 API
+				console.log("url : "+url);
+				$.ajax({
+					url: url + '?size=' + perPage + '&page=' + page,
+					type: 'Get',
+					data: params,
+					cache: false,
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader("JWT_AccessToken", accessToken);
+						xhr.setRequestHeader("insert_id", insert_id);
+					},
+					error: function (request) {
+						if (request.status === 500) {
+							// console.log("500에러 재로그인 해주세요.");
+							alertCaution("500에러 재로그인 해주세요.", 2);
+						} else {
+							// console.log("404에러 재로그인 해주세요.");
+							alertCaution("404에러 재로그인 해주세요.", 2);
+						}
+					},
+					success: function (res) {
+						console.log("성능개선사업평가 등록 글 출력");
+						if (res.status === 200) {
+							//화면 출력
+							totCnt = res.total_rows;
+							$("#performancePaging").jqueryPager({
+								pageSize: perPage,
+								pageBlock: perArea,
+								currentPage: page + 1,
+								pageTotal: totCnt,
+								clickEvent: 'callList'
+							});
+
+							if (totCnt === 0) {
+								$tablePerformanceList.empty().append('<tr class="t-c"><td colspan="9" align="center">조회된 데이터가 없습니다.</td></tr>');
+								return;
+							}
+
+							$totalCnt.text(totCnt);
+							let html = '';
+							$.each(res.datalist, function (key, value) {
+								html += '<tr>';
+									html += '<td >'+ '<input type="checkbox" value='+echoNull2Blank(value.piAutoNum)+' />' +'</td>';
+									html += '<td >' + echoNull2Blank(value.piFacilityType) + '</td>';
+									html += '<td >' + echoNull2Blank(value.piFacilityName) + '</td>';
+									html += '<td >' + echoNull2Blank(value.piCompletionYear) + '</td>';
+									html += '<td >' + echoNull2Blank(value.piErectionCost) + '</td>';
+									html += '<td >' + echoNull2Blank(value.piSafetyLevel) + '</td>';
+									html += '<td >' + echoNull2Blank(value.piGoalLevel) + '</td>';
+									html += '<td >' + echoNull2Blank(value.piBusinessType) + '</td>';
+									html += '<td >' + echoNull2Blank(value.piBusinessExpenses) + '</td>';
+									html += '<td ><button class="c-button" onclick="outputMove(\'' + echoNull2Blank(value.piAutoNum) + '\');">비교대안 보기</button></td>';
+									html += '<td ><button class="c-button" onclick="del(\'' + echoNull2Blank(value.piAutoNum) + '\');">삭제</button></td>';
+								html += '</tr>';
+							});
+							$tablePerformanceList.html(html);
+						}
+					}
+				});
 			}
 		}
-		// 소수점한개로 제한한 실수값입력할수있게하는 함수
-		function isNumberKey(evt) {
-			const charCode = (evt.which) ? evt.which : event.keyCode;
-			const _value = event.srcElement.value;
-			if (event.keyCode < 48 || event.keyCode > 57) {
-				if (event.keyCode !== 46) {
-					return false;
-				}
+
+		function outputMove(autoNum){
+			location.href = "/performance/output/" + autoNum;
+		}
+
+		// 대안 리스트에서 삭제
+		function del(autoNum){
+			JWT_Get();
+
+			if (accessToken == null && refreshToken == null && insert_id == null) {
+				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
 			}
-			// 소수점(.)이 두번 이상 나오지 못하게
-			const _pattern0 = /^\d*[.]\d*$/;
-			if (_pattern0.test(_value)) {
-				if (charCode === 46) {
-					return false;
+			// else if (accessToken == null) {
+			// 	refreshTokenCookie();
+			// }
+			else {
+
+				console.log("autoNum : "+autoNum);
+
+				let url;
+				url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/del"; // 호출할 백엔드 API
+				console.log("url : "+url);
+
+				const params = {
+					autoNum : autoNum
 				}
-			}
-			// 소수점 둘째자리까지만 입력가능
-			const _pattern2 = /^\d*[.]\d{2}$/;
-			if (_pattern2.test(_value)) {
-				return false;
+
+				$.ajax({
+					url: url,
+					type: 'post',
+					data:params,
+					cache: false,
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader("JWT_AccessToken", accessToken);
+						xhr.setRequestHeader("insert_id", insert_id);
+					},
+					error: function (request) {
+						if (request.status === 500) {
+							// console.log("500에러 재로그인 해주세요.");
+							alertCaution("500에러 재로그인 해주세요.", 2);
+						} else {
+							// console.log("404에러 재로그인 해주세요.");
+							alertCaution("404에러 재로그인 해주세요.", 2);
+						}
+					},
+					success: function (res) {
+						console.log("리스트출력");
+						if (res.status === 200) {
+							alertSuccess("삭제가 완료되었습니다.");
+							callList(1);
+						}
+					}
+				});
 			}
 		}
+
+		// // 한글을 지우는 함수
+		// function delHangle(evt){
+		// 	var objTarget = evt.srcElement || evt.target;
+		// 	var _value = event.srcElement.value;
+		// 	if(/[ㄱ-ㅎㅏ-ㅡ가-핳]/g.test(_value)) {
+		// 		objTarget.value = null;
+		// 	}
+		// }
+		// // 소수점한개로 제한한 실수값입력할수있게하는 함수
+		// function isNumberKey(evt) {
+		// 	const charCode = (evt.which) ? evt.which : event.keyCode;
+		// 	const _value = event.srcElement.value;
+		// 	if (event.keyCode < 48 || event.keyCode > 57) {
+		// 		if (event.keyCode !== 46) {
+		// 			return false;
+		// 		}
+		// 	}
+		// 	// 소수점(.)이 두번 이상 나오지 못하게
+		// 	const _pattern0 = /^\d*[.]\d*$/;
+		// 	if (_pattern0.test(_value)) {
+		// 		if (charCode === 46) {
+		// 			return false;
+		// 		}
+		// 	}
+		// 	// 소수점 둘째자리까지만 입력가능
+		// 	const _pattern2 = /^\d*[.]\d{2}$/;
+		// 	if (_pattern2.test(_value)) {
+		// 		return false;
+		// 	}
+		// }
 
 	</script>
 </th:block>
@@ -235,7 +214,7 @@
 		<section class="section">
 			<article class="article">
 				<div class="article__head">
-					<h2 class="article__heading" style="font-size: 27px">성능개선 사업평가 등록글 조회</h2>
+					<h2 class="article__heading" style="font-size: 27px">성능개선 사업평가 등록 글 조회</h2>
 				</div>
 				<div class="article__body">
 					<div class="l-float-heading">
@@ -245,9 +224,11 @@
 					</div>
 					<table class="c-table">
 						<colgroup>
+							<col style="width: 100px;" />
 							<col />
+							<col style="width: 100px;" />
 							<col />
-							<col />
+							<col style="width: 100px;" />
 							<col />
 							<col style="width: 60px;" />
 						</colgroup>
@@ -279,6 +260,12 @@
 										</select>
 									</div>
 								</td>
+								<th>시설명</th>
+								<td>
+									<div class="c-text">
+										<input type="text" id="piFacilityName" class="c-text__input" />
+									</div>
+								</td>
 								<td>
 									<button class="c-button c-button--point" id="searchBtn">조회</button>
 								</td>
@@ -292,15 +279,16 @@
 				<div class="article__body">
 					<table class="c-table">
 						<colgroup>
-							<col />
-							<col />
-							<col />
-							<col />
-							<col />
-							<col />
-							<col />
-							<col />
-							<col />
+							<col style="width: 40px;" />
+							<col style="width: 100px;" />
+							<col style="width: 100px;" />
+							<col style="width: 80px;" />
+							<col style="width: 150px;" />
+							<col style="width: 70px;" />
+							<col style="width: 120px;" />
+							<col style="width: 80px;" />
+							<col style="width: 150px;" />
+							<col style="width: 110px;" />
 							<col style="width: 60px;" />
 						</colgroup>
 						<thead>
@@ -309,12 +297,12 @@
 								<th>시설유형</th>
 								<th>시설명</th>
 								<th>준공연도</th>
-								<th>안전등급</th>
 								<th>취득원가</th>
+								<th>안전등급</th>
 								<th>목표 안전등급</th>
-								<th>유지보수 지연기간</th>
 								<th>사업유형</th>
 								<th>사업비용</th>
+								<th></th>
 								<th></th>
 							</tr>
 						</thead>

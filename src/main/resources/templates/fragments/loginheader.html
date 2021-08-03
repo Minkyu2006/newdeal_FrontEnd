@@ -14,6 +14,8 @@
 				<li id="adminMenu" class="nav__item">
 					<a href="#" class="nav__link toggle">기초정보</a>
 					<ul class="nav__list-depth">
+<!--						<li class="nav__item"><a href="/admin/teamreg" onclick="readyPage()" class="nav__link">부서등록</a></li>-->
+<!--						<li class="nav__item"><a href="/admin/accountreg" onclick="readyPage()" class="nav__link">사용자 등록</a></li>-->
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">부서등록</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">사용자 등록</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">센서 등록</a></li>
@@ -30,67 +32,96 @@
 						<li class="nav__item"><a href="/performance/performancelist" class="nav__link">세부별 등록리스트 조회</a></li>
 					</ul>
 				</li>
-				<li class="nav__item">
-					<a href="#" class="nav__link toggle">depth1-2</a>
-					<ul class="nav__list-depth">
-						<li class="nav__item"><a href="#" class="nav__link">depth2-1</a></li>
-						<li class="nav__item"><a href="#" class="nav__link">depth2-2</a></li>
-						<li class="nav__item"><a href="#" class="nav__link">depth2-3</a></li>
-					</ul>
-				</li>
-				<li class="nav__item">
-					<a href="#" class="nav__link">depth1-3</a>
-				</li>
-				<li class="nav__item">
-					<a href="#" class="nav__link toggle">depth1-2</a>
-					<ul class="nav__list-depth">
-						<li class="nav__item"><a href="#" class="nav__link">depth2-1</a></li>
-						<li class="nav__item"><a href="#" class="nav__link">depth2-2</a></li>
-					</ul>
-				</li>
+<!--				<li class="nav__item">-->
+<!--					<a href="#" class="nav__link toggle">depth1-2</a>-->
+<!--					<ul class="nav__list-depth">-->
+<!--						<li class="nav__item"><a href="#" class="nav__link">depth2-1</a></li>-->
+<!--						<li class="nav__item"><a href="#" class="nav__link">depth2-2</a></li>-->
+<!--						<li class="nav__item"><a href="#" class="nav__link">depth2-3</a></li>-->
+<!--					</ul>-->
+<!--				</li>-->
+<!--				<li class="nav__item">-->
+<!--					<a href="#" class="nav__link">depth1-3</a>-->
+<!--				</li>-->
+<!--				<li class="nav__item">-->
+<!--					<a href="#" class="nav__link toggle">depth1-2</a>-->
+<!--					<ul class="nav__list-depth">-->
+<!--						<li class="nav__item"><a href="#" class="nav__link">depth2-1</a></li>-->
+<!--						<li class="nav__item"><a href="#" class="nav__link">depth2-2</a></li>-->
+<!--					</ul>-->
+<!--				</li>-->
 			</ul>
 
 		</nav>
 
-		<div class="info" sec:authorize="isAuthenticated()">
+		<div class="info">
 			<div class="user">
 				<ul>
 					<li class="user__img">
-						<img src="/assets/images/icon__user.svg" alt="user" />
-						<!-- <img src="/assets/images/icon__admin.svg" alt="admin" /> -->
+						<img class="userimage" src="/assets/images/icon__check.svg" alt=""/>
 					</li>
 					<li class="user__name">
-						<!-- <div sec:authentication="name"> -->
-						<span>UserName</span>
+						<span id="userName">로그인해주세요.</span>
 					</li>
 				</ul>
 			</div>
 			<ul class="info__btn-list">
 				<li>
-					<button class="info__btn setting">설정</button>
+					<button id="mypage" class="info__btn setting">설정</button>
 				</li>
 				<li>
-					<button class="info__btn logout">Logout</button>
-				</li>
-				
-				<!-- <li>
-					<form th:action="@{/logout}" method="post">
-				        <input type="submit" class="info__btn" value="로그아웃"/>
-				    </form>
-				</li> -->
-				
-			</ul>
-		</div>
-		<!-- <div class="info" sec:authorize="!isAuthenticated()">
-			<ul>
-				<li>
-					<a href="/login" class="info__btn">로그인</a>
+					<button id="logout" class="info__btn logout">Logout</button>
 				</li>
 			</ul>
 		</div>
-		<input id="checkId" type="hidden" th:value="${session.userid}" />
-		 -->
 	</div>
+
+	<script>
+		$(function() {
+
+			loginInfo();
+
+			// 내정보수정
+			$("#mypage").on('click',function(){
+				mypage();
+			});
+			// 로그아웃
+			$("#logout").on('click',function(){
+				logout();
+			});
+		});
+
+		function loginInfo(){
+			const username = getCookie("username");
+			const userrole = getCookie("userrole");
+			console.log("username : "+username);
+			console.log("userrole : "+userrole);
+
+			$("#userName").text(username);
+			const $userimage = $(".userimage");
+			if(userrole==="관리자"){
+				console.log("관리자 입니다.");
+				$userimage.attr('src','/assets/images/icon__admin.svg');
+				$userimage.attr("alt","admin");
+			}else{
+				console.log("사용자 입니다.");
+				$userimage.attr('src','/assets/images/icon__user.svg');
+				$userimage.attr("alt","user");
+			}
+		}
+
+		function mypage(){
+			location.href="/mypage"
+		}
+
+		function logout(){
+			setCookie("JwtAccessToken",null, 0);
+			setCookie("JwtRefreshAccessToken",null, 0);
+			setCookie("JwtRefreshToken",null, 0);
+			setCookie("insert_id",null, 0);
+			location.href="/login"
+		}
+	</script>
 </header>
 
 </html>
