@@ -13,6 +13,9 @@
 <th:block layout:fragment="script">
  	<script>
 		$(function() {
+
+			logreg(1,"기초정보","물가배수 등록",null);
+
 			$("input:text[numberOnly]").on("keyup", function() {
 				$(this).val($(this).val().replace(/[^0-9]/g,""));
 			});
@@ -23,6 +26,7 @@
 
 			callList(1);
 			$("#searchBtn").on('click',function(){
+				logreg(0,"기초정보","물가배수 등록",null);
 				callList(1);
 			});
 
@@ -33,8 +37,6 @@
 
 			if (accessToken == null && refreshToken == null && insert_id == null) {
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-			} else if (accessToken == null) {
-				refreshTokenCookie();
 			} else {
 
 				let url;
@@ -88,9 +90,7 @@
 			if (accessToken == null && refreshToken == null && insert_id == null) {
 				// console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-			} else if (accessToken == null) {
-				refreshTokenCookie();
-			} else {
+			}else {
 
 				let url;
 
@@ -161,8 +161,6 @@
 
 			if (accessToken == null && refreshToken == null && insert_id == null) {
 				alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-			} else if (accessToken == null) {
-				refreshTokenCookie();
 			} else {
 
 				let url;

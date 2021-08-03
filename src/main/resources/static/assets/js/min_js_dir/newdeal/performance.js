@@ -1173,11 +1173,11 @@ function call_performance(autoNum){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
-                    alertCaution("500에러 재로그인 해주세요.", 1);
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
-                    alertCaution("404에러 재로그인 해주세요.", 1);
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {

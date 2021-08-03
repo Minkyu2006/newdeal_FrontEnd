@@ -54,6 +54,37 @@
 					setCookie("JwtRefreshToken",res.data.token.refreshToken, 10); // 발행시간은 5시간으로설정
 					setCookie("insert_id",res.data.token.insert_id, 10); // 발행시간은 5시간으로설정
 
+					// location.href="/performance/input"
+
+					calliRoleName(res.data.token.insert_id);
+				}
+			});
+		}
+
+		// NEWDEAL 유저ROLE,이름 쿠키에 저장
+		function calliRoleName(userid) {
+			const params = {
+				userid: userid
+			};
+
+			let url = $("#backend_protocol").val()+"://"+$("#backend_url").val() + "/api/account/rolename"; // 호출할 백엔드 API
+			$.ajax({
+				url: url,
+				type: 'POST',
+				data: params,
+				cache: false,
+				error: function (request) {
+					if (request.status === 500) {
+						console.log("500에러");
+						alertCaution("유저를 찾을 수 없습니다.<br>관리자에게 문의해주세요.", 1);
+					} else {
+						console.log("404에러");
+						alertCaution("유저를 찾을 수 없습니다.<br>관리자에게 문의해주세요.", 1);
+					}
+				},
+				success: function (res) {
+					setCookie("username",res.sendData.accountData.username, 10); // 발행시간은 5시간으로설정
+					setCookie("userrole",res.sendData.accountData.role, 10); // 발행시간은 5시간으로설정
 					location.href="/performance/input"
 				}
 			});
@@ -84,8 +115,10 @@
 </th:block>
 
 <div layout:fragment="content" class="login-wrap">
-	<input type="hidden" id="security_url" th:value="${security_url}" />
-	<input type="hidden" id="security_protocol" th:value="${security_protocol}" />
+	<input type="hidden" id="security_url" th:value="${security_url}" readonly="readonly" />
+	<input type="hidden" id="security_protocol" th:value="${security_protocol}" readonly="readonly" />
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="login">
 		<h1 class="login__logo">
 			<a href="/login" class="logo">
