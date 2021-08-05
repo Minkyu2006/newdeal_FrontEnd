@@ -51,3 +51,30 @@ function logreg(num,menuName1,menuName2,data) {
         });
     }
 }
+
+// 숫자만 입력하게하고, 3번째 숫자마다 콤마(,)를 찍어주는 함수
+function inputNumberFormat(obj) {
+    obj.value = comma(uncomma(obj.value));
+}
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+
+// 숫자콤마찍는 함수
+function pushComma(num){
+    let len, point, str;
+    num = num + "";
+    point = num.length % 3 ;
+    len = num.length;
+    str = num.substring(0, point);
+    while (point < len) {
+        if (str !== "") str += ",";
+        str += num.substring(point, point + 3);
+        point += 3;
+    } return str;
+}

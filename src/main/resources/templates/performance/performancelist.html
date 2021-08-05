@@ -13,9 +13,6 @@
 <th:block layout:fragment="script">
  	<script>
 		$(function() {
-			// $("input:text[numberOnly]").on("keyup", function() {
-			// 	$(this).val($(this).val().replace(/[^0-9]/g,""));
-			// });
 
 			logreg(1,"의사결정 시스템","세부별 등록리스트 조회",null);
 
@@ -53,7 +50,7 @@
 					piFacilityName : $("#piFacilityName").val()
 				};
 
-				$tablePerformanceList.empty().append('<tr ><td colspan="9" align="center">조회 중</td></tr>');
+				$tablePerformanceList.empty().append('<tr ><td colspan="11" align="center">조회 중</td></tr>');
 				$totalCnt.text('0');
 
 				let url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/list"; // 호출할 백엔드 API
@@ -90,7 +87,7 @@
 							});
 
 							if (totCnt === 0) {
-								$tablePerformanceList.empty().append('<tr class="t-c"><td colspan="9" align="center">조회된 데이터가 없습니다.</td></tr>');
+								$tablePerformanceList.empty().append('<tr class="t-c"><td colspan="11" align="center">조회된 데이터가 없습니다.</td></tr>');
 								return;
 							}
 
@@ -102,11 +99,11 @@
 									html += '<td >' + echoNull2Blank(value.piFacilityType) + '</td>';
 									html += '<td >' + echoNull2Blank(value.piFacilityName) + '</td>';
 									html += '<td >' + echoNull2Blank(value.piCompletionYear) + '</td>';
-									html += '<td >' + echoNull2Blank(value.piErectionCost) + '</td>';
+									html += '<td >' + pushComma(echoNull2Blank(value.piErectionCost)) + '</td>';
 									html += '<td >' + echoNull2Blank(value.piSafetyLevel) + '</td>';
 									html += '<td >' + echoNull2Blank(value.piGoalLevel) + '</td>';
 									html += '<td >' + echoNull2Blank(value.piBusinessType) + '</td>';
-									html += '<td >' + echoNull2Blank(value.piBusinessExpenses) + '</td>';
+									html += '<td >' + pushComma(echoNull2Blank(value.piBusinessExpenses)) + '</td>';
 									html += '<td ><button class="c-button" onclick="outputMove(\'' + echoNull2Blank(value.piAutoNum) + '\');">비교대안 보기</button></td>';
 									html += '<td ><button class="c-button" onclick="del(\'' + echoNull2Blank(value.piAutoNum) + '\');">삭제</button></td>';
 								html += '</tr>';

@@ -46,10 +46,13 @@ public class LifetimeController{
     public String input(Model model){
         return "lifetime/input";
     }
-    
+
     // 상태평가 input
-    @RequestMapping("stateinput")
-    public String stateinput(Model model){
+    @RequestMapping("stateinput/{absence}")
+    public String stateinput(Model model,@PathVariable String absence){
+        model.addAttribute("absence", absence);
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "lifetime/stateinput";
     }
     

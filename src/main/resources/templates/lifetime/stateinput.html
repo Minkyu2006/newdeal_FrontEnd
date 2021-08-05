@@ -2,7 +2,7 @@
 <html lang="ko"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="layout/default2">
+	  layout:decorate="layout/default2" xmlns="http://www.w3.org/1999/html">
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
@@ -13,18 +13,26 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
+	<script src="/assets/js/min_js_dir/newdeal/lifetime.js"></script>
  	<script>
 		$(function() {
-			
+			absenceSelect();
 		});
 	</script>
 </th:block>
 
 <div layout:fragment="content" class="content">
+	<input type="hidden" id="absence" th:value="${absence}" readonly="readonly" />
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
+
 	<div class="content__inner">
 		<h2 class="content__heading">생애주기 의사결정 지원 서비스 - 부재 전체 열화인자 상태 평가</h2>
-		<div class="lifetime" id="lifetime">
+		<div class="lifetime">
 			<div class="talk">
+
+				<form id="lifeAllTimeForm" enctype="multipart/form-data">
+
 				<div class="talk__box">
 					<div class="talk__header">
 						<h3>1. 교량 정보</h3>
@@ -35,7 +43,7 @@
 								<div class="talk__input-item">
 									<div class="talk__input-heading">교량코드</div>
 									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="B001" name="ltBridgeCode" id="ltBridgeCode" class="c-text__input" /></div>
 									</div>
 								</div>
 							</li>
@@ -43,7 +51,7 @@
 								<div class="talk__input-item">
 									<div class="talk__input-heading">교량명</div>
 									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="라멘교" name="ltBridgeName" id="ltBridgeName" class="c-text__input" /></div>
 									</div>
 								</div>
 							</li>
@@ -51,7 +59,9 @@
 								<div class="talk__input-item">
 									<div class="talk__input-heading">경간수</div>
 									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text">
+											<input name="ltSpanNum" id="ltSpanNum" value="4" type="text" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" />
+										</div>
 									</div>
 								</div>
 							</li>
@@ -60,16 +70,7 @@
 									<div class="talk__input-heading">세부부재명</div>
 									<div class="talk__input">
 										<div class="c-select">
-											<select name="" id="" class="c-select__input">
-												<option value="">RC T형 거더</option>
-												<option value="">강 I형 거더</option>
-												<option value="">PSC BOX 거더</option>
-												<option value="">강판형 거더</option>
-												<option value="">프리플렉스 거더</option>
-												<option value="">PSCI 거더</option>
-												<option value="">RC BOX 거더</option>
-												<option value="">ST BOX 거더</option>
-											</select>
+											<select name="ltAbsenceCode" id="ltAbsenceCode" class="c-select__input"></select>
 										</div>
 									</div>
 								</div>
@@ -86,15 +87,40 @@
 						<ul class="talk__list talk__list--split">
 							<li>
 								<div class="talk__input-item">
-									<div class="talk__input-heading">수행전 등급</div>
+									<div class="talk__input-heading">수행전 B등급 손상지수</div>
 									<div class="talk__input">
-										<div class="c-select">
-											<select name="" id="" class="c-select__input">
-												<option value="">B</option>
-												<option value="">C</option>
-												<option value="">D</option>
-												<option value="">E</option>
-											</select>
+										<div class="c-text">
+											<input type="text" value="0.2" name="ltDamageBRank" id="ltDamageBRank" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" />
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">수행전 C등급 손상지수</div>
+									<div class="talk__input">
+										<div class="c-text">
+											<input type="text" value="0.4" name="ltDamageCRank" id="ltDamageCRank" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" />
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">수행전 D등급 손상지수</div>
+									<div class="talk__input">
+										<div class="c-text">
+											<input type="text" value="0.7" name="ltDamageDRank" id="ltDamageDRank" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" />
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">수행전 E등급 손상지수</div>
+									<div class="talk__input">
+										<div class="c-text">
+											<input type="text" value="1.0" name="ltDamageERank" id="ltDamageERank" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" />
 										</div>
 									</div>
 								</div>
@@ -103,7 +129,7 @@
 								<div class="talk__input-item">
 									<div class="talk__input-heading">전체물량</div>
 									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="700" name="ltAllVolume" id="ltAllVolume" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
 									</div>
 								</div>
 							</li>
@@ -111,7 +137,7 @@
 								<div class="talk__input-item">
 									<div class="talk__input-heading">할인율</div>
 									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="4" name="ltDiscountRate" id="ltDiscountRate" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
 									</div>
 								</div>
 							</li>
@@ -119,7 +145,7 @@
 								<div class="talk__input-item">
 									<div class="talk__input-heading">열화증가율</div>
 									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="1" name="ltIncrease" id="ltIncrease" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
 									</div>
 								</div>
 							</li>
@@ -149,42 +175,45 @@
 								<tr>
 									<th>정기점검</th>
 									<td>
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="0.5" name="ltPeriodicFrequency" id="ltPeriodicFrequency" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
 									</td>
 									<td>
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="3437000" name="ltPeriodicCost" id="ltPeriodicCost" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
 									</td>
 								</tr>
 								<tr>
 									<th>정밀점검</th>
 									<td>
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="2" name="ltCloseFrequency" id="ltCloseFrequency" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
 									</td>
 									<td>
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="16152000" name="ltCloseCost" id="ltCloseCost" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
 									</td>
 								</tr>
 								<tr>
 									<th>정밀안전점검</th>
 									<td>
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="5" name="ltSafetyFrequency" id="ltSafetyFrequency" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
 									</td>
 									<td>
-										<div class="c-text"><input type="text" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" value="48463000" name="ltSafetyCost" id="ltSafetyCost" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
-				
+
+			</form>
+
 				<div class="talk__console">
 					<ul>
 						<li>
-							<button class="c-button c-button--point">완료</button>
+							<button onclick="lifeAllTimeSave()" class="c-button c-button--point">완료</button>
 						</li>
 					</ul>
 				</div>
+
 			</div>
 		</div>
 	</div>

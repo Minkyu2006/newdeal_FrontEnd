@@ -17,6 +17,12 @@
 		$(function() {
 			
 		});
+
+		// 이진혁박사 인풋페이지 이동
+		function stateinput(){
+			const $absence = $("#absence").val();
+			location.href = "/lifetime/stateinput/"+$absence;
+		}
 	</script>
 </th:block>
 
@@ -34,9 +40,9 @@
 							<li>
 								<h4>부재를 선택해주세요</h4>
 								<div class="c-select">
-									<select class="c-select__input">
-										<option>거더</option>
-										<option>바닥판</option>
+									<select id="absence" class="c-select__input">
+										<option value="girder">거더</option>
+										<option value="plate">바닥판</option>
 									</select>
 								</div>
 							</li>
@@ -65,7 +71,7 @@
 					<ul>
 						<li>
 							<!-- <button onclick="" class="c-button c-button--point">NEXT</button> -->
-							<a href="stateinput" class="c-button c-button--point">next</a>
+							<a onclick="stateinput()" class="c-button c-button--point">next</a>
 						</li>
 					</ul>
 				</div>
