@@ -1,5 +1,6 @@
 package com.broadwava.front.Controller;
 
+import com.broadwava.front.Enum.AccountRole;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,14 @@ public class MainController {
     @RequestMapping("index")
     public String index(){
         return "index";
+    }
+
+    @RequestMapping("/register")
+    public String register(Model model){
+        model.addAttribute("roles", AccountRole.values());
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "register";
     }
 
     @RequestMapping("/mypage")
