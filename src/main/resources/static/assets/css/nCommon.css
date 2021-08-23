@@ -738,10 +738,8 @@ table {
 
 /* chart */
 .chart {
-	position: relative;
-	width: 100%;
-	height: 400px;
-	background-color: #ddd;
+	width: 90vw;
+	height: 90vh;
 }
 
 

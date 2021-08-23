@@ -57,10 +57,12 @@ public class LifetimeController{
     }
     
     // 상태평가 output
-    @RequestMapping("stateoutput")
-    public String stateoutput(Model model){
+    @RequestMapping("stateoutput/{id}")
+    public String stateoutput(Model model,@PathVariable Long id){
+        model.addAttribute("getid", id);
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "lifetime/stateoutput";
     }
-
 
 }
