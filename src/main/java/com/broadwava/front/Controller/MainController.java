@@ -44,5 +44,10 @@ public class MainController {
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
         return "mypage";
+    }    
+    
+    @RequestMapping("env/envsearch")
+    public String envsearch(Model model){
+        return "env/envsearch";
     }
 }
