@@ -536,6 +536,11 @@
 .c-text.c-text--inline .c-text__input {
 	width: 50px;
 }
+.c-text__label {
+	display: block;
+	margin-bottom: 5px;
+}
+
 /* field */
 .c-field {
 	position: relative;
