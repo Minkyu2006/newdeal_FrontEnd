@@ -1785,7 +1785,7 @@ table {
 	width: 100vw;
 	height: 100vh;
 }
-.login {
+.login-wrap .login {
 	position: fixed;
 	width: 500px;
 	top: 50%;
