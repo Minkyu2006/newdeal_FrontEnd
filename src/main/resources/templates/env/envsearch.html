@@ -11,48 +11,7 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-
-    <script>
-
-        $(function(){
-            logreg(1);
-        })
-
-        function logreg(num) {
-            var typeName;
-            if(num===1){
-                typeName = "open";
-            }else{
-                typeName = "search";
-            }
-
-            var params = {
-                menuName1: "중장기 데이터 공유 서비스",
-                menuName2: "환경정보 조회 서비스",
-                useType: typeName
-            };
-
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-            $(document).ajaxSend(function(e, xhr) { xhr.setRequestHeader(header, token); });
-
-            $.ajax({
-                url: '/api/userLog/logreg',
-                type: 'post',
-                data: params,
-                cache:false,
-                error:function(request){
-                    ajaxErrorMsg(request);
-                },
-                success: function(res){
-                    if (!Ajax.checkResult(res)) {
-                        return;
-                    }
-                }
-            });
-        }
-
-    </script>
+	<script src="/assets/js/openlayers/openlayers.e31bb0bc.js"></script>
 </th:block>
 
 <div layout:fragment="content" class="content">
@@ -569,7 +528,7 @@
         </article>
     </section>
 
-    <script src="/assets/js/openlayers/openlayers.e31bb0bc.js"></script>
+    
 
 </div>
 </html>
