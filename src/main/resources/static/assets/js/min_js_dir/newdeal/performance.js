@@ -1,4 +1,33 @@
-// 시설물 유형을 통해 형식구분의 대한 select box
+// * 성능개선사업평가 서비스 자바스크립트 *
+
+// 사업 유형을 통해 사업분류의 대한 select box 편의성
+function piBusinessTypeClick(idVal,idAdd,data){
+
+    let html = "";
+
+    // console.log("idVal : "+idVal);
+    // console.log("idAdd : "+idVal);
+    // console.log("data : "+data);
+    const $piBusinessClassification = $("#piBusinessClassification"+idAdd);
+    if(idVal===1 || idVal===3 || idVal===5 || idVal===7){
+        html += "<option value='개량''>"+"개량"+"</option>";
+        html += "<option value='확장''>"+"확장"+"</option>";
+        html += "<option value='일부개축''>"+"일부개축"+"</option>";
+        html += "<option value='전면개축''>"+"전면개축"+"</option>";
+        $piBusinessClassification.html(html);
+    }else{
+        html += "<option value='단순보수보강''>"+"단순보수보강"+"</option>";
+    }
+    $piBusinessClassification.html(html);
+
+    if(data!==null){
+        // console.log("데이터넣기");
+        $piBusinessClassification.val(data);
+    }
+
+}
+
+// 시설물 유형을 통해 형식구분의 대한 select box 편의성
 function piTypeClick(idVal,data){
 
     // console.log("호출 : "+idVal);
@@ -7,6 +36,22 @@ function piTypeClick(idVal,data){
     const $piGoalLevel = $("#piGoalLevel");
     const $gitaOp = $("#gitaOp");
     const $piType = $("#piType");
+    const $piSafetyLevel = $("#piSafetyLevel");
+
+    let html = "";
+    let html2 = "";
+
+    if(idVal==="1" || idVal==="3"){
+        html2 += "<option value='B'>"+"B"+"</option>";
+        html2 += "<option value='C'>"+"C"+"</option>";
+        html2 += "<option value='D'>"+"D"+"</option>";
+        html2 += "<option value='E'>"+"E"+"</option>";
+    }else{
+        html2 += "<option value='C'>"+"C"+"</option>";
+        html2 += "<option value='D'>"+"D"+"</option>";
+        html2 += "<option value='E'>"+"E"+"</option>";
+    }
+    $piSafetyLevel.html(html2);
 
     if(idVal==="1" || idVal==="2"){
         if(idVal==="1"){
@@ -19,7 +64,6 @@ function piTypeClick(idVal,data){
             $gitaOp.css("display","block");
         }
 
-        let html = "";
         html += "<option value='슬래브교'>"+"슬래브교"+"</option>";
         html += "<option value='거더교'>"+"거더교"+"</option>";
         html += "<option value='라멘교'>"+"라멘교"+"</option>";
@@ -39,7 +83,6 @@ function piTypeClick(idVal,data){
             $gitaOp.css("display","block");
         }
 
-        let html = "";
         html += "<option value='ASSM터널'>"+"ASSM터널"+"</option>";
         html += "<option value='NATM터널'>"+"NATM터널"+"</option>";
         html += "<option value='개착식터널'>"+"개착식 터널"+"</option>";
@@ -54,7 +97,6 @@ function piTypeClick(idVal,data){
         $piGoalLevel.val("C");
         $gitaOp.css("display","block");
 
-        let html = "";
         html += "<option value='암반사면'>"+"암반사면"+"</option>";
         html += "<option value='토사사면'>"+"토사사면"+"</option>";
         html += "<option value='혼합사면'>"+"혼합사면"+"</option>";
@@ -65,7 +107,6 @@ function piTypeClick(idVal,data){
         $piGoalLevel.val("C");
         $gitaOp.css("display","block");
 
-        let html = "";
         html += "<option value='콘크리트옹벽'>"+"콘크리트옹벽"+"</option>";
         html += "<option value='보강토옹벽'>"+"보강토옹벽"+"</option>";
         html += "<option value='돌쌓기옹벽'>"+"돌쌓기옹벽(석축)"+"</option>";
@@ -127,20 +168,32 @@ function inputPerformanceNext1(){
             alertCaution("준공연도를 입력해주세요.",1);
             return false;
         }
-        const $piErectionCost = $("#piErectionCost").val();
-        if($piErectionCost===""){
+        const $piErectionCost = $("#piErectionCost");
+        if($piErectionCost.val()===""){
             alertCaution("취득원가를 입력해주세요.",1);
             return false;
+        }else{
+            $piErectionCost.val($piErectionCost.val().replaceAll(",",""));
+            if($piErectionCost.val().length>=15){
+                alertCaution("취득원가를 한계치가 넘었습니다.<br>다시 확인해주시고 입력해주세요..",1);
+                return false;
+            }
         }
         const $piMaintenanceDelay = $("#piMaintenanceDelay").val();
         if($piMaintenanceDelay===""){
             alertCaution("유지보수 지연기간를 입력해주세요.",1);
             return false;
         }
-        const $piAADT = $("#piAADT").val();
-        if($piAADT===""){
+        const $piAADT = $("#piAADT");
+        if($piAADT.val()===""){
             alertCaution("연평균일교통량(AADT)를 입력해주세요.",1);
             return false;
+        }else{
+            $piAADT.val($piAADT.val().replaceAll(",",""));
+            if($piAADT.val().length>=8){
+                alertCaution("연평균일교통량(AADT) 한계치가 넘었습니다.<br>다시 확인해주시고 입력해주세요..",1);
+                return false;
+            }
         }
         const $piRaterBaseYear = $("#piRaterBaseYear").val();
         if($piRaterBaseYear===""){
@@ -201,21 +254,100 @@ function inputPerformanceNext1(){
 
 // Input 첫번째 NEXT버튼 두번째 구간(중간저장)
 function inputPerformanceNext2(){
+    let i;
     JWT_Get();
-
-    let url;
 
     if (accessToken == null || refreshToken == null || insert_id == null) {
         // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else {
 
+        // 예외처리
+        const $businessCount = $("#businessCount");
+        let j=1;
+        let x=1;
+        let y=2;
+        let text = "";
+        for(i = 0; i<$businessCount.val(); i++){
+            if(i===0) {
+                text = "기준대안";
+            }else if(i===1){
+                text = "비교대안";
+            }else if(i===2){
+                text = "추가대안1";
+            }else if(i===3){
+                text = "추가대안2";
+            }
+            if(document.getElementById("piBusinessType"+x).checked===false && document.getElementById("piBusinessType"+y).checked===false){
+                alertCaution(text+"의 사업유형을 선택해주세요.",1);
+                return false;
+            }
+            if($("#piBusinessExpenses"+j).val()==="") {
+                alertCaution(text+"의 사업비용을 작성해주세요.", 1)
+                return false;
+            }
+
+            const $piBeforeSafetyRating = $("#piBeforeSafetyRating" + j).val();
+            const $piAfterSafetyRating = $("#piAfterSafetyRating"+j).val();
+            if($piBeforeSafetyRating==="") {
+                alertCaution(text+"의 사업전 종합 안전등급을 <br>선택해주세요.",1);
+                return false;
+            }
+            if($piAfterSafetyRating==="") {
+                alertCaution(text+"의 사업후 종합 안전등급을 <br>선택해주세요.",1);
+                return false;
+            }
+            if($piBeforeSafetyRating==="A"){
+                if($piAfterSafetyRating==="B" || $piAfterSafetyRating==="C" || $piAfterSafetyRating==="D" || $piAfterSafetyRating==="E"){
+                    alertCaution(text+"의 사업전 안전등급보다 사업후 <br>안전등급이 낮을 수 없습니다.",1);
+                    return false;
+                }
+            }else if($piBeforeSafetyRating==="B"){
+                if($piAfterSafetyRating==="C" || $piAfterSafetyRating==="D" || $piAfterSafetyRating==="E"){
+                    alertCaution(text+"의 사업전 안전등급보다 사업후 <br>안전등급이 낮을 수 없습니다.",1);
+                    return false;
+                }
+            }else if($piBeforeSafetyRating==="C"){
+                if($piAfterSafetyRating==="D" || $piAfterSafetyRating==="E"){
+                    alertCaution(text+"의 사업전 안전등급보다 사업후 <br>안전등급이 낮을 수 없습니다.",1);
+                    return false;
+                }
+            }else if($piBeforeSafetyRating==="D"){
+                if($piAfterSafetyRating==="E"){
+                    alertCaution(text+"의 사업전 안전등급보다 사업후 <br>안전등급이 낮을 수 없습니다.",1);
+                    return false;
+                }
+            }
+
+            if(document.getElementById("piBusinessObligatory"+x).checked===false && document.getElementById("piBusinessObligatory"+y).checked===false){
+                alertCaution(text+"의 법의 따른 의무사업을 <br>선택해주세요.",1);
+                return false;
+            }
+            if(document.getElementById("piBusinessMandatory"+x).checked===false && document.getElementById("piBusinessMandatory"+y).checked===false){
+                alertCaution(text+"의 법정계획/설계기준에 따른 <br>의무사업을 선택해주세요.",1);
+                return false;
+            }
+            if(document.getElementById("piBusinessPlanned"+x).checked===false && document.getElementById("piBusinessPlanned"+y).checked===false){
+                alertCaution(text+"의 자체계획/의결에 따른 <br>사업을 선택해주세요.",1);
+                return false;
+            }
+            if($("#piWhether"+j).val()==="") {
+                alertCaution(text+"의 최근 1년 간 민원 및 사고발생 <br>건수를 작성해주세요.",1);
+                return false;
+            }
+            j++
+            x=x+2;
+            y=y+2;
+        }
+
+        let url;
+
         const  autoNum = $("#autoNum").val();
         const formData = new FormData(document.getElementById('performance2'));
 
-        console.log("두번째 중간저장 autoNum : "+autoNum);
+        // console.log("두번째 중간저장 autoNum : "+autoNum);
         url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/middleSaveUpdateBusiness/"+autoNum; // 호출할 백엔드 API
-        console.log("url : "+url);
+        // console.log("url : "+url);
 
         $.ajax({
             url: url,
@@ -231,19 +363,19 @@ function inputPerformanceNext2(){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    // console.log("request.status : " + request.status + " => 500에러");
-                    alertCaution("500에러 재로그인 해주세요.", 2);
+                    console.log("request.status : " + request.status + " => 500에러");
+                    // alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    // console.log("request.status : " + request.status + " => 404에러");
-                    alertCaution("404에러 재로그인 해주세요.", 2);
+                    console.log("request.status : " + request.status + " => 404에러");
+                    // alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
                 let status = request.status;
                 // console.log("status : " + status);
                 if (status === 200) {
-                    console.log("autoNum : "+request.sendData.autoNum);
-                    console.log("again : "+request.sendData.again);
+                    // console.log("autoNum : "+request.sendData.autoNum);
+                    // console.log("again : "+request.sendData.again);
                     if(request.sendData.again==="again"){
                         inputPerformanceNext2();
                     }else{
@@ -275,7 +407,7 @@ function inputPerformanceNext3(){
     } else {
 
         const  autoNum = $("#autoNum").val();
-        console.log("마지막 저장 autoNum : "+autoNum);
+        // console.log("마지막 저장 autoNum : "+autoNum);
 
         let technologyAdd;
         let economyAdd;
@@ -434,7 +566,7 @@ function inputPerformanceNext3(){
         const formData = new FormData(document.getElementById('weightSendForm'));
 
         url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/weightSave/"+autoNum; // 호출할 백엔드 API
-        console.log("url : " + url);
+        // console.log("url : " + url);
         $.ajax({
             url: url,
             type: 'POST',
@@ -458,7 +590,7 @@ function inputPerformanceNext3(){
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
                     // console.log("저장완료");
                     alertLink(request.sendData.autoNum);
@@ -520,7 +652,7 @@ function inputMiddleSaveCheck(){
                         $("#autoNum").val(request.sendData.piAutoNum);
                         alertMiddleSaveCheck("작성중 완료되지 않은 대안이 존재합니다.<BR>계속 작성하시겠습니까?");
                     }else{
-                        console.log("중간저장 게시물이 존재하지 않음");
+                        // console.log("중간저장 게시물이 존재하지 않음");
                     }
                 } else {
                     if (request.err_msg2 === null) {
@@ -602,7 +734,7 @@ function middleData(autoNum){
                     $("#piFacilityName").val(request.sendData.performanceData.piFacilityName);
                     $("#piCompletionYear").val(request.sendData.performanceData.piCompletionYear);
                     $("#piPublicYear").val(request.sendData.performanceData.piPublicYear);
-                    $("#piErectionCost").val(request.sendData.performanceData.piErectionCost);
+                    $("#piErectionCost").val(pushComma(request.sendData.performanceData.piErectionCost));
                     $("#piKind").val(request.sendData.performanceData.piKind);
                     if(request.sendData.performanceData.piSafetyLevel==="A"){
                         $('#piSafetyLevel').val('A').prop("selected",true);
@@ -637,7 +769,7 @@ function middleData(autoNum){
                     }
 
                     const piMaintenanceDelay = request.sendData.performanceData.piMaintenanceDelay;
-                    console.log("piMaintenanceDelay : "+piMaintenanceDelay)
+                    // console.log("piMaintenanceDelay : "+piMaintenanceDelay)
                     if(piMaintenanceDelay<1){
                         $("#piMaintenanceDelay").val("0");
                     }else if(piMaintenanceDelay===1){
@@ -650,7 +782,7 @@ function middleData(autoNum){
                         $("#piMaintenanceDelay").val("4");
                     }
 
-                    $("#piAADT").val(request.sendData.performanceData.piAADT);
+                    $("#piAADT").val(pushComma(request.sendData.performanceData.piAADT));
                     $("#piManagement").val(request.sendData.performanceData.piManagement);
                     $("#piAgency").val(request.sendData.performanceData.piAgency);
 
@@ -685,14 +817,14 @@ function middleDataBusiness(autoNum){
         refreshTokenCookie();
     } else {
 
-        console.log("호출할 일련번호 : "+autoNum);
+        // console.log("호출할 일련번호 : "+autoNum);
 
         const params = {
             autoNum: autoNum
         };
 
         url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/middleDataBusiness"; // 호출할 백엔드 API
-        console.log("url : " + url);
+        // console.log("url : " + url);
         $.ajax({
             url: url,
             type: 'POST',
@@ -711,16 +843,17 @@ function middleDataBusiness(autoNum){
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
 
                     const piBusiness = request.sendData.piBusiness;
                     const size = request.sendData.size;
-                    console.log("piBusiness : "+piBusiness);
-                    console.log("size : "+size);
+                    // console.log("piBusiness : "+piBusiness);
+                    // console.log("size : "+size);
 
                     if(piBusiness!==null){
-                        if(piBusiness==="노후화"){
+                        // console.log("piBusiness : "+piBusiness);
+                        if(piBusiness === "노후화대응"){
                             $('#piBusiness-1').prop("checked", true);
                         }else if(piBusiness==="기준변화"){
                             $('#piBusiness-2').prop("checked", true);
@@ -732,9 +865,19 @@ function middleDataBusiness(autoNum){
                         let x=1;
                         let y=2;
                         for(let i=0; i<size; i++){
-                            $("#piBusinessType"+j).val(request.sendData.performance[i].piBusinessType);
+                            const piBusinessType = request.sendData.performance[i].piBusinessType;
+                            const piBusinessClassification = request.sendData.performance[i].piBusinessClassification;
+                            // console.log("piBusinessType : "+piBusinessType);
+                            // console.log("piBusinessClassification : "+piBusinessClassification);
+                            if(piBusinessType==="성능개선"){
+                                $("#piBusinessType"+x).prop("checked", true);
+                                piBusinessTypeClick(x,j,piBusinessClassification)
+                            }else{
+                                $("#piBusinessType"+y).prop("checked", true);
+                                piBusinessTypeClick(y,j,piBusinessClassification)
+                            }
+
                             $("#piTargetAbsence"+j).val(request.sendData.performance[i].piTargetAbsence);
-                            $("#piBusinessClassification"+j).val(request.sendData.performance[i].piBusinessClassification);
                             $("#piBusinessExpenses"+j).val(request.sendData.performance[i].piBusinessExpenses);
                             $("#piBeforeSafetyRating"+j).val(request.sendData.performance[i].piBeforeSafetyRating);
                             $("#piAfterSafetyRating"+j).val(request.sendData.performance[i].piAfterSafetyRating);
@@ -791,7 +934,6 @@ function middleDataBusiness(autoNum){
     }
 }
 
-// 성능개선 유형 호출하기
 function weightBusiness(autoNum){
 
     JWT_Get();
@@ -805,14 +947,14 @@ function weightBusiness(autoNum){
         refreshTokenCookie();
     } else {
 
-        console.log("호출할 일련번호 : "+autoNum);
+        // console.log("호출할 일련번호 : "+autoNum);
 
         const params = {
             autoNum: autoNum
         };
 
         url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/weightBusiness"; // 호출할 백엔드 API
-        console.log("url : " + url);
+        // console.log("url : " + url);
         $.ajax({
             url: url,
             type: 'POST',
@@ -831,7 +973,7 @@ function weightBusiness(autoNum){
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
 
                     const weightBusiness = request.sendData.weightBusiness;
@@ -1139,8 +1281,8 @@ function alertLink(autoNum) {
 // Output 값 함수호출
 function call_performance(autoNum){
 
-    console.log("사업평가정보 함수호추 ");
-    console.log("autoNum : "+autoNum);
+    // console.log("사업평가정보 함수호추 ");
+    // console.log("autoNum : "+autoNum);
 
     if(autoNum==null){
         location.href="/404";
@@ -1151,17 +1293,15 @@ function call_performance(autoNum){
     let url;
 
     if (accessToken == null && refreshToken == null && insert_id == null) {
-        console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-    } else if (accessToken == null) {
-        refreshTokenCookie();
     } else {
         const params = {
             autoNum: autoNum
         };
 
         url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/output"; // 호출할 백엔드 API
-        console.log("url : " + url);
+        // console.log("url : " + url);
         $.ajax({
             url: url,
             type: 'POST',
@@ -1182,9 +1322,9 @@ function call_performance(autoNum){
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
-                    console.log("아웃풋 성공");
+                    // console.log("아웃풋 성공");
 
                     // 시설 정보 테이블
                     const $outputTableFacility = $('#outputTableFacility');
@@ -1239,7 +1379,7 @@ function call_performance(autoNum){
                     html += '<tr>';
                     html += '<th>'+'취득원가'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html += '<td>'+request.sendData.performanceList[j].piErectionCost+'</td>';
+                        html += '<td>'+pushComma(request.sendData.performanceList[j].piErectionCost)+'</td>';
                     }
                     html += '</tr>';
 
@@ -1311,7 +1451,7 @@ function call_performance(autoNum){
                         html2 += '<tr>';
                         html2 += '<th>'+'연평균일교통량(AADT)'+'</th>';
                         for(let j=0; j<request.sendData.performanceSize; j++){
-                            html2 += '<td>'+request.sendData.performanceList[j].piAADT+'</td>';
+                            html2 += '<td>'+pushComma(request.sendData.performanceList[j].piAADT)+'</td>';
                         }
                         html2 += '</tr>';
                     html2 += '</tbody>';
@@ -1361,7 +1501,7 @@ function call_performance(autoNum){
                     html3 += '<tr>';
                     html3 += '<th>'+'사업비용'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html3 += '<td>'+request.sendData.performanceList[j].piBusinessExpenses+'</td>';
+                        html3 += '<td>'+pushComma(request.sendData.performanceList[j].piBusinessExpenses)+'</td>';
                     }
                     html3 += '</tr>';
 
@@ -1400,28 +1540,40 @@ function call_performance(autoNum){
                     html4 += '<tr>';
                     html4 += '<th>'+'법에 따른 의무사업'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html4 += '<td>'+request.sendData.performanceList[j].piBusinessObligatory+'</td>';
+                        if(request.sendData.performanceList[j].piBusinessObligatory===0){
+                            html4 += '<td>'+'해당없음'+'</td>';
+                        }else{
+                            html4 += '<td>'+'해당'+'</td>';
+                        }
                     }
                     html4 += '</tr>';
 
                     html4 += '<tr>';
                     html4 += '<th>'+'법정계획에 따른 의무사업'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html4 += '<td>'+request.sendData.performanceList[j].piBusinessMandatory+'</td>';
+                        if(request.sendData.performanceList[j].piBusinessMandatory===0){
+                            html4 += '<td>'+'해당없음'+'</td>';
+                        }else{
+                            html4 += '<td>'+'해당'+'</td>';
+                        }
                     }
                     html4 += '</tr>';
 
                     html4 += '<tr>';
                     html4 += '<th>'+'자제계획/의결에 따른 사업'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html4 += '<td>'+request.sendData.performanceList[j].piBusinessPlanned+'</td>';
+                        if(request.sendData.performanceList[j].piBusinessPlanned===0){
+                            html4 += '<td>'+'해당없음'+'</td>';
+                        }else{
+                            html4 += '<td>'+'해당'+'</td>';
+                        }
                     }
                     html4 += '</tr>';
 
                     html4 += '<tr>';
                     html4 += '<th>'+'최근 1년 간 민원 및 사고발생 건수'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html4 += '<td>'+request.sendData.performanceList[j].piWhether+'</td>';
+                        html4 += '<td>'+request.sendData.performanceList[j].piWhether+'건'+'</td>';
                     }
                     html4 += '</tr>';
 
@@ -1857,5 +2009,147 @@ function call_performance(autoNum){
     }
 }
 
+// 조회
+function callList(page){
+    JWT_Get();
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    }else {
+
+        console.log("성능개선사업평가 조회");
+
+        page = page - 1;
+        if (page < 0) page = 0
+
+        const perPage = 10;
+        const perArea = 5;
+        let totCnt = 0;
+
+        const $tablePerformanceList = $('#tablePerformanceList');
+        const $totalCnt = $('#totalCnt');
+
+        const params = {
+            piFacilityType : $("#piFacilityType").val(),
+            piKind : $("#piKind").val(),
+            piFacilityName : $("#piFacilityName").val()
+        };
+
+        $tablePerformanceList.empty().append('<tr ><td colspan="11" align="center">조회 중</td></tr>');
+        $totalCnt.text('0');
+
+        let url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/list"; // 호출할 백엔드 API
+        console.log("url : "+url);
+        $.ajax({
+            url: url + '?size=' + perPage + '&page=' + page,
+            type: 'Get',
+            data: params,
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    // console.log("500에러 재로그인 해주세요.");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    // console.log("404에러 재로그인 해주세요.");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (res) {
+                console.log("성능개선사업평가 등록 글 출력");
+                if (res.status === 200) {
+                    //화면 출력
+                    totCnt = res.total_rows;
+                    $("#performancePaging").jqueryPager({
+                        pageSize: perPage,
+                        pageBlock: perArea,
+                        currentPage: page + 1,
+                        pageTotal: totCnt,
+                        clickEvent: 'callList'
+                    });
+
+                    if (totCnt === 0) {
+                        $tablePerformanceList.empty().append('<tr class="t-c"><td colspan="11" align="center">조회된 데이터가 없습니다.</td></tr>');
+                        return;
+                    }
+
+                    $totalCnt.text(totCnt);
+                    let html = '';
+                    $.each(res.datalist, function (key, value) {
+                        html += '<tr>';
+                        html += '<td >'+ '<input type="checkbox" value='+echoNull2Blank(value.piAutoNum)+' />' +'</td>';
+                        html += '<td >' + echoNull2Blank(value.piFacilityType) + '</td>';
+                        html += '<td >' + echoNull2Blank(value.piFacilityName) + '</td>';
+                        html += '<td >' + echoNull2Blank(value.piCompletionYear) + '</td>';
+                        html += '<td >' + pushComma(echoNull2Blank(value.piErectionCost)) + '</td>';
+                        html += '<td >' + echoNull2Blank(value.piSafetyLevel) + '</td>';
+                        html += '<td >' + echoNull2Blank(value.piGoalLevel) + '</td>';
+                        html += '<td >' + echoNull2Blank(value.piBusinessType) + '</td>';
+                        html += '<td >' + pushComma(echoNull2Blank(value.piBusinessExpenses)) + '</td>';
+                        html += '<td ><button class="c-button" onclick="outputMove(\'' + echoNull2Blank(value.piAutoNum) + '\');">비교대안 보기</button></td>';
+                        html += '<td ><button class="c-button" onclick="del(\'' + echoNull2Blank(value.piAutoNum) + '\');">삭제</button></td>';
+                        html += '</tr>';
+                    });
+                    $tablePerformanceList.html(html);
+                }
+            }
+        });
+    }
+}
+
+// 아웃풋페이지 이동
+function outputMove(autoNum){
+    location.href = "/performance/output/" + autoNum;
+}
+
+// 대안 리스트에서 삭제
+function del(autoNum){
+    JWT_Get();
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else {
+
+        console.log("autoNum : "+autoNum);
+
+        let url;
+        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/del"; // 호출할 백엔드 API
+        console.log("url : "+url);
+
+        const params = {
+            autoNum : autoNum
+        }
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data:params,
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    // console.log("500에러 재로그인 해주세요.");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    // console.log("404에러 재로그인 해주세요.");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (res) {
+                console.log("리스트출력");
+                if (res.status === 200) {
+                    alertSuccess("삭제가 완료되었습니다.");
+                    callList(1);
+                }
+            }
+        });
+    }
+}
 
 

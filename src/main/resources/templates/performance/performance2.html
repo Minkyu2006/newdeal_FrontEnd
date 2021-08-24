@@ -390,22 +390,23 @@
 
 		document.getElementById("weight_Category").onchange = function(){
 			const $weight_Category = $("#weight_Category").val();
+			console.log("$weight_Category : "+$weight_Category);
 			const $choseCategory = $("#choseCategory");
 			const $piWeightTechnicality = $("#piWeightTechnicality");
 			const $piWeightEconomy = $("#piWeightEconomy");
 			const $piWeightPolicy = $("#piWeightPolicy");
 
-			if($weight_Category==="노후화 대응"){
+			if($weight_Category==="노후화대응"){
 				$choseCategory.text("노후화 대응");
 				$piWeightTechnicality.val(0.8);
 				$piWeightEconomy.val(0.1);
 				$piWeightPolicy.val(0.1);
-			}else if($weight_Category==="기준 변화") {
+			}else if($weight_Category==="기준변화") {
 				$choseCategory.text("기준 변화");
 				$piWeightTechnicality.val(0.2);
 				$piWeightEconomy.val(0.7);
 				$piWeightPolicy.val(0.1);
-			}else if($weight_Category==="사용성 유형") {
+			}else if($weight_Category==="사용성유형") {
 				$choseCategory.text("사용성 유형");
 				$piWeightTechnicality.val(0.1);
 				$piWeightEconomy.val(0.6);

@@ -16,6 +16,8 @@
 					<ul class="nav__list-depth">
 <!--						<li class="nav__item"><a href="/admin/teamreg" onclick="readyPage()" class="nav__link">부서등록</a></li>-->
 <!--						<li class="nav__item"><a href="/admin/accountreg" onclick="readyPage()" class="nav__link">사용자 등록</a></li>-->
+						<li class="nav__item"><a href="/register" class="nav__link">회원가입</a></li>
+						<li class="nav__item"><a href="/admin/mastercodereg" class="nav__link">마스터코드 관리</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">부서등록</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">사용자 등록</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">센서 등록</a></li>
@@ -26,7 +28,7 @@
 					<a href="#" class="nav__link toggle">의사결정 시스템</a>
 					<ul class="nav__list-depth">
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">장래 예산수요 추정서비스</a></li>
-						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">유지보수 우선순위 선정서비스</a></li>
+						<li class="nav__item"><a href="/lifetime/input" class="nav__link">유지보수 우선순위 선정서비스</a></li>
 						<li class="nav__item"><a href="/performance/input" class="nav__link">성능개선 사업평가 서비스</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">중기 재정계획 수립서비스</a></li>
 						<li class="nav__item"><a href="/performance/performancelist" class="nav__link">세부별 등록리스트 조회</a></li>
@@ -94,17 +96,17 @@
 		function loginInfo(){
 			const username = getCookie("username");
 			const userrole = getCookie("userrole");
-			console.log("username : "+username);
-			console.log("userrole : "+userrole);
+			// console.log("username : "+username);
+			// console.log("userrole : "+userrole);
 
 			$("#userName").text(username);
 			const $userimage = $(".userimage");
 			if(userrole==="관리자"){
-				console.log("관리자 입니다.");
+				// console.log("관리자 입니다.");
 				$userimage.attr('src','/assets/images/icon__admin.svg');
 				$userimage.attr("alt","admin");
 			}else{
-				console.log("사용자 입니다.");
+				// console.log("사용자 입니다.");
 				$userimage.attr('src','/assets/images/icon__user.svg');
 				$userimage.attr("alt","user");
 			}

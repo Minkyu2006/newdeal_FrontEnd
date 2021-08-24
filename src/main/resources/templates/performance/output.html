@@ -11,17 +11,54 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
+
+	<!-- PDF 내보내기에 필요한 JS 추가 2021.08.19 -->
+	<!-- html2canvas : html 객체를 canvas로 변환해주는 라이브러리 -->
+	<!-- jspdf : html, 이미지, canvas 객체를 pdf로 변환해주는 라이브러리 -->
+	<script src="/assets/js/min_js_dir/pdf/html2canvas.js"></script>
+	<script src="/assets/js/min_js_dir/pdf/jspdf.min.js"></script>
+
 	<script src="/assets/js/min_js_dir/newdeal/performance.js"></script>
 	<script type="text/javascript">
 		$(function() {
 			const autoNum = $("#autoNum").val();
 			call_performance(autoNum);
 			logreg(1,"의사결정 시스템","대안Output",autoNum);
+
+			$('#devReady').click(function() { // pdf저장 button id
+				html2canvas($('#performance')[0]).then(function(canvas) { //저장 영역 div id
+					// 캔버스를 이미지로 변환
+					const imgData = canvas.toDataURL('image/png');
+					const imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+					const pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+					const imgHeight = canvas.height * imgWidth / canvas.width;
+					let heightLeft = imgHeight;
+					const margin = 10; // 출력 페이지 여백설정
+					const doc = new jsPDF('p', 'mm','a4');
+					let position = 0;
+
+					// 첫 페이지 출력
+					doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+					heightLeft -= pageHeight;
+
+					// 한 페이지 이상일 경우 루프 돌면서 출력
+					while (heightLeft >= 20) {
+						position = heightLeft - imgHeight;
+						doc.addPage();
+						doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+						heightLeft -= pageHeight;
+					}
+					// 파일 저장
+					doc.save($("#autoNum").val()+"_PDF파일");
+				});
+			});
+
 		});
 
 		function devReady(){
 			alertCaution("해당 기능은 현재개발중 입니다.",1)
 		}
+
 	</script>
 </th:block>
 
@@ -29,7 +66,9 @@
 	<input type="hidden" id="autoNum" th:value="${autoNum}" />
 	<input type="hidden" id="backend_url" th:value="${backend_url}" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
+
 	<div class="content__inner">
+
 		<div class="performance" id="performance">
 
 			<div class="talk">
@@ -190,17 +229,17 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="talk__console">
-					<ul>
-						<li>
-							<button class="c-button c-button--point" onclick="devReady()">PDF 다운로드</button>
-						</li>
-					</ul>
-				</div>
+		</div>
+
+		<div class="talk__console">
+			<ul>
+				<li>
+					<button class="c-button c-button--point" id="devReady">PDF 다운로드</button>
+				</li>
+			</ul>
 		</div>
 
 	</div>
-	
+
 </div>
 </html>

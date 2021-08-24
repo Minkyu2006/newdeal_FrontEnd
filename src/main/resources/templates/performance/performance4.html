@@ -50,15 +50,22 @@
 						<li>
 		                    <div class="talk__input-item">
 		                        <div class="talk__input-heading">사업유형</div>
-		                        <div class="talk__input">
-		                        	<div class="c-select">
-										<select id="piBusinessType1" name="piBusinessType" class="c-select__input">
-											<option value="">유형을 선택해주세요.</option>
-											<option value="성능개선">성능개선</option>
-											<option value="유지보수">유지보수</option>
-										</select>
-									</div>
-		                        </div>
+								<div class="talk__input">
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" onclick="piBusinessTypeClick(1,1,null)" value="성능개선" name="piBusinessType1" id="piBusinessType1" />
+												<label for="piBusinessType1" class="c-radio__label">성능개선</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" onclick="piBusinessTypeClick(2,1,null)" value="유지보수" name="piBusinessType1" id="piBusinessType2" />
+												<label for="piBusinessType2" class="c-radio__label">유지보수</label>
+											</div>
+										</li>
+									</ul>
+								</div>
 		                    </div>
 		                </li>
 						<li>
@@ -77,12 +84,7 @@
 								<div class="talk__input">
 									<div class="c-select">
 										<select id="piBusinessClassification1" name="piBusinessClassification" class="c-select__input">
-											<option value="">사업분류를 선택해주세요.</option>
-											<option value="개량">개량</option>
-											<option value="확장">확장</option>
-											<option value="일부개축">일부개축</option>
-											<option value="전면개축">전면개축</option>
-											<option value="단순보수보강">단순보수보강</option>
+											<option value="">사업유형를 선택해주세요.</option>
 										</select>
 									</div>
 								</div>
@@ -93,7 +95,7 @@
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
 									<div class="c-text">
-										<input type="text" name="piBusinessExpenses" id="piBusinessExpenses1" class="c-text__input" numberOnly />
+										<input type="text" name="piBusinessExpenses" id="piBusinessExpenses1" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" numberOnly />
 									</div>
 								</div>
 							</div>
@@ -108,6 +110,8 @@
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
+											<option value="D">D</option>
+											<option value="E">E</option>
 										</select>
 									</div>
 								</div>
@@ -123,6 +127,8 @@
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
+											<option value="D">D</option>
+											<option value="E">E</option>
 										</select>
 									</div>
 								</div>
@@ -217,13 +223,20 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업유형</div>
 								<div class="talk__input">
-									<div class="c-select">
-										<select id="piBusinessType2" name="piBusinessType" class="c-select__input">
-											<option value="">유형을 선택해주세요.</option>
-											<option value="성능개선">성능개선</option>
-											<option value="유지보수">유지보수</option>
-										</select>
-									</div>
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="성능개선" onclick="piBusinessTypeClick(3,2,null)" name="piBusinessType2" id="piBusinessType3" />
+												<label for="piBusinessType3" class="c-radio__label">성능개선</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="유지보수" onclick="piBusinessTypeClick(4,2,null)" name="piBusinessType2" id="piBusinessType4" />
+												<label for="piBusinessType4" class="c-radio__label">유지보수</label>
+											</div>
+										</li>
+									</ul>
 								</div>
 							</div>
 						</li>
@@ -243,12 +256,7 @@
 								<div class="talk__input">
 									<div class="c-select">
 										<select id="piBusinessClassification2" name="piBusinessClassification" class="c-select__input">
-											<option value="">사업분류를 선택해주세요.</option>
-											<option value="개량">개량</option>
-											<option value="확장">확장</option>
-											<option value="일부개축">일부개축</option>
-											<option value="전면개축">전면개축</option>
-											<option value="단순보수보강">단순보수보강</option>
+											<option value="">사업유형를 선택해주세요.</option>
 										</select>
 									</div>
 								</div>
@@ -258,7 +266,7 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses2" class="c-text__input" numberOnly /></div>
+									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses2" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" numberOnly /></div>
 								</div>
 							</div>
 						</li>
@@ -272,6 +280,8 @@
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
+											<option value="D">D</option>
+											<option value="E">E</option>
 										</select>
 									</div>
 								</div>
@@ -287,6 +297,8 @@
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
+											<option value="D">D</option>
+											<option value="E">E</option>
 										</select>
 									</div>
 								</div>
@@ -374,20 +386,27 @@
 			<!--############################# 세번째 대안 ##########################################-->
 
 			<div class="performance-business" id="addBusiness1" style="display: none">
-				<h4 class="performance-business__heading">비교대안</h4>
+				<h4 class="performance-business__heading">추가대안1</h4>
 				<div class="performance-business__contents">
 					<ul class="talk__list talk__list--split">
 						<li>
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업유형</div>
 								<div class="talk__input">
-									<div class="c-select">
-										<select id="piBusinessType3" name="piBusinessType" class="c-select__input">유
-											<option value="">유형을 선택해주세요.</option>
-											<option value="성능개선">성능개선</option>
-											<option value="유지보수">유지보수</option>
-										</select>
-									</div>
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="성능개선" onclick="piBusinessTypeClick(5,3,null)" name="piBusinessType3" id="piBusinessType5" />
+												<label for="piBusinessType5" class="c-radio__label">성능개선</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="유지보수" onclick="piBusinessTypeClick(6,3,null)" name="piBusinessType3" id="piBusinessType6" />
+												<label for="piBusinessType6" class="c-radio__label">유지보수</label>
+											</div>
+										</li>
+									</ul>
 								</div>
 							</div>
 						</li>
@@ -407,12 +426,7 @@
 								<div class="talk__input">
 									<div class="c-select">
 										<select id="piBusinessClassification3" name="piBusinessClassification" class="c-select__input">
-											<option value="">사업분류를 선택해주세요.</option>
-											<option value="개량">개량</option>
-											<option value="확장">확장</option>
-											<option value="일부개축">일부개축</option>
-											<option value="전면개축">전면개축</option>
-											<option value="보수보강">보수보강</option>
+											<option value="">사업유형를 선택해주세요.</option>
 										</select>
 									</div>
 								</div>
@@ -422,7 +436,7 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses3" class="c-text__input" numberOnly /></div>
+									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses3" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" numberOnly /></div>
 								</div>
 							</div>
 						</li>
@@ -436,6 +450,8 @@
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
+											<option value="D">D</option>
+											<option value="E">E</option>
 										</select>
 									</div>
 								</div>
@@ -451,6 +467,8 @@
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
+											<option value="D">D</option>
+											<option value="E">E</option>
 										</select>
 									</div>
 								</div>
@@ -539,20 +557,27 @@
 			<!--############################# 네번째 대안 #######################################-->
 
 			<div class="performance-business" id="addBusiness2" style="display: none">
-				<h4 class="performance-business__heading">비교대안</h4>
+				<h4 class="performance-business__heading">추가대안2</h4>
 				<div class="performance-business__contents">
 					<ul class="talk__list talk__list--split">
 						<li>
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업유형</div>
 								<div class="talk__input">
-									<div class="c-select">
-										<select id="piBusinessType4" name="piBusinessType" class="c-select__input">
-											<option value="">유형을 선택해주세요.</option>
-											<option value="성능개선">성능개선</option>
-											<option value="유지보수">유지보수</option>
-										</select>
-									</div>
+									<ul class="c-radio-group">
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="성능개선" onclick="piBusinessTypeClick(7,4,null)" name="piBusinessType4" id="piBusinessType7" />
+												<label for="piBusinessType7" class="c-radio__label">성능개선</label>
+											</div>
+										</li>
+										<li class="c-radio-group__item">
+											<div class="c-radio">
+												<input type="radio" class="c-radio__input" value="유지보수" onclick="piBusinessTypeClick(8,4,null)" name="piBusinessType4" id="piBusinessType8" />
+												<label for="piBusinessType8" class="c-radio__label">유지보수</label>
+											</div>
+										</li>
+									</ul>
 								</div>
 							</div>
 						</li>
@@ -572,12 +597,7 @@
 								<div class="talk__input">
 									<div class="c-select">
 										<select id="piBusinessClassification4" name="piBusinessClassification" class="c-select__input">
-											<option value="">사업분류를 선택해주세요.</option>
-											<option value="개량">개량</option>
-											<option value="확장">확장</option>
-											<option value="일부개축">일부개축</option>
-											<option value="전면개축">전면개축</option>
-											<option value="보수보강">보수보강</option>
+											<option value="">사업유형를 선택해주세요.</option>
 										</select>
 									</div>
 								</div>
@@ -587,7 +607,7 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses4" class="c-text__input" numberOnly /></div>
+									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses4" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" numberOnly /></div>
 								</div>
 							</div>
 						</li>
@@ -601,6 +621,8 @@
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
+											<option value="D">D</option>
+											<option value="E">E</option>
 										</select>
 									</div>
 								</div>
@@ -616,6 +638,8 @@
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
+											<option value="D">D</option>
+											<option value="E">E</option>
 										</select>
 									</div>
 								</div>
@@ -724,7 +748,7 @@
 
 		const  autoNum = $("#autoNum").val();
 		if(autoNum!==""){
-			console.log("중간 저장된 데이터 호출하기2");
+			// console.log("중간 저장된 데이터 호출하기2");
 			middleDataBusiness(autoNum);
 		}
 

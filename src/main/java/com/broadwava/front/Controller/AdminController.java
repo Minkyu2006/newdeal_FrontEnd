@@ -1,6 +1,7 @@
 package com.broadwava.front.Controller;
 
 import com.broadwava.front.Enum.AccountRole;
+import com.broadwava.front.bscodes.CodeType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,15 @@ public class AdminController {
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
         return "admin/teamreg";
+    }
+
+    //관리코드등록
+    @RequestMapping("mastercodereg")
+    public String masterCodeReg(Model model){
+        model.addAttribute("codetypes", CodeType.values());
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "admin/mastercodereg";
     }
 
 }

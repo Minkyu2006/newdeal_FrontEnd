@@ -97,7 +97,7 @@
 							<div class="talk__input">
 								<div class="c-select">
 									<select name="piType" id="piType" class="c-select__input">
-										<option value="">시설물을 선택해주세요</option>
+										<option value="">시설물 유형을 선택해주세요</option>
 									</select>
 								</div>
 							</div>
@@ -107,7 +107,7 @@
 						<div class="talk__input-item">
 							<div class="talk__input-heading">취득원가(공사비)</div>
 							<div class="talk__input">
-								<div class="c-text"><input name="piErectionCost" id="piErectionCost" type="text" class="c-text__input" numberOnly /></div>
+								<div class="c-text"><input name="piErectionCost" id="piErectionCost" type="text" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" placeholder="1~10000000000000" /></div>
 							</div>
 						</div>
 					</li>
@@ -117,11 +117,7 @@
 							<div class="talk__input">
 								<div class="c-select">
 									<select name="piSafetyLevel" id="piSafetyLevel" class="c-select__input">
-										<option value="A">A</option>
-										<option value="B">B</option>
-										<option value="C">C</option>
-										<option value="D">D</option>
-										<option value="E">E</option>
+										<option value="">시설물 유형을 선택해주세요</option>
 									</select>
 								</div>
 							</div>
@@ -171,7 +167,7 @@
 						<div class="talk__input-item">
 							<div class="talk__input-heading">연평균일교통량(AADT)</div>
 							<div class="talk__input">
-								<div class="c-text"><input name="piAADT" id="piAADT" type="text" class="c-text__input" numberOnly placeholder="1~300000"/></div>
+								<div class="c-text"><input name="piAADT" id="piAADT" type="text" class="c-text__input" maxlength="7" onkeyup="inputNumberFormat(this)" placeholder="1~300000"/></div>
 							</div>
 						</div>
 					</li>
@@ -205,7 +201,7 @@
 						<div class="talk__input-item">
 							<div class="talk__input-heading">평가 기준년도</div>
 							<div class="talk__input">
-								<div class="c-text"><input type="text" name="piRaterBaseYear" id="piRaterBaseYear" class="c-text__input" readonly="readonly" style="color: black" placeholder="준공연도를 통해 자동으로 입력됩니다." /></div>
+								<div class="c-text"><input type="text" name="piRaterBaseYear" id="piRaterBaseYear" class="c-text__input" readonly="readonly" style="color: black" /></div>
 							</div>
 						</div>
 					</li>
@@ -247,21 +243,24 @@
 </div>
 
 <script>
+
 	$(function() {
+
 		const  autoNum = $("#autoNum").val();
 		if(autoNum!==""){
-			console.log("중간 저장된 데이터 호출하기");
+			// console.log("중간 저장된 데이터 호출하기");
 			middleData(autoNum);
 		}
 
+		const date = new Date();
+		const nowdate = date.getFullYear();
+		$('#piRaterBaseYear').val(nowdate);
+
 		// 공용연수 계산하기
 		$('#piCompletionYear').focusout(function() {
-			const date = new Date();
-			const nowdate = date.getFullYear();
 			const a = $('#piCompletionYear').val();
 			const publicDay = nowdate - a;
 			$('#piPublicYear').val(publicDay);
-			$('#piRaterBaseYear').val(a);
 		})
 
 		// 오직 숫자만 입력할수있게하는 제이쿼리

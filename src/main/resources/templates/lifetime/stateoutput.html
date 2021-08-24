@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<style>
+		#amChart {
+			width: 100%;
+			height: 500px;
+		}
+	</style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<!-- am chart -->
+	<script src="/assets/js/min_js_dir/charts/am/core.js"></script>
+	<script src="/assets/js/min_js_dir/charts/am/charts.js"></script>
+	<script src="/assets/js/min_js_dir/charts/am/material.js"></script>
+	<script src="/assets/js/min_js_dir/charts/am/ko_KR.js"></script>
+	<script src="/assets/js/min_js_dir/charts/am/animated.js"></script>
+
+	<script src="/assets/js/min_js_dir/newdeal/lifetime.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			const getid = $('#getid').val();
+			if(getid!==null){
+				lifeAllTimeOutput(getid);
+			}else{
+				alertCaution("존재하지 않은 글입니다.",1);
+			}
+		});
+	</script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<input type="hidden" id="getid" th:value="${getid}" readonly="readonly" />
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
+	<div class="content__inner">
+		<div class="lifetime" id="lifetime">
+			<div class="talk">
+				<div class="talk__box">
+					<div class="talk__header">
+						<h3>교량 부재 수준 - 사용자 입력 사항</h3>
+					</div>
+					<div class="talk__contents">
+						<table class="c-table c-table--border">
+							<colgroup>
+								<col />
+								<col />
+								<col />
+								<col />
+							</colgroup>
+							<thead>
+								<tr>
+									<th>교량코드</th>
+									<th>교량명</th>
+									<th>경간수</th>
+									<th>세부부재명</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td id="ltBridgeCode">B001</td>
+									<td id="ltBridgeName">%%교</td>
+									<td id="ltSpanNum">4</td>
+									<td id="ltAbsenceName">PSCI 거더</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<table class="c-table c-table--border">
+							<colgroup>
+								<col />
+								<col />
+								<col />
+								<col />
+								<col />
+							</colgroup>
+							<thead>
+								<tr>
+									<th colspan="2">대표보수보강공법 수행 전</th>
+									<th rowspan="2">전체물량</th>
+									<th>할인율</th>
+									<th rowspan="2">열화증가율</th>
+								</tr>
+								<tr>
+									<th>등급</th>
+									<th>손상지수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>B, C, D, E</td>
+									<td id="damageRank">0.2</td>
+									<td id="allVolume">700m2</td>
+									<td id="discountRate">4%</td>
+									<td id="increase">1%</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<table class="c-table c-table--border">
+							<colgroup>
+								<col />
+								<col />
+								<col />
+							</colgroup>
+							<thead>
+								<tr>
+									<th>점검종류</th>
+									<th>빈도수(년/회)</th>
+									<th>비용(원)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>정기점검</th>
+									<td id="ltPeriodicFrequency">0.5</td>
+									<td id="ltPeriodicCost">3,437,000</td>
+								</tr>
+								<tr>
+									<th>정밀점검</th>
+									<td id="ltCloseFrequency">2</td>
+									<td id="ltCloseCost">16,152,000</td>
+								</tr>
+								<tr>
+									<th>정밀안전진단</th>
+									<td id="ltSafetyFrequency">5</td>
+									<td id="ltSafetyCost">48,463,000</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			<div class="talk">
+				<div class="talk__box">
+					<div class="talk__header">
+						<h3>총 LCC</h3>
+					</div>
+					<div class="talk__contents">
+						<h4>단계별 점검진단(보수보강수행시기 시점)</h4>
+						<table class="c-table c-table--border">
+							<colgroup>
+								<col />
+								<col />
+								<col />
+								<col />
+								<col />
+								<col />
+							</colgroup>
+							<thead>
+								<tr>
+									<th>단계</th>
+									<th>정기점검 횟수</th>
+									<th>정밀점검 횟수</th>
+									<th>정밀안전진단 횟수</th>
+									<th style="width: 20%">[할인율 적용]<br />총 점검비용(원)</th>
+									<th style="width: 20%">[할인율 적용]<br />실제 총 유지관리비용(원)</th>
+								</tr>
+							</thead>
+							<tbody id="diagnosisTable">
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+<!--				<div class="talk__box">-->
+<!--					<div class="talk__contents">-->
+<!--&lt;!&ndash;						<h4>CASE별 유지관리 시나리오</h4>&ndash;&gt;-->
+<!--						<div id="toastChart"></div>-->
+<!--					</div>-->
+<!--				</div>-->
+
+				<div class="talk__box">
+					<div class="talk__contents">
+						<div id="amChart"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	
+</div>
+</html>

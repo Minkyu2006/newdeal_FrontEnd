@@ -72948,7 +72948,7 @@ function initData() {
   });
 
   var wmsSource = new _ImageWMS.default({
-    url: 'http://k8s-default-bwgeoser-ef1d0b0c63-2123650264.ap-northeast-2.elb.amazonaws.com/geoserver/newdeal/wms',
+    url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
       'LAYERS': 'Base'
     },
@@ -72960,7 +72960,7 @@ function initData() {
   });
   
   var totalSource = new _ImageWMS.default({
-	  url: 'http://k8s-default-bwgeoser-ef1d0b0c63-2123650264.ap-northeast-2.elb.amazonaws.com/geoserver/newdeal/wms',
+	  url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
 	  params: {
 		  'LAYERS': 'TOTAL_GRADE2'
 	  },
@@ -72972,7 +72972,7 @@ function initData() {
   });
   
   var naclSource = new _ImageWMS.default({
-    url: 'http://k8s-default-bwgeoser-ef1d0b0c63-2123650264.ap-northeast-2.elb.amazonaws.com/geoserver/newdeal/wms',
+    url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
       'LAYERS': 'NACL-2'
     },
@@ -72983,7 +72983,7 @@ function initData() {
     source: naclSource
   });
   var dmSource = new _ImageWMS.default({
-    url: 'http://k8s-default-bwgeoser-ef1d0b0c63-2123650264.ap-northeast-2.elb.amazonaws.com/geoserver/newdeal/wms',
+    url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
       'LAYERS': 'DM'
     },
@@ -72994,7 +72994,7 @@ function initData() {
     source: dmSource
   });
   var fteSource = new _ImageWMS.default({
-    url: 'http://k8s-default-bwgeoser-ef1d0b0c63-2123650264.ap-northeast-2.elb.amazonaws.com/geoserver/newdeal/wms',
+    url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
       'LAYERS': 'FTe'
     },

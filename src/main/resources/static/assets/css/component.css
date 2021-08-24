@@ -21,6 +21,7 @@
     padding: 10px 5px;
     border-bottom: 1px solid #efefef;
     vertical-align: middle;
+    line-height: 1.2;
     word-break: break-all;
     word-wrap: break-word;
 }
@@ -535,6 +536,11 @@
 .c-text.c-text--inline .c-text__input {
 	width: 50px;
 }
+.c-text__label {
+	display: block;
+	margin-bottom: 5px;
+}
+
 /* field */
 .c-field {
 	position: relative;
@@ -1873,6 +1879,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	border-radius: 50%;
 	color: #fff;
 	text-align: center;
+	z-index: 1;
 }
 .c-tooltip__text {
 	visibility: hidden;
