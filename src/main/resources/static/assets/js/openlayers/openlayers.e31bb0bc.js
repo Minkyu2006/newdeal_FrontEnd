@@ -72820,9 +72820,9 @@ function initData() {
             });
         }
 (function () {
-  initData(); // marker 분류
-    initData2(); // marker 분류
-    initData3(); // marker 분류
+//  initData(); // marker 분류
+//    initData2(); // marker 분류
+//    initData3(); // marker 분류
   var tunnel = [];
     var point = [];
     // var tunnel = new Array();
