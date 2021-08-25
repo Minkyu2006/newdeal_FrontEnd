@@ -549,8 +549,10 @@ function inputPerformanceNext3(){
             return false;
         }
 
-        const allAdd = parseFloat($("#piWeightTechnicality").val())+parseFloat($("#piWeightEconomy").val())+parseFloat($("#piWeightPolicy").val());
-        // console.log("allAdd : "+allAdd)
+        const a = Number($("#piWeightTechnicality").val());
+        const b = Number($("#piWeightEconomy").val());
+        const c = Number($("#piWeightPolicy").val());
+        const allAdd =  +(a+b+c).toFixed(12);
         if(allAdd !== 1){
             alertCaution("성능개선 유형 기본 가중치의<Br>합이 '1'이여야 합니다.",1);
             return false;
