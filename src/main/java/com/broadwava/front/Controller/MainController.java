@@ -50,4 +50,9 @@ public class MainController {
     public String envsearch(Model model){
         return "env/envsearch";
     }
+    
+    @RequestMapping("env/maptest")
+    public String maptest(Model model){
+        return "env/maptest";
+    }
 }

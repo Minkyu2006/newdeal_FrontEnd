@@ -72820,14 +72820,12 @@ function initData() {
             });
         }
 (function () {
-//  initData(); // marker 분류
+//	initData(); // marker 분류
 //    initData2(); // marker 분류
 //    initData3(); // marker 분류
   var tunnel = [];
     var point = [];
-    // var tunnel = new Array();
   var bridge = [];
-  // var point = new Array();
 
   for (var i = 0; i < markerArray.length; i++) {
       tunnel.push(markerArray[i]);
@@ -72838,9 +72836,6 @@ function initData() {
     for (var i = 0; i < markerArray3.length; i++) {
         bridge.push(markerArray3[i]);
     }
-    // console.log("tunnel : "+tunnel);
-    // console.log("point : "+point);
-    // console.log("bridge : "+bridge);
 
   var tunnelSource = new _source.Vector({}); //create a bunch of icons and add to source vector
     var iconFeature;
@@ -72868,12 +72863,8 @@ function initData() {
     tunnelSource.addFeature(iconFeature);
   }
 
-  // console.log(tunnelSource.length);
   var tunnelStyle = new _style.Style({
     image: new _style.Icon({
-	  //anchor: [0.5, 46],
-	  //anchorXUnits: 'fraction',
-	  //anchorYUnits: 'pixels',
     	imgSize: [8, 8],
 	  src: '/assets/images/icon__marker.png'
 	})
@@ -72905,9 +72896,6 @@ function initData() {
 
   var bridgeStyle = new _style.Style({
     image: new _style.Icon({
-      //anchor: [0.5, 46],
-      //anchorXUnits: 'fraction',
-      //anchorYUnits: 'pixels',
     	imgSize: [8, 8],
       src: '/assets/images/icon__marker--red.png'
     })
@@ -72934,9 +72922,6 @@ function initData() {
 
   var pointStyle = new _style.Style({
     image: new _style.Icon({
-      //anchor: [0.5, 46],
-      //anchorXUnits: 'fraction',
-      //anchorYUnits: 'pixels',
       imgSize: [8, 8],
       src: '/assets/images/icon__marker--blue.png'
     })
@@ -72947,18 +72932,7 @@ function initData() {
     style: pointStyle
   });
 
-  var wmsSource = new _ImageWMS.default({
-    url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
-    params: {
-      'LAYERS': 'Base'
-    },
-    serverType: 'geoserver',
-    crossOrigin: 'anonymous'
-  });
-  var baseMap = new _Image.default({
-    source: wmsSource
-  });
-  
+
   var totalSource = new _ImageWMS.default({
 	  url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
 	  params: {
@@ -72972,9 +72946,9 @@ function initData() {
   });
   
   var naclSource = new _ImageWMS.default({
-    url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
+	  url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
-      'LAYERS': 'NACL-2'
+      'LAYERS': 'NACL'
     },
     serverType: 'geoserver',
     crossOrigin: 'anonymous'
@@ -72983,7 +72957,7 @@ function initData() {
     source: naclSource
   });
   var dmSource = new _ImageWMS.default({
-    url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
+	  url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
       'LAYERS': 'DM'
     },
@@ -72994,7 +72968,7 @@ function initData() {
     source: dmSource
   });
   var fteSource = new _ImageWMS.default({
-    url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
+	  url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
       'LAYERS': 'FTe'
     },
@@ -73004,24 +72978,22 @@ function initData() {
   var fteLayer = new _Image.default({
     source: fteSource
   });
+  
   var map = new _Map.default({
-    // layers: [baseMap, naclLayer, tunnelLayer, bridgeLayer, pointLayer, tCluster],
-    // layers: [baseMap, naclLayer, tunnelLayer, bridgeLayer, pointLayer],
     layers: [new _layer.Tile({
       source: new _source.OSM()
     }), totalLayer],
-    //overlays: [overlay],
     target: document.getElementById('map'),
     view: new _View.default({
       center: [128.01270, 36],
-      // center: [14261231.27636, 4333098.11010],
-      //projection: 'EPSG:3857',
       projection: 'EPSG:4326',
       zoom: 6.8,
       minZoom: 6.5
     })
-  }); // popup
-
+  }); 
+  
+  
+  // popup
   var element1 = document.getElementById('popupPoint');
   var element2 = document.getElementById('popupTunnel');
     var element3 = document.getElementById('popupBridge');
@@ -73037,7 +73009,6 @@ function initData() {
 
 
         if(feature.get('type')==="point"){
-            // console.log("기상계측점선택");
             popup = new _Overlay.default({
                 element: element1,
                 positioning: 'bottom-center',
@@ -73069,8 +73040,6 @@ function initData() {
             clickview();
 
         }else if(feature.get('type')==="tunnel"){
-            // console.log("터널선택");
-
             popup = new _Overlay.default({
                 element: element2,
                 positioning: 'bottom-center',
@@ -73116,8 +73085,6 @@ function initData() {
 
             clickview();
         }else{
-            // console.log("교량선택");
-
             popup = new _Overlay.default({
                 element: element3,
                 positioning: 'bottom-center',
@@ -73166,10 +73133,6 @@ function initData() {
   }); // change mouse cursor when over marker
 
   map.on('pointermove', function (e) {
-    // if (e.dragging) {
-    //     $(element).popover('dispose');
-    //     return;
-    // }
     var pixel = map.getEventPixel(e.originalEvent);
     var hit = map.hasFeatureAtPixel(pixel);
     map.getTarget().style.cursor = hit ? 'pointer' : '';
@@ -73463,4 +73426,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/openlayers.e31bb0bc.js.map
+//# sourceMappingURL=/assets/js/openlayers/openlayers.e31bb0bc.js.map
