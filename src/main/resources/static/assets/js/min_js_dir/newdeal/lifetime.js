@@ -38,7 +38,89 @@ function lifeAllTimeSave(){
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else {
 
-        console.log("호출성공");
+        if($("#ltBridgeName").val()==="") {
+            alertCaution("교량명을 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltSpanNum").val()==="") {
+            alertCaution("경간수를 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltDamageBRank").val()==="") {
+            alertCaution("B등급 손상지수를 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltDamageCRank").val()==="") {
+            alertCaution("C등급 손상지수를 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltDamageDRank").val()==="") {
+            alertCaution("D등급 손상지수를 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltDamageERank").val()==="") {
+            alertCaution("E등급 손상지수를 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltAllVolume").val()==="") {
+            alertCaution("전체물량을 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltDiscountRate").val()==="") {
+            alertCaution("할인율을 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltIncrease").val()==="") {
+            alertCaution("열화증가율을 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltPeriodicFrequency").val()==="") {
+            alertCaution("정기점검 빈도수를 입력해주세요.", 1)
+            return false;
+        }
+
+        const $ltPeriodicCost = $("#ltPeriodicCost");
+        if($ltPeriodicCost.val()==="") {
+            alertCaution("정기점검 비용을 입력해주세요.", 1)
+            return false;
+        }else{
+            $ltPeriodicCost.val($ltPeriodicCost.val().replaceAll(",",""));
+        }
+
+        if($("#ltCloseFrequency").val()==="") {
+            alertCaution("정밀점검 빈도수를 입력해주세요.", 1)
+            return false;
+        }
+
+        const $ltCloseCost = $("#ltCloseCost");
+        if($ltCloseCost.val()==="") {
+            alertCaution("정밀점검 비용을 입력해주세요.", 1)
+            return false;
+        }else{
+            $ltCloseCost.val($ltCloseCost.val().replaceAll(",",""));
+        }
+
+        if($("#ltSafetyFrequency").val()==="") {
+            alertCaution("정밀안전점검 빈도수를 입력해주세요.", 1)
+            return false;
+        }
+
+        const $ltSafetyCost = $("#ltSafetyCost");
+        if($ltSafetyCost.val()==="") {
+            alertCaution("정밀안전점검 비용을 입력해주세요.", 1)
+            return false;
+        }else{
+            $ltSafetyCost.val($ltSafetyCost.val().replaceAll(",",""));
+        }
 
         const formData = new FormData(document.getElementById('lifeAllTimeForm'));
 
