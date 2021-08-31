@@ -888,6 +888,71 @@ table {
 	margin-top: 10px;
 }
 
+/* 환경정보조회 지도 팝업 */
+.map-popup {
+    display: none;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 3px 5px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.map-popup.open {
+    display: block;
+}
+.map-popup__title {
+    width: 100%;
+    padding: 5px 24px 5px 5px;
+    margin: 0;
+    background-color: #181a1f;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.map-popup ul, .map-popup li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.map-popup li {
+    margin-top: 2px;
+    font-size: 12px;
+}
+.map-popup li span {
+    display: inline-block;
+}
+.map-popup__item-title {
+    width: 60px;
+}
+.map-popup__close {
+    display: block;
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+}
+.map-popup__close img {
+    width: 100%;
+}
+
+.appearance-area {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 360px;
+	/* border: 1px solid #0100FF; */
+}
+.appearance-area + .l-popup__function {
+	padding-top: 20px;
+	padding-bottom: 0;
+}
+
+
 /* popup */
 .pop {
 	display: none;
