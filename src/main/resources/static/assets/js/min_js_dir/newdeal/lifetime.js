@@ -174,79 +174,7 @@ function lifeAllTimeOutput(id){
                     }
                     $diagnosisTable.html(html);
 
-
-                    // // toastChart
-                    // const el = document.getElementById('toastChart');
-                    // const data = {
-                    //     categories: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
-                    //     series: [
-                    //         {
-                    //             name: '선제적 유지관리',
-                    //             data: [1.0, 0.91, 0.85, 0.84, 0.82, 0.8, 0.78, 0.8, 0.64, 0.29, 0],
-                    //         },
-                    //         {
-                    //             name: '무조치시 열화모델',
-                    //             // data: [1.0, 0.91, 0.63, 0.17, -0.48, -1.31, -2.33, -3.53, -4.91, -6.48, -8.24],
-                    //             data: [1.0, 0.91, 0.63, 0.17, 0, 0, 0, 0, 0, 0, 0],
-                    //         }
-                    //     ],
-                    // };
-                    // const options = {
-                    //     legend: {
-                    //         align: 'bottom',
-                    //     },
-                    //
-                    //     chart: {
-                    //         title: {
-                    //             text : '유지관리 시나리오 차트',
-                    //             align : 'center'
-                    //         },
-                    //         width: 1050,
-                    //         height: 500
-                    //     },
-                    //     xAxis: {
-                    //         title: '공용연수',
-                    //         // tick: {
-                    //         //     interval: 2,
-                    //         // },
-                    //         // label: {
-                    //         //     interval: 10,
-                    //         // }, // x축범위 옵션
-                    //     },
-                    //     yAxis: {
-                    //         title: '상태지수',
-                    //         scale: {
-                    //             min: 0,
-                    //             max: 1.0,
-                    //             stepSize: 0.1,
-                    //         }
-                    //     },
-                    //     theme: {
-                    //         tooltip: {
-                    //             background: '#454848',
-                    //         },
-                    //     },
-                    //     tooltip: {
-                    //         template: (model, defaultTooltipTemplate, theme) => {
-                    //             const {body, header} = defaultTooltipTemplate;
-                    //             const {background} = theme;
-                    //             return `
-                    //         <div style="background: ${background};padding:5px;text-align: center;color: white;">
-                    //             <p>공용연수 : ${model.category}년</p>
-                    //             ${body}
-                    //         </div>`;
-                    //         },
-                    //         formatter: (value) => `${value} C.I`,
-                    //     },
-                    //     series: {
-                    //         spline: true,
-                    //     },
-                    // };
-                    //
-                    // const toast_Chart = toastui.Chart.lineChart({ el, data, options });
-
-
-                    console.log("차트 데이터 : "+request.sendData.chartDataList);
+                    // console.log("차트 데이터 : "+request.sendData.chartDataList);
                     // amChart
                     am4core.ready(function() { // am4core 시작
 
@@ -255,6 +183,7 @@ function lifeAllTimeOutput(id){
 
                         const chart = am4core.create("amChart", am4charts.XYChart);
 
+                        // 날짜 데이터
                         // chart.dateFormatter.dateFormat = "MMM YYYY";
                         // chart.numberFormatter.numberFormat = "#.#a";
                         // chart.numberFormatter.bigNumberPrefixes = [
@@ -325,19 +254,22 @@ function lifeAllTimeOutput(id){
                         //     }
                         // ];
 
-                        // XY축 차트 생성
-                        const dateAxis = chart.xAxes.push(new am4charts.CategoryAxis);
-                        dateAxis.dataFields.category = "category";
-                        // dateAxis.renderer.grid.template.location = 0;
-                        // dateAxis.renderer.minGridDistance = 30;
-                        dateAxis.title.text = "공용연수(Years)";
+                        // X축 차트 생성
+                        const xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
+                        xAxis.dataFields.category = "category";
+                        // xAxis.renderer.grid.template.location = 0;
+                        xAxis.renderer.minGridDistance = 96; // 범위 조절옵션
+                        xAxis.title.text = "공용연수(Years)";
+                        // xAxis.renderer.grid.template.disabled = true; // x축 라인 제거
+                        // xAxis.renderer.labels.template.disabled = true;
 
-                        const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                        // Y축 차트 생성
+                        const yAxis = chart.yAxes.push(new am4charts.ValueAxis());
                         // valueAxis.renderer.inside = true;
                         // valueAxis.renderer.labels.template.verticalCenter = "bottom";
-                        valueAxis.title.text = "상태지수(condition Index,C.I)";
-                        valueAxis.min = 0;
-                        valueAxis.max = 1;
+                        yAxis.title.text = "상태지수(condition Index,C.I)";
+                        yAxis.min = 0;
+                        yAxis.max = 1;
                         // valueAxis.strictMinMax = true;
                         // valueAxis.renderer.minGridDistance = 20;
                         // valueAxis.adjustLabelPrecision = false;
@@ -347,7 +279,7 @@ function lifeAllTimeOutput(id){
                         // valueAxis.title.marginRight = 5;
 
                         // 차트옵션 설정 + 차트설명박스(완)
-                        function createSeries(field, name, color, dashed) {
+                        function createSeries(field, name, lineColor,textColor) {
                             const series = chart.series.push(new am4charts.LineSeries());
                             series.dataFields.categoryX = "category";
                             series.dataFields.valueY = field;
@@ -355,17 +287,35 @@ function lifeAllTimeOutput(id){
                             series.tooltipText = "[bold]{name}[/] \n 공용연수 : [b]{categoryX}년[/] \n 상태지수 : [b]{valueY}[/]";
                             series.strokeWidth = 2;
                             series.smoothing = "monotoneX";
-                            series.stroke = color;
-
-                            // if (dashed) {
-                            //     series.strokeDasharray = "5 3";
-                            // }
-
+                            series.stroke = lineColor;
+                            series.tooltip.getFillFromObject = false;
+                            series.tooltip.background.fill = lineColor;
+                            series.tooltip.label.fill = textColor;
                             return series;
                         }
+                        createSeries("noAction", "무조치시 열화모델", am4core.color("#1c1d66"),am4core.color("#ffffff")); // 무조치시 열화모델 라인색 설정(완)
+                        createSeries("maintenance", "선제적 유지관리", am4core.color("#6889e2"),am4core.color("#000000")); // 선제적 유지관리 라인색 설정(완)
+                        createSeries("maintenance2", "현행 유지관리", am4core.color("#5fee83"),am4core.color("#000000")); // 현행 유지관리 라인색 설정(완)
 
-                        createSeries("noAction", "무조치시 열화모델", am4core.color("#ff7f7f")); // 무조치시 열화모델 라인색 설정(완)
-                        createSeries("maintenance", "선제적 유지관리", am4core.color("#5276f5")); // 선제적 유지관리 라인색 설정(완)
+                        // 점선차트 A~D등급
+                        function dashSeries(field,color, dashed) {
+                            const series = chart.series.push(new am4charts.LineSeries());
+                            series.dataFields.categoryX = "category";
+                            series.dataFields.valueY = field;
+                            series.strokeWidth = 2;
+                            series.smoothing = "monotoneX";
+                            series.stroke = color;
+                            series.hiddenInLegend = true; // legend 숨기기
+                            // 점선 옵션
+                            if (dashed) {
+                                series.strokeDasharray = "5 3";
+                            }
+                            return series;
+                        }
+                        dashSeries("aRank", am4core.color("#ff7979"),true); // 현행 유지관리 라인색 설정(완)
+                        dashSeries("bRank", am4core.color("#ff7979"),true); // 현행 유지관리 라인색 설정(완)
+                        dashSeries("cRank", am4core.color("#ff7979"),true); // 현행 유지관리 라인색 설정(완)
+                        dashSeries("dRank", am4core.color("#ff7979"),true); // 현행 유지관리 라인색 설정(완)
 
                         chart.legend = new am4charts.Legend(); // 항목 상단 오른쪽으로 배치(완)
                         chart.legend.position = "top";
@@ -374,6 +324,32 @@ function lifeAllTimeOutput(id){
                         chart.cursor = new am4charts.XYCursor(); // x축y축 생성(완)
 
                         chart.exporting.menu = new am4core.ExportMenu(); // 오른쪽상단 이미지, 데이터 가져올수있는 형식의 메뉴(완)
+                        chart.exporting.menu.items = [{
+                            "label": "...",
+                            "menu": [
+                                {
+                                    "label": "Image",
+                                    "menu": [
+                                        { "type": "png", "label": "PNG" },
+                                        { "type": "jpg", "label": "JPG" },
+                                        { "type": "svg", "label": "SVG" },
+                                        // { "type": "pdf", "label": "PDF" }
+                                    ]
+                                }, {
+                                    "label": "Data",
+                                    "menu": [
+                                        { "type": "json", "label": "JSON" },
+                                        { "type": "csv", "label": "CSV" },
+                                        // { "type": "xlsx", "label": "XLSX" },
+                                        { "type": "html", "label": "HTML" },
+                                        // { "type": "pdfdata", "label": "PDF" }
+                                    ]
+                                },
+                                // {
+                                //     "label": "Print", "type": "print"
+                                // }
+                            ]
+                        }];
 
                     }); // am4core 끝
 
