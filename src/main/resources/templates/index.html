@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-	  layout:decorate="layout/default">
+	  layout:decorate="layout/mainpage">
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
@@ -43,14 +43,17 @@
 			<div class="main__incover">
 				<div class="main__center">
 					<div class="main__txt">
-						<h2 class="main__txt-heading">Long-Term Data Analysis Platform<br />for Infra-Structure Maintenance</h2>
-						<h3 class="main__sub-heading">노후인프라 시설물 유지관리를 위한 중장기 데이터 분석 플랫폼</h3>
+						<h2 class="main__txt-heading">BMAPS</h2>
+						<h3 class="main__sub-heading"></h3>
 					</div>
 
 					<div class="info" sec:authorize="!isAuthenticated()">
 						<ul>
 							<li>
 								<a href="/login" class="main__btn main__btn--login">LogIn</a>
+							</li>
+							<li>
+								<a href="/register" class="main__btn main__btn--login">회원가입</a>
 							</li>
 						</ul>
 					</div>
