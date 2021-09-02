@@ -47,22 +47,40 @@ public class LifetimeController{
         return "lifetime/input";
     }
 
-    // 상태평가 input
+    // 상태평가 전체부분 input
     @RequestMapping("stateinput/{absence}")
-    public String stateinput(Model model,@PathVariable String absence){
+    public String state_input(Model model,@PathVariable String absence){
         model.addAttribute("absence", absence);
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
         return "lifetime/stateinput";
     }
     
-    // 상태평가 output
+    // 상태평가 전체부분 output
     @RequestMapping("stateoutput/{id}")
-    public String stateoutput(Model model,@PathVariable Long id){
+    public String state_output(Model model,@PathVariable Long id){
         model.addAttribute("getid", id);
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
         return "lifetime/stateoutput";
     }
+
+    // 상태평가 세부부분 input
+    @RequestMapping("detailinput/{absence}")
+    public String detail_input(Model model,@PathVariable String absence){
+        model.addAttribute("absence", absence);
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "lifetime/detailinput";
+    }
+
+//    // 상태평가 전체부분 output
+//    @RequestMapping("stateoutput/{id}")
+//    public String detail_output(Model model,@PathVariable Long id){
+//        model.addAttribute("getid", id);
+//        model.addAttribute("backend_url", backend_url);
+//        model.addAttribute("backend_protocol", backend_protocol);
+//        return "lifetime/stateoutput";
+//    }
 
 }

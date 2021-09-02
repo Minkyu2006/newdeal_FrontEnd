@@ -21,7 +21,16 @@
 		// 이진혁박사 인풋페이지 이동
 		function stateinput(){
 			const $absence = $("#absence").val();
-			location.href = "/lifetime/stateinput/"+$absence;
+			const $service = $('input:radio[name="choseService"]:checked').val();
+			// console.log("service : "+$service);
+			if($service==="all"){
+				location.href = "/lifetime/stateinput/"+$absence;
+			}else if($service==="detail"){
+				location.href = "/lifetime/detailinput/"+$absence;
+			}else{
+				alertCaution("평가할 열화 인자를 선택해주세요.",1)
+			}
+
 		}
 	</script>
 </th:block>
@@ -51,14 +60,14 @@
 								<ul class="c-radio-group">
 									<li class="c-radio-group__item">
 										<div class="c-radio">
-											<input type="radio" name="service" class="c-radio__input" />
-											<label for="" class="c-radio__label">전체</label>
+											<input type="radio" id="allChose" name="choseService" value="all" class="c-radio__input" />
+											<label for="allChose" class="c-radio__label">전체</label>
 										</div>
 									</li>
 									<li class="c-radio-group__item">
 										<div class="c-radio">
-											<input type="radio" name="service" class="c-radio__input" />
-											<label for="" class="c-radio__label">세부</label>
+											<input type="radio" id="detailChose" name="choseService" value="detail" class="c-radio__input" />
+											<label for="detailChose" class="c-radio__label">세부</label>
 										</div>
 									</li>
 								</ul>
@@ -70,7 +79,6 @@
 				<div class="talk__console">
 					<ul>
 						<li>
-							<!-- <button onclick="" class="c-button c-button--point">NEXT</button> -->
 							<a onclick="stateinput()" class="c-button c-button--point">next</a>
 						</li>
 					</ul>
