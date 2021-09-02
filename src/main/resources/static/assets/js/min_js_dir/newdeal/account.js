@@ -1,9 +1,7 @@
-// 사용자 관련 자바스크립트
-console.log("사용자 관련 자바스크립트 적용완료");
 
 // 회원가입 시작
 function registerSave(){
-    console.log("회원가입 시작");
+    // console.log("회원가입 시작");
 
     if($("#userid").val()==="") {
         alertCaution("아이디를 입력해주세요.", 1)
@@ -84,7 +82,64 @@ function alertLink() {
     });
 }
 
-// 부서선택 팝업창
-function btn_team_search(){
+// NEWDEAL 회원가입용 부서리스트 불러오는 팝업
+function callTeamListPopup(page){
+    page = page - 1;
+    if (page < 0) page = 0;
 
+    const perPage = 10;
+    const perArea = 5;
+    let totCnt = 0;
+
+    const $schTeamList = $('#schTeamList');
+    const $totalTeamCnt = $('#totalTeamCnt');
+    const params = {
+        teamcode:$("#p_teamcode").val(),
+        teamname:$("#p_teamname").val()
+    };
+    $schTeamList.empty().append('<tr ><td colspan="3" align="center">조회 중</td></tr>');
+    $totalTeamCnt.text('0');
+
+    let url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/team/list"; // 호출할 백엔드 API
+    // console.log("url : "+url);
+
+    $.ajax({
+        url : url+'?size='+ perPage + '&page=' + page,
+        type : 'GET',
+        data : params,
+        cache : false,
+        error:function(request){
+            ajaxErrorMsg(request);
+        },
+        success: function(res){
+            // 화면 출력
+            totCnt = res.total_rows;
+            $("#teamPaging").jqueryPager({pageSize: perPage,
+                pageBlock: perArea,
+                currentPage: page + 1,
+                pageTotal: totCnt,
+                clickEvent: 'callTeamListPopup'});
+            if (totCnt === 0) {
+                $schTeamList.empty().append('<tr class="t-c"><td colspan="3" align="center">조회된 데이터가 없습니다.</td></tr>');
+                return;
+            }
+            $totalTeamCnt.text(totCnt);
+            let html = '';
+            $.each(res.datalist, function(key, value){
+                html += '<tr >';
+                html += '<td >'+ echoNull2Blank(value.teamcode) +'</td>';
+                html += '<td >'+ echoNull2Blank(value.teamname) +'</td>';
+                html += '<td ><button class="c-button c-button--small c-button--point" onclick="selectTeam(\''+ echoNull2Blank(value.teamcode) +'\',\''+ echoNull2Blank(value.teamname) +'\');">선택</button></td>';
+                html += '</tr>';
+            });
+            $schTeamList.html(html);
+        }
+    });
+}
+
+// NEWDEAL 회원가입용 부서선택
+function selectTeam(code,name){
+    $("#teamcode").val(code);
+    $("#teamname").val(name);
+    $('.l-popup').removeClass('open');
 }
