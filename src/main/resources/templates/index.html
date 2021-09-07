@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-	  layout:decorate="layout/default">
+	  layout:decorate="layout/mainpage">
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
@@ -36,12 +36,6 @@
 		<section class="main__section">
 			<ul class="main__slide">
 				<li>
-					<div class="main__image"></div>
-				</li>
-				<li>
-					<div class="main__image dongjak"></div>
-				</li>
-				<li>
 					<div class="main__image sungsan"></div>
 				</li>
 			</ul>
@@ -49,14 +43,17 @@
 			<div class="main__incover">
 				<div class="main__center">
 					<div class="main__txt">
-						<h2 class="main__txt-heading">Long-Term Data Analysis Platform<br />for Infra-Structure Maintenance</h2>
-						<h3 class="main__sub-heading">노후인프라 시설물 유지관리를 위한 중장기 데이터 분석 플랫폼</h3>
+						<h2 class="main__txt-heading">BMAPS</h2>
+						<h3 class="main__sub-heading"></h3>
 					</div>
 
-					<div class="info" sec:authorize="!isAuthenticated()">
+					<div class="info">
 						<ul>
 							<li>
-								<a href="/login" class="main__btn main__btn--login">LogIn</a>
+								<a  id="loginBtn" href="/login" class="main__btn main__btn--login">로그인</a>
+							</li>
+							<li>
+								<a id="registerBtn" href="/register" class="main__btn main__btn--login">회원가입</a>
 							</li>
 						</ul>
 					</div>
@@ -65,6 +62,7 @@
 
 		</section>
 
+<!-- 
 		<section class="main__sub-section main__sub-section--menu">
 			<div class="sub">
 				<div class="main__menu">
@@ -138,7 +136,6 @@
 						</div>
 						<div class="sub__contents">
 							<div class="sub__video">
-								<!-- 아이프레임 들어갈 영역 -->
 								<iframe src="https://www.youtube.com/embed/9B8a5LdVh6c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							</div>
 						</div>
@@ -538,6 +535,7 @@
 				</div>
 			</div>
 		</section>
+		 -->
 	</div>
 </div>
 </html>

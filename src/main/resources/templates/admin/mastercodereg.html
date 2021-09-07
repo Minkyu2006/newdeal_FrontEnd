@@ -40,7 +40,7 @@
 	<section class="section">
 		<article class="article">
 			<div class="article__head">
-				<h2 class="article__heading" style="font-size: 27px">마스터코드등록</h2>
+				<h2 class="article__heading">마스터코드등록</h2>
 			</div>
 			<div class="code">
 				<form name="frmreg">
@@ -54,6 +54,7 @@
 							</select>
 						</div>
 					</div>
+					
 					<ul class="code__detail">
 						<li class="code__detail-item">
 							<div class="c-text">
@@ -70,6 +71,33 @@
 						<li class="code__detail-item">
 							<label for="remark" class="c-textarea__label">비고</label>
 							<textarea class="c-textarea" id="remark" name="remark"></textarea>
+						</li>
+					</ul>
+					
+					<ul class="code__detail-list">
+						<li>
+							<div class="c-text">
+								<label for="name" class="c-text__label">레퍼런스1</label>
+								<input type="text" class="c-text__input" />
+							</div>
+						</li>
+						<li>
+							<div class="c-text">
+								<label for="name" class="c-text__label">레퍼런스2</label>
+								<input type="text" class="c-text__input">
+							</div>
+						</li>
+						<li>
+							<div class="c-text">
+								<label for="name" class="c-text__label">레퍼런스3</label>
+								<input type="text" class="c-text__input">
+							</div>
+						</li>
+						<li>
+							<div class="c-text">
+								<label for="name" class="c-text__label">레퍼런스4</label>
+								<input type="text" class="c-text__input">
+							</div>
 						</li>
 					</ul>
 				</form>
@@ -92,7 +120,9 @@
 
 	<section class="section">
 		<article class="article">
-			<h3 class="article__heading">마스터코드조회</h3>
+			<div class="article__head">
+				<h3 class="article__heading">마스터코드조회</h3>
+			</div>
 			<table class="c-table">
 				<colgroup>
 					<col style="width: 100px;" />

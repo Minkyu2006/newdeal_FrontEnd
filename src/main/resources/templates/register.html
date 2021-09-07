@@ -8,8 +8,21 @@
 	<script src="/assets/js/min_js_dir/newdeal/account.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			$('#btn_search').on('click', function(e) {
+				$('#pop_search').addClass('open');
+				callTeamListPopup(1);
+				e.preventDefault();
+			});
 
-		})
+			$('.l-popup__close').on('click', function(e) {
+				$('.l-popup').removeClass('open');
+				e.preventDefault();
+			});
+
+			$("#btnTeamSearch").on('click',function(){
+				callTeamListPopup(1);
+			});
+		});
 	</script>
 </th:block>
 
@@ -18,20 +31,26 @@
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
 	
 	<div class="join">
-		<h2 class="join__logo">BMAPS</h2>
+		<h2 class="join__logo">BMAPS 회원가입</h2>
 		<div class="join__form">
-			<form name="frmreg">
+			<form id="registerStart" enctype="multipart/form-data">
 				<div class="join__form__article">
 					<div class="join__form-item">
 						<div class="c-text">
-							<label for="userid" class="c-text__label">ID</label>
+							<label for="userid" class="c-text__label">아이디</label>
 							<input type="text" class="c-text__input" id="userid" name="userid" />
 						</div>
 					</div>
 					<div class="join__form-item">
 						<div class="c-text">
-							<label for="password" class="c-text__label">PASSWORD</label>
+							<label for="password" class="c-text__label">비밀번호</label>
 							<input type="password" class="c-text__input" id="password" name="password" />
+						</div>
+					</div>
+					<div class="join__form-item">
+						<div class="c-text">
+							<label for="password" class="c-text__label">비밀번호 확인</label>
+							<input type="password" class="c-text__input" id="check_password" name="check_password" />
 						</div>
 					</div>
 					<div class="join__form-item">
@@ -42,7 +61,7 @@
 					</div>
 					<div class="join__form-item">
 						<div class="c-text">
-							<label for="email" class="c-text__label">e-mail</label>
+							<label for="email" class="c-text__label">이메일</label>
 							<input type="text" class="c-text__input" id="email" name="email" />
 						</div>
 					</div>
@@ -52,90 +71,93 @@
 					<div class="join__form-item">
 						<div class="c-select">
 							<label for="role" class="c-text__label">권한</label>
-							<select class="c-select__input" id="role" name="role">
-								<option th:each ="role : ${roles}"
-										th:value="${role.getCode()}"
-										th:text="${role.getDesc()}"></option>
-							</select>
+							<input type="text" class="c-text__input" id="role" value="사용자" readonly="readonly" />
+<!--							<select class="c-select__input" id="role" name="role">-->
+<!--								<option th:each ="role : ${roles}"-->
+<!--										th:value="${role.getCode()}"-->
+<!--										th:text="${role.getDesc()}"></option>-->
+<!--							</select>-->
 						</div>
 					</div>
 					<div class="join__form-item">
 						<label for="teamname" class="c-text__label">부서</label>
 						<div class="c-text c-text--duo">
-							<input type="text" class="c-text__input" readonly placeholder="부서코드" id="teamcode" name="teamcode"/>
-							<input type="text" class="c-text__input" readonly placeholder="부서명" id="teamname" name="teamname"/>
+							<input type="text" class="c-text__input" readonly="readonly" placeholder="부서코드" id="teamcode" name="teamcode"/>
+							<input type="text" class="c-text__input" readonly="readonly" placeholder="부서명" id="teamname" name="teamname"/>
 							<button class="c-text__button" id="btn_search">검색</button>
 						</div>
 					</div>
 				</div>
 			</form>
-			<button class="join__btn" id="btnNbtnSaveew">회원가입 완료</button>
+			<button class="join__btn" onclick="registerSave()">회원가입 완료</button>
 		</div>
 	</div>
-	
-	<!-- <section class="section">
-		<article class="article">
-			<h3 class="article__head">회원가입</h3>
-			<form name="frmreg">
-				<table class="c-table c-table--non-border">
-					<colgroup>
-						<col style="width: 130px;" />
-						<col />
-						<col style="width: 130px;" />
-						<col />
-					</colgroup>
-					<tbody>
+
+	<div class="l-popup" id="pop_search">
+		<div class="l-popup__container">
+			<div class="l-popup__head">
+				<div class="l-popup__heading">부서 검색</div>
+			</div>
+			<div class="l-popup__content">
+				<div class="l-popup__section">
+					<table class="c-table c-table--non-border">
+						<colgroup>
+							<col style="width: 100px;" />
+							<col />
+							<col style="width: 100px;" />
+							<col />
+							<col style="width: 60px;" />
+						</colgroup>
+						<tbody>
 						<tr>
-							<th>아이디</th>
+							<th>부서코드</th>
 							<td>
-								<input type="hidden" class="c-text__input" id="mode" name="mode" value = "N"/>
-								<div class="c-text"><input type="text" class="c-text__input" id="userid" name="userid" /></div>
+								<div class="c-text"><input type="text" class="c-text__input" id="p_teamcode" /></div>
 							</td>
-							<th>패스워드</th>
+							<th>부서명</th>
 							<td>
-								<div class="c-text"><input type="password" class="c-text__input" id="password" name="password"/></div>
+								<div class="c-text"><input type="text" class="c-text__input" id="p_teamname" /></div>
+							</td>
+							<td>
+								<button class="c-button c-button--point" id="btnTeamSearch">조회</button>
 							</td>
 						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="l-popup__section">
+					<table class="c-table">
+						<colgroup>
+							<col />
+							<col />
+							<col style="width: 50px;" />
+						</colgroup>
+						<thead>
 						<tr>
-							<th>이름</th>
-							<td>
-								<div class="c-text"><input type="text" class="c-text__input" id="username" name="username"/></div>
-							</td>
-							<th>이메일</th>
-							<td>
-								<div class="c-text"><input type="text" class="c-text__input" id="email" name="email"/></div>
-							</td>
+							<th>부서코드</th>
+							<th>부서명</th>
+							<th></th>
 						</tr>
-						<tr>
-							<th>권한</th>
-							<td>
-								<div class="c-select">
-									<select class="c-select__input" id="role" name="role">
-										<option th:each ="role : ${roles}"
-												th:value="${role.getCode()}"
-												th:text="${role.getDesc()}"></option>
-									</select>
-								</div>
-							</td>
-							<th>부서</th>
-							<td>
-								<div class="c-text c-text--duo">
-									<input type="text" class="c-text__input" readonly placeholder="부서코드" id="teamcode" name="teamcode"/>
-									<input type="text" class="c-text__input" readonly placeholder="부서명" id="teamname" name="teamname"/>
-									<button class="c-text__button" id="btn_search">검색</button>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
-			<div class="c-function">
-				<div class="c-function__group c-function__group--right">
-					<div class="c-function__item"><button class="c-button c-button--point" id="btnNbtnSaveew">회원가입 완료</button></div>
+						</thead>
+						<tbody id ="schTeamList">
+						</tbody>
+					</table>
+					<div class="c-pager">
+						<div class="c-paging" id="teamPaging">
+							<!-- 페이징 처리되는곳   -->
+						</div>
+						<div class="c-paging__total">
+							<div class="c-paging__total-group">
+								Total
+							</div>
+							<div class="c-paging__total-group" id ="totalTeamCnt">0</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</article>
-	</section> -->
+			<a href="#" class="l-popup__close">팝업닫기</a>
+		</div>
+	</div>
 
 </div>
 
