@@ -57,25 +57,55 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th>교량코드</th>
-									<th>교량명</th>
-									<th>경간수</th>
-									<th>세부부재명</th>
+									<th style="text-align: center">교량코드</th>
+									<th style="text-align: center">교량명</th>
+									<th style="text-align: center">경간수</th>
+									<th style="text-align: center">세부부재명</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td id="ltBridgeCode">B001</td>
-									<td id="ltBridgeName">%%교</td>
-									<td id="ltSpanNum">4</td>
-									<td id="ltAbsenceName">PSCI 거더</td>
+									<td style="text-align: center" id="ltBridgeCode"></td>
+									<td style="text-align: center" id="ltBridgeName"></td>
+									<td style="text-align: center" id="ltSpanNum"></td>
+									<td style="text-align: center" id="ltAbsenceName"></td>
 								</tr>
 							</tbody>
 						</table>
-						
+
+                        <table class="c-table c-table--border">
+                            <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">차로수</th>
+                                <th style="text-align: center">종별구분</th>
+                                <th style="text-align: center">연장(m)</th>
+                                <th style="text-align: center">폭(m)</th>
+                                <th style="text-align: center">전체물량(m2)</th>
+                                <th style="text-align: center">준공 일자</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td style="text-align: center" id="ltAllTeaRoad"></td>
+                                <td style="text-align: center" id="ltAllKind"></td>
+                                <td style="text-align: center" id="ltAllLength"></td>
+                                <td style="text-align: center" id="ltAllArea"></td>
+                                <td style="text-align: center" id="allVolume"></td>
+                                <td style="text-align: center" id="ltAllCompletionDate"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
 						<table class="c-table c-table--border">
 							<colgroup>
-								<col />
 								<col />
 								<col />
 								<col />
@@ -83,27 +113,65 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th colspan="2">대표보수보강공법 수행 전</th>
-									<th rowspan="2">전체물량</th>
-									<th>할인율</th>
-									<th rowspan="2">열화증가율</th>
+									<th style="text-align: center" colspan="4">대표보수 보강공법 수행효과</th>
 								</tr>
 								<tr>
-									<th>등급</th>
-									<th>손상지수</th>
+									<th style="text-align: center">등급</th>
+									<th style="text-align: center">수행 전 손상지수</th>
+									<th style="text-align: center">수행 후 손상지수</th>
+									<th style="text-align: center">비용</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td>B, C, D, E</td>
-									<td id="damageRank">0.2</td>
-									<td id="allVolume">700m2</td>
-									<td id="discountRate">4%</td>
-									<td id="increase">1%</td>
+									<td style="text-align: center">B</td>
+									<td style="text-align: center" id="damageBRankBefore"></td>
+									<td style="text-align: center" id="damageBRankAfter"></td>
+									<td style="text-align: right" id="damageBCost"></td>
+								</tr>
+								<tr>
+									<td style="text-align: center">C</td>
+									<td style="text-align: center" id="damageCRankBefore"></td>
+									<td style="text-align: center" id="damageCRankAfter"></td>
+									<td style="text-align: right" id="damageCCost"></td>
+								</tr>
+								<tr>
+									<td style="text-align: center">D</td>
+									<td style="text-align: center" id="damageDRankBefore"></td>
+									<td style="text-align: center" id="damageDRankAfter"></td>
+									<td style="text-align: right" id="damageDCost" ></td>
+								</tr>
+								<tr>
+									<td style="text-align: center">E</td>
+									<td style="text-align: center" id="damageERankBefore"></td>
+									<td style="text-align: center" id="damageERankAfter"></td>
+									<td style="text-align: right" id="damageECost"></td>
 								</tr>
 							</tbody>
 						</table>
-						
+
+						<table class="c-table c-table--border">
+							<colgroup>
+								<col />
+								<col />
+								<col />
+							</colgroup>
+							<thead>
+							<tr>
+								<th style="text-align: center">할인율(r)</th>
+								<th style="text-align: center">R=1/(1+r)</th>
+								<th style="text-align: center">열화증가율(%)</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td style="text-align: center" id="discountRate"></td>
+								<td style="text-align: center" id="rnValue"></td>
+								<td style="text-align: center" id="increase"></td>
+							</tr>
+							</tbody>
+						</table>
+
 						<table class="c-table c-table--border">
 							<colgroup>
 								<col />
@@ -112,26 +180,34 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th>점검종류</th>
-									<th>빈도수(년/회)</th>
-									<th>비용(원)</th>
+									<th style="text-align: center">점검종류</th>
+									<th style="text-align: center">빈도수(년/회)</th>
+									<th style="text-align: center">비용(원)</th>
+									<th style="text-align: center">비고</th>
+									<th style="text-align: center">R^n</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<th>정기점검</th>
-									<td id="ltPeriodicFrequency">0.5</td>
-									<td id="ltPeriodicCost">3,437,000</td>
+									<th style="text-align: center">정기점검</th>
+									<td style="text-align: center" id="ltPeriodicFrequency"></td>
+									<td style="text-align: right" id="ltPeriodicCost"></td>
+									<td style="text-align: center">1년에 2회</td>
+									<td style="text-align: center" id="periodicRn"></td>
 								</tr>
 								<tr>
-									<th>정밀점검</th>
-									<td id="ltCloseFrequency">2</td>
-									<td id="ltCloseCost">16,152,000</td>
+									<th style="text-align: center">정밀점검</th>
+									<td style="text-align: center" id="ltCloseFrequency"></td>
+									<td style="text-align: right" id="ltCloseCost"></td>
+									<td style="text-align: center">2년에 1회</td>
+									<td style="text-align: center" id="closeRn"></td>
 								</tr>
 								<tr>
-									<th>정밀안전진단</th>
-									<td id="ltSafetyFrequency">5</td>
-									<td id="ltSafetyCost">48,463,000</td>
+									<th style="text-align: center">정밀안전진단</th>
+									<td style="text-align: center" id="ltSafetyFrequency"></td>
+									<td style="text-align: right" id="ltSafetyCost"></td>
+									<td style="text-align: center">10년 1회 수행후 5년에 1회</td>
+									<td style="text-align: center" id="safetyRn"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -142,10 +218,10 @@
 			<div class="talk">
 				<div class="talk__box">
 					<div class="talk__header">
-						<h3>총 LCC</h3>
+						<h3>총 생애주기 유지관리비용(선제적 유지관리 결과)</h3>
 					</div>
 					<div class="talk__contents">
-						<h4>단계별 점검진단(보수보강수행시기 시점)</h4>
+						<h4>단계별 유지관리 결과(보수·보강수행시점 기준)</h4>
 						<table class="c-table c-table--border">
 							<colgroup>
 								<col />
@@ -157,12 +233,15 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th>단계</th>
+									<th  style="width: 3%;text-align: center;">단계</th>
 									<th style="text-align: center;">정기점검 횟수</th>
 									<th style="text-align: center;">정밀점검 횟수</th>
 									<th style="text-align: center;">정밀안전진단 횟수</th>
-									<th style="width: 20%;text-align: center;">[할인율 적용]<br />총 점검비용(원)</th>
-									<th style="width: 20%;text-align: center;">[할인율 적용]<br />실제 총 유지관리비용(원)</th>
+									<th style="width: 10%;text-align: center;">[할인율 적용]<br />총 점검비용(원)</th>
+									<th style="text-align: center;">누적 보수·보강수행 횟수</th>
+									<th style="text-align: center;">보수·보강수행시기(년)</th>
+									<th style="width: 15%;text-align: center;">[할인율 적용]<br />누적 보수·보강비용(원)</th>
+									<th style="width: 16%;text-align: center;">[할인율 적용]<br />실제 총 유지관리비용(원)</th>
 								</tr>
 							</thead>
 							<tbody id="diagnosisTable">
@@ -170,13 +249,6 @@
 						</table>
 					</div>
 				</div>
-				
-<!--				<div class="talk__box">-->
-<!--					<div class="talk__contents">-->
-<!--&lt;!&ndash;						<h4>CASE별 유지관리 시나리오</h4>&ndash;&gt;-->
-<!--						<div id="toastChart"></div>-->
-<!--					</div>-->
-<!--				</div>-->
 
 				<div class="talk__box">
 					<div class="talk__contents">

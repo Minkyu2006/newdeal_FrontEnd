@@ -7,7 +7,7 @@
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
 	<style>
-		
+
 	</style>
 </th:block>
 
@@ -16,6 +16,10 @@
 	<script src="/assets/js/min_js_dir/newdeal/lifetime.js"></script>
  	<script>
 		$(function() {
+
+			// 달력폼
+			$("#ltAllCompletionDate").datepicker({});
+
 			absenceSelect();
 		});
 	</script>
@@ -26,7 +30,7 @@
 	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="content__inner">
-		<h2 class="content__heading">생애주기 의사결정 지원 서비스 - 부재 전체 열화인자 상태 평가</h2>
+		<h2 class="content__heading">생애주기 의사결정 지원 서비스 - 교량 부재 수준 상태 평가</h2>
 		<div class="lifetime">
 			<div class="talk">
 
@@ -34,7 +38,7 @@
 
 				<div class="talk__box">
 					<div class="talk__header">
-						<h3>1. 교량 정보</h3>
+						<h3>1. 기본 정보</h3>
 					</div>
 					<div class="talk__contents">
 						<ul class="talk__list talk__list--split">
@@ -42,7 +46,7 @@
 								<div class="talk__input-item">
 									<div class="talk__input-heading">교량코드</div>
 									<div class="talk__input">
-										<div class="c-text"><input type="text" placeholder="코드는 자동입력 됩니다." readonly="readonly" class="c-text__input" /></div>
+										<div class="c-text"><input type="text" placeholder="코드는 자동으로 채번되어 입력됩니다." readonly="readonly" class="c-text__input" /></div>
 									</div>
 								</div>
 							</li>
@@ -74,13 +78,68 @@
 									</div>
 								</div>
 							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">차로수</div>
+									<div class="talk__input">
+										<div class="c-text"><input type="text" name="ltAllTeaRoad" id="ltAllTeaRoad" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">종별구분</div>
+									<div class="talk__input">
+										<div class="c-select">
+											<select name="ltAllKind" id="ltAllKind" class="c-select__input">
+												<option value="1종">1종</option>
+												<option value="2종">2종</option>
+												<option value="3종">3종</option>
+												<option value="기타">기타</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">연장</div>
+									<div class="talk__input">
+										<div class="c-text c-text--unit"><input type="text" name="ltAllLength" id="ltAllLength" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">m</span></div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">폭(m)</div>
+									<div class="talk__input">
+										<div class="c-text c-text--unit"><input type="text" name="ltAllArea" id="ltAllArea" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">m</span></div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">전체물량(㎡)</div>
+									<div class="talk__input">
+										<div class="c-text c-text--unit"><input type="text" name="ltAllVolume" id="ltAllVolume" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">m2</span></div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">준공일자</div>
+									<div class="talk__input">
+										<input type="text" name="ltAllCompletionDate" id="ltAllCompletionDate"  placeholder="연 - 월 - 일" class="c-text__input" readonly="readonly" style="background-color: white;color: black"/>
+									</div>
+								</div>
+							</li>
 						</ul>
 					</div>
 				</div>
 				
 				<div class="talk__box">
 					<div class="talk__header">
-						<h3>2. 대표보수보강공법 수행효과</h3>
+						<h3>2. 상세 정보</h3>
 					</div>
 					<div class="talk__contents">
 						<ul class="talk__list talk__list--split">
@@ -126,25 +185,17 @@
 							</li>
 							<li>
 								<div class="talk__input-item">
-									<div class="talk__input-heading">전체물량</div>
+									<div class="talk__input-heading">할인율(%)</div>
 									<div class="talk__input">
-										<div class="c-text"><input type="text" name="ltAllVolume" id="ltAllVolume" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
+										<div class="c-text c-text--unit"><input type="text" name="ltDiscountRate" id="ltDiscountRate" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
 									</div>
 								</div>
 							</li>
 							<li>
 								<div class="talk__input-item">
-									<div class="talk__input-heading">할인율</div>
+									<div class="talk__input-heading">열화증가율(%)</div>
 									<div class="talk__input">
-										<div class="c-text"><input type="text" name="ltDiscountRate" id="ltDiscountRate" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">열화증가율</div>
-									<div class="talk__input">
-										<div class="c-text"><input type="text" name="ltIncrease" id="ltIncrease" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
+										<div class="c-text c-text--unit"><input type="text" name="ltIncrease" id="ltIncrease" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
 									</div>
 								</div>
 							</li>
@@ -154,7 +205,7 @@
 				
 				<div class="talk__box">
 					<div class="talk__header">
-						<h3>3. 점검 빈도 및 비용</h3>
+						<h3>3. 점검 빈도 및 비용 정보</h3>
 					</div>
 					<div class="talk__contents">
 						<table class="c-table c-table--border">
