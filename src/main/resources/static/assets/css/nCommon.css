@@ -515,6 +515,56 @@ table {
 	line-height: 60px;
 }
 
+.main__count {
+	position: absolute;
+	right: 30px;
+	bottom: 30px;
+	padding: 20px;
+	background-color: rgba(255, 255, 255, .4);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.main__count ul:before {
+	content: " ";
+	display: table;
+}
+.main__count ul:after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+.main__count li {
+	float: left;
+}
+.main__count li + li {
+	margin-left: 20px;
+}
+
+.count {
+	position: relative;
+	width: 160px;
+	padding: 60px 0 30px;
+}
+.count h4 {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+.count img {
+	position: absolute;
+	top: 6px;
+	left: 50%;
+	margin-left: -24px;
+}
+.count__number {
+	font-size: 24px;
+	text-align: center;
+	
+}
+
 
 /* content */
 .content {

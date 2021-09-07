@@ -1908,7 +1908,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	visibility: visible;
 	opacity: 1;
 }
-
+.c-tooltip__text .c-table {
+	border-color: #fff;
+	color: #fff;
+} 
+.c-tooltip__text .c-table thead + tbody {
+	border-color: #fff;
+}
 
 /* datepicker */
 .ui-datepicker,
