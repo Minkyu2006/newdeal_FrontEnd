@@ -15,18 +15,37 @@
 	<script src="/assets/js/bxslider/jquery.bxslider.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('.bxslider').bxSlider();
+			//$('.bxslider').bxSlider();
 
-			$('.main__slide').bxSlider({
-				auto: true,
-				spped: 500,
-				pause: 3000,
-				mode: 'fade',
-				pager: false,
-				autoControls: false,
-				controls: false,
-				infiniteLoop: true
-			})
+			//$('.main__slide').bxSlider({
+			//	auto: true,
+			//	spped: 500,
+			//	pause: 3000,
+			//	mode: 'fade',
+			//	pager: false,
+			//	autoControls: false,
+			//	controls: false,
+			//	infiniteLoop: true
+			//})
+			
+			$('.count__number').each(function() {
+				var $this = $(this),
+					countTo = $this.attr('data-count');
+					
+				$({ countNum: $this.text()}).animate({
+					countNum: countTo
+				}, 
+				{
+					duration: 3000,
+					easing:'linear',
+					step: function() {
+						$this.text(Math.floor(this.countNum));
+					},
+					complete: function() {
+						$this.text(this.countNum);
+					}
+				});
+			});
 		})
 	</script>
 </th:block>
@@ -58,7 +77,42 @@
 						</ul>
 					</div>
 				</div>
+				
+				
+				<div class="main__count">
+					<ul>
+						<li>
+							<div class="count">
+								<h4>보유한 전체 데이터</h4>
+								<img src="/assets/images/icon__poll.svg" alt="" />
+								<div class="count__number" data-count="100000">0</div>
+							</div>
+						</li>
+						<li>
+							<div class="count">
+								<h4>제공한 데이터</h4>
+								<img src="/assets/images/icon__poll.svg" alt="" />
+								<div class="count__number" data-count="8880">0</div>
+							</div>
+						</li>
+						<li>
+							<div class="count">
+								<h4>BMAPS 사용자</h4>
+								<img src="/assets/images/icon__poll.svg" alt="" />
+								<div class="count__number" data-count="990">0</div>
+							</div>
+						</li>
+						<li>
+							<div class="count">
+								<h4>BMAPS를 사용하는 기관</h4>
+								<img src="/assets/images/icon__poll.svg" alt="" />
+								<div class="count__number" data-count="49">0</div>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
+				
 
 		</section>
 
