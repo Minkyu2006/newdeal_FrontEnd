@@ -44,6 +44,8 @@ public class LifetimeController{
     // 전체, 상세 선택 
     @RequestMapping("input")
     public String input(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "lifetime/input";
     }
 

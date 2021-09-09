@@ -35,11 +35,11 @@ function logreg(num,menuName1,menuName2,data) {
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("500에러 재로그인 해주세요.");
-                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                    // console.log("500에러 재로그인 해주세요.");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("404에러 재로그인 해주세요.");
-                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                    // console.log("404에러 재로그인 해주세요.");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
