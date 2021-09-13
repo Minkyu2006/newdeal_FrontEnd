@@ -28,13 +28,13 @@
 		$(function() {
 			logreg(1,"의사결정 시스템","생애주기 의사결정 세부부분 지원 서비스 Output",null);
 
-			const getid = $('#getid').val();
-			if(getid!==null){
-				lifeAllTimeOutput(getid);
-			}else{
-				alertCaution("존재하지 않은 글입니다.",1);
-			}
-		});
+		// 	const getid = $('#getid').val();
+		// 	if(getid!==null){
+		// 		lifeAllTimeOutput(getid);
+		// 	}else{
+		// 		alertCaution("존재하지 않은 글입니다.",1);
+		// 	}
+		// });
 	</script>
 </th:block>
 
@@ -235,18 +235,10 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th  style="width: 3%;text-align: center;">단계</th>
-									<th style="text-align: center;">정기점검 횟수</th>
-									<th style="text-align: center;">정밀점검 횟수</th>
-									<th style="text-align: center;">정밀안전진단 횟수</th>
-									<th style="width: 10%;text-align: center;">[할인율 적용]<br />총 점검비용(원)</th>
-									<th style="text-align: center;">누적 보수·보강수행 횟수</th>
-									<th style="text-align: center;">보수·보강수행시기(년)</th>
-									<th style="width: 15%;text-align: center;">[할인율 적용]<br />누적 보수·보강비용(원)</th>
-									<th style="width: 16%;text-align: center;">[할인율 적용]<br />실제 총 유지관리비용(원)</th>
+									<th  style="text-align: center;">단계</th>
 								</tr>
 							</thead>
-							<tbody id="diagnosisTable">
+							<tbody id="noActionTable">
 							</tbody>
 						</table>
 					</div>

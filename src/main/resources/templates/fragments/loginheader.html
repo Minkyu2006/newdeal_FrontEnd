@@ -17,7 +17,7 @@
 <!--						<li class="nav__item"><a href="/admin/teamreg" onclick="readyPage()" class="nav__link">부서등록</a></li>-->
 <!--						<li class="nav__item"><a href="/admin/accountreg" onclick="readyPage()" class="nav__link">사용자 등록</a></li>-->
 						<li class="nav__item"><a href="/admin/mastercodereg" class="nav__link">마스터코드 관리</a></li>
-						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">부서등록</a></li>
+						<li class="nav__item"><a href="/admin/teamreg" class="nav__link">부서등록</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">사용자 등록</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">센서 등록</a></li>
 						<li class="nav__item"><a href="/admin/price" class="nav__link">물가배수 등록</a></li>
@@ -109,6 +109,7 @@
 				// console.log("사용자 입니다.");
 				$userimage.attr('src','/assets/images/icon__user.svg');
 				$userimage.attr("alt","user");
+				$("#adminMenu").css("display","none");
 			}
 		}
 

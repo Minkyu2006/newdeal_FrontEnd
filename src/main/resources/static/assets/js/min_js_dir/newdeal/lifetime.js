@@ -162,11 +162,11 @@ function lifeAllTimeSave(){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
-                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
-                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
@@ -223,11 +223,11 @@ function lifeAllTimeOutput(id){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
-                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
-                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
@@ -714,7 +714,13 @@ function absenceCallList(page){
             data: params,
             cache: false,
             error: function (request) {
-                ajaxErrorMsg(request);
+                if (request.status === 500) {
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
             },
             success: function (res) {
                 console.log("교량 부재별 평균열화율 리스트 출력");
@@ -775,7 +781,13 @@ function absenceInfoClick(id){
             data: params,
             cache: false,
             error: function (request) {
-                ajaxErrorMsg(request);
+                if (request.status === 500) {
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
             },
             success: function (res) {
                 // console.log("교량 부재별 평균열화율 정보 출력");
@@ -853,6 +865,73 @@ function absenceDel(){
                 if (res.status === 200) {
                     alertSuccess("삭제가 완료됬습니다.");
                     absenceCallList(1);
+                }
+            }
+        });
+    }
+}
+
+// 세부부분 저장버튼
+function lifeDetailTimeSave(){
+    JWT_Get();
+
+    if (accessToken == null || refreshToken == null || insert_id == null) {
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else {
+
+        // if($("#ltBridgeName").val()==="") {
+        //     alertCaution("교량명을 작성해주세요.", 1)
+        //     return false;
+        // }
+
+        // const $ltPeriodicCost = $("#ltPeriodicCost");
+        // if($ltPeriodicCost.val()==="") {
+        //     alertCaution("정기점검 비용을 입력해주세요.", 1)
+        //     return false;
+        // }else{
+        //     $ltPeriodicCost.val($ltPeriodicCost.val().replaceAll(",",""));
+        // }
+
+        const formData = new FormData(document.getElementById('lifeDetailTimeForm'));
+
+        let url;
+        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/lifedetailtime/save"; // 호출할 백엔드 API
+        console.log("url : "+url);
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    console.log("request.status : " + request.status + " => 500에러");
+                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    console.log("request.status : " + request.status + " => 404에러");
+                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                console.log("status : " + status);
+                if (status === 200) {
+                    console.log("저장성공");
+                    // alertLink(request.sendData.getId);
+                    // alertSuccess("업로드를 완료했습니다.");
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
                 }
             }
         });

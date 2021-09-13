@@ -67,97 +67,98 @@
 					</div>
 				</div>
 				
-				<div class="join__form__article">
-					<div class="join__form-item">
-						<div class="c-select">
-							<label for="role" class="c-text__label">권한</label>
-							<input type="text" class="c-text__input" id="role" value="사용자" readonly="readonly" />
-<!--							<select class="c-select__input" id="role" name="role">-->
-<!--								<option th:each ="role : ${roles}"-->
-<!--										th:value="${role.getCode()}"-->
-<!--										th:text="${role.getDesc()}"></option>-->
-<!--							</select>-->
-						</div>
-					</div>
-					<div class="join__form-item">
-						<label for="teamname" class="c-text__label">부서</label>
-						<div class="c-text c-text--duo">
-							<input type="text" class="c-text__input" readonly="readonly" placeholder="부서코드" id="teamcode" name="teamcode"/>
-							<input type="text" class="c-text__input" readonly="readonly" placeholder="부서명" id="teamname" name="teamname"/>
-							<button class="c-text__button" id="btn_search">검색</button>
-						</div>
-					</div>
-				</div>
+<!--				<div class="join__form__article">-->
+<!--					<div class="join__form-item">-->
+<!--						<div class="c-select">-->
+<!--							<label for="role" class="c-text__label">권한</label>-->
+<!--							<input type="text" class="c-text__input" id="role" value="사용자" readonly="readonly" />-->
+<!--&lt;!&ndash;							<select class="c-select__input" id="role" name="role">&ndash;&gt;-->
+<!--&lt;!&ndash;								<option th:each ="role : ${roles}"&ndash;&gt;-->
+<!--&lt;!&ndash;										th:value="${role.getCode()}"&ndash;&gt;-->
+<!--&lt;!&ndash;										th:text="${role.getDesc()}"></option>&ndash;&gt;-->
+<!--&lt;!&ndash;							</select>&ndash;&gt;-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="join__form-item">-->
+<!--						<label for="teamname" class="c-text__label">부서</label>-->
+<!--						<div class="c-text c-text&#45;&#45;duo">-->
+<!--							<input type="text" class="c-text__input" readonly="readonly" placeholder="부서코드" id="teamcode" name="teamcode"/>-->
+<!--							<input type="text" class="c-text__input" readonly="readonly" placeholder="부서명" id="teamname" name="teamname"/>-->
+<!--							<button class="c-text__button" id="btn_search">검색</button>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+
 			</form>
 			<button class="join__btn" onclick="registerSave()">회원가입 완료</button>
 		</div>
 	</div>
 
-	<div class="l-popup" id="pop_search">
-		<div class="l-popup__container">
-			<div class="l-popup__head">
-				<div class="l-popup__heading">부서 검색</div>
-			</div>
-			<div class="l-popup__content">
-				<div class="l-popup__section">
-					<table class="c-table c-table--non-border">
-						<colgroup>
-							<col style="width: 100px;" />
-							<col />
-							<col style="width: 100px;" />
-							<col />
-							<col style="width: 60px;" />
-						</colgroup>
-						<tbody>
-						<tr>
-							<th>부서코드</th>
-							<td>
-								<div class="c-text"><input type="text" class="c-text__input" id="p_teamcode" /></div>
-							</td>
-							<th>부서명</th>
-							<td>
-								<div class="c-text"><input type="text" class="c-text__input" id="p_teamname" /></div>
-							</td>
-							<td>
-								<button class="c-button c-button--point" id="btnTeamSearch">조회</button>
-							</td>
-						</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="l-popup__section">
-					<table class="c-table">
-						<colgroup>
-							<col />
-							<col />
-							<col style="width: 50px;" />
-						</colgroup>
-						<thead>
-						<tr>
-							<th>부서코드</th>
-							<th>부서명</th>
-							<th></th>
-						</tr>
-						</thead>
-						<tbody id ="schTeamList">
-						</tbody>
-					</table>
-					<div class="c-pager">
-						<div class="c-paging" id="teamPaging">
-							<!-- 페이징 처리되는곳   -->
-						</div>
-						<div class="c-paging__total">
-							<div class="c-paging__total-group">
-								Total
-							</div>
-							<div class="c-paging__total-group" id ="totalTeamCnt">0</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<a href="#" class="l-popup__close">팝업닫기</a>
-		</div>
-	</div>
+<!--	<div class="l-popup" id="pop_search">-->
+<!--		<div class="l-popup__container">-->
+<!--			<div class="l-popup__head">-->
+<!--				<div class="l-popup__heading">부서 검색</div>-->
+<!--			</div>-->
+<!--			<div class="l-popup__content">-->
+<!--				<div class="l-popup__section">-->
+<!--					<table class="c-table c-table&#45;&#45;non-border">-->
+<!--						<colgroup>-->
+<!--							<col style="width: 100px;" />-->
+<!--							<col />-->
+<!--							<col style="width: 100px;" />-->
+<!--							<col />-->
+<!--							<col style="width: 60px;" />-->
+<!--						</colgroup>-->
+<!--						<tbody>-->
+<!--						<tr>-->
+<!--							<th>부서코드</th>-->
+<!--							<td>-->
+<!--								<div class="c-text"><input type="text" class="c-text__input" id="p_teamcode" /></div>-->
+<!--							</td>-->
+<!--							<th>부서명</th>-->
+<!--							<td>-->
+<!--								<div class="c-text"><input type="text" class="c-text__input" id="p_teamname" /></div>-->
+<!--							</td>-->
+<!--							<td>-->
+<!--								<button class="c-button c-button&#45;&#45;point" id="btnTeamSearch">조회</button>-->
+<!--							</td>-->
+<!--						</tr>-->
+<!--						</tbody>-->
+<!--					</table>-->
+<!--				</div>-->
+<!--				<div class="l-popup__section">-->
+<!--					<table class="c-table">-->
+<!--						<colgroup>-->
+<!--							<col />-->
+<!--							<col />-->
+<!--							<col style="width: 50px;" />-->
+<!--						</colgroup>-->
+<!--						<thead>-->
+<!--						<tr>-->
+<!--							<th>부서코드</th>-->
+<!--							<th>부서명</th>-->
+<!--							<th></th>-->
+<!--						</tr>-->
+<!--						</thead>-->
+<!--						<tbody id ="schTeamList">-->
+<!--						</tbody>-->
+<!--					</table>-->
+<!--					<div class="c-pager">-->
+<!--						<div class="c-paging" id="teamPaging">-->
+<!--							&lt;!&ndash; 페이징 처리되는곳   &ndash;&gt;-->
+<!--						</div>-->
+<!--						<div class="c-paging__total">-->
+<!--							<div class="c-paging__total-group">-->
+<!--								Total-->
+<!--							</div>-->
+<!--							<div class="c-paging__total-group" id ="totalTeamCnt">0</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<a href="#" class="l-popup__close">팝업닫기</a>-->
+<!--		</div>-->
+<!--	</div>-->
 
 </div>
 
