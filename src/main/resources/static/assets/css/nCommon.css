@@ -562,6 +562,7 @@ table {
 }
 .count__number {
 	font-size: 28px;
+	font-weight: 700;
 	text-align: center;
 }
 
@@ -637,12 +638,16 @@ table {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+.talk__question + .talk__question {
+	margin-top: 20px;
+}
 .talk__question > li + li {
 	margin-top: 10px;
 }
 .talk__contents h4 {
 	margin-bottom: 10px;
 	font-weight: 700;
+	line-height: 1.4;
 }
 .talk__contents > .c-table + .c-table{
 	margin-top: 20px;
@@ -737,6 +742,12 @@ table {
 }
 .talk__select-pop.open {
 	display: block;
+}
+.talk__select-pop p {
+	margin-bottom: 20px;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.4;
 }
 .talk__select-heading {
 	margin-bottom: 10px;
@@ -1184,6 +1195,46 @@ table {
 	padding-bottom: 0;
 }
 
+/* performance-report */
+.performance-report {
+	position: relative;
+	width: 100%;
+}
+.performance-report__heading {
+	width: 100%;
+	margin-bottom: 20px;
+	font-size: 24px;
+	font-weight: 700;
+	text-align: center;
+}
+.performance-report__head {
+	margin-bottom: 20px;
+	font-size: 18px;
+	line-height: 1.4;
+}
+.performance-report__chapter {
+	display: none;
+	margin-bottom: 20px;
+}
+.performance-report__chapter.view {
+	display: block;
+}
+.performance-report__chapter > p {
+	font-size: 18px;
+}
+.performance-report__chapter > div {
+	margin-top: 10px;
+	line-height: 1.4;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #888;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.performance-report__footer {
+	line-height: 1.4;
+}
 
 /* popup */
 .pop {
@@ -1196,7 +1247,7 @@ table {
 	background-color: rgba(0, 0, 0, .4);
 }
 .pop.open {
-	dispaly: block;
+	display: block;
 }
 .pop__box {
 	position: absolute;
@@ -1228,7 +1279,9 @@ table {
 	font-weight: 700;
 }
 .pop__body {
+	overflow: auto;
 	position: relative;
+	max-height: 763px;
 }
 .pop__contents {
 	width: 100%;
@@ -1246,6 +1299,7 @@ table {
 .pop__console {
 	position: relative;
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
 .pop__console ul {
 	display: flex;
