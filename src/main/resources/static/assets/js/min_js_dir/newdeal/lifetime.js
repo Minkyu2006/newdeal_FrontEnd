@@ -865,6 +865,7 @@ function absenceDel(){
                 if (res.status === 200) {
                     alertSuccess("삭제가 완료됬습니다.");
                     absenceCallList(1);
+                    init();
                 }
             }
         });
