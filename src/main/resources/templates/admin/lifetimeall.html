@@ -57,7 +57,7 @@
 				<div class="code">
 					<input type="hidden" id="ltAbsenceId" />
 					<form id="absenceForm" enctype="multipart/form-data">
-						<ul class="code__detail-list">
+						<ul class="code__detail-list flex">
 							<li>
 								<label for="ltAbsence" class="c-text__label">부재 선택</label>
 								<div class="c-select">
@@ -82,7 +82,7 @@
 							</li>
 							<li>
 								<div class="c-text">
-									<label for="ltDeterioration" class="c-textarea__label">평균열화율</label>
+									<label for="ltDeterioration" class="c-text__label">평균열화율</label>
 									<input type="text" class="c-text__input" id="ltDeterioration" name="ltDeterioration" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event,0)" />
 								</div>
 							</li>
@@ -94,7 +94,7 @@
 							</li>
 						</ul>
 
-						<ul class="code__detail-list">
+						<ul class="code__detail-list flex">
 							<li>
 								<div class="c-text">
 									<label for="ltRemunerationThree" class="c-text__label">보수보강 비용모델 3차항 계수</label>
@@ -121,7 +121,7 @@
 							</li>
 						</ul>
 
-						<ul class="code__detail-list">
+						<ul class="code__detail-list flex">
 							<li>
 								<div class="c-text">
 									<label for="ltStatusTwo" class="c-text__label">상태향상 모델 2차항 계수</label>

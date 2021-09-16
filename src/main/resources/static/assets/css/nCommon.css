@@ -1709,11 +1709,17 @@ h4.l-popup__heading {
 	margin-top: 10px;
 	display: flex;
 }
+.code__detail-list.flex {
+	display: flex;
+}
 .code__detail-list li {
 	flex: 1;
 }
 .code__detail-list li + li {
 	margin-left: 10px
+}
+.code__detail-list + .code__detail-list {
+	margin-top: 20px;
 }
 
 /* footer */
