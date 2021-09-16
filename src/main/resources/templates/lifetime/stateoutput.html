@@ -23,9 +23,11 @@
 	<script src="/assets/js/min_js_dir/charts/am/ko_KR.js"></script>
 	<script src="/assets/js/min_js_dir/charts/am/animated.js"></script>
 
-	<script src="/assets/js/min_js_dir/newdeal/lifetime.js"></script>
+	<script src="/assets/js/min_js_dir/newdeal/lifetime/lifetime_all.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			logreg(1,"의사결정 시스템","생애주기 의사결정 세부부분 지원 서비스 Output",null);
+
 			const getid = $('#getid').val();
 			if(getid!==null){
 				lifeAllTimeOutput(getid);

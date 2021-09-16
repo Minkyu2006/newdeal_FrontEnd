@@ -13,7 +13,7 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-	<script src="/assets/js/min_js_dir/newdeal/lifetime.js"></script>
+	<script src="/assets/js/min_js_dir/newdeal/lifetime/lifetime_all.js"></script>
  	<script>
 		$(function() {
 
@@ -63,7 +63,7 @@
 									<div class="talk__input-heading">경간수</div>
 									<div class="talk__input">
 										<div class="c-text">
-											<input name="ltSpanNum" id="ltSpanNum" type="text" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" />
+											<input name="ltSpanNum" id="ltSpanNum" type="text" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event,1)" />
 										</div>
 									</div>
 								</div>
@@ -103,7 +103,7 @@
 							</li>
 							<li>
 								<div class="talk__input-item">
-									<div class="talk__input-heading">연장</div>
+									<div class="talk__input-heading">연장(m)</div>
 									<div class="talk__input">
 										<div class="c-text c-text--unit"><input type="text" name="ltAllLength" id="ltAllLength" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">m</span></div>
 									</div>

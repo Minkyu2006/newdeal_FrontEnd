@@ -14,10 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -85,14 +82,6 @@ public class PerformanceController{
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
         return "performance/output";
-    }
-    
-    // 관리자전용 물가배수 등록및조회 페이지
-    @RequestMapping("price")
-    public String price(Model model){
-        model.addAttribute("backend_url", backend_url);
-        model.addAttribute("backend_protocol", backend_protocol);
-        return "performance/price";
     }
 
     //  세부별 등록 조회 페이지

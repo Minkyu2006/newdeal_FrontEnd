@@ -15,7 +15,7 @@
 <th:block layout:fragment="script">
  	<script>
 		$(function() {
-			
+			logreg(1,"의사결정 시스템","생애주기 의사결정 지원 서비스 Input",null);
 		});
 
 		// 이진혁박사 인풋페이지 이동
@@ -36,6 +36,8 @@
 </th:block>
 
 <div layout:fragment="content" class="content">
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="content__inner">
 		<h2 class="content__heading">생애주기 의사결정 지원 서비스</h2>
 		<div class="lifetime" id="lifetime">

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<style>
+		#amChart {
+			width: 100%;
+			height: 500px;
+		}
+	</style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<!-- am chart -->
+	<script src="/assets/js/min_js_dir/charts/am/core.js"></script>
+	<script src="/assets/js/min_js_dir/charts/am/charts.js"></script>
+	<script src="/assets/js/min_js_dir/charts/am/material.js"></script>
+	<script src="/assets/js/min_js_dir/charts/am/ko_KR.js"></script>
+	<script src="/assets/js/min_js_dir/charts/am/animated.js"></script>
+
+	<script src="/assets/js/min_js_dir/newdeal/lifetime/lifetime_detail.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			logreg(1,"의사결정 시스템","생애주기 의사결정 세부부분 지원 서비스 Output",null);
+
+			const getid = $('#getid').val();
+			if(getid!==null){
+				lifeDetailTimeOutput(getid);
+			}else{
+				alertCaution("존재하지 않은 글입니다.",1);
+			}
+		});
+	</script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<input type="hidden" id="getid" th:value="${getid}" readonly="readonly" />
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
+	<div class="content__inner">
+		<div class="lifetime" id="lifetime">
+
+				<div class="talk__box">
+					<div class="talk__contents">
+						<div id="amChart"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	
+</div>
+</html>

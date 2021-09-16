@@ -15,18 +15,37 @@
 	<script src="/assets/js/bxslider/jquery.bxslider.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('.bxslider').bxSlider();
+			//$('.bxslider').bxSlider();
 
-			$('.main__slide').bxSlider({
-				auto: true,
-				spped: 500,
-				pause: 3000,
-				mode: 'fade',
-				pager: false,
-				autoControls: false,
-				controls: false,
-				infiniteLoop: true
-			})
+			//$('.main__slide').bxSlider({
+			//	auto: true,
+			//	spped: 500,
+			//	pause: 3000,
+			//	mode: 'fade',
+			//	pager: false,
+			//	autoControls: false,
+			//	controls: false,
+			//	infiniteLoop: true
+			//})
+			
+			$('.count__number').each(function() {
+				var $this = $(this),
+					countTo = $this.attr('data-count');
+					
+				$({ countNum: $this.text()}).animate({
+					countNum: countTo
+				}, 
+				{
+					duration: 3000,
+					easing:'linear',
+					step: function() {
+						$this.text(Math.floor(this.countNum));
+					},
+					complete: function() {
+						$this.text(this.countNum);
+					}
+				});
+			});
 		})
 	</script>
 </th:block>
@@ -58,7 +77,42 @@
 						</ul>
 					</div>
 				</div>
+				
+				
+				<div class="main__count">
+					<ul>
+						<li>
+							<div class="count">
+								<h4>대표 교량 수</h4>
+								<img src="/assets/images/icon__star.svg" alt="" />
+								<div class="count__number" data-count="31">0</div>
+							</div>
+						</li>
+						<li>
+							<div class="count">
+								<h4>센서 개수</h4>
+								<img src="/assets/images/icon__sensor.svg" alt="" />
+								<div class="count__number" data-count="300">0</div>
+							</div>
+						</li>
+						<li>
+							<div class="count">
+								<h4>가속도 데이터</h4>
+								<img src="/assets/images/icon__speed.svg" alt="" />
+								<div class="count__number" data-count="7000000000">0</div>
+							</div>
+						</li>
+						<li>
+							<div class="count">
+								<h4>변이 데이터</h4>
+								<img src="/assets/images/icon__poll.svg" alt="" />
+								<div class="count__number" data-count="500000">0</div>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
+				
 
 		</section>
 

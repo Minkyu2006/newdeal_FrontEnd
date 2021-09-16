@@ -1879,7 +1879,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	border-radius: 50%;
 	color: #fff;
 	text-align: center;
-	z-index: 1;
+	line-height: 20px;
+	/*z-index: 1;*/
 }
 .c-tooltip__text {
 	visibility: hidden;
@@ -1887,7 +1888,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	position: absolute;
 	top: -10px;
 	left: 30px;
-	width: 300px;
+	width: 500px;
 	padding: 5px 10px;
 	background-color: #555;
 	text-align: left;
@@ -1904,9 +1905,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	-o-transition: all .2s;
 	transition: all .2s;
 }
+.c-tooltip.c-tooltip--left .c-tooltip__text {
+	left: -505px;
+}
+.c-tooltip:hover {
+	z-index: 1;
+}
 .c-tooltip:hover .c-tooltip__text {
 	visibility: visible;
 	opacity: 1;
+}
+.c-tooltip__text pre {
+	overflow: auto;
+	white-space: pre-wrap;
 }
 .c-tooltip__text .c-table {
 	border-color: #fff;
@@ -1914,6 +1925,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 } 
 .c-tooltip__text .c-table thead + tbody {
 	border-color: #fff;
+}
+.c-tooltip__color {
+	color: #ffff72;
+}
+
+.c-color--red {
+	color: #dd2c00;
+	font-weight: 700;
 }
 
 /* datepicker */

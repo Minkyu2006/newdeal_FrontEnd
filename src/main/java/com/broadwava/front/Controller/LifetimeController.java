@@ -44,6 +44,8 @@ public class LifetimeController{
     // 전체, 상세 선택 
     @RequestMapping("input")
     public String input(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "lifetime/input";
     }
 
@@ -74,13 +76,13 @@ public class LifetimeController{
         return "lifetime/detailinput";
     }
 
-//    // 상태평가 전체부분 output
-//    @RequestMapping("stateoutput/{id}")
-//    public String detail_output(Model model,@PathVariable Long id){
-//        model.addAttribute("getid", id);
-//        model.addAttribute("backend_url", backend_url);
-//        model.addAttribute("backend_protocol", backend_protocol);
-//        return "lifetime/stateoutput";
-//    }
+    // 상태평가 전체부분 output
+    @RequestMapping("detailoutput/{id}")
+    public String detail_output(Model model,@PathVariable Long id){
+        model.addAttribute("getid", id);
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "lifetime/detailoutput";
+    }
 
 }

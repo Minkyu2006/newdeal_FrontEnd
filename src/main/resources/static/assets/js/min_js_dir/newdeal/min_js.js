@@ -35,11 +35,11 @@ function logreg(num,menuName1,menuName2,data) {
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("500에러 재로그인 해주세요.");
-                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                    // console.log("500에러 재로그인 해주세요.");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("404에러 재로그인 해주세요.");
-                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                    // console.log("404에러 재로그인 해주세요.");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
@@ -52,7 +52,41 @@ function logreg(num,menuName1,menuName2,data) {
     }
 }
 
-// 숫자만 입력하게하고, 3번째 숫자마다 콤마(,)를 찍어주는 함수
+//한글을 지우는 함수
+function delHangle(evt){
+    var objTarget = evt.srcElement || evt.target;
+    var _value = event.srcElement.value;
+    if(/[ㄱ-ㅎㅏ-ㅡ가-핳]/g.test(_value)) {
+        objTarget.value = null;
+    }
+}
+// 소수점한개로 제한한 실수값입력할수있게하는 함수
+function isNumberKey(evt,num) {
+    const charCode = (evt.which) ? evt.which : event.keyCode;
+    const _value = event.srcElement.value;
+    if (event.keyCode < 48 || event.keyCode > 57) {
+        if (event.keyCode !== 46) {
+            return false;
+        }
+    }
+    // 소수점(.)이 두번 이상 나오지 못하게
+    const _pattern0 = /^\d*[.]\d*$/;
+    if (_pattern0.test(_value)) {
+        if (charCode === 46) {
+            return false;
+        }
+    }
+
+    if(num===1){
+        // 소수점 넷째자리까지만 입력가능
+        const _pattern2 = /^\d*[.]\d{4}$/;
+        if (_pattern2.test(_value)) {
+            return false;
+        }
+    }
+}
+
+// 숫자만 입력하게하고, 3번째 숫자마다 콤마(,)를 찍어주는 함수(input용)
 function inputNumberFormat(obj) {
     obj.value = comma(uncomma(obj.value));
 }
@@ -65,7 +99,7 @@ function uncomma(str) {
     return str.replace(/[^\d]+/g, '');
 }
 
-// 숫자콤마찍는 함수
+// 숫자콤마찍는 함수(output용)
 function pushComma(num){
     let len, point, str;
     num = num + "";

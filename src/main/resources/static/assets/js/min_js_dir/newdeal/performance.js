@@ -1,5 +1,10 @@
 // * 성능개선사업평가 서비스 자바스크립트 *
 
+// 팝업창 닫기
+function popClose(){
+    $('.pop').removeClass('open');
+}
+
 // 사업 유형을 통해 사업분류의 대한 select box 편의성
 function piBusinessTypeClick(idVal,idAdd,data){
 
@@ -124,7 +129,30 @@ function piTypeClick(idVal,data){
 
 // 선택팝업열기
 function popOpen(){
-    $('.talk__select-pop').addClass('open');
+
+    console.log("group1 : "+$('input[name=group1]').val());
+
+    if($("#business_name").val()===""){
+        alertCaution("사업명을 입력해주세요.",1);
+        return false;
+    }
+
+    if(document.getElementById("group1-1").checked===true || document.getElementById("group1-2").checked===true){
+        if(document.getElementById("group1-1").checked===true){
+            $('.talk__select-pop').addClass('open');
+        }else{
+            $("#business_dissatisfaction").text("1)시설유형");
+            $("#business_name_pop").text($("#business_name").val());
+            $("#question_1").css("display","block");
+            $('.pop').addClass('open');
+        }
+    }else{
+        alertCaution("1번 문항을 체크해주세요",1)
+    }
+    // $('.pop').addClass('open');
+
+    // $('.talk__select-pop').addClass('open');
+
 }
 
 // Input 첫번째 NEXT버튼 첫번째 구간(중간저장)

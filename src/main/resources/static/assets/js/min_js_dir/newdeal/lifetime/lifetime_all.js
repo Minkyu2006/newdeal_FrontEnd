@@ -1,4 +1,4 @@
-// * 생애주기 의사결정 지원 서비스 자바스크립트 *
+// * 생애주기 의사결정 지원 서비스 자바스크립트 전체부분 *
 
 // 부재의 따른 세부부재 select box 생성
 function absenceSelect(){
@@ -162,11 +162,11 @@ function lifeAllTimeSave(){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
-                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
-                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
@@ -223,11 +223,11 @@ function lifeAllTimeOutput(id){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
-                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
-                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
@@ -502,36 +502,4 @@ function lifeAllTimeOutput(id){
         });
     }
 
-}
-
-
-//한글을 지우는 함수
-function delHangle(evt){
-    var objTarget = evt.srcElement || evt.target;
-    var _value = event.srcElement.value;
-    if(/[ㄱ-ㅎㅏ-ㅡ가-핳]/g.test(_value)) {
-        objTarget.value = null;
-    }
-}
-// 소수점한개로 제한한 실수값입력할수있게하는 함수
-function isNumberKey(evt) {
-    const charCode = (evt.which) ? evt.which : event.keyCode;
-    const _value = event.srcElement.value;
-    if (event.keyCode < 48 || event.keyCode > 57) {
-        if (event.keyCode !== 46) {
-            return false;
-        }
-    }
-    // 소수점(.)이 두번 이상 나오지 못하게
-    const _pattern0 = /^\d*[.]\d*$/;
-    if (_pattern0.test(_value)) {
-        if (charCode === 46) {
-            return false;
-        }
-    }
-    // 소수점 넷째자리까지만 입력가능
-    const _pattern2 = /^\d*[.]\d{4}$/;
-    if (_pattern2.test(_value)) {
-        return false;
-    }
 }

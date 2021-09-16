@@ -29,6 +29,13 @@ $(function() {
         startYesorNo(false)
     });
 
+    $(document).on("click","#checkDelSuccessBtn",function(){
+        startDel($("#delId").val(),true)
+    });
+    $(document).on("click","#checkDelCancelBtn",function(){
+        startDel($("#delId").val(),false)
+    });
+
     // $('#success').on('click', function() {
     //     //console.log("성공버튼 실행");
     //     alertSuccess('성공!');
@@ -119,6 +126,27 @@ function alertCaution(text,type) { //경고창
 
     $('#alertpop').html(html);
 
+}
+
+// 삭제 알림창.
+function alertCheck(text,id) { //정말삭제할껀지확인하는창
+    let html = '';
+
+    html +='<div id="popupId" class="popup popup--dim">';
+    html +='<div class="popup__box">';
+    html +='<div class="popup__content">';
+    html +='<div class="popup__stat check"></div>';
+    html +='<div class="popup__text">'+text+'</div>';
+    html +='</div>';
+    html +='<div class="popup__buttons">';
+    html +='<input type="hidden" id="delId" value="'+id+'" />';
+    html +='<button id="checkDelSuccessBtn" class="popup__btn popup__btn--success">확인</button>';
+    html +='<button id="checkDelCancelBtn" class="popup__btn popup__btn--cancel">취소</button>';
+    html +='</div>';
+    html +='</div>';
+    html +='</div>';
+
+    $('#alertpop').html(html);
 }
 
 function alertMiddleSaveCheck(text) { // 정말작성할껀지 확인하는창
