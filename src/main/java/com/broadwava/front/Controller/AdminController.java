@@ -59,5 +59,11 @@ public class AdminController {
         model.addAttribute("backend_protocol", backend_protocol);
         return "admin/lifetimeall";
     }
+    
+    // 성능개선사업평가
+    @RequestMapping("performanceadmin")
+    public String performance1(){
+        return "admin/performance";
+    }
 
 }

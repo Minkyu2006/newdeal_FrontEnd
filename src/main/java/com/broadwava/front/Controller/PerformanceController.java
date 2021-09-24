@@ -37,6 +37,12 @@ public class PerformanceController{
     @Value("${newdeal.api.backend_protocol}")
     private String backend_protocol;
 
+    // 성능개선 사업성 평가 안내 내용
+    @RequestMapping("information")
+    public String information(){
+        return "performance/information";
+    }
+    
     // 성능개선사업평가 Iutput-1
     @RequestMapping("input")
     public String input(Model model){

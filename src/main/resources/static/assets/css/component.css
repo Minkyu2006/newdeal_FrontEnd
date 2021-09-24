@@ -328,6 +328,10 @@
     transition: border-color .2s;
     outline: none;
 }
+.c-text__input[type=number] {
+	text-align: right;
+	padding: 0;
+}
 .c-text__input:focus,
 .c-text__input:active {
     border-color: #181A1F;

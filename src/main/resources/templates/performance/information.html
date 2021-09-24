@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+ 	<script>
+		
+	</script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<div class="content__inner">
+		<h2 class="content__heading">성능개선 사업성평가 안내 내용</h2>
+		<section class="section">
+			<article class="article">
+				<h3 class="article__heading">1. 성능개선 사업성 평가 개요</h3>
+				<div class="performanceinfo__text">
+					<h4>가. 추진근거</h4>
+					<ul>
+						<li>* 법률 제17237호, 『지속가능한 기반시설관리 기본법』 제13조제1항</li>
+						<li>* 국토교통부 고시 제2020-559호, 『기반시설 성능개선 공통기준』</li>
+						<li>* 국토교통부 고시 제2021-213호, 『도로시설 성능개선 기준』</li>
+					</ul>
+					<p class="c-color--red">※ 성능개선 사업성평가 내용은 법에 따른 “실태조사”의 수검 자료로 활용됩니다.</p>
+				</div>
+				<div class="performanceinfo__text">
+					<h4>나. 평가대상</h4>
+					<ul>
+						<li>* 대상 : 교량, 터널, 보도육교, 지하차도, 옹벽, 절토사면</li>
+						<li>* 목적 : 시설 내용연수 초과, 안전등급 기준이하, 국가설계기준 변화, 사용성 변화</li>
+						<li>* 부재 : 주요구조부의 개량, 확장, 일부개축, 전면개축</li>
+						<li>* 규모 : 총사업비 50억 원 이상</li>
+						<li>* 면제 : 타법률에 의한 사업성평가를 시행하거나, 국가재정법 상 당연사업의 경우 면제</li>
+					</ul>
+					<p class="c-color--red">※ 상기 조건을 모두 충족하는 경우에만 사업성 평가를 시행합니다.</p>
+				</div>
+				<div class="performanceinfo__text">
+					<h4>다. 평가내용</h4>
+					<ul>
+						<li>* 사업유형별 기술성, 경제성, 정책성을 평가하여 종합사업점수 도출 </li>
+						<li>* 수립된 사업대안에 대한 사업성 판정, 복수 사업대안 중 우수대안 선택</li>
+					</ul>
+					<p class="c-color--red">※ 사업별로 평가 완료시 사업성 평가리포트를 자동으로 생성하여 제공합니다.</p>
+				</div>
+			</article>
+			
+			<article class="article">
+					<h3 class="article__heading">2. 성능개선 사업평가 활용 절차</h3>
+					<div class="performanceinfo__text">
+						<p>* 성능개선 사업 자체 기획 → 사업평가 대상여부 판단 → 사업성 평가 요구자료 입력 → 사업성 평가결과 확인 및 리포트 출력 (필요시 사업내용, 가중치 조정하여 재분석)</p>
+					</div>
+					<div class="performanceinfo__img"><img src="/assets/images/performanceinfo.png" alt="사업성 평가 절차" /></div>
+			</article>
+			
+			<article class="article">
+					<h3 class="article__heading">3. 주의사항</h3>
+					<div class="performanceinfo__text">
+						<p>* 본 플랫폼에서 제공하는 성능개선사업평가 자동화 서비스 일체는 국토교통부 고시 제2021-213호(’21.2.25) 『도로시설 성능개선기준』에서 정하고 있는 내용을 기준으로 개발되었습니다. 해당 기준은 각 관리감독기관(광역자치단체 등)에서 정한 성능개선기준과 일치하지 않을 수 있으므로 평가의 유효성에 대해서는 자체적으로 검토 후 활용하시기 바랍니다.</p>						
+					</div>
+			</article>
+			
+			<div class="c-function">
+				<div class="c-function__group c-function__group--right">
+					<div class="c-function__item">
+						<a href="#" class="c-button c-button--point">국토부 고시 다운로드</a>
+					</div>
+					<div class="c-function__item">
+						<a href="#" class="c-button c-button--point">매뉴얼 다운로드</a>
+					</div>
+					<div class="c-function__item">
+						<a href="#" class="c-button c-button--point">사업유형별 평가절차 다운로드</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	
+</div>
+</html>
