@@ -390,7 +390,7 @@ function lifeAllTimeOutput(id){
                         const xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
                         xAxis.dataFields.category = "publicYear";
                         // xAxis.renderer.grid.template.location = 0;
-                        xAxis.renderer.minGridDistance = 96; // 범위 조절옵션
+                        xAxis.renderer.minGridDistance = 91; // 범위 조절옵션
                         xAxis.title.text = "공용연수(Years)";
                         xAxis.renderer.grid.template.disabled = false // x축 라인 제거
                         // xAxis.renderer.labels.template.disabled = true;
