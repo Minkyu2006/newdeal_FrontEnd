@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2">
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script>
+		$(function(){
+			$('.tabs__btn').on('click', function() {
+				var idx = $(this).index();
+
+				$('.tabs__btn').removeClass('active');
+				$('.tabs__btn').eq(idx).addClass('active');
+				$('.tabs__content').removeClass('active');
+				$('.tabs__content').eq(idx).addClass('active');
+			})
+		});
+	</script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
+	<div class="content__inner">
+		<h2 class="content__heading">성능개선 사업평가 참조 테이블</h2>
+		<div class="tabs">
+			<div class="tabs__head">
+				<button class="tabs__btn active">기술성</button>
+				<button class="tabs__btn">경제성</button>
+				<button class="tabs__btn">정책성</button>
+			</div>
+			<div class="tabs__body">
+				<div class="tabs__content active">
+					<section class="section">
+						<h3 class="section__heading">평가로직 참조 테이블</h3>
+						<article class="article">
+							<div class="tabs__flex">
+								<div class="tabs__flex-item three">
+									<h4>안정성</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가등급</th>
+												<th>안전등급</th>
+												<th>환산점수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>A</td>
+												<td>E</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+											</tr>
+											<tr>
+												<td>B</td>
+												<td>D</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="80" /></div>
+												</td>
+											</tr>
+											<tr>
+												<td>C</td>
+												<td>C</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="60" /></div>
+												</td>
+											</tr>
+											<tr>
+												<td>D</td>
+												<td>B</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="20" /></div>
+												</td>
+											</tr>
+											<tr>
+												<td>E</td>
+												<td>A</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="tabs__flex-item four">
+									<h4>노후도</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가등급</th>
+												<th>공용연수_최소</th>
+												<th>공용연수_최대</th>
+												<th>환산점수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>A</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="50" /></div>
+												</td>
+												<td></td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+											</tr>
+											<tr>
+												<td>B</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="30" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="49" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="90" /></div>
+												</td>
+											</tr>
+											<tr>
+												<td>C</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="20" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="29" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="80" /></div>
+												</td>
+											</tr>
+											<tr>
+												<td>D</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="10" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="19" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="50" /></div>
+												</td>
+											</tr>
+											<tr>
+												<td>E</td>
+												<td></td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="9" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+						
+						<article class="article">
+							<div class="tabs__flex tabs__flex--vertical">
+								<div class="tabs__flex-item">
+									<h4>지체도</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th colspan="2" rowspan="2">시급성 배점표</th>
+												<th colspan="5">지연기간에 따른 배점</th>
+											</tr>
+											<tr>
+												<th>0</th>
+												<th>1</th>
+												<th>2</th>
+												<th>3</th>
+												<th>4</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th rowspan="5">현 안전등급</th>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="10" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="20" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="10" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="20" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="30" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="40" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="30" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="50" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="60" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="70" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="80" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="80" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="90" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="tabs__flex-item">
+									<h4>지체도 참조값 행렬</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<tbody>
+											<tr>
+												<th>참조ID</th>
+												<td>A0</td>
+												<td>B0</td>
+												<td>C0</td>
+												<td>D0</td>
+												<td>E0</td>
+												<td>A1</td>
+												<td>B1</td>
+												<td>C1</td>
+												<td>D1</td>
+												<td>E1</td>
+												<td>A2</td>
+												<td>B2</td>
+												<td>C2</td>
+												<td>D2</td>
+												<td>E2</td>
+												<td>A3</td>
+												<td>B3</td>
+												<td>C3</td>
+												<td>D3</td>
+												<td>E3</td>
+												<td>A4</td>
+												<td>B4</td>
+												<td>C4</td>
+												<td>D4</td>
+												<td>E4</td>
+											</tr>
+											<tr>
+												<th>환산점수</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="30" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="80" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="10" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="50" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="90" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="0" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="20" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="60" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="10" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="30" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="70" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="20" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="40" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="80" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" placeholder="100" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+						
+						<article class="article">
+							<div class="tabs__flex tabs__flex--vertical">
+								<div class="tabs__flex-item">
+									<h4>목표성능 달성도</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th rowspan="2">사후 안전등급</th>
+												<th colspan="3">목표등급</th>
+											</tr>
+											<tr>
+												<th>A</th>
+												<th>B</th>
+												<th>C</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="tabs__flex-item">
+									<h4>목표달성 달성도 참조값 행렬</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<tbody>
+											<tr>
+												<th>참조ID</th>
+												<th>AA</th>
+												<th>BA</th>
+												<th>CA</th>
+												<th>DA</th>
+												<th>EA</th>
+												<th>AB</th>
+												<th>BB</th>
+												<th>CB</th>
+												<th>DB</th>
+												<th>EB</th>
+												<th>AC</th>
+												<th>BC</th>
+												<th>CC</th>
+												<th>DC</th>
+												<th>EC</th>
+											</tr>
+											<tr>
+												<th>환산점수</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+						
+						<article class="article">
+							<div class="tabs__flex">
+								<div class="tabs__flex-item">
+									<h4>종합평가 등급 환산표</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가</th>
+												<th>기술성 환산 등급</th>
+												<th>최소</th>
+												<th>최대</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th rowspan="2">우수</th>
+												<th>A+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>A0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th rowspan="2">양호</th>
+												<th>B+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th rowspan="2">보통</th>
+												<th>C+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th rowspan="2">미흡</th>
+												<th>D+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>낙제</th>
+												<th>ㄸ</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+					</section>
+				</div>
+				
+				<div class="tabs__content">
+					<section class="section">
+						<h3 class="section__heading">평가로직 참조 테이블</h3>
+						<article class="article">
+							<div class="tabs__flex">
+								<div class="tabs__flex-item four">
+									<h4>자산가치 개선 효율성</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가등급</th>
+												<th>최소</th>
+												<th>최대</th>
+												<th>환산점수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="tabs__flex-item two">
+									<h4>안전등급에 따른 잔존수명비율 환산표</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>안전등급</th>
+												<th>잔존수명 비율(%)</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="tabs__flex-item two">
+									<h4>시설 유형별 내용연수 참조표</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>시설구분</th>
+												<th>내용연수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>교량</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>보도육교</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>터널</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>지하터널</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>옹벽</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>절토사면</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>포장</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+						
+						<article class="article">
+							<div class="tabs__flex">
+								<div class="tabs__flex-item">
+									<h4>사업 전후 안전등급에 따른 효용성 점수표</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th rowspan="2" colspan="2">보수효과 배점표</th>
+												<th colspan="5">사업후 등급</th>
+											</tr>
+											<tr>
+												<th>A</th>
+												<th>B</th>
+												<th>C</th>
+												<th>D</th>
+												<th>E</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th rowspan="5">사업전 등급</th>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+						
+						<article class="article">
+							<div class="tabs__flex tabs__flex--wrap">
+								<div class="tabs__flex-item half">
+									<h4>교통량 등급에 따른 가중계수표</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가등급</th>
+												<th>교통량-최소</th>
+												<th>교통량-최대</th>
+												<th>가중 계수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								
+								<div class="tabs__flex-item half">
+									<h4>안전효용 개선 효율성</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>등급</th>
+												<th>최소</th>
+												<th>최대</th>
+												<th>환산점수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								
+								<div class="tabs__flex-item nomargin margintop">
+									<h4>안전등급 효율성 참조표</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<tbody>
+											<tr>
+												<th>참조값</th>
+												<th>AA</th>
+												<th>AB</th>
+												<th>AC</th>
+												<th>AD</th>
+												<th>AE</th>
+												<th>BA</th>
+												<th>BB</th>
+												<th>BC</th>
+												<th>BD</th>
+												<th>BE</th>
+												<th>CA</th>
+												<th>CB</th>
+												<th>CC</th>
+												<th>CD</th>
+												<th>CE</th>
+												<th>DA</th>
+												<th>DB</th>
+												<th>DC</th>
+												<th>DD</th>
+												<th>DE</th>
+												<th>EA</th>
+												<th>EB</th>
+												<th>EC</th>
+												<th>ED</th>
+												<th>EE</th>
+											</tr>
+											<tr>
+												<th>환산점수</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+						
+						<article class="article">
+							<div class="tabs__flex">
+								<div class="tabs__flex-item">
+									<h4>사업규모 등급</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가등급</th>
+												<th>평가기준</th>
+												<th>환산점수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<span class="tabs__comment">단위비용 : 5,000,000,000원</span>
+								</div>
+								<div class="tabs__flex-item">
+									<h4>사업효율 등급</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가등급</th>
+												<th>평가기준</th>
+												<th>환산점수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<span class="tabs__comment">단위차량수 : 3,000대</span>
+								</div>
+								<div class="tabs__flex-item">
+									<h4>중간 점수 계산</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th rowspan="2">평가항목</th>
+												<th colspan="2">평가값</th>
+											</tr>
+											<tr>
+												<th>성능개선1</th>
+												<th>성능개선2</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>사업비용 단위</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>교통량 단위</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+						
+						<article class="article">
+							<div class="tabs__flex">
+								<div class="tabs__flex-item">
+									<h4>종합평가 등급 환산표</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가</th>
+												<th>기술성 환산 등급</th>
+												<th>최소</th>
+												<th>최대</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th rowspan="2">우수</th>
+												<th>A+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>A0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th rowspan="2">양호</th>
+												<th>B+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th rowspan="2">보통</th>
+												<th>C+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th rowspan="2">미흡</th>
+												<th>D+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>낙제</th>
+												<th>ㄸ</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+					</section>
+				</div>
+				
+				<div class="tabs__content">
+					<section class="section">
+						<h3 class="section__heading">평가로직 참조 테이블</h3>
+						<article class="article">
+							<div class="tabs__flex">
+								<div class="tabs__flex-item three">
+									<h4>사업추진 타당성</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가등급</th>
+												<th>평가기준</th>
+												<th>환산점수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>법 요구사항 대응 사업</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>법정계획, 설계기준 변경 대응사업</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>조직 자체 계획/의결에 의한 추진 사업</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>별도의 근거없음</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								
+								<div class="tabs__flex-item four">
+									<h4>민원 및 사고 대응성</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가등급</th>
+												<th>평가기준</th>
+												<th>참조값</th>
+												<th>환산점수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>안전사고, 피해 배상, 민원발생 이력 3건 이상</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>안전사고, 피해 배상, 민원발생 이력 1건 이상</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>안전사고, 피해 배상, 민원발생 이력이 없는 경우 </td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								
+								
+							</div>
+						</article>
+						
+						<article class="article">
+							<div class="tabs__flex">
+								<div class="tabs__flex-item">
+									<h4>사업효과 범용성</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가등급</th>
+												<th>교통량-최소</th>
+												<th>교통량-최대</th>
+												<th>환산점수</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>A</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>E</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+						
+						<article class="article">
+							<div class="tabs__flex">
+								<div class="tabs__flex-item">
+									<h4>종합평가 등급 환산표</h4>
+									<table class="c-table c-table--border">
+										<colgroup>
+											<col />
+											<col />
+											<col />
+											<col />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>평가</th>
+												<th>기술성 환산 등급</th>
+												<th>최소</th>
+												<th>최대</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th rowspan="2">우수</th>
+												<th>A+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>A0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th rowspan="2">양호</th>
+												<th>B+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>B0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th rowspan="2">보통</th>
+												<th>C+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>C0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th rowspan="2">미흡</th>
+												<th>D+</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>D0</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+											<tr>
+												<th>낙제</th>
+												<th>ㄸ</th>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+												<td>
+													<div class="c-text"><input type="number" class="c-text__input" /></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+					</section>
+				</div>
+			</div>
+		</div>
+
+	
+	</div>
+</div>
+
+</html>

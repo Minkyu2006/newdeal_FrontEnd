@@ -156,19 +156,16 @@
 							<colgroup>
 								<col />
 								<col />
-								<col />
 							</colgroup>
 							<thead>
 							<tr>
 								<th style="text-align: center">할인율(r)</th>
-								<th style="text-align: center">R=1/(1+r)</th>
 								<th style="text-align: center">열화증가율(%)</th>
 							</tr>
 							</thead>
 							<tbody>
 							<tr>
 								<td style="text-align: center" id="discountRate"></td>
-								<td style="text-align: center" id="rnValue"></td>
 								<td style="text-align: center" id="increase"></td>
 							</tr>
 							</tbody>
@@ -186,7 +183,6 @@
 									<th style="text-align: center">빈도수(년/회)</th>
 									<th style="text-align: center">비용(원)</th>
 									<th style="text-align: center">비고</th>
-									<th style="text-align: center">R^n</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -195,21 +191,18 @@
 									<td style="text-align: center" id="ltPeriodicFrequency"></td>
 									<td style="text-align: right" id="ltPeriodicCost"></td>
 									<td style="text-align: center">1년에 2회</td>
-									<td style="text-align: center" id="periodicRn"></td>
 								</tr>
 								<tr>
 									<th style="text-align: center">정밀점검</th>
 									<td style="text-align: center" id="ltCloseFrequency"></td>
 									<td style="text-align: right" id="ltCloseCost"></td>
 									<td style="text-align: center">2년에 1회</td>
-									<td style="text-align: center" id="closeRn"></td>
 								</tr>
 								<tr>
 									<th style="text-align: center">정밀안전진단</th>
 									<td style="text-align: center" id="ltSafetyFrequency"></td>
 									<td style="text-align: right" id="ltSafetyCost"></td>
 									<td style="text-align: center">10년 1회 수행후 5년에 1회</td>
-									<td style="text-align: center" id="safetyRn"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -226,24 +219,29 @@
 						<h4>단계별 유지관리 결과(보수·보강수행시점 기준)</h4>
 						<table class="c-table c-table--border">
 							<colgroup>
+								<col style="width: 50px;" />
+								<col style="width: 110px;" />
+								<col style="width: 110px;" />
+								<col style="width: 80px;" />
 								<col />
-								<col />
-								<col />
-								<col />
+								<col style="width: 110px;" />
+								<col style="width: 100px;" />
+								<col style="width: 80px;" />
 								<col />
 								<col />
 							</colgroup>
 							<thead>
 								<tr>
-									<th  style="width: 3%;text-align: center;">단계</th>
+									<th  style="text-align: center;">단계</th>
 									<th style="text-align: center;">정기점검 횟수</th>
 									<th style="text-align: center;">정밀점검 횟수</th>
-									<th style="text-align: center;">정밀안전진단 횟수</th>
-									<th style="width: 10%;text-align: center;">[할인율 적용]<br />총 점검비용(원)</th>
-									<th style="text-align: center;">누적 보수·보강수행 횟수</th>
-									<th style="text-align: center;">보수·보강수행시기(년)</th>
-									<th style="width: 15%;text-align: center;">[할인율 적용]<br />누적 보수·보강비용(원)</th>
-									<th style="width: 16%;text-align: center;">[할인율 적용]<br />실제 총 유지관리비용(원)</th>
+									<th style="text-align: center;">정밀안전<br />진단횟수</th>
+									<th style="text-align: center;">[할인율 적용]<br />총 점검비용(원)</th>
+									<th style="text-align: center;">누적 보수·보강<br />수행 횟수</th>
+									<th style="text-align: center;">보수·보강<br />수행시기(년)</th>
+									<th style="text-align: center;">보수·보강<br />수행 등급</th>
+									<th style="text-align: center;">[할인율 적용]<br />누적 보수·보강<br />비용(원)</th>
+									<th style=";text-align: center;">[할인율 적용]<br />실제 총<br />유지관리비용(원)</th>
 								</tr>
 							</thead>
 							<tbody id="diagnosisTable">

@@ -926,6 +926,11 @@ table {
 .section + .section {
 	margin-top: 20px;
 }
+.section__heading {
+	margin-bottom: 20px;
+	font-size: 18px;
+	font-weight: 700;
+}
 
 /* article */
 .article {
@@ -947,6 +952,22 @@ table {
 	font-size: 12px;
 	font-weight: 400;
 	color: #888;
+}
+
+.performanceinfo__text {
+	margin-top: 10px;
+	line-height: 1.6;
+}
+.performanceinfo__img {
+	width: 90%;
+	margin: 10px auto 0;
+	border: 1px solid #efefef;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+}
+.performanceinfo__img img {
+	width: 100%;
 }
 
 /* float-heading */
@@ -978,6 +999,94 @@ table {
 	line-height: 24px;
 }
 
+/* tabs */
+.tabs {
+	position: relative;
+	width: 100%;
+	background-color: #fff;
+}
+.tabs__head {
+	display: flex;
+	border: 1px solid #1e3868;
+	background-color: #007ab5;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.tabs__btn {
+	padding: 10px 20px;
+	border: 0 none;
+	background-color: #007ab5;
+	color: #fff;
+	font-size: 18px;
+	font-weight: 700;
+}
+.tabs__btn:hover {
+	background-color: #456296;
+}
+.tabs__btn.active {
+	background-color: #1e3868;
+}
+.tabs__body {
+	border: 1px solid #1e3868;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.tabs__content {
+	display: none;
+}
+.tabs__content.active {
+	display: block;
+}
+.tabs__flex {
+	display: flex;
+}
+.tabs__flex.tabs__flex--vertical {
+	flex-direction: column;
+}
+.tabs__flex.tabs__flex--wrap {
+	flex-wrap: wrap;
+}
+.tabs__flex-item {
+	flex: 1;
+}
+.tabs__flex-item.half {
+	flex: 1 0 auto;
+	width: calc(50% - 10px);
+}
+.tabs__flex-item.two {
+	flex: 2;
+}
+.tabs__flex-item.three {
+	flex: 3;
+}
+.tabs__flex-item.four {
+	flex: 4;
+}
+.tabs__flex-item.eight {
+	flex: 8;
+}
+.tabs__flex-item + .tabs__flex-item {
+	margin-left: 20px;
+}
+.tabs__flex.tabs__flex--vertical > .tabs__flex-item + .tabs__flex-item {
+	margin-top: 20px;
+	margin-left: 0;
+}
+.tabs__flex-item.nomargin {
+	margin: 0;
+}
+.tabs__flex-item.margintop {
+	margin-top: 20px;
+}
+.tabs__flex-item h4 {
+	margin-bottom: 10px;
+}
+.tabs__comment {
+	font-size: 14px;
+	text-align: right;
+}
 
 /* map area */
 .map-area {

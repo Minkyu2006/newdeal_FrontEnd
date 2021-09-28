@@ -1,5 +1,11 @@
 @charset "utf-8";
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* table */
 .c-table {
     table-layout: fixed;
@@ -18,7 +24,7 @@
     text-align: center;
 }
 .c-table th {
-    padding: 10px 5px;
+    padding: 10px 3px;
     border-bottom: 1px solid #efefef;
     vertical-align: middle;
     line-height: 1.2;
@@ -27,7 +33,7 @@
 }
 .c-table td {
     height: 35px;
-    padding: 5px;
+    padding: 5px 3px;
     border-bottom: 1px solid #efefef;
     vertical-align: middle;
     word-break: break-all;
@@ -317,7 +323,7 @@
     display: block;
     width: 100%;
     height: 30px;
-    padding: 0 10px;
+    padding: 0 5px;
     border: 1px solid #d3d3d3;
     border-radius: 3px;
     -webkit-box-sizing: border-box;
@@ -327,6 +333,10 @@
     font-size: 14px;
     transition: border-color .2s;
     outline: none;
+}
+.c-text__input[type=number] {
+	text-align: right;
+	padding: 0 3px;
 }
 .c-text__input:focus,
 .c-text__input:active {

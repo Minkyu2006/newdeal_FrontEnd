@@ -12,12 +12,12 @@
 			var $password = $("#password");
 
 			if ($userid.val().trim() === '') {
-				alert("아이디를 입력하세요.");
+				alertCaution("아이디를 입력하세요.");
 				$userid.trigger('focus');
 				return false;
 			}
 			if ($password.val().trim() === '') {
-				alert("비밀번호을 입력하세요.");
+				alertCaution("비밀번호을 입력하세요.");
 				$password.trigger('focus');
 				return false;
 			}
@@ -29,7 +29,7 @@
 
 			const jsonString = JSON.stringify(params);
 
-			console.log("로그인 실행");
+			// console.log("로그인 실행");
 			const url = $("#security_protocol").val()+"://"+$("#security_url").val() + "/auth/login";
 			$.ajax({
 				url: url,
@@ -132,7 +132,7 @@
 				<div style="margin-top: 10px">
 					<label><input type="password" class="login__input" id="password" name="password" placeholder="패스워드를 입력하세요." required></label>
 				</div>
-				<div><input class="login__btn" value="로그인" onclick="loginActive()" /></div>
+				<div><input class="login__btn" type="button" value="로그인" onclick="loginActive()" /></div>
 				<div><a class="login__btn" href="/register">회원가입</a></div>
 		</div>
 	</div>

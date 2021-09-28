@@ -256,9 +256,8 @@ function lifeAllTimeOutput(id){
                     // console.log("ltAllCompletionDate : "+request.sendData.lifeAllTimeDto.ltAllCompletionDate);
                     const ltAllCompletionDate = request.sendData.lifeAllTimeDto.ltAllCompletionDate;
                     const year = ltAllCompletionDate.substring(0, 4);
-                    const month = ltAllCompletionDate.substring(4,6);
-                    const day = ltAllCompletionDate.substring(6,8);
-                    $('#ltAllCompletionDate').text(year+'-'+month+'-'+day);
+                    const month = ltAllCompletionDate.substring(5,7);
+                    $('#ltAllCompletionDate').text(year+'년도 '+month+'월');
                     $('#allVolume').text(request.sendData.lifeAllTimeDto.ltAllVolume+'m2');
 
                     // 대표보수 보강공법 수행효과  수행 전 손상지수
@@ -280,7 +279,6 @@ function lifeAllTimeOutput(id){
                     $('#damageECost').text(pushComma(Math.round(request.sendData.costRankList[3])));
 
                     $('#discountRate').text(Number(request.sendData.lifeAllTimeDto.ltDiscountRate*100)+'%');
-                    $('#rnValue').text(request.sendData.discount.toFixed(3));
                     $('#increase').text(Number(request.sendData.lifeAllTimeDto.ltIncrease*100)+'%');
 
                     $('#ltPeriodicFrequency').text(request.sendData.lifeAllTimeDto.ltPeriodicFrequency);
@@ -289,10 +287,6 @@ function lifeAllTimeOutput(id){
                     $('#ltCloseCost').text(pushComma(request.sendData.lifeAllTimeDto.ltCloseCost));
                     $('#ltSafetyFrequency').text(request.sendData.lifeAllTimeDto.ltSafetyFrequency);
                     $('#ltSafetyCost').text(pushComma(request.sendData.lifeAllTimeDto.ltSafetyCost));
-
-                    $('#periodicRn').text(request.sendData.ltPeriodicRn.toFixed(3));
-                    $('#closeRn').text(request.sendData.ltCloseRn.toFixed(3));
-                    $('#safetyRn').text(request.sendData.ltSafetyRn.toFixed(3));
 
                     const $diagnosisTable = $('#diagnosisTable');
                     let html = "";
@@ -305,6 +299,7 @@ function lifeAllTimeOutput(id){
                             html += '<td style="text-align: right;">'+pushComma(Math.round(request.sendData.checkCostList[i]))+'</td>';
                             html += '<td style="text-align: center;">'+(i+1)+'</td>';
                             html += '<td style="text-align: center;">'+request.sendData.damageRankYearList[i].toFixed(0)+'</td>';
+                            html += '<td style="text-align: center;">'+request.sendData.costRank[i]+'</td>';
                             html += '<td style="text-align: right;">'+pushComma(Math.round(request.sendData.discountAccumulateList[i]))+'</td>';
                             html += '<td style="text-align: right;">'+pushComma(Math.round(request.sendData.managementCostList[i]))+'</td>';
                         html += '</tr>';
@@ -397,13 +392,14 @@ function lifeAllTimeOutput(id){
                         // xAxis.renderer.grid.template.location = 0;
                         xAxis.renderer.minGridDistance = 96; // 범위 조절옵션
                         xAxis.title.text = "공용연수(Years)";
-                        xAxis.renderer.grid.template.disabled = true; // x축 라인 제거
+                        xAxis.renderer.grid.template.disabled = false // x축 라인 제거
                         // xAxis.renderer.labels.template.disabled = true;
 
                         // Y축 차트 생성
                         const yAxis = chart.yAxes.push(new am4charts.ValueAxis());
                         // valueAxis.renderer.inside = true;
                         // valueAxis.renderer.labels.template.verticalCenter = "bottom";
+                        yAxis.renderer.grid.template.disabled = true // y축 라인 제거
                         yAxis.title.text = "상태지수(condition Index,C.I)";
                         yAxis.min = 0;
                         yAxis.max = 1;
@@ -434,8 +430,13 @@ function lifeAllTimeOutput(id){
                         createSeries("preemptive", "선제적 유지관리", am4core.color("#6889e2"),am4core.color("#000000")); // 선제적 유지관리 라인색 설정(완)
                         createSeries("current", "현행 유지관리", am4core.color("#5fee83"),am4core.color("#000000")); // 현행 유지관리 라인색 설정(완)
 
+                        let label;
+
+                        chart.paddingRight = 60;
+                        chart.maskBullets = false;
+
                         // 점선차트 A~D등급
-                        function dashSeries(field,color, dashed) {
+                        function dashSeries(field,color, dashed,number) {
                             const series = chart.series.push(new am4charts.LineSeries());
                             series.dataFields.categoryX = "publicYear";
                             series.dataFields.valueY = field;
@@ -443,16 +444,36 @@ function lifeAllTimeOutput(id){
                             series.smoothing = "monotoneX";
                             series.stroke = color;
                             series.hiddenInLegend = true; // legend 숨기기
+
                             // 점선 옵션
                             if (dashed) {
                                 series.strokeDasharray = "5 3";
                             }
+
+                            const labelBullet = series.bullets.push(new am4charts.LabelBullet());
+                            labelBullet.disabled = true;
+                            if(number===1){
+                                labelBullet.label.text = request.sendData.aRankValue+"(A)";
+                            }else if(number===2){
+                                labelBullet.label.text = request.sendData.bRankValue+"(B)";
+                            }else if(number===3){
+                                labelBullet.label.text = request.sendData.cRankValue+"(C)";
+                            }else{
+                                labelBullet.label.text = request.sendData.dRankValue+"(D)";
+                            }
+                            labelBullet.fontSize = 17;
+                            labelBullet.horizontalCenter = "left";
+                            labelBullet.label.horizontalCenter = "left";
+                            labelBullet.label.paddingLeft = 10;
+                            labelBullet.propertyFields.disabled = "bulletDisabled";
+
                             return series;
                         }
-                        dashSeries("aRank", am4core.color("#ff7979"),true); // A등급 점선 설정(완)
-                        dashSeries("bRank", am4core.color("#ff7979"),true); // B등급 점선 설정(완)
-                        dashSeries("cRank", am4core.color("#ff7979"),true); // C등급 점선 설정(완)
-                        dashSeries("dRank", am4core.color("#ff7979"),true); // D등급 점선 설정(완)
+
+                        dashSeries("aRank", am4core.color("#ff7979"),true,1); // A등급 점선 설정(완)
+                        dashSeries("bRank", am4core.color("#ff7979"),true,2); // B등급 점선 설정(완)
+                        dashSeries("cRank", am4core.color("#ff7979"),true,3); // C등급 점선 설정(완)
+                        dashSeries("dRank", am4core.color("#ff7979"),true,4); // D등급 점선 설정(완)
 
                         chart.legend = new am4charts.Legend(); // 항목 상단 오른쪽으로 배치(완)
                         chart.legend.position = "top";
