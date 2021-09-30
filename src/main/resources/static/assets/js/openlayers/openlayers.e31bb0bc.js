@@ -72948,7 +72948,7 @@ function initData() {
   var naclSource = new _ImageWMS.default({
 	  url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
-      'LAYERS': 'NACL'
+      'LAYERS': 'NACL-2'
     },
     serverType: 'geoserver',
     crossOrigin: 'anonymous'
