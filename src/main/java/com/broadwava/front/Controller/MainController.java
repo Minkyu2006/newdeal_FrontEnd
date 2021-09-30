@@ -36,6 +36,12 @@ public class MainController {
     public String loginindex(){
         return "loginindex";
     }
+    
+    // 임시 공지사항
+    @RequestMapping("board")
+    public String board(){
+        return "board";
+    }
 
     @RequestMapping("/register")
     public String register(Model model){
