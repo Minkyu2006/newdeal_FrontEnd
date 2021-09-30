@@ -30,6 +30,12 @@ public class MainController {
     public String index(){
         return "index";
     }
+    
+    // login main
+    @RequestMapping("loginindex")
+    public String loginindex(){
+        return "loginindex";
+    }
 
     @RequestMapping("/register")
     public String register(Model model){
