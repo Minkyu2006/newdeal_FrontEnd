@@ -115,81 +115,62 @@ function lifeDetailTimeOutput(id){
                 if (status === 200) {
                     console.log("아웃풋 호출성공");
 
-                //     // console.log("lifeAllTimeDto : " + request.sendData.lifeAllTimeDto);
-                //     // console.log("periodicCountList : " + request.sendData.periodicCountList);
-                //     // console.log("closeCountList : " + request.sendData.closeCountList);
-                //     // console.log("safetyCountList : " + request.sendData.safetyCountList);
-                //     // console.log("checkCostList : " + request.sendData.checkCostList);
-                //     // console.log("managementCostList : " + request.sendData.managementCostList);
-                //     // console.log("ltAbsenceName : " + request.sendData.ltAbsenceName);
-                //
-                //     $('#ltBridgeCode').text(request.sendData.lifeAllTimeDto.ltBridgeCode);
-                //     $('#ltBridgeName').text(request.sendData.lifeAllTimeDto.ltBridgeName);
-                //     $('#ltSpanNum').text(request.sendData.lifeAllTimeDto.ltSpanNum);
-                //     $('#ltAbsenceName').text(request.sendData.ltAbsenceName);
-                //
-                //     $('#ltAllTeaRoad').text(request.sendData.lifeAllTimeDto.ltAllTeaRoad);
-                //     $('#ltAllKind').text(request.sendData.lifeAllTimeDto.ltAllKind);
-                //     $('#ltAllLength').text(request.sendData.lifeAllTimeDto.ltAllLength+'m');
-                //     $('#ltAllArea').text(request.sendData.lifeAllTimeDto.ltAllArea+'m');
-                //     // console.log("ltAllCompletionDate : "+request.sendData.lifeAllTimeDto.ltAllCompletionDate);
-                //     const ltAllCompletionDate = request.sendData.lifeAllTimeDto.ltAllCompletionDate;
-                //     const year = ltAllCompletionDate.substring(0, 4);
-                //     const month = ltAllCompletionDate.substring(4,6);
-                //     const day = ltAllCompletionDate.substring(6,8);
-                //     $('#ltAllCompletionDate').text(year+'-'+month+'-'+day);
-                //     $('#allVolume').text(request.sendData.lifeAllTimeDto.ltAllVolume+'m2');
-                //
-                //     // 대표보수 보강공법 수행효과  수행 전 손상지수
-                //     $('#damageBRankBefore').text(request.sendData.lifeAllTimeDto.ltDamageBRank);
-                //     $('#damageCRankBefore').text(request.sendData.lifeAllTimeDto.ltDamageCRank);
-                //     $('#damageDRankBefore').text(request.sendData.lifeAllTimeDto.ltDamageDRank);
-                //     $('#damageERankBefore').text(request.sendData.lifeAllTimeDto.ltDamageERank);
-                //
-                //     // 대표보수 보강공법 수행효과  수행 후 손상지수
-                //     $('#damageBRankAfter').text(request.sendData.damageRankList[0].toFixed(2));
-                //     $('#damageCRankAfter').text(request.sendData.damageRankList[1].toFixed(2));
-                //     $('#damageDRankAfter').text(request.sendData.damageRankList[2].toFixed(2));
-                //     $('#damageERankAfter').text(request.sendData.damageRankList[3]);
-                //
-                //     // 대표보수 보강공법 수행효과 비용
-                //     $('#damageBCost').text(pushComma(Math.round(request.sendData.costRankList[0])));
-                //     $('#damageCCost').text(pushComma(Math.round(request.sendData.costRankList[1])));
-                //     $('#damageDCost').text(pushComma(Math.round(request.sendData.costRankList[2])));
-                //     $('#damageECost').text(pushComma(Math.round(request.sendData.costRankList[3])));
-                //
-                //     $('#discountRate').text(Number(request.sendData.lifeAllTimeDto.ltDiscountRate*100)+'%');
-                //     $('#rnValue').text(request.sendData.discount.toFixed(3));
-                //     $('#increase').text(Number(request.sendData.lifeAllTimeDto.ltIncrease*100)+'%');
-                //
-                //     $('#ltPeriodicFrequency').text(request.sendData.lifeAllTimeDto.ltPeriodicFrequency);
-                //     $('#ltPeriodicCost').text(pushComma(request.sendData.lifeAllTimeDto.ltPeriodicCost));
-                //     $('#ltCloseFrequency').text(request.sendData.lifeAllTimeDto.ltCloseFrequency);
-                //     $('#ltCloseCost').text(pushComma(request.sendData.lifeAllTimeDto.ltCloseCost));
-                //     $('#ltSafetyFrequency').text(request.sendData.lifeAllTimeDto.ltSafetyFrequency);
-                //     $('#ltSafetyCost').text(pushComma(request.sendData.lifeAllTimeDto.ltSafetyCost));
-                //
-                //     $('#periodicRn').text(request.sendData.ltPeriodicRn.toFixed(3));
-                //     $('#closeRn').text(request.sendData.ltCloseRn.toFixed(3));
-                //     $('#safetyRn').text(request.sendData.ltSafetyRn.toFixed(3));
-                //
-                //     const $diagnosisTable = $('#diagnosisTable');
-                //     let html = "";
-                //     for(let i=0; i<request.sendData.periodicCountList.length; i++){
-                //         html += '<tr>';
-                //         html += '<td style="text-align: center;">'+Number(i+1)+'</td>';
-                //         html += '<td style="text-align: center;">'+request.sendData.periodicCountList[i]+'</td>';
-                //         html += '<td style="text-align: center;">'+request.sendData.closeCountList[i]+'</td>';
-                //         html += '<td style="text-align: center;">'+request.sendData.safetyCountList[i]+'</td>';
-                //         html += '<td style="text-align: right;">'+pushComma(Math.round(request.sendData.checkCostList[i]))+'</td>';
-                //         html += '<td style="text-align: center;">'+(i+1)+'</td>';
-                //         html += '<td style="text-align: center;">'+request.sendData.damageRankYearList[i].toFixed(0)+'</td>';
-                //         html += '<td style="text-align: right;">'+pushComma(Math.round(request.sendData.discountAccumulateList[i]))+'</td>';
-                //         html += '<td style="text-align: right;">'+pushComma(Math.round(request.sendData.managementCostList[i]))+'</td>';
-                //         html += '</tr>';
-                //     }
-                //     $diagnosisTable.html(html);
-                //
+                    $('#ltRecoveryOne').text(request.sendData.lifeDetailTimeDto.ltRecoveryOne);
+                    $('#ltRecoveryTwo').text(request.sendData.lifeDetailTimeDto.ltRecoveryTwo);
+                    $('#ltRecoveryThree').text(request.sendData.lifeDetailTimeDto.ltRecoveryThree);
+                    $('#ltRecoveryFour').text(request.sendData.lifeDetailTimeDto.ltRecoveryFour);
+                    $('#ltRecoveryFive').text(request.sendData.lifeDetailTimeDto.ltRecoveryFive);
+                    $('#ltRecoverySix').text(request.sendData.lifeDetailTimeDto.ltRecoverySix);
+
+                    $('#ltCostOne').text(request.sendData.lifeDetailTimeDto.ltCostOne);
+                    $('#ltCostTwo').text(request.sendData.lifeDetailTimeDto.ltCostTwo);
+                    $('#ltCostThree').text(request.sendData.lifeDetailTimeDto.ltCostThree);
+                    $('#ltCostFour').text(request.sendData.lifeDetailTimeDto.ltCostFour);
+                    $('#ltCostFive').text(request.sendData.lifeDetailTimeDto.ltCostFive);
+                    $('#ltCostSix').text(request.sendData.lifeDetailTimeDto.ltCostSix);
+
+                    $('#pfmax').text(request.sendData.pfmax);
+                    $('#pfmin').text(request.sendData.pfmin);
+
+                    $('#bmax').text(request.sendData.bmax);
+                    $('#bmin').text(request.sendData.bmin);
+                    $('#ltRecoveryPercent').text(request.sendData.ltRecoveryPercent+"%");
+                    $('#maintenanceYear').text(request.sendData.maintenanceYear);
+
+                    const $noActionTable = $('#noActionTable');
+                    let html = "";
+                    html += '<tr>';
+                    html += '<td style="text-align: center;">'+'PF='+'</td>';
+                    for(let i=0; i<request.sendData.pfList.length; i++){
+                        html += '<td style="text-align: right;">'+request.sendData.pfList[i]+'</td>';
+                    }
+                    html += '</tr>';
+                    html += '<tr>';
+                    html += '<td style="text-align: center;">'+'B='+'</td>';
+                    for(let i=0; i<request.sendData.bList.length; i++){
+                        html += '<td style="text-align: right;">'+request.sendData.bList[i]+'</td>';
+                    }
+                    html += '</tr>';
+                    $noActionTable.html(html);
+
+
+                    const $actionTable = $('#actionTable');
+                    let html2 = "";
+                    html2 += '<tr>';
+                    html2 += '<td style="text-align: center;">'+'B1='+'</td>';
+                    for(let i=0; i<request.sendData.bOneList.length; i++){
+                        html2 += '<td style="text-align: right;">'+request.sendData.bOneList[i]+'</td>';
+                    }
+                    html2 += '</tr>';
+                    html2 += '<tr>';
+                    html2 += '<td style="text-align: center;">'+'B2='+'</td>';
+                    for(let i=0; i<request.sendData.bTwoList.length; i++){
+                        html2 += '<td style="text-align: right;">'+request.sendData.bTwoList[i]+'</td>';
+                    }
+                    html2 += '</tr>';
+                    $actionTable.html(html2);
+
+                    
                     // console.log("차트 데이터 : "+request.sendData.chartDataList);
                     // amChart
                     am4core.ready(function() { // am4core 시작

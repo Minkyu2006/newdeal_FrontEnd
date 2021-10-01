@@ -60,11 +60,8 @@ public class MainController {
     
     @RequestMapping("env/envsearch")
     public String envsearch(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "env/envsearch";
-    }
-    
-    @RequestMapping("env/maptest")
-    public String maptest(Model model){
-        return "env/maptest";
     }
 }

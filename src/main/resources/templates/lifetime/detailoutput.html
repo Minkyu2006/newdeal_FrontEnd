@@ -64,32 +64,32 @@
 									</tr>
 									<tr>
 										<th></th>
-										<th></th>
-										<th></th>
-										<th></th>
-										<th></th>
-										<th></th>
-										<th></th>
+										<th>보수1</th>
+										<th>보수2</th>
+										<th>보수3</th>
+										<th>보강1</th>
+										<th>보강2</th>
+										<th>교체</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<th></th>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<th>회복율</th>
+										<td id="ltRecoveryOne"></td>
+										<td id="ltRecoveryTwo"></td>
+										<td id="ltRecoveryThree"></td>
+										<td id="ltRecoveryFour"></td>
+										<td id="ltRecoveryFive"></td>
+										<td id="ltRecoverySix"></td>
 									</tr>
 									<tr>
-										<th></th>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<th>비용(만원/m)</th>
+										<td id="ltCostOne"></td>
+										<td id="ltCostTwo"></td>
+										<td id="ltCostThree"></td>
+										<td id="ltCostFour"></td>
+										<td id="ltCostFive"></td>
+										<td id="ltCostSix"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -108,16 +108,16 @@
 								</thead>
 								<tbody>
 									<tr>
-										<th></th>
-										<td></td>
+										<th>보수보강 총 길이(m)</th>
+										<td>10</td>
 									</tr>
 									<tr>
-										<th></th>
-										<td></td>
+										<th>보수보강 개입 횟수(회)</th>
+										<td id="repairNumber"></td>
 									</tr>
 									<tr>
-										<th></th>
-										<td></td>
+										<th>보수보강 총 비용(만원)</th>
+										<td id="repairCost"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -129,9 +129,11 @@
 			
 			<div class="talk__box">
 				<div class="talk__contents">
+
 					<div class="talk__chart">
-						<div id="amChart"></div>
+						<div id="amChart1"></div>
 					</div>
+
 					<div class="talk__chart-table">
 						<table class="c-table c-table--border">
 							<colgroup>
@@ -145,12 +147,12 @@
 							</thead>
 							<tbody>
 								<tr>
-									<th></th>
-									<td></td>
+									<th>손상확률 최대값</th>
+									<td id="pfmax"></td>
 								</tr>
 								<tr>
-									<th></th>
-									<td></td>
+									<th>신뢰성 지수 최소값</th>
+									<td id="pfmin"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -179,79 +181,35 @@
 							<col />
 							<col />
 							<col />
+							<col />
 						</colgroup>
 						<thead>
 							<tr>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
+								<th>Time(Years)</th>
+								<th>0</th>
+								<th>1</th>
+								<th>2</th>
+								<th>3</th>
+								<th>4</th>
+								<th>5</th>
+								<th>6</th>
+								<th>7</th>
+								<th>8</th>
+								<th>9</th>
+								<th>10</th>
+								<th>11</th>
+								<th>12</th>
+								<th>13</th>
+								<th>14</th>
+								<th>15</th>
+								<th>16</th>
+								<th>17</th>
+								<th>18</th>
+								<th>19</th>
+								<th>20</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<th></th>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<th></th>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+						<tbody id="noActionTable">
 						</tbody>
 					</table>
 				</div>
@@ -259,9 +217,11 @@
 			
 			<div class="talk__box">
 				<div class="talk__contents">
+
 					<div class="talk__chart">
-						<div id="amChart1"></div>
+						<div id="amChart2"></div>
 					</div>
+
 					<div class="talk__chart-table">
 						<table class="c-table c-table--border">
 							<colgroup>
@@ -275,20 +235,20 @@
 							</thead>
 							<tbody>
 								<tr>
-									<th></th>
-									<td></td>
+									<th>신뢰성 지수 최대값</th>
+									<td id="bmax"></td>
 								</tr>
 								<tr>
-									<th></th>
-									<td></td>
+									<th>신뢰성 지수 최소값</th>
+									<td id="bmin"></td>
 								</tr>
 								<tr>
-									<th></th>
-									<td></td>
+									<th>보수보강 회복율</th>
+									<td id="ltRecoveryPercent"></td>
 								</tr>
 								<tr>
-									<th></th>
-									<td></td>
+									<th>유지보수 무조치 가능년수</th>
+									<td id="maintenanceYear"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -317,79 +277,35 @@
 							<col />
 							<col />
 							<col />
+							<col />
 						</colgroup>
 						<thead>
 							<tr>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
+								<th>Time(Years)</th>
+								<th>0</th>
+								<th>1</th>
+								<th>2</th>
+								<th>3</th>
+								<th>4</th>
+								<th>5</th>
+								<th>6</th>
+								<th>7</th>
+								<th>8</th>
+								<th>9</th>
+								<th>10</th>
+								<th>11</th>
+								<th>12</th>
+								<th>13</th>
+								<th>14</th>
+								<th>15</th>
+								<th>16</th>
+								<th>17</th>
+								<th>18</th>
+								<th>19</th>
+								<th>20</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<th></th>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<th></th>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+						<tbody id="actionTable">
 						</tbody>
 					</table>
 				</div>
