@@ -775,6 +775,7 @@ table {
 	line-height: 40px;
 }
 .talk__contents {
+	positoin: relative;
 	padding: 10px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -961,6 +962,33 @@ table {
 .talk__input .c-radio-group {
 	margin-top: 6px;
 }
+.talk__flex {
+	display: flex;
+}
+.talk__flex-item + .talk__flex-item {
+	margin-left: 20px;
+}
+.talk__flex-item.talk__flex-item--7 {
+	width: 70%;
+}
+.talk__flex-item.talk__flex-item--3 {
+	width: 30%;
+}
+.talk__chart-area {
+	position: relative;
+	margin-bottom: 20px;
+}
+.talk__chart {
+	width: calc(100% - 320px);
+	height: 400px;
+}
+.talk__chart-table {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 300px;
+}
+
 
 .performance-business {
 	position: relative;

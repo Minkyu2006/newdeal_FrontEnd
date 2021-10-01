@@ -47,7 +47,7 @@
 			<div class="talk__box">
 				<div class="talk__contents">
 					<div class="talk__flex">
-						<div class="talk__flex-item">
+						<div class="talk__flex-item talk__flex-item--7">
 							<table class="c-table c-table--border">
 								<colgroup>
 									<col />
@@ -60,7 +60,7 @@
 								</colgroup>
 								<thead>
 									<tr>
-										<th colspan="7">보수보강비용</th>
+										<th colspan="7" class="align--center">보수보강비용</th>
 									</tr>
 									<tr>
 										<th></th>
@@ -95,15 +95,15 @@
 							</table>
 						</div>
 						
-						<div class="talk__flex-item">
+						<div class="talk__flex-item talk__flex-item--3">
 							<table class="c-table c-table--border">
 								<colgroup>
 									<col />
-									<col />
+									<col style="width: 100px;" />
 								</colgroup>
 								<thead>
 									<tr>
-										<th colspan="2">유지관리 보수 보강 제시값</th>
+										<th colspan="2" class="align--center">유지관리 보수 보강 제시값</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -129,34 +129,36 @@
 			
 			<div class="talk__box">
 				<div class="talk__contents">
-
-					<div class="talk__chart">
-						<div id="amChart1"></div>
+					<div class="talk__chart-area">
+						<div class="talk__chart">
+							<div id="amChart1"></div>
+						</div>
+	
+						<div class="talk__chart-table">
+							<table class="c-table c-table--border">
+								<colgroup>
+									<col />
+									<col style="width: 100px;" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th colspan="2" class="align--center">무조치시</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>손상확률 최대값</th>
+										<td id="pfmax"></td>
+									</tr>
+									<tr>
+										<th>신뢰성 지수 최소값</th>
+										<td id="pfmin"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
-
-					<div class="talk__chart-table">
-						<table class="c-table c-table--border">
-							<colgroup>
-								<col />
-								<col />
-							</colgroup>
-							<thead>
-								<tr>
-									<th colspan="2">무조치시</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>손상확률 최대값</th>
-									<td id="pfmax"></td>
-								</tr>
-								<tr>
-									<th>신뢰성 지수 최소값</th>
-									<td id="pfmin"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					
 					
 					<table class="c-table c-table--border">
 						<colgroup>
@@ -217,42 +219,44 @@
 			
 			<div class="talk__box">
 				<div class="talk__contents">
-
-					<div class="talk__chart">
-						<div id="amChart2"></div>
+					<div class="talk__chart-area">
+						<div class="talk__chart">
+							<div id="amChart2"></div>
+						</div>
+	
+						<div class="talk__chart-table">
+							<table class="c-table c-table--border">
+								<colgroup>
+									<col />
+									<col style="width: 100px;" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th colspan="2" class="align--center">유지보수 개입시</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>신뢰성 지수 최대값</th>
+										<td id="bmax"></td>
+									</tr>
+									<tr>
+										<th>신뢰성 지수 최소값</th>
+										<td id="bmin"></td>
+									</tr>
+									<tr>
+										<th>보수보강 회복율</th>
+										<td id="ltRecoveryPercent"></td>
+									</tr>
+									<tr>
+										<th>유지보수 무조치 가능년수</th>
+										<td id="maintenanceYear"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
-
-					<div class="talk__chart-table">
-						<table class="c-table c-table--border">
-							<colgroup>
-								<col />
-								<col />
-							</colgroup>
-							<thead>
-								<tr>
-									<th colspan="2">유지보수 개입시</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>신뢰성 지수 최대값</th>
-									<td id="bmax"></td>
-								</tr>
-								<tr>
-									<th>신뢰성 지수 최소값</th>
-									<td id="bmin"></td>
-								</tr>
-								<tr>
-									<th>보수보강 회복율</th>
-									<td id="ltRecoveryPercent"></td>
-								</tr>
-								<tr>
-									<th>유지보수 무조치 가능년수</th>
-									<td id="maintenanceYear"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					
 					
 					<table class="c-table c-table--border">
 						<colgroup>
