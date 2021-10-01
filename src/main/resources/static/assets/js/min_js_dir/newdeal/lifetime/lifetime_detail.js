@@ -292,6 +292,19 @@ function lifeDetailTimeOutput(id){
                                 series.tooltip.getFillFromObject = false;
                                 series.tooltip.background.fill = lineColor;
                                 series.tooltip.label.fill = textColor;
+
+                                series.strokeDasharray = 3;
+                                series.strokeWidth = 2
+                                series.strokeOpacity = 0.3;
+                                series.strokeDasharray = "3,3"
+
+                                const bullet = series.bullets.push(new am4charts.CircleBullet());
+                                bullet.strokeWidth = 2;
+                                bullet.stroke = lineColor;
+                                bullet.setStateOnChildren = true;
+                                bullet.propertyFields.fillOpacity = "opacity";
+                                bullet.propertyFields.strokeOpacity = "opacity";
+
                                 return series;
                             }
 
