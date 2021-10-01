@@ -41,7 +41,7 @@
 				<li class="nav__item">
 					<a href="#" class="nav__link toggle">노후화 데이터 확보 및 관리 기술</a>
 					<ul class="nav__list-depth">
-						<li class="nav__item"><a href="iot" class="nav__link">IoT 센서 데이터 계측</a></li>
+						<li class="nav__item"><a href="/iot" class="nav__link">IoT 센서 데이터 계측</a></li>
 						<li class="nav__item"><a href="/env/envsearch" class="nav__link">환경정보 조회 서비스</a></li>
 					</ul>
 				</li>
@@ -123,6 +123,7 @@
 			// console.log("userrole : "+userrole);
 
 			$("#userName").text(username);
+			$("#indexUser").text(username);
 			const $userimage = $(".userimage");
 			if(userrole==="관리자"){
 				// console.log("관리자 입니다.");

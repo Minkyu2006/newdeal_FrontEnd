@@ -41,20 +41,20 @@ function lifeDetailTimeSave(){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
-                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
-                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
                 let status = request.status;
                 console.log("status : " + status);
                 if (status === 200) {
-                    console.log("저장성공");
-                    // alertLink(request.sendData.getId);
-                    alertSuccess("업로드를 완료했습니다.");
+                    // console.log("저장성공");
+                    alertLink(request.sendData.getId);
+                    alertSuccess("등록을 완료했습니다.");
                 } else {
                     if (request.err_msg2 === null) {
                         alertCaution(request.err_msg, 1);
@@ -83,7 +83,7 @@ function lifeDetailTimeOutput(id){
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else {
 
-        console.log("호출성공 id : "+id);
+        // console.log("호출성공 id : "+id);
 
         const params = {
             id : id,
@@ -102,18 +102,18 @@ function lifeDetailTimeOutput(id){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
-                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
-                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
-                    console.log("아웃풋 호출성공");
+                    // console.log("아웃풋 호출성공");
 
                     $('#ltRecoveryOne').text(request.sendData.lifeDetailTimeDto.ltRecoveryOne);
                     $('#ltRecoveryTwo').text(request.sendData.lifeDetailTimeDto.ltRecoveryTwo);
@@ -129,6 +129,10 @@ function lifeDetailTimeOutput(id){
                     $('#ltCostFive').text(request.sendData.lifeDetailTimeDto.ltCostFive);
                     $('#ltCostSix').text(request.sendData.lifeDetailTimeDto.ltCostSix);
 
+                    $('#repairLength').text(request.sendData.repairLength);
+                    $('#repairNumber').text(request.sendData.repairNumber);
+                    $('#repairCost').text(request.sendData.repairCost);
+
                     $('#pfmax').text(request.sendData.pfmax);
                     $('#pfmin').text(request.sendData.pfmin);
 
@@ -142,13 +146,17 @@ function lifeDetailTimeOutput(id){
                     html += '<tr>';
                     html += '<td style="text-align: center;">'+'PF='+'</td>';
                     for(let i=0; i<request.sendData.pfList.length; i++){
-                        html += '<td style="text-align: right;">'+request.sendData.pfList[i]+'</td>';
+                        html += '<td style="text-align: right;">'+request.sendData.pfList[i].toFixed(3)+'</td>';
                     }
                     html += '</tr>';
                     html += '<tr>';
                     html += '<td style="text-align: center;">'+'B='+'</td>';
                     for(let i=0; i<request.sendData.bList.length; i++){
-                        html += '<td style="text-align: right;">'+request.sendData.bList[i]+'</td>';
+                        if(Math.floor(request.sendData.bList[i]*10)/10<2.5){
+                            html += '<td style="text-align: right;color: red">'+request.sendData.bList[i].toFixed(3)+'</td>';
+                        }else{
+                            html += '<td style="text-align: right;">'+request.sendData.bList[i].toFixed(3)+'</td>';
+                        }
                     }
                     html += '</tr>';
                     $noActionTable.html(html);
@@ -159,198 +167,139 @@ function lifeDetailTimeOutput(id){
                     html2 += '<tr>';
                     html2 += '<td style="text-align: center;">'+'B1='+'</td>';
                     for(let i=0; i<request.sendData.bOneList.length; i++){
-                        html2 += '<td style="text-align: right;">'+request.sendData.bOneList[i]+'</td>';
+                        html2 += '<td style="text-align: right;">'+request.sendData.bOneList[i].toFixed(3)+'</td>';
                     }
                     html2 += '</tr>';
                     html2 += '<tr>';
                     html2 += '<td style="text-align: center;">'+'B2='+'</td>';
                     for(let i=0; i<request.sendData.bTwoList.length; i++){
-                        html2 += '<td style="text-align: right;">'+request.sendData.bTwoList[i]+'</td>';
+                        html2 += '<td style="text-align: right;">'+request.sendData.bTwoList[i].toFixed(3)+'</td>';
                     }
                     html2 += '</tr>';
                     $actionTable.html(html2);
 
-                    
-                    // console.log("차트 데이터 : "+request.sendData.chartDataList);
+                    // console.log("무조치 시 차트데이터 : "+request.sendData.noactionChartDataList);
+                    // console.log("유지보수 시 차트데이터 : "+request.sendData.actionChartDataList);
                     // amChart
-                    am4core.ready(function() { // am4core 시작
 
-                        // 테마설정
-                        am4core.useTheme(am4themes_animated);
+                    chartResult(1);
+                    chartResult(2);
+                    function chartResult(num) {
+                        am4core.ready(function () { // am4core 시작
 
-                        const chart = am4core.create("amChart", am4charts.XYChart);
+                            // 테마설정
+                            am4core.useTheme(am4themes_animated);
 
-                        // 날짜 데이터
-                        // chart.dateFormatter.dateFormat = "MMM YYYY";
-                        // chart.numberFormatter.numberFormat = "#.#a";
-                        // chart.numberFormatter.bigNumberPrefixes = [
-                        //     { "number": 1e+3, "suffix": "K" },
-                        //     { "number": 1e+6, "suffix": "M" },
-                        //     { "number": 1e+9, "suffix": "B" }
-                        // ];
+                            let chart;
 
-                        // 차트 제목
-                        const title = chart.titles.create();
-                        title.text = "철근부식 바닥판 휨 성능 - 유지보수 무조치 시";
-                        title.fontSize = 25;
-                        title.paddingBottom = 8;
+                            // 차트 제목
+                            let title;
 
-                        // chart.data = request.sendData.chartDataList;
-                        // 차트 데이터 맵으로 가져오면 됨
-                        chart.data = [
-                            {
-                                // "date": new Date(2020, 1, 1),
-                                "category": 0,
-                                "maintenance": 1.0,
-                                "noAction": 1.0,
-                            },
-                            {
-                                "category": 10,
-                                "maintenance": 0.91,
-                                "noAction": 0.91,
-                            },
-                            {
-                                "category": 20,
-                                "maintenance": 0.85,
-                                "noAction": 0.63,
-                            },
-                            {
-                                "category": 30,
-                                "maintenance": 0.84,
-                                "noAction": 0.17,
-                            },
-                            {
-                                "category": 40,
-                                "maintenance": 0.82,
-                                "noAction": 0,
-                            },
-                            {
-                                "category": 50,
-                                "maintenance": 0.80,
-                                "noAction": 0,
-                            }, {
-                                "category": 60,
-                                "maintenance": 0.78,
-                                "noAction": 0,
-                            }, {
-                                "category": 70,
-                                "maintenance": 0.80,
-                                "noAction": 0,
-                            }, {
-                                "category": 80,
-                                "maintenance": 0.64,
-                                "noAction": 0,
-                            }, {
-                                "category": 90,
-                                "maintenance": 0.29,
-                                "noAction": 0,
-                            }, {
-                                "category": 100,
-                                "maintenance": 0,
-                                "noAction": 0,
+                            // X축 차트 생성
+                            let xAxis
+
+                            // Y축 차트 생성
+                            let yAxis
+
+                            if (num === 1) {
+                                chart = am4core.create("amChart1", am4charts.XYChart);
+                                chart.data = request.sendData.noactionChartDataList;
+
+                                title = chart.titles.create();
+                                title.text = "철근부식 바닥판 휨 성능 - 유지보수 무조치 시";
+
+                                xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
+                                yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+                                createSeries("noaction", "무조치 시 성능지수", am4core.color("#4b4dff"), am4core.color("#ffffff")); // 무조치 시
+                            } else {
+                                chart = am4core.create("amChart2", am4charts.XYChart);
+                                chart.data = request.sendData.actionChartDataList;
+
+                                title = chart.titles.create();
+                                title.text = "철근부식 바닥판 휨 성능 - 유지보수 유지보수 개입 시";
+
+                                xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
+                                yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+                                createSeries("action", "유지보수 개입 시 성능지수", am4core.color("#338f35"), am4core.color("#ffffff")); // 유지보수 개입시
                             }
-                        ];
 
-                        // X축 차트 생성
-                        const xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
-                        xAxis.dataFields.category = "category";
-                        // xAxis.renderer.grid.template.location = 0;
-                        xAxis.renderer.minGridDistance = 96; // 범위 조절옵션
-                        xAxis.title.text = "공용연수(Years)";
-                        // xAxis.renderer.grid.template.disabled = true; // x축 라인 제거
-                        // xAxis.renderer.labels.template.disabled = true;
+                            // 차트 제목
+                            title.fontSize = 20;
+                            title.paddingBottom = 8;
 
-                        // Y축 차트 생성
-                        const yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-                        // valueAxis.renderer.inside = true;
-                        // valueAxis.renderer.labels.template.verticalCenter = "bottom";
-                        yAxis.title.text = "성능(신뢰성) 지수";
-                        // yAxis.min = 0;
-                        // yAxis.max = 1;
-                        // valueAxis.strictMinMax = true;
-                        // valueAxis.renderer.minGridDistance = 20;
-                        // valueAxis.adjustLabelPrecision = false;
-                        // valueAxis.renderer.labels.template.dx = -5;
-                        // valueAxis.renderer.labels.template.dy = 10;
-                        // valueAxis.renderer.maxLabelPosition = 0.95;
-                        // valueAxis.title.marginRight = 5;
+                            // X축 차트 옵션
+                            xAxis.dataFields.category = "publicYear";
+                            xAxis.title.text = "공용연수(Years)";
 
-                        // 차트옵션 설정 + 차트설명박스(완)
-                        function createSeries(field, name, lineColor,textColor) {
-                            const series = chart.series.push(new am4charts.LineSeries());
-                            series.dataFields.categoryX = "publicYear";
-                            series.dataFields.valueY = field;
-                            series.name = name;
-                            series.tooltipText = "[bold]{name}[/] \n 공용연수 : [b]{categoryX}년[/] \n 상태지수 : [b]{valueY}[/]";
-                            series.strokeWidth = 2;
-                            series.smoothing = "monotoneX";
-                            series.stroke = lineColor;
-                            series.tooltip.getFillFromObject = false;
-                            series.tooltip.background.fill = lineColor;
-                            series.tooltip.label.fill = textColor;
-                            return series;
-                        }
-                        createSeries("noAction", "무조치시 열화모델", am4core.color("#1c1d66"),am4core.color("#ffffff")); // 무조치시 열화모델 라인색 설정(완)
-                        createSeries("preemptive", "선제적 유지관리", am4core.color("#6889e2"),am4core.color("#000000")); // 선제적 유지관리 라인색 설정(완)
-                        createSeries("current", "현행 유지관리", am4core.color("#5fee83"),am4core.color("#000000")); // 현행 유지관리 라인색 설정(완)
+                            // Y축 차트 온셥
+                            yAxis.title.text = "성능(신뢰성) 지수";
+                            yAxis.min = 1.0;
+                            yAxis.max = Number(request.sendData.bmax.toFixed(0)) + Number(1.0);
 
-                        // 점선차트 A~D등급
-                        function dashSeries(field,color, dashed) {
-                            const series = chart.series.push(new am4charts.LineSeries());
-                            series.dataFields.categoryX = "publicYear";
-                            series.dataFields.valueY = field;
-                            series.strokeWidth = 2;
-                            series.smoothing = "monotoneX";
-                            series.stroke = color;
-                            series.hiddenInLegend = true; // legend 숨기기
-                            // 점선 옵션
-                            if (dashed) {
-                                series.strokeDasharray = "5 3";
+                            // 차트옵션 설정 + 차트설명박스(완)
+                            function createSeries(field, name, lineColor, textColor) {
+                                const series = chart.series.push(new am4charts.LineSeries())
+                                series.dataFields.categoryX = "publicYear";
+                                series.dataFields.valueY = field;
+                                series.name = name;
+                                series.tooltipText = "[bold]{name}[/] \n 공용연수 : [b]{categoryX}년[/] \n 상태지수 : [b]{valueY}[/]";
+                                series.strokeWidth = 2;
+                                series.smoothing = "monotoneX";
+                                series.stroke = lineColor;
+                                series.tooltip.getFillFromObject = false;
+                                series.tooltip.background.fill = lineColor;
+                                series.tooltip.label.fill = textColor;
+                                return series;
                             }
-                            return series;
-                        }
-                        dashSeries("aRank", am4core.color("#ff7979"),true); // A등급 점선 설정(완)
-                        dashSeries("bRank", am4core.color("#ff7979"),true); // B등급 점선 설정(완)
-                        dashSeries("cRank", am4core.color("#ff7979"),true); // C등급 점선 설정(완)
-                        dashSeries("dRank", am4core.color("#ff7979"),true); // D등급 점선 설정(완)
 
-                        chart.legend = new am4charts.Legend(); // 항목 상단 오른쪽으로 배치(완)
-                        chart.legend.position = "top";
-                        chart.legend.contentAlign = "right";
+                            // 점선차트
+                            function dashSeries(field, color, dashed) {
+                                const series = chart.series.push(new am4charts.LineSeries());
+                                series.dataFields.categoryX = "publicYear";
+                                series.dataFields.valueY = field;
+                                series.strokeWidth = 2;
+                                series.smoothing = "monotoneX";
+                                series.stroke = color;
+                                series.hiddenInLegend = true; // legend 숨기기
+                                // 점선 옵션
+                                if (dashed) {
+                                    series.strokeDasharray = "5 3";
+                                }
+                                return series;
+                            }
 
-                        chart.cursor = new am4charts.XYCursor(); // x축y축 생성(완)
+                            dashSeries("redline", am4core.color("#ef4141"), true);
 
-                        chart.exporting.menu = new am4core.ExportMenu(); // 오른쪽상단 이미지, 데이터 가져올수있는 형식의 메뉴(완)
-                        chart.exporting.menu.items = [{
-                            "label": "...",
-                            "menu": [
-                                {
-                                    "label": "Image",
-                                    "menu": [
-                                        { "type": "png", "label": "PNG" },
-                                        { "type": "jpg", "label": "JPG" },
-                                        { "type": "svg", "label": "SVG" },
-                                        // { "type": "pdf", "label": "PDF" }
-                                    ]
-                                }, {
-                                    "label": "Data",
-                                    "menu": [
-                                        { "type": "json", "label": "JSON" },
-                                        { "type": "csv", "label": "CSV" },
-                                        // { "type": "xlsx", "label": "XLSX" },
-                                        { "type": "html", "label": "HTML" },
-                                        // { "type": "pdfdata", "label": "PDF" }
-                                    ]
-                                },
-                                // {
-                                //     "label": "Print", "type": "print"
-                                // }
-                            ]
-                        }];
+                            chart.legend = new am4charts.Legend(); // 항목 상단 오른쪽으로 배치(완)
+                            chart.legend.position = "top";
+                            chart.legend.contentAlign = "right";
 
-                    }); // am4core 끝
-
-
+                            chart.cursor = new am4charts.XYCursor(); // x축y축 생성(완)
+                            chart.exporting.menu = new am4core.ExportMenu(); // 오른쪽상단 이미지, 데이터 가져올수있는 형식의 메뉴(완)
+                            chart.exporting.menu.items = [{
+                                "label": "...",
+                                "menu": [
+                                    {
+                                        "label": "Image",
+                                        "menu": [
+                                            {"type": "png", "label": "PNG"},
+                                            {"type": "jpg", "label": "JPG"},
+                                            {"type": "svg", "label": "SVG"},
+                                        ]
+                                    }, {
+                                        "label": "Data",
+                                        "menu": [
+                                            {"type": "json", "label": "JSON"},
+                                            {"type": "csv", "label": "CSV"},
+                                            {"type": "html", "label": "HTML"},
+                                        ]
+                                    },
+                                ]
+                            }];
+                        });
+                    }
                 } else {
                     if (request.err_msg2 === null) {
                         alertCaution(request.err_msg, 1);

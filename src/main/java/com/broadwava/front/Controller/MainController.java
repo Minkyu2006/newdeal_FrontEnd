@@ -43,7 +43,7 @@ public class MainController {
         return "board";
     }
 
-    @RequestMapping("/register")
+    @RequestMapping("register")
     public String register(Model model){
         model.addAttribute("roles", AccountRole.values());
         model.addAttribute("backend_url", backend_url);
@@ -51,22 +51,15 @@ public class MainController {
         return "register";
     }
 
-    @RequestMapping("/mypage")
+    @RequestMapping("mypage")
     public String mypage(Model model){
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
         return "mypage";
-    }    
-    
-    @RequestMapping("env/envsearch")
-    public String envsearch(Model model){
-        model.addAttribute("backend_url", backend_url);
-        model.addAttribute("backend_protocol", backend_protocol);
-        return "env/envsearch";
     }
     
-    @RequestMapping("/iot")
-    public String iot(Model model){
+    @RequestMapping("iot")
+    public String iot(){
         return "iot";
     }
 }
