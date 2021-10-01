@@ -72728,27 +72728,33 @@ var markerArray2 = [];
 var markers = [];
 
 function initData() {
-    var params = {
-        none: "none"
-    };
+    // var params = {
+    //     none: "none"
+    // };
     var apiurl = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/env/tunnel/list"; // 호출할 백엔드 API
-
+    // console.log("apiurl : "+apiurl)
     $.ajax({
         url: apiurl,
         type: 'post',
         //dataType: 'html',
-        data: params,
+        // data: params,
         cache: false,
         async: false,
-        error: function error(request, status, _error) {
-            ajaxErrorMsg(request);
+        error: function (request) {
+            if (request.status === 500) {
+                console.log("request.status : " + request.status + " => 500에러");
+                // alertCaution("500에러 재로그인 해주세요.", 2);
+            } else {
+                console.log("request.status : " + request.status + " => 404에러");
+                // alertCaution("404에러 재로그인 해주세요.", 2);
+            }
         },
         success: function success(res) {
-            if(!Ajax.checkResult(res)) {
-                return;
-            }
+            // if(!Ajax.checkResult(res)) {
+            //     return;
+            // }
 
-            markerArray = res.data.sendData.datalist;
+            markerArray = res.sendData.datalist;
 
         }
     });
@@ -72766,15 +72772,21 @@ function initData() {
                 data: params,
                 cache: false,
                 async: false,
-                error: function error(request, status, _error) {
-                    ajaxErrorMsg(request);
+                error: function (request) {
+                    if (request.status === 500) {
+                        // console.log("request.status : " + request.status + " => 500에러");
+                        alertCaution("500에러 재로그인 해주세요.", 2);
+                    } else {
+                        // console.log("request.status : " + request.status + " => 404에러");
+                        alertCaution("404에러 재로그인 해주세요.", 2);
+                    }
                 },
                 success: function success(res) {
-                    if(!Ajax.checkResult(res)) {
-                        return;
-                    }
+                    // if(!Ajax.checkResult(res)) {
+                    //     return;
+                    // }
 
-                    markerArray2 = res.data.sendData.datalist;
+                    markerArray2 = res.sendData.datalist;
 
                 }
             });
@@ -72792,15 +72804,21 @@ function initData() {
                 data: params,
                 cache: false,
                 async: false,
-                error: function error(request, status, _error) {
-                    ajaxErrorMsg(request);
+                error: function (request) {
+                    if (request.status === 500) {
+                        // console.log("request.status : " + request.status + " => 500에러");
+                        alertCaution("500에러 재로그인 해주세요.", 2);
+                    } else {
+                        // console.log("request.status : " + request.status + " => 404에러");
+                        alertCaution("404에러 재로그인 해주세요.", 2);
+                    }
                 },
                 success: function success(res) {
-                    if(!Ajax.checkResult(res)) {
-                        return;
-                    }
+                    // if(!Ajax.checkResult(res)) {
+                    //     return;
+                    // }
 
-                    markerArray3 = res.data.sendData.datalist;
+                    markerArray3 = res.sendData.datalist;
 
                 }
             });
@@ -72815,6 +72833,7 @@ function initData() {
   var bridge = [];
 
   for ( i = 0; i < markerArray.length; i++) {
+      // console.log("markerArray[i] : "+markerArray[i]);
       tunnel.push(markerArray[i]);
   }
     for ( i = 0; i < markerArray2.length; i++) {

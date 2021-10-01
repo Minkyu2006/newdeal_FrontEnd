@@ -11,10 +11,18 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-	
+	<script>
+
+		$(function(){
+			logreg(1,"노후화 데이터 확보 및 관리기술","환경정보 조회 서비스",null);
+		})
+
+	</script>
 </th:block>
 
 <div layout:fragment="content" class="content">
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
     <section class="section">
         <article class="article">
             <h3 class="article__head">환경정보조회</h3>
