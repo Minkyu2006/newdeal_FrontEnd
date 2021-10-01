@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate ="~{layout/default2}">
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript">
+		$(document).ready(function () {			
+			$('.count__number').each(function() {
+				var $this = $(this),
+					countTo = $this.attr('data-count');
+					
+				$({ countNum: $this.text()}).animate({
+					countNum: countTo
+				}, 
+				{
+					duration: 3000,
+					easing:'linear',
+					step: function() {
+						$this.text(Math.floor(this.countNum));
+					},
+					complete: function() {
+						$this.text(this.countNum);
+					}
+				});
+			});
+		})
+	</script>
+</th:block>
+<div layout:fragment="content" class="content">
+	<div class="li-main__head"></div>
+    <div class="li-main">
+    	<div class="li-main__item li-main__item--100">
+    		<div class="li-main__inner">
+    			<div class="li-main__user">
+    				<p>환영합니다</p>
+    				<h2><span id="indexUser"></span>님</h2>
+    			</div>
+    			<div class="li-main__count">
+					<ul>
+						<li>
+							<div class="count">
+								<h4>대표 교량 수</h4>
+								<img src="/assets/images/icon__star.svg" alt="" />
+								<div class="count__number" data-count="31">0</div>
+							</div>
+						</li>
+						<li>
+							<div class="count">
+								<h4>센서 개수</h4>
+								<img src="/assets/images/icon__sensor.svg" alt="" />
+								<div class="count__number" data-count="300">0</div>
+							</div>
+						</li>
+						<li>
+							<div class="count">
+								<h4>가속도 데이터</h4>
+								<img src="/assets/images/icon__speed.svg" alt="" />
+								<div class="count__number" data-count="7000000000">0</div>
+							</div>
+						</li>
+						<li>
+							<div class="count">
+								<h4>변이 데이터</h4>
+								<img src="/assets/images/icon__poll.svg" alt="" />
+								<div class="count__number" data-count="500000">0</div>
+							</div>
+						</li>
+					</ul>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="li-main__item li-main__item--60">
+    		<div class="li-main__inner">
+    			<h3 class="li-main__heading">공지사항</h3>
+    			<ul class="li-main__list">
+    				<li><a href="board">BMAPS 서비스가 오픈하였습니다.</a></li>
+    			</ul>
+    		</div>
+    	</div>
+    	<div class="li-main__item li-main__item--40">
+    		<div class="li-main__inner">
+    			<h3 class="li-main__heading">최근 이용한 메뉴</h3>
+    			<ul class="li-main__list">
+    				<li><a href="/lifetime/input">의사결정 시스템/생애주기 의사결정 지원 서비스</a></li>
+    				<li><a href="/performance/input">의사결정 시스템/성능 개선 사업 평가 서비스</a></li>
+    				<li><a href="/env/envsearch">노후화 데이터 확보 및 관리 기술/환경정보 조회 서비스</a></li>
+    				<li><a href="#">노후화 데이터 확보 및 관리 기술/IoT 센서 데이터 계측</a></li>
+    			</ul>
+    		</div>
+    	</div>
+    	<!-- 
+    	<div class="li-main__item">
+    		<div class="li-main__inner">준비중</div>
+    	</div>
+    	<div class="li-main__item">
+    		<div class="li-main__inner">준비중</div>
+    	</div>
+    	 -->
+    </div>
+</div>
+</html>

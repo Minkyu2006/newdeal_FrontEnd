@@ -176,13 +176,25 @@
 								<tr>
 									<th colspan="4" style="text-align: center">생애주기 목표값(성능유지 기준값)</th>
 									<td>
-										<div class="c-text"><input type="text" id="ltTargetValue" name="ltTargetValue" class="c-text__input" value="2.5" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
+										<div class="c-select">
+											<select name="ltTargetValue" id="ltTargetValue" class="c-select__input">
+												<option value="1.5">1.5</option>
+												<option value="1.75">1.75</option>
+												<option value="2.0">2.0</option>
+												<option value="2.25">2.25</option>
+												<option value="2.5">2.5</option>
+											</select>
+										</div>
 									</td>
 								</tr>
 								<tr>
 									<th colspan="4" style="text-align: center">보수·보강 회복율</th>
 									<td>
-										<div class="c-text"><input type="text" id="ltRecoveryPercent" name="ltRecoveryPercent" class="c-text__input" value="0.84" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>
+										<div class="c-select">
+											<select name="ltRecoveryPercent" id="ltRecoveryPercent" class="c-select__input">
+												<option value="0.88">0.88</option>
+											</select>
+										</div>
 									</td>
 								</tr>
 							</tbody>
@@ -211,9 +223,9 @@
 									<th>보수1</th>
 									<th>보수2</th>
 									<th>보수3</th>
-									<th>보수4</th>
-									<th>보수5</th>
-									<th>보수6</th>
+									<th>보강1</th>
+									<th>보강2</th>
+									<th>교체</th>
 								</tr>
 								</thead>
 								<tbody>

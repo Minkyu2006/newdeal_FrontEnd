@@ -7,9 +7,9 @@
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
 	<style>
-		#amChart {
+		#amChart1,#amChart2 {
 			width: 100%;
-			height: 500px;
+			height: 420px;
 		}
 	</style>
 </th:block>
@@ -44,17 +44,281 @@
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="content__inner">
 		<div class="lifetime" id="lifetime">
-
-				<div class="talk__box">
-					<div class="talk__contents">
-						<div id="amChart"></div>
+			<div class="talk__box">
+				<div class="talk__contents">
+					<div class="talk__flex">
+						<div class="talk__flex-item talk__flex-item--7">
+							<table class="c-table c-table--border">
+								<colgroup>
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+								</colgroup>
+								<thead>
+									<tr>
+										<th colspan="7" class="align--center">보수보강비용</th>
+									</tr>
+									<tr>
+										<th></th>
+										<th>보수1</th>
+										<th>보수2</th>
+										<th>보수3</th>
+										<th>보강1</th>
+										<th>보강2</th>
+										<th>교체</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>회복율</th>
+										<td id="ltRecoveryOne"></td>
+										<td id="ltRecoveryTwo"></td>
+										<td id="ltRecoveryThree"></td>
+										<td id="ltRecoveryFour"></td>
+										<td id="ltRecoveryFive"></td>
+										<td id="ltRecoverySix"></td>
+									</tr>
+									<tr>
+										<th>비용(만원/m)</th>
+										<td id="ltCostOne"></td>
+										<td id="ltCostTwo"></td>
+										<td id="ltCostThree"></td>
+										<td id="ltCostFour"></td>
+										<td id="ltCostFive"></td>
+										<td id="ltCostSix"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						
+						<div class="talk__flex-item talk__flex-item--3">
+							<table class="c-table c-table--border">
+								<colgroup>
+									<col />
+									<col style="width: 100px;" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th colspan="2" class="align--center">유지관리 보수 보강 제시값</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>보수보강 총 길이(m)</th>
+										<td id="repairLength"></td>
+									</tr>
+									<tr>
+										<th>보수보강 개입 횟수(회)</th>
+										<td id="repairNumber"></td>
+									</tr>
+									<tr>
+										<th>보수보강 총 비용(만원)</th>
+										<td id="repairCost"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
-
 			</div>
-		</div>
+			
+			
+			<div class="talk__box">
+				<div class="talk__contents">
+					<div class="talk__chart-area">
+						<div class="talk__chart">
+							<div id="amChart1"></div>
+						</div>
+	
+						<div class="talk__chart-table">
+							<table class="c-table c-table--border">
+								<colgroup>
+									<col />
+									<col style="width: 100px;" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th colspan="2" class="align--center">무조치시</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>손상확률 최대값</th>
+										<td id="pfmax"></td>
+									</tr>
+									<tr>
+										<th>신뢰성 지수 최소값</th>
+										<td id="pfmin"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+					
+					<table class="c-table c-table--border">
+						<colgroup>
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th style="width: 50px;text-align: center">Time(Years)</th>
+								<th style="text-align: center">0</th>
+								<th style="text-align: center">1</th>
+								<th style="text-align: center">2</th>
+								<th style="text-align: center">3</th>
+								<th style="text-align: center">4</th>
+								<th style="text-align: center">5</th>
+								<th style="text-align: center">6</th>
+								<th style="text-align: center">7</th>
+								<th style="text-align: center">8</th>
+								<th style="text-align: center">9</th>
+								<th style="text-align: center">10</th>
+								<th style="text-align: center">11</th>
+								<th style="text-align: center">12</th>
+								<th style="text-align: center">13</th>
+								<th style="text-align: center">14</th>
+								<th style="text-align: center">15</th>
+								<th style="text-align: center">16</th>
+								<th style="text-align: center">17</th>
+								<th style="text-align: center">18</th>
+								<th style="text-align: center">19</th>
+								<th style="text-align: center">20</th>
+							</tr>
+						</thead>
+						<tbody id="noActionTable">
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			<div class="talk__box">
+				<div class="talk__contents">
+					<div class="talk__chart-area">
+						<div class="talk__chart">
+							<div id="amChart2"></div>
+						</div>
+	
+						<div class="talk__chart-table">
+							<table class="c-table c-table--border">
+								<colgroup>
+									<col />
+									<col style="width: 100px;" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th colspan="2" class="align--center">유지보수 개입시</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>신뢰성 지수 최대값</th>
+										<td id="bmax"></td>
+									</tr>
+									<tr>
+										<th>신뢰성 지수 최소값</th>
+										<td id="bmin"></td>
+									</tr>
+									<tr>
+										<th>보수보강 회복율</th>
+										<td id="ltRecoveryPercent"></td>
+									</tr>
+									<tr>
+										<th>유지보수 무조치 가능년수</th>
+										<td id="maintenanceYear"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+					
+					<table class="c-table c-table--border">
+						<colgroup>
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+							<col />
+						</colgroup>
+						<thead>
+							<tr>
+								<th style="width: 50px;text-align: center">Time(Years)</th>
+								<th style="text-align: center">0</th>
+								<th style="text-align: center">1</th>
+								<th style="text-align: center">2</th>
+								<th style="text-align: center">3</th>
+								<th style="text-align: center">4</th>
+								<th style="text-align: center">5</th>
+								<th style="text-align: center">6</th>
+								<th style="text-align: center">7</th>
+								<th style="text-align: center">8</th>
+								<th style="text-align: center">9</th>
+								<th style="text-align: center">10</th>
+								<th style="text-align: center">11</th>
+								<th style="text-align: center">12</th>
+								<th style="text-align: center">13</th>
+								<th style="text-align: center">14</th>
+								<th style="text-align: center">15</th>
+								<th style="text-align: center">16</th>
+								<th style="text-align: center">17</th>
+								<th style="text-align: center">18</th>
+								<th style="text-align: center">19</th>
+								<th style="text-align: center">20</th>
+							</tr>
+						</thead>
+						<tbody id="actionTable">
+						</tbody>
+					</table>
+				</div>
+			</div>
 
+		</div>
 	</div>
+
+
 	
 </div>
 </html>

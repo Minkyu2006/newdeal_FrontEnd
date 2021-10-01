@@ -72728,31 +72728,33 @@ var markerArray2 = [];
 var markers = [];
 
 function initData() {
-    var params = {
-        none: "none"
-    };
-    var apiurl = '/api/env/tunnel/list';
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-    $(document).ajaxSend(function (e, xhr, options) {
-        xhr.setRequestHeader(header, token);
-    });
+    // var params = {
+    //     none: "none"
+    // };
+    var apiurl = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/env/tunnel/list"; // 호출할 백엔드 API
+    // console.log("apiurl : "+apiurl)
     $.ajax({
         url: apiurl,
         type: 'post',
         //dataType: 'html',
-        data: params,
+        // data: params,
         cache: false,
         async: false,
-        error: function error(request, status, _error) {
-            ajaxErrorMsg(request);
+        error: function (request) {
+            if (request.status === 500) {
+                console.log("request.status : " + request.status + " => 500에러");
+                // alertCaution("500에러 재로그인 해주세요.", 2);
+            } else {
+                console.log("request.status : " + request.status + " => 404에러");
+                // alertCaution("404에러 재로그인 해주세요.", 2);
+            }
         },
         success: function success(res) {
-            if(!Ajax.checkResult(res)) {
-                return;
-            }
+            // if(!Ajax.checkResult(res)) {
+            //     return;
+            // }
 
-            markerArray = res.data.datalist;
+            markerArray = res.sendData.datalist;
 
         }
     });
@@ -72762,12 +72764,7 @@ function initData() {
             var params = {
                 none: "none"
             };
-            var apiurl = '/api/env/weather/list';
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-            $(document).ajaxSend(function (e, xhr, options) {
-                xhr.setRequestHeader(header, token);
-            });
+            var apiurl = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/env/weather/list"; // 호출할 백엔드 API
             $.ajax({
                 url: apiurl,
                 type: 'post',
@@ -72775,15 +72772,21 @@ function initData() {
                 data: params,
                 cache: false,
                 async: false,
-                error: function error(request, status, _error) {
-                    ajaxErrorMsg(request);
+                error: function (request) {
+                    if (request.status === 500) {
+                        // console.log("request.status : " + request.status + " => 500에러");
+                        alertCaution("500에러 재로그인 해주세요.", 2);
+                    } else {
+                        // console.log("request.status : " + request.status + " => 404에러");
+                        alertCaution("404에러 재로그인 해주세요.", 2);
+                    }
                 },
                 success: function success(res) {
-                    if(!Ajax.checkResult(res)) {
-                        return;
-                    }
+                    // if(!Ajax.checkResult(res)) {
+                    //     return;
+                    // }
 
-                    markerArray2 = res.data.datalist;
+                    markerArray2 = res.sendData.datalist;
 
                 }
             });
@@ -72793,12 +72796,7 @@ function initData() {
             var params = {
                 none: "none"
             };
-            var apiurl = '/api/facility/common/mapList';
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-            $(document).ajaxSend(function (e, xhr, options) {
-                xhr.setRequestHeader(header, token);
-            });
+            var apiurl = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/facility/common/mapList"; // 호출할 백엔드 API
             $.ajax({
                 url: apiurl,
                 type: 'post',
@@ -72806,34 +72804,42 @@ function initData() {
                 data: params,
                 cache: false,
                 async: false,
-                error: function error(request, status, _error) {
-                    ajaxErrorMsg(request);
+                error: function (request) {
+                    if (request.status === 500) {
+                        // console.log("request.status : " + request.status + " => 500에러");
+                        alertCaution("500에러 재로그인 해주세요.", 2);
+                    } else {
+                        // console.log("request.status : " + request.status + " => 404에러");
+                        alertCaution("404에러 재로그인 해주세요.", 2);
+                    }
                 },
                 success: function success(res) {
-                    if(!Ajax.checkResult(res)) {
-                        return;
-                    }
+                    // if(!Ajax.checkResult(res)) {
+                    //     return;
+                    // }
 
-                    markerArray3 = res.data.datalist;
+                    markerArray3 = res.sendData.datalist;
 
                 }
             });
         }
 (function () {
-//	initData(); // marker 분류
-//    initData2(); // marker 분류
-//    initData3(); // marker 분류
+
+    initData(); // marker 분류
+   initData2(); // marker 분류
+   initData3(); // marker 분류
   var tunnel = [];
-    var point = [];
+  var point = [];
   var bridge = [];
 
-  for (var i = 0; i < markerArray.length; i++) {
+  for ( i = 0; i < markerArray.length; i++) {
+      // console.log("markerArray[i] : "+markerArray[i]);
       tunnel.push(markerArray[i]);
   }
-    for (var i = 0; i < markerArray2.length; i++) {
+    for ( i = 0; i < markerArray2.length; i++) {
             point.push(markerArray2[i]);
     }
-    for (var i = 0; i < markerArray3.length; i++) {
+    for ( i = 0; i < markerArray3.length; i++) {
         bridge.push(markerArray3[i]);
     }
 
@@ -72948,7 +72954,7 @@ function initData() {
   var naclSource = new _ImageWMS.default({
 	  url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
-      'LAYERS': 'NACL'
+      'LAYERS': 'NACL-2'
     },
     serverType: 'geoserver',
     crossOrigin: 'anonymous'
@@ -73170,7 +73176,7 @@ function initData() {
   }); // radio checked
 
   function layerShow(layerName) {
-    if (layerName == "TOTAL") {
+    if (layerName === "TOTAL") {
     	map.addLayer(totalLayer);
     	map.removeLayer(naclLayer);
     	map.removeLayer(dmLayer);
@@ -73180,7 +73186,7 @@ function initData() {
     	$('.map__legend-dm').removeClass('open');
     	$('.map__legend-fte').removeClass('open');
 	} else if
-    (layerName == "NACL") {
+    (layerName === "NACL") {
       map.addLayer(naclLayer);
       map.removeLayer(totalLayer);
       map.removeLayer(dmLayer);
@@ -73189,7 +73195,7 @@ function initData() {
       $('.map__legend-total').removeClass('open');
       $('.map__legend-dm').removeClass('open');
       $('.map__legend-fte').removeClass('open');
-    } else if (layerName == "DM") {
+    } else if (layerName === "DM") {
       map.addLayer(dmLayer);
       map.removeLayer(totalLayer);
       map.removeLayer(naclLayer);

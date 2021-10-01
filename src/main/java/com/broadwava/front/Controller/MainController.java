@@ -30,8 +30,20 @@ public class MainController {
     public String index(){
         return "index";
     }
+    
+    // login main
+    @RequestMapping("loginindex")
+    public String loginindex(){
+        return "loginindex";
+    }
+    
+    // 임시 공지사항
+    @RequestMapping("board")
+    public String board(){
+        return "board";
+    }
 
-    @RequestMapping("/register")
+    @RequestMapping("register")
     public String register(Model model){
         model.addAttribute("roles", AccountRole.values());
         model.addAttribute("backend_url", backend_url);
@@ -39,20 +51,15 @@ public class MainController {
         return "register";
     }
 
-    @RequestMapping("/mypage")
+    @RequestMapping("mypage")
     public String mypage(Model model){
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
         return "mypage";
-    }    
-    
-    @RequestMapping("env/envsearch")
-    public String envsearch(Model model){
-        return "env/envsearch";
     }
     
-    @RequestMapping("env/maptest")
-    public String maptest(Model model){
-        return "env/maptest";
+    @RequestMapping("iot")
+    public String iot(){
+        return "iot";
     }
 }
