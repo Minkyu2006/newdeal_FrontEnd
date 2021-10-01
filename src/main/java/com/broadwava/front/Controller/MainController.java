@@ -64,4 +64,9 @@ public class MainController {
         model.addAttribute("backend_protocol", backend_protocol);
         return "env/envsearch";
     }
+    
+    @RequestMapping("/iot")
+    public String iot(Model model){
+        return "iot";
+    }
 }
