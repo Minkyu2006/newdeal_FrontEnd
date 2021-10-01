@@ -8,18 +8,59 @@ function lifeDetailTimeSave(){
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else {
 
-        // if($("#ltBridgeName").val()==="") {
-        //     alertCaution("교량명을 작성해주세요.", 1)
-        //     return false;
-        // }
+        if($("#ltFyAverage").val()==="") {
+            alertCaution("철근 항복강도 평균값을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltFyVariance").val()==="") {
+            alertCaution("철근 항복강도 변동계수를 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltFyStandard").val()==="") {
+            alertCaution("철근 항복강도 표준편차를 작성해주세요.", 1)
+            return false;
+        }
 
-        // const $ltPeriodicCost = $("#ltPeriodicCost");
-        // if($ltPeriodicCost.val()==="") {
-        //     alertCaution("정기점검 비용을 입력해주세요.", 1)
-        //     return false;
-        // }else{
-        //     $ltPeriodicCost.val($ltPeriodicCost.val().replaceAll(",",""));
-        // }
+        if($("#ltFcAverage").val()==="") {
+            alertCaution("콘크리트 압축강도 평균값을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltFcVariance").val()==="") {
+            alertCaution("콘크리트 압축강도 변동계수를 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltFcStandard").val()==="") {
+            alertCaution("콘크리트 압축강도 표준편차를 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltSectionAverage").val()==="") {
+            alertCaution("철근 단면적 평균값을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltSectionVariance").val()==="") {
+            alertCaution("철근 단면적 변동계수를 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltSectionStandard").val()==="") {
+            alertCaution("철근 단면적 표준편차를 작성해주세요.", 1)
+            return false;
+        }
+
+        if($("#ltVehicleAverage").val()==="") {
+            alertCaution("차량하중 평균값을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltVehicleVariance").val()==="") {
+            alertCaution("차량하중 변동계수를 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltVehicleStandard").val()==="") {
+            alertCaution("차량하중 표준편차를 작성해주세요.", 1)
+            return false;
+        }
+
+
 
         const formData = new FormData(document.getElementById('lifeDetailTimeForm'));
 
