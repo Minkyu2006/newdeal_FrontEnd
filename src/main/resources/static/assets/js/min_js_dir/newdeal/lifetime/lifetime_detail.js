@@ -60,7 +60,55 @@ function lifeDetailTimeSave(){
             return false;
         }
 
+        if($("#ltRecoveryOne").val()==="") {
+            alertCaution("회복율 보수1을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltRecoveryTwo").val()==="") {
+            alertCaution("회복율 보수2를 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltRecoveryThree").val()==="") {
+            alertCaution("회복율 보수3을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltRecoveryFour").val()==="") {
+            alertCaution("회복율 보강1을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltRecoveryFive").val()==="") {
+            alertCaution("회복율 보강2를 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltRecoverySix").val()==="") {
+            alertCaution("회복율 교체를 작성해주세요.", 1)
+            return false;
+        }
 
+        if($("#ltCostOne").val()==="") {
+            alertCaution("비용 보수1을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltCostTwo").val()==="") {
+            alertCaution("비용 보수2를 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltCostThree").val()==="") {
+            alertCaution("비용 보수3을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltCostFour").val()==="") {
+            alertCaution("비용 보강1을 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltCostFive").val()==="") {
+            alertCaution("비용 보강2를 작성해주세요.", 1)
+            return false;
+        }
+        if($("#ltCostSix").val()==="") {
+            alertCaution("비용 교체를 작성해주세요.", 1)
+            return false;
+        }
 
         const formData = new FormData(document.getElementById('lifeDetailTimeForm'));
 
@@ -368,5 +416,42 @@ function lifeDetailTimeOutput(id){
             }
         });
     }
+}
+
+function recoverySelectBox(){
+    let $ltRecoveryPercent = $("#ltRecoveryPercent");
+    let html = "";
+
+    const $ltRecoveryOne = $("#ltRecoveryOne");
+    const $ltRecoveryTwo = $("#ltRecoveryTwo");
+    const $ltRecoveryThree = $("#ltRecoveryThree");
+    const $ltRecoveryFour = $("#ltRecoveryFour");
+    const $ltRecoveryFive = $("#ltRecoveryFive");
+    const $ltRecoverySix = $("#ltRecoverySix");
+
+    if($ltRecoveryOne.val()!=="") {
+        html += '<option value='+$ltRecoveryOne.val()+'>'+$ltRecoveryOne.val()+'</option>'
+    }
+    if($ltRecoveryTwo.val()!=="") {
+        html += '<option value='+$ltRecoveryTwo.val()+'>'+$ltRecoveryTwo.val()+'</option>'
+    }
+    if($ltRecoveryThree.val()!=="") {
+        html += '<option value='+$ltRecoveryThree.val()+'>'+$ltRecoveryThree.val()+'</option>'
+    }
+    if($ltRecoveryFour.val()!=="") {
+        html += '<option value='+$ltRecoveryFour.val()+'>'+$ltRecoveryFour.val()+'</option>'
+    }
+    if($ltRecoveryFive.val()!=="") {
+        html += '<option value='+$ltRecoveryFive.val()+'>'+$ltRecoveryFive.val()+'</option>'
+    }
+    if($ltRecoverySix.val()!=="") {
+        html += '<option value='+$ltRecoverySix.val()+'>'+$ltRecoverySix.val()+'</option>'
+    }
+
+    $ltRecoveryPercent.html(html);
 
 }
+
+
+
+
