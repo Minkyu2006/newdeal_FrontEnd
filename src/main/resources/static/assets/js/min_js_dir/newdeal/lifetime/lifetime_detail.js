@@ -305,6 +305,9 @@ function lifeDetailTimeOutput(id){
                                 bullet.propertyFields.fillOpacity = "opacity";
                                 bullet.propertyFields.strokeOpacity = "opacity";
 
+                                const hoverState = bullet.states.create("hover");
+                                hoverState.properties.scale = 1.7;
+
                                 return series;
                             }
 

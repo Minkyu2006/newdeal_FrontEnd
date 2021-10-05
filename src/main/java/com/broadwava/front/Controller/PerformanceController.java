@@ -105,7 +105,7 @@ public class PerformanceController{
     public ResponseEntity<Resource> resouceFileDownload(@PathVariable String fileName) {
         log.info("fileName : "+fileName);
         try {
-            Resource resource = resourceLoader.getResource("classpath:static/assets/files/"+ fileName);
+            Resource resource = resourceLoader.getResource("classpath:static/assets/files/"+fileName);
             log.info("resource : "+resource.getURI());
             File file = resource.getFile();	//파일이 없는 경우 fileNotFoundException error가 난다.
             return ResponseEntity.ok()
