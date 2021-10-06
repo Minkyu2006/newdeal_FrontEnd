@@ -405,6 +405,10 @@ function lifeDetailTimeOutput(id){
                             }];
                         });
                     }
+
+                    $("#noactionLoadingBar").hide();
+                    $("#actionLoadingBar").hide();
+
                 } else {
                     if (request.err_msg2 === null) {
                         alertCaution(request.err_msg, 1);

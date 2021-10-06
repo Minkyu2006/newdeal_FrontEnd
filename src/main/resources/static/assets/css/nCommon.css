@@ -2046,8 +2046,8 @@ h4.l-popup__heading {
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
-	border: 6px solid #f64848;
-	border-color: #f64848 transparent #f64848 transparent;
+	border: 6px solid #002153;
+	border-color: #002153; transparent #002153 transparent;
 	animation: dual-ring 1.2s linear infinite;
 }
 
