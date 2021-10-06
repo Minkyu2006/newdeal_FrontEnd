@@ -2037,7 +2037,6 @@ h4.l-popup__heading {
 	margin-left: -40px;
 	z-index: 10;
 }
-/* 온도 로딩창 */
 .c-loader__active.c-loader__active--ring:after {
 	content: " ";
 	display: block;
@@ -2050,4 +2049,21 @@ h4.l-popup__heading {
 	border: 6px solid #f64848;
 	border-color: #f64848 transparent #f64848 transparent;
 	animation: dual-ring 1.2s linear infinite;
+}
+
+@keyframes dual-ring {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
