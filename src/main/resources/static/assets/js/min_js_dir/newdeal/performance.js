@@ -132,23 +132,29 @@ function popOpen(){
 
     console.log("group1 : "+$('input[name=group1]').val());
 
-    if($("#business_name").val()===""){
+    const $business_name = $("#business_name");
+    if($business_name.val()===""){
         alertCaution("사업명을 입력해주세요.",1);
         return false;
+    }else{
+        $("#business_name_pop").text($business_name.val());
     }
+
 
     if(document.getElementById("group1-1").checked===true || document.getElementById("group1-2").checked===true){
         if(document.getElementById("group1-1").checked===true){
             $('.talk__select-pop').addClass('open');
         }else{
             $("#business_dissatisfaction").text("1)시설유형");
-            $("#business_name_pop").text($("#business_name").val());
             $("#question_1").css("display","block");
             $('.pop').addClass('open');
         }
     }else{
         alertCaution("1번 문항을 체크해주세요",1)
     }
+
+
+
     // $('.pop').addClass('open');
 
     // $('.talk__select-pop').addClass('open');
