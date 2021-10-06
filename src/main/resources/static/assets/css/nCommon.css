@@ -754,6 +754,8 @@ table {
 	border-top: 1px solid #888;
 }
 .talk__box {
+	overflow: auto;
+	position: relative;
 	width: 100%;
 	background-color: #fff;
 	border: 1px solid #333;
@@ -775,7 +777,7 @@ table {
 	line-height: 40px;
 }
 .talk__contents {
-	positoin: relative;
+	position: relative;
 	padding: 10px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
