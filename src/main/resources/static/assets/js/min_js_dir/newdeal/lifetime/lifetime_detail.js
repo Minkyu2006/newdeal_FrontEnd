@@ -241,7 +241,7 @@ function lifeDetailTimeOutput(id){
                     html += '<tr>';
                     html += '<td style="text-align: center;">'+'B='+'</td>';
                     for(let i=0; i<request.sendData.bList.length; i++){
-                        if(Math.floor(request.sendData.bList[i]*10)/10<2.5){
+                        if(Math.floor(request.sendData.bList[i]*10)/10<request.sendData.ltTargetValue){
                             html += '<td style="text-align: right;color: red">'+request.sendData.bList[i].toFixed(3)+'</td>';
                         }else{
                             html += '<td style="text-align: right;">'+request.sendData.bList[i].toFixed(3)+'</td>';

@@ -2018,3 +2018,36 @@ h4.l-popup__heading {
 .content.content--main + .footer {
 	min-width: auto;
 }
+
+.c-loader {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+}
+.c-loader__active {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 80px;
+	height: 80px;
+	margin-top: -40px;
+	margin-left: -40px;
+	z-index: 10;
+}
+/* 온도 로딩창 */
+.c-loader__active.c-loader__active--ring:after {
+	content: " ";
+	display: block;
+	width: 64px;
+	height: 64px;
+	margin: 8px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	border: 6px solid #f64848;
+	border-color: #f64848 transparent #f64848 transparent;
+	animation: dual-ring 1.2s linear infinite;
+}
