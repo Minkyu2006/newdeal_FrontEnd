@@ -60,6 +60,11 @@ function lifeDetailTimeSave(){
             return false;
         }
 
+        if($("#ltRepairLength").val()==="") {
+            alertCaution("보수보강 총길이를 작성해주세요.", 1)
+            return false;
+        }
+
         if($("#ltRecoveryOne").val()==="") {
             alertCaution("회복율 보수1을 작성해주세요.", 1)
             return false;
@@ -218,7 +223,7 @@ function lifeDetailTimeOutput(id){
                     $('#ltCostFive').text(request.sendData.lifeDetailTimeDto.ltCostFive);
                     $('#ltCostSix').text(request.sendData.lifeDetailTimeDto.ltCostSix);
 
-                    $('#repairLength').text(request.sendData.repairLength);
+                    $('#ltRepairLength').text(request.sendData.ltRepairLength);
                     $('#repairNumber').text(request.sendData.repairNumber);
                     $('#repairCost').text(request.sendData.repairCost);
 
@@ -227,6 +232,7 @@ function lifeDetailTimeOutput(id){
 
                     $('#bmax').text(request.sendData.bmax);
                     $('#bmin').text(request.sendData.bmin);
+
                     $('#ltRecoveryPercent').text(request.sendData.ltRecoveryPercent+"%");
                     $('#maintenanceYear').text(request.sendData.maintenanceYear);
 
