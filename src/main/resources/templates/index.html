@@ -2,7 +2,6 @@
 <html lang="ko"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	  layout:decorate="layout/mainpage">
 
 <!-- 사용자 CSS 추가 -->
@@ -12,45 +11,66 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-	<script src="/assets/js/bxslider/jquery.bxslider.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			//$('.bxslider').bxSlider();
 
-			//$('.main__slide').bxSlider({
-			//	auto: true,
-			//	spped: 500,
-			//	pause: 3000,
-			//	mode: 'fade',
-			//	pager: false,
-			//	autoControls: false,
-			//	controls: false,
-			//	infiniteLoop: true
-			//})
-			
+	<script src="/assets/js/bxslider/jquery.bxslider.min.js"></script>
+	<script src="/assets/js/min_js_dir/newdeal/index.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+
 			$('.count__number').each(function() {
-				var $this = $(this),
-					countTo = $this.attr('data-count');
-					
+				const $this = $(this),
+						countTo = $this.attr('data-count');
+
 				$({ countNum: $this.text()}).animate({
 					countNum: countTo
-				}, 
+				},
 				{
 					duration: 3000,
 					easing:'linear',
 					step: function() {
-						$this.text(Math.floor(this.countNum));
+						$this.text(pushComma(Math.floor(this.countNum)));
 					},
 					complete: function() {
-						$this.text(this.countNum);
+						$this.text(pushComma(this.countNum));
 					}
 				});
 			});
-		})
+
+			// 유저 수 가져오는 함수
+			userCount();
+
+			// 데이터 조회 수 가져오는 함수
+			dataLogCount();
+
+		});
+
+		function indexDataCount(id){
+			$('#'+id).each(function() {
+				const $this = $(this),
+						countTo = $this.attr('data-count');
+				$({ countNum: $this.text()}).animate({
+						countNum: countTo
+					},
+					{
+						duration: 2000,
+						easing:'linear',
+						step: function() {
+							$this.text(pushComma(Math.floor(this.countNum)));
+						},
+						complete: function() {
+							$this.text(pushComma(this.countNum));
+						}
+				});
+			});
+		}
+
 	</script>
 </th:block>
 
 <div layout:fragment="content" class="content padding-zero content--main">
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="main">
 		<section class="main__section">
 			<ul class="main__slide">
@@ -85,14 +105,14 @@
 							<div class="count">
 								<h4>플랫폼 회원수</h4>
 								<img src="/assets/images/icon__face.svg" alt="" />
-								<div class="count__number" data-count="28">0</div>
+								<div id="userCount" class="count__number"></div>
 							</div>
 						</li>
 						<li>
 							<div class="count">
 								<h4>데이터 조회수</h4>
 								<img src="/assets/images/icon__favorite.svg" alt="" />
-								<div class="count__number" data-count="400">0</div>
+								<div id="dataSearchCount" class="count__number"></div>
 							</div>
 						</li>
 						<li>

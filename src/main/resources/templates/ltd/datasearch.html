@@ -57,7 +57,7 @@
 	function callExcelDown(){
 		const seriescode = $("#serioscode").val();
 		const measurementitemcode = $("#measurementitemcode").val();
-		document.location.href = '/api/ltd/common/graphrowdata.xls?seriescode=' + seriescode +"&measurementitemcode=" + measurementitemcode;
+		document.location.href = $("#backend_protocol").val() + "://" + $("#backend_url").val()+'/api/ltd/common/graphrowdata.xls?seriescode=' + seriescode +"&measurementitemcode=" + measurementitemcode;
 	}
 
 	function periodnameShowSetting(){

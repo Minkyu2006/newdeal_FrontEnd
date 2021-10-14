@@ -25,12 +25,13 @@ public class MainController {
         return "page/newpage";
     }
 
-
-    @RequestMapping("index")
-    public String index(){
+    @RequestMapping(value = {"/index", "/"})
+    public String index(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "index";
     }
-    
+
     // login main
     @RequestMapping("loginindex")
     public String loginindex(){
