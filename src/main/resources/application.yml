@@ -15,9 +15,9 @@ logging:
   file: ./logs/infraFront.log
   file.max-history: 5
   level:
-    kr:
-      co:
-        broadwave: DEBUG
+    com:
+      broadwave:
+        front: DEBUG
     org:
       hibernate: INFO
     root: INFO
