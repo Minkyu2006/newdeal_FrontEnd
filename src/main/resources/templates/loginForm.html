@@ -8,8 +8,8 @@
 
 		function loginActive() {
 
-			var $userid = $("#userid");
-			var $password = $("#password");
+			const $userid = $("#userid");
+			const $password = $("#password");
 
 			if ($userid.val().trim() === '') {
 				alertCaution("아이디를 입력하세요.");
@@ -22,9 +22,9 @@
 				return false;
 			}
 
-			var params = {
-				userid : $userid.val(),
-				password : $password.val()
+			const params = {
+				userid: $userid.val(),
+				password: $password.val()
 			};
 
 			const jsonString = JSON.stringify(params);
@@ -44,17 +44,15 @@
 				success: function (res) {
 					console.log("로그인 되었습니다.");
 
-					console.log("accessToken : "+res.data.token.accessToken)
-					console.log("refreshToken : "+res.data.token.refreshToken)
-					console.log("insert_id : "+res.data.token.insert_id)
+					// console.log("accessToken : "+res.data.token.accessToken)
+					// console.log("refreshToken : "+res.data.token.refreshToken)
+					// console.log("insert_id : "+res.data.token.insert_id)
 
 					// setCookie(변수이름, 변수값, 유효시간);
 					setCookie("JwtAccessToken",res.data.token.accessToken, 10); // 발행시간은 5시간으로설정
 					setCookie("JwtRefreshAccessToken", res.data.token.accessToken, 10); // 발행시간은 5시간으로설정
 					setCookie("JwtRefreshToken",res.data.token.refreshToken, 10); // 발행시간은 5시간으로설정
 					setCookie("insert_id",res.data.token.insert_id, 10); // 발행시간은 5시간으로설정
-
-					// location.href="/performance/input"
 
 					calliRoleName(res.data.token.insert_id);
 				}
@@ -136,21 +134,6 @@
 				<div><a class="login__btn" href="/register">회원가입</a></div>
 		</div>
 	</div>
-
-<!--	<h2 class="form-signin-heading"> 인프라 로그인 </h2>-->
-<!--	<p>-->
-<!--		<label for="userid" class="sr-only">아이디 : </label>-->
-<!--		<input type="text" id="userid" name="userid" class="form-control" placeholder="아이디를 입력하세요." required="" autofocus="">-->
-<!--	</p>-->
-<!--	<p>-->
-<!--		<label for="password" class="sr-only">비밀번호 : </label>-->
-<!--		<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요." required="">-->
-<!--	</p>-->
-<!--	<button class="btn btn-lg btn-primary btn-block" onclick="loginActive()" >로그인</button>-->
-
-<!--	<button class="btn btn-lg btn-primary btn-block" onclick="accessTokenCookieGet()" >쿠키가져오기</button>-->
-<!--	<button class="btn btn-lg btn-primary btn-block" onclick="mps_Add_test()" >MPS더하기 테스트</button>-->
-<!--	<button class="btn btn-lg btn-primary btn-block" onclick="yaml_test()" >YAML 파일 받아오기</button>-->
 </div>
 
 <div id='alertpop'>
