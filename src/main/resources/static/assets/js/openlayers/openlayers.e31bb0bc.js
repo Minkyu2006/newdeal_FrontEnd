@@ -72965,7 +72965,7 @@ function initData() {
   var dmSource = new _ImageWMS.default({
 	  url: 'http://geo.bmaps.kr/geoserver/newdeal/wms',
     params: {
-      'LAYERS': 'DM'
+      'LAYERS': 'Dm'
     },
     serverType: 'geoserver',
     crossOrigin: 'anonymous'
