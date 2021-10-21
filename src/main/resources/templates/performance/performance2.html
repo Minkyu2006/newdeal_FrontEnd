@@ -11,12 +11,11 @@
 					<ul>
 						<li>1. 업로드 할 파일은 제공해드린 파일만 업로드해주시길 바랍니다.(파일양식은 하단에 양식 다운로드)</li>
 						<li>2. 대안1,대안2에 각각 업로드할 대안들을 작성해주세요.</li>
-						<li>3. 작성하실 대안의 열에 파랑색으로 칠해져 있는 셀은 필수적으로 입력하셔야 합니다.</li>
+						<li>3. 작성하실 대안의 열에 파랑색으로 표기된 셀은 필수적으로 입력하셔야 합니다.</li>
 						<li>4. 대안은 최대 4개까지만 등록 가능합니다.</li>
-						<li>5. 숫자를 문자로 작성하시면 업로드할 수 없습니다.</li>
-						<li>6. 각 셀은 I열을 참고하여 작성해주길 바랍니다. 그렇지 않을 경우 업로드할 수 없습니다.</li>
-						<li>7. 6번이 이해가 안되시면 2번시트를 참고하여 작성해주시길 바랍니다.</li>
-						<li>8. 제공해드린 양식파일이 아닌 파일은 업로드할 수 없습니다.</li>
+						<li>5. 구체적인 입력 방법은 제공해 드린 양식에 포함된 입력방법 sheet를 참조해 주세요</li>
+						<li>6. 5번이 이해가 안되시면 2번시트를 참고하여 작성해주시길 바랍니다.</li>
+						<li>7. 제공해드린 양식파일이 아닌 파일은 업로드할 수 없습니다.</li>
 					</ul>
 				</div>
 				<div class="talk__file">
@@ -40,13 +39,16 @@
 	</div>
 
 	<div class="talk__box">
+		<div class="talk__header">
+			<h3>Step 3. 사업평가 지표의 가중치를 설정합니다.</h3>
+		</div>
 		<div class="talk__contents">
 			<div class="weight">
 				<div class="weight__head">
-					<h4 class="weight__heading">성능개선 유형을 선택해주세요.</h4>
-					<div class="talk__input">
+					<h4 class="weight__heading">사업평가에 적용할 가중치를 입력합니다. <br />성능개선 유형을 선택하시면 각 유형별 표준가중치와 최소-최대 범위를 불러옵니다. 수정시 가중치의 합은 1이 되어야 합니다.</h4>
+					<div class="talk__select">
 						<div class="c-select">
-							<select id="weight_Category" name="weight_Category" class="c-select__input" style="width: 20%">
+							<select id="weight_Category" name="weight_Category" class="c-select__input">
 								<option value="">유형을 선택해주세요.</option>
 								<option value="노후화대응">노후화 대응</option>
 								<option value="기준변화">기준 변화</option>
@@ -61,12 +63,17 @@
 							<col />
 							<col />
 							<col />
+							<col />
+							<col />
+							<col />
 						</colgroup>
 						<thead>
 						<tr>
 							<th>성능개선 유형</th>
 							<th>항목</th>
-							<th>가중치</th>
+							<th>표준 가중치</th>
+							<th>최소 가중치</th>
+							<th>최대 가중치</th>
 							<th>비고</th>
 						</tr>
 						</thead>
@@ -79,6 +86,8 @@
 									<input type="number"  id="piWeightTechnicality" name="piWeightTechnicality" class="c-text__input" />
 								</div>
 							</td>
+							<td>최소값</td>
+							<td>최대값</td>
 							<th rowspan="4" style="color: red;text-align: center">해당 가중치는 0.05수준까지<br>가감할 수 있습니다.</th>
 						</tr>
 						<tr>
@@ -88,6 +97,8 @@
 									<input type="number" id="piWeightEconomy"  name="piWeightEconomy" class="c-text__input" />
 								</div>
 							</td>
+							<td>최소값</td>
+							<td>최대값</td>
 						</tr>
 						<tr>
 							<th>정책성</th>
@@ -96,17 +107,20 @@
 									<input type="number" id="piWeightPolicy"  name="piWeightPolicy" class="c-text__input" />
 								</div>
 							</td>
+							<td>최소값</td>
+							<td>최대값</td>
 						</tr>
 						</tbody>
 					</table>
+					
+					<div class="talk__comment">
+						비고 : 가중치 설정방법 및 제안 가중치의 활용<br />
+						각 평가항목 및 세부지표의 가중치는 사업의 목적과 특성을 고려하여 관리주체가 자체적으로 설정할 수 있습니다. 적절한 가중치 설정이 어려운 경우 본 평가방법 개발과정에서 실무자, 전문가의 의견을 반영하여 제안한 표준가중치와 조정범위를 참조하여 적용할 것을 권장합니다. 
+					</div>
 				</div>
 
 			</div>
-		</div>
-	</div>
-
-	<div class="talk__box">
-		<div class="talk__contents">
+			
 			<div class="weight">
 				<div class="weight__head">
 					<h4 class="weight__heading">가중치를 수정하시겠습니까?</h4>
@@ -373,7 +387,7 @@
 	<div class="talk__console">
 		<ul>
 			<li><button class="c-button" onclick="movePage('/performance/performance1')">BEFORE</button></li>
-			<li><button onclick="filesend()" class="c-button c-button--point">완료</button></li>
+			<li><button onclick="filesend()" class="c-button c-button--point">성능개선 사업성 평가 실행</button></li>
 		</ul>
 	</div>
 </div>

@@ -28,12 +28,17 @@
 								<col />
 								<col />
 								<col />
+								<col />
+								<col />
+								<col />
 							</colgroup>
 							<thead>
 							<tr>
 								<th>성능개선 유형</th>
 								<th>항목</th>
-								<th>기본 가중치</th>
+								<th>표준 가중치</th>
+								<th>최소 가중치</th>
+								<th>최대 가중치</th>
 								<th>비고</th>
 							</tr>
 							</thead>
@@ -46,6 +51,8 @@
 										<input type="number"  id="piWeightTechnicality" name="piWeightTechnicality" class="c-text__input" readonly="readonly" />
 									</div>
 								</td>
+								<td>최소값</td>
+								<td>최대값</td>
 								<th rowspan="4" style="color: red;text-align: center">해당 가중치는 0.05수준까지<br>가감할 수 있습니다.</th>
 							</tr>
 							<tr>
@@ -55,6 +62,8 @@
 										<input type="number" id="piWeightEconomy"  name="piWeightEconomy" class="c-text__input" readonly="readonly" />
 									</div>
 								</td>
+								<td>최소값</td>
+								<td>최대값</td>
 							</tr>
 							<tr>
 								<th>정책성</th>
@@ -63,6 +72,8 @@
 										<input type="number" id="piWeightPolicy"  name="piWeightPolicy" class="c-text__input" readonly="readonly" />
 									</div>
 								</td>
+								<td>최소값</td>
+								<td>최대값</td>
 							</tr>
 							</tbody>
 						</table>
@@ -317,7 +328,7 @@
 	<div class="talk__console">
 		<ul>
 			<li><button class="c-button" onclick="movePage('/performance/performance4')">BEFORE</button></li>
-			<li><button class="c-button c-button--point" onclick="inputPerformanceNext3()">완료</button></li>
+			<li><button class="c-button c-button--point" onclick="inputPerformanceNext3()">성능개선 사업성 평가 실행</button></li>
 		</ul>
 	</div>
 </div>
