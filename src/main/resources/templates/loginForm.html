@@ -88,26 +88,27 @@
 			});
 		}
 
-		// function mps_Add_test(){
-		// 	var settings = {
-		// 		"url": "http://ec2-3-37-19-235.ap-northeast-2.compute.amazonaws.com:9910/add_Test/add",
-		// 		"method": "POST",
-		// 		"timeout": 0,
-		// 		"headers": {
-		// 			"Content-Type": "application/json"
-		// 		},
-		// 		"data": JSON.stringify(
-		// 				{
-		// 					"nargout":1,
-		// 					"rhs":[1.1,2.1]
-		// 				}
-		// 		),
-		// 	};
-		//
-		// 	$.ajax(settings).done(function (response) {
-		// 		console.log(response);
-		// 	});
-		// }
+		// 매틀랩 호출 함수 Javascript
+		function mps_Add_test(){
+			const settings = {
+				"url": "http://ec2-3-37-19-235.ap-northeast-2.compute.amazonaws.com:9910/add_Test/add", // http://매틀랩링크주소:포트번호/호출파일/함수명
+				"method": "POST",
+				"timeout": 0,
+				"headers": {
+					"Content-Type": "application/json"
+				},
+				"data": JSON.stringify(
+						{
+							"nargout": 1, // 필드 고유값
+							"rhs": [1.1, 2.1] // 호출할 값
+						}
+				),
+			};
+
+			$.ajax(settings).done(function (response) {
+				console.log(response);
+			});
+		}
 
 	</script>
 </th:block>
