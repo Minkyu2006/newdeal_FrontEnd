@@ -700,9 +700,9 @@ table {
 .li-main__count ul li {
 	float: left;
 }
-.li-main__count .count {
+/*.li-main__count .count {
 	width: 150px;
-}
+}*/
 .li-main__heading {
 	width: 100%;
 	padding: 10px 20px;
