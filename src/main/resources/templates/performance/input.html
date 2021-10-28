@@ -24,15 +24,6 @@
 				inputMiddleSaveCheck();
 			}
 
-			document.getElementById("talk-select01").click();
-			document.getElementById("group1-1").click();
-			document.getElementById("group2-1").click();
-			document.getElementById("group3-1").click();
-			document.getElementById("group4-1").click();
-			document.getElementById("group5-1").click();
-			document.getElementById("group6-1").click();
-			document.getElementById("group7-1").click();
-
 			$('#devReady').click(function() { // pdf저장 button id
 				html2canvas($('.pop__contents')[0]).then(function(canvas) { //저장 영역 div id
 					// 캔버스를 이미지로 변환
@@ -83,7 +74,7 @@
 						<ul class="talk__question">
 							<li>
 								<h4>사업명을 입력하세요</h4>
-								<div class="c-text"><input value="testing" type="text" class="c-text__input" id="business_name" placeholder="ex) ***관리기관 ***시설명 성능개선 사업" /></div>
+								<div class="c-text"><input type="text" class="c-text__input" id="business_name" placeholder="ex) ***관리기관 ***시설명 성능개선 사업" /></div>
 							</li>
 						</ul>
 						<ul class="talk__question">
