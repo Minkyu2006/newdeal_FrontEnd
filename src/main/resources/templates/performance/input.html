@@ -23,12 +23,51 @@
 			if(autoNum===""){
 				inputMiddleSaveCheck();
 			}
+
+			document.getElementById("talk-select01").click();
+			document.getElementById("group1-1").click();
+			document.getElementById("group2-1").click();
+			document.getElementById("group3-1").click();
+			document.getElementById("group4-1").click();
+			document.getElementById("group5-1").click();
+			document.getElementById("group6-1").click();
+			document.getElementById("group7-1").click();
+
+			$('#devReady').click(function() { // pdf저장 button id
+				html2canvas($('.pop__contents')[0]).then(function(canvas) { //저장 영역 div id
+					// 캔버스를 이미지로 변환
+					const imgData = canvas.toDataURL('image/png');
+					const imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+					const pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+					const imgHeight = canvas.height * imgWidth / canvas.width;
+					let heightLeft = imgHeight;
+					const margin = 10; // 출력 페이지 여백설정
+					const doc = new jsPDF('p', 'mm','a4');
+					let position = 0;
+
+					// 첫 페이지 출력
+					doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+					heightLeft -= pageHeight;
+
+					// 한 페이지 이상일 경우 루프 돌면서 출력
+					while (heightLeft >= 20) {
+						position = heightLeft - imgHeight;
+						doc.addPage();
+						doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+						heightLeft -= pageHeight;
+					}
+					// 파일 저장
+					doc.save("성능평가 비대상 사유서");
+				});
+			});
+
 		});
 	</script>
 </th:block>
 
 <div layout:fragment="content" class="content">
 	<input type="hidden" id="autoNum" readonly="readonly" />
+	<input type="hidden" id="businessNum" readonly="readonly" />
 	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="content__inner">
@@ -44,7 +83,7 @@
 						<ul class="talk__question">
 							<li>
 								<h4>사업명을 입력하세요</h4>
-								<div class="c-text"><input type="text" class="c-text__input" id="business_name" placeholder="ex) ***관리기관 ***시설명 성능개선 사업" /></div>
+								<div class="c-text"><input value="testing" type="text" class="c-text__input" id="business_name" placeholder="ex) ***관리기관 ***시설명 성능개선 사업" /></div>
 							</li>
 						</ul>
 						<ul class="talk__question">
@@ -247,7 +286,7 @@
 					<ul>
 						<li>
 							<a href="/performance/information" class="c-button">BEFORE</a>
-							<button onclick="popOpen()" class="c-button c-button--point talk__select-pop-btn">NEXT</button>
+							<button onclick="radioPopOpen()" class="c-button c-button--point talk__select-pop-btn">NEXT</button>
 						</li>
 					</ul>
 				</div>
@@ -256,7 +295,7 @@
 
 		</div>
 		
-		<div class="talk__select-pop">
+		<div class="talk__select-pop" id="choicePop">
 			<p>“입력하신 성능개선 사업은 국토교통부 『도로시설 성능개선 기준』에서 정하는 평가대상 요건인 1)시설유형, 2)부재유형, 3)보수유형, 4)사업유형, 5)사업규모, 6)사업평가 중복성, 7)당연사업 면제사유 조건을 모두 충족함에 따라 성능개선사업 평가 대상으로 판정되었습니다.”</p>
 			<h4 class="talk__select-heading">추진하실 사업의 정보 입력 방식을 선택해주세요.</h4>
 			<div class="talk__select-radio">
@@ -277,11 +316,12 @@
 			</div>
 			<p class="talk__select-comment">파일 업로드 선택시 양식 다운로드를 제공합니다.</p>
 			<button class="c-button c-button--point" onclick="selectMovePage()">선택 완료</button>
+			<button class="c-button c-button--point" onclick="choicePopClose()">취소</button>
 		</div>
 
 
 
-		<div class="pop ">
+		<div class="pop" id="falseRadio">
 			<div class="pop__box">
 				<div class="pop__head">
 					<h3 class="pop__heading">해당 사업은 성능개선 기준 적용 대상 사업이 아닙니다.</h3>
@@ -402,6 +442,7 @@
 					<div class="pop__console">
 							<ul>
 								<li><button class="c-button c-button--point" onclick="popClose()">확인</button></li>
+								<li><button class="c-button c-button--point" id="devReady">PDF 다운로드</button></li>
 							</ul>
 						</div>
 				</div>

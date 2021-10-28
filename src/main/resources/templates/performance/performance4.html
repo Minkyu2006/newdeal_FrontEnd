@@ -3,44 +3,15 @@
 
 	<form id="performance2" enctype="multipart/form-data">
 	<input type="hidden" id="businessCount" name="businessCount" value="2" />
-	<div class="talk__box">
-		<div class="talk__header">
-			<h3>Step 5. 사업구분</h3>
-		</div>
-		<div class="talk__contents">
-			<ul class="c-radio-group">
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" value="노후화대응" name="piBusiness" id="piBusiness-1" />
-						<label for="piBusiness-1" class="c-radio__label">노후화대응</label>
-					</div>
-				</li>
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" value="기준변화" name="piBusiness" id="piBusiness-2" />
-						<label for="piBusiness-2" class="c-radio__label">기준변화</label>
-					</div>
-				</li>
-				<li class="c-radio-group__item">
-					<div class="c-radio">
-						<input type="radio" class="c-radio__input" value="사용성변화" name="piBusiness" id="piBusiness-3" />
-						<label for="piBusiness-3" class="c-radio__label">사용성변화</label>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
 
 	<div class="talk__box">
+
 		<div class="talk__header">
 			<h3>Step 6. 사업정보 입력</h3>
 		</div>
 
-
-
 		<div class="talk__contents">
-			<div class="talk__comment">노후화의 경우 반드시 최소 성능개선 1개, 유지보수 1개, 기준변화 및 사용성변화의 경우 최소 성능개선 2개 대안을 입력하여야 합니다(단 2개 이상의 대안 구성이 불가능한 경우 1개의 대안만 입력)</div>
+			<div class="talk__comment">노후화대응의 경우 반드시 최소 성능개선 1개, 유지보수 1개, 기준변화 및 사용성변화의 경우 최소 성능개선 2개 대안을 입력하여야 합니다.<br>(단, 2개 이상의 대안 구성이 불가능한 경우 1개의 대안만 입력)</div>
 
 			<!--############################# 첫번째 대안 #########################-->
 
@@ -96,12 +67,12 @@
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
 									<div class="c-text">
-										<input type="text" name="piBusinessExpenses" id="piBusinessExpenses1" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" numberOnly />
+										<input type="text" name="piBusinessExpenses" id="piBusinessExpenses1" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" placeholder="1~10000000000000"  />
 									</div>
 								</div>
 							</div>
 						</li>
-						<li>
+						<li id="piBeforeSafetyRating1List" style="display: none">
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업전 종합 안전등급</div>
 								<div class="talk__input">
@@ -118,7 +89,7 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li id="piAfterSafetyRating1List" style="display: none">
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업후 종합 안전등급</div>
 								<div class="talk__input">
@@ -132,6 +103,14 @@
 											<option value="E">E</option>
 										</select>
 									</div>
+								</div>
+							</div>
+						</li>
+						<li id="piWhetherList">
+							<div class="talk__input-item">
+								<div class="talk__input-heading">최근 1년 간 민원 및 사고발생 건수</div>
+								<div class="talk__input">
+									<div class="c-text"><input type="text" id="piWhether" name="piWhether" class="c-text__input" numberOnly /></div>
 								</div>
 							</div>
 						</li>
@@ -202,14 +181,6 @@
 		                        </div>
 							</div>
 						</li>
-						<li>
-							<div class="talk__input-item">
-								<div class="talk__input-heading">최근 1년 간 민원 및 사고발생 건수</div>
-								<div class="talk__input">
-									<div class="c-text"><input type="text" id="piWhether1" name="piWhether" class="c-text__input" numberOnly /></div>
-								</div>
-							</div>
-						</li>
 					</ul>
 				</div>
 			</div>
@@ -267,11 +238,11 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses2" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" numberOnly /></div>
+									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses2" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" placeholder="1~10000000000000"  /></div>
 								</div>
 							</div>
 						</li>
-						<li>
+						<li id="piBeforeSafetyRating2List">
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업전 종합 안전등급</div>
 								<div class="talk__input">
@@ -288,7 +259,7 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li id="piAfterSafetyRating2List">
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업후 종합 안전등급</div>
 								<div class="talk__input">
@@ -372,14 +343,6 @@
 								</div>
 							</div>
 						</li>
-						<li>
-							<div class="talk__input-item">
-								<div class="talk__input-heading">최근 1년 간 민원 및 사고발생 건수</div>
-								<div class="talk__input">
-									<div class="c-text"><input type="text" id="piWhether2" name="piWhether" class="c-text__input" numberOnly /></div>
-								</div>
-							</div>
-						</li>
 					</ul>
 				</div>
 			</div>
@@ -437,11 +400,11 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses3" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" numberOnly /></div>
+									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses3" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" placeholder="1~10000000000000" /></div>
 								</div>
 							</div>
 						</li>
-						<li>
+						<li id="piBeforeSafetyRating3List">
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업전 종합 안전등급</div>
 								<div class="talk__input">
@@ -458,7 +421,7 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li id="piAfterSafetyRating3List">
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업후 종합 안전등급</div>
 								<div class="talk__input">
@@ -542,14 +505,6 @@
 								</div>
 							</div>
 						</li>
-						<li>
-							<div class="talk__input-item">
-								<div class="talk__input-heading">최근 1년 간 민원 및 사고발생 건수</div>
-								<div class="talk__input">
-									<div class="c-text"><input type="text" id="piWhether3" name="piWhether" class="c-text__input" numberOnly /></div>
-								</div>
-							</div>
-						</li>
 					</ul>
 				</div>
 				<a href="#" class="performance-business__close" onclick="businessRemove(1);">대안 삭제</a>
@@ -608,11 +563,11 @@
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업비용</div>
 								<div class="talk__input">
-									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses4" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" numberOnly /></div>
+									<div class="c-text"><input type="text" name="piBusinessExpenses" id="piBusinessExpenses4" onkeyup="inputNumberFormat(this)" maxlength="17" class="c-text__input" placeholder="1~10000000000000"  /></div>
 								</div>
 							</div>
 						</li>
-						<li>
+						<li id="piBeforeSafetyRating4List">
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업전 종합 안전등급</div>
 								<div class="talk__input">
@@ -629,7 +584,7 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li id="piAfterSafetyRating4List">
 							<div class="talk__input-item">
 								<div class="talk__input-heading">사업후 종합 안전등급</div>
 								<div class="talk__input">
@@ -713,14 +668,6 @@
 								</div>
 							</div>
 						</li>
-						<li>
-							<div class="talk__input-item">
-								<div class="talk__input-heading">최근 1년 간 민원 및 사고발생 건수</div>
-								<div class="talk__input">
-									<div class="c-text"><input type="text" id="piWhether4" name="piWhether" class="c-text__input" numberOnly /></div>
-								</div>
-							</div>
-						</li>
 					</ul>
 				</div>
 				<a href="#" class="performance-business__close" onclick="businessRemove(2);">대안 삭제</a>
@@ -751,6 +698,52 @@
 		if(autoNum!==""){
 			// console.log("중간 저장된 데이터 호출하기2");
 			middleDataBusiness(autoNum);
+		}
+
+		const  businessNum = $("#businessNum").val();
+		if(businessNum==="노후화대응"){
+			$("#piBeforeSafetyRating1List").css('display','block');
+			$("#piAfterSafetyRating1List").css('display','block');
+
+			$("#piBeforeSafetyRating2List").css('display','block');
+			$("#piAfterSafetyRating2List").css('display','block');
+
+			$("#piBeforeSafetyRating3List").css('display','block');
+			$("#piAfterSafetyRating3List").css('display','block');
+
+			$("#piBeforeSafetyRating4List").css('display','block');
+			$("#piAfterSafetyRating4List").css('display','block');
+		}else{
+			$("#piBeforeSafetyRating1List").css('display','none');
+			$("#piAfterSafetyRating1List").css('display','none');
+
+			$("#piBeforeSafetyRating2List").css('display','none');
+			$("#piAfterSafetyRating2List").css('display','none');
+
+			$("#piBeforeSafetyRating3List").css('display','none');
+			$("#piAfterSafetyRating3List").css('display','none');
+
+			$("#piBeforeSafetyRating4List").css('display','none');
+			$("#piAfterSafetyRating4List").css('display','none');
+
+			$("#piBeforeSafetyRating1").val("A");
+			$("#piBeforeSafetyRating2").val("A");
+			$("#piBeforeSafetyRating3").val("A");
+			$("#piBeforeSafetyRating4").val("A");
+			$("#piAfterSafetyRating1").val("A");
+			$("#piAfterSafetyRating2").val("A");
+			$("#piAfterSafetyRating3").val("A");
+			$("#piAfterSafetyRating4").val("A");
+		}
+
+		const  $piWhetherList = $("#piWhetherList")
+		const  $piWhether = $("#piWhether")
+		if(businessNum==="기준변화"){
+			$piWhetherList.css('display','none');
+			$piWhether.val("99999");
+		}else{
+			$piWhetherList.css('display','blcok');
+			$piWhether.val("");
 		}
 
 		// 오직 숫자만 입력할수있게하는 제이쿼리

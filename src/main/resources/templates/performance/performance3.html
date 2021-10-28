@@ -1,8 +1,37 @@
 <div class="talk">
 	<form id="performance1" enctype="multipart/form-data">
+
 		<div class="talk__box">
 			<div class="talk__header">
-				<h3>Step 2. 시설물의 유형을 선택해주세요.</h3>
+				<h3>Step 2. 사업구분을 선택해주세요.</h3>
+			</div>
+			<div class="talk__contents">
+				<ul class="c-radio-group">
+					<li class="c-radio-group__item">
+						<div class="c-radio">
+							<input type="radio" class="c-radio__input" value="노후화대응" onclick="piBusinessClick(1)" name="piBusiness" id="piBusiness-1" />
+							<label for="piBusiness-1" class="c-radio__label">노후화대응 유형</label>
+						</div>
+					</li>
+					<li class="c-radio-group__item">
+						<div class="c-radio">
+							<input type="radio" class="c-radio__input" value="기준변화" onclick="piBusinessClick(2)" name="piBusiness" id="piBusiness-2" />
+							<label for="piBusiness-2" class="c-radio__label">기준변화 유형</label>
+						</div>
+					</li>
+					<li class="c-radio-group__item">
+						<div class="c-radio">
+							<input type="radio" class="c-radio__input" value="사용성변화" onclick="piBusinessClick(3)" name="piBusiness" id="piBusiness-3" />
+							<label for="piBusiness-3" class="c-radio__label">사용성변화 유형</label>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="talk__box" id="step3div" style="display: none">
+			<div class="talk__header">
+				<h3>Step 3. 시설물의 유형을 선택해주세요.</h3>
 			</div>
 			<div class="talk__contents">
 				<ul class="c-radio-group">
@@ -46,9 +75,9 @@
 			</div>
 		</div>
 
-		<div class="talk__box">
+		<div class="talk__box" id="step4div" style="display: none">
 			<div class="talk__header">
-				<h3>Step 3. 시설물 기본정보</h3>
+				<h3>Step 4. 시설물 기본정보</h3>
 			</div>
 			<div class="talk__contents">
 				<ul class="talk__list talk__list--split">
@@ -103,7 +132,7 @@
 							</div>
 						</div>
 					</li>
-					<li>
+					<li id="piErectionCostList">
 						<div class="talk__input-item">
 							<div class="talk__input-heading">취득원가(공사비)</div>
 							<div class="talk__input">
@@ -117,23 +146,11 @@
 							<div class="talk__input">
 								<div class="c-select">
 									<select name="piSafetyLevel" id="piSafetyLevel" class="c-select__input">
-										<option value="">시설물 유형을 선택해주세요</option>
-									</select>
-								</div>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="talk__input-item">
-							<div class="talk__input-heading">사용성등급</div>
-							<div class="talk__input">
-								<div class="c-select">
-									<select name="piUsabilityLevel" id="piUsabilityLevel" class="c-select__input">
 										<option value="A">A</option>
 										<option value="B">B</option>
 										<option value="C">C</option>
 										<option value="D">D</option>
-										<option style="display: none" id="gitaOp" value="기타">기타</option>
+										<option value="E">E</option>
 									</select>
 								</div>
 							</div>
@@ -141,9 +158,19 @@
 					</li>
 					<li>
 						<div class="talk__input-item">
-							<div class="talk__input-heading">목표 안전등급</div>
+							<div id="piUsabilityAndGoalLevelName" class="talk__input-heading">목표 안전등급</div>
 							<div class="talk__input">
-								<input type="text" name="piGoalLevel" id="piGoalLevel" style="color: black;" readonly="readonly" class="c-text__input" />
+								<div class="c-select">
+									<select name="piUsabilityAndGoalLevel" id="piUsabilityAndGoalLevel" class="c-select__input">
+										<option id="rankA" value="A">A</option>
+										<option id="rankB" value="B">B</option>
+										<option id="rankC" value="C">C</option>
+										<option id="rankD" value="D">D</option>
+										<option id="rankE" value="E">E</option>
+										<option id="gitaOp" value="기타">기타</option>
+										<option id="gitaNo" value="해당안됨">해당안됨</option>
+									</select>
+								</div>
 							</div>
 						</div>
 					</li>
@@ -153,11 +180,11 @@
 							<div class="talk__input">
 								<div class="c-select">
 									<select name="piMaintenanceDelay" id="piMaintenanceDelay" class="c-select__input">
-										<option value="0">1년 미만</option>
-										<option value="1">1년</option>
-										<option value="2">2년</option>
-										<option value="3">3년</option>
-										<option value="4">4년 이상</option>
+										<option id="delay0" value="0">1년 미만</option>
+										<option id="delay1" value="1">1년</option>
+										<option id="delay2" value="2">2년</option>
+										<option id="delay3" value="3">3년 이상</option>
+										<option id="delayNo" value="9">해당안됨</option>
 									</select>
 								</div>
 							</div>
@@ -191,9 +218,9 @@
 			</div>
 		</div>
 
-		<div class="talk__box">
+		<div class="talk__box" id="step5div" style="display: none">
 			<div class="talk__header">
-				<h3>Step 4. 시설물의 유형을 선택해주세요.</h3>
+				<h3>Step 5. 시설물의 유형을 선택해주세요.</h3>
 			</div>
 			<div class="talk__contents">
 				<ul class="talk__list talk__list--split">
