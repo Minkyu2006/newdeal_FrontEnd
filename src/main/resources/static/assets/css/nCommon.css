@@ -852,14 +852,20 @@ table {
 	display: table;
 	clear: both;
 }
-.talk__file li:first-child {
+.talk__file li {
 	float: left;
+}
+.talk__file li + li {
+	margin-left: 10px;
+}
+.talk__file li:first-child {
+	width: 185px;
+}
+.talk__file li:nth-child(2) {
 	width: 165px;
 }
 .talk__file li:last-child {
-	float: left;
-	width: calc(100% - 185px);
-	margin-left: 20px;
+	width: calc(100% - 370px);
 }
 .talk__select-pop {
 	display: none;

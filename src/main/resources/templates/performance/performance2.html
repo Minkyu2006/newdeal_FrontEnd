@@ -17,18 +17,18 @@
 						<li style="padding: 3px">6. 제공해드린 양식파일이 아닌 파일은 업로드할 수 없습니다.</li>
 					</ul>
 				</div>
-				<div class="talk__select">
-					<div class="c-select">
-						<select id="weight_Category" name="weightCategory" class="c-select__input">
-							<option value="">유형을 선택해주세요.</option>
-							<option value="노후화대응">노후화 유형</option>
-							<option value="기준변화">기준변화 유형</option>
-							<option value="사용성변화">사용성변화 유형</option>
-						</select>
-					</div>
-				</div>
 				<div class="talk__file">
 					<ul>
+						<li>
+							<div class="c-select">
+								<select id="weight_Category" name="weightCategory" class="c-select__input">
+									<option value="">유형을 선택해주세요.</option>
+									<option value="노후화대응">노후화 유형</option>
+									<option value="기준변화">기준변화 유형</option>
+									<option value="사용성변화">사용성변화 유형</option>
+								</select>
+							</div>
+						</li>
 						<li>
 							<!-- href에 다운로드 할 파일 경로 삽입 -->
 							<a id="excelDownload" onclick="formDownload()" class="talk__download c-button">입력 파일 양식 다운로드</a>
