@@ -61,7 +61,7 @@ public class AdminController {
     }
     
     // 성능개선사업평가
-    @RequestMapping("performanceadmin")
+    @RequestMapping("performance")
     public String performance1(){
         return "admin/performance";
     }

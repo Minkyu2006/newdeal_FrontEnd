@@ -184,7 +184,7 @@ function radioPopOpen(){
         return false;
     }
     if(document.getElementById("group3-1").checked===true || document.getElementById("group3-2").checked===true){
-        if($("#group3-1").checked===false){
+        if(document.getElementById("group3-1").checked===false){
             business_dissatisfaction.push("3)보수유형");
             $("#question_3").css("display","block");
             popOpenClonse = 1;

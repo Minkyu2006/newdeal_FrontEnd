@@ -9,7 +9,7 @@
 	<script>
 		$(function(){
 			$('.tabs__btn').on('click', function() {
-				var idx = $(this).index();
+				const idx = $(this).index();
 
 				$('.tabs__btn').removeClass('active');
 				$('.tabs__btn').eq(idx).addClass('active');
@@ -32,9 +32,12 @@
 				<button class="tabs__btn">정책성</button>
 			</div>
 			<div class="tabs__body">
+
+				<!-- 기술성 -->
 				<div class="tabs__content active">
 					<section class="section">
 						<h3 class="section__heading">평가로직 참조 테이블</h3>
+
 						<article class="article">
 							<div class="tabs__flex">
 								<div class="tabs__flex-item three">
@@ -730,7 +733,8 @@
 						</article>
 					</section>
 				</div>
-				
+
+				<!-- 경제성 -->
 				<div class="tabs__content">
 					<section class="section">
 						<h3 class="section__heading">평가로직 참조 테이블</h3>
@@ -1649,7 +1653,8 @@
 						</article>
 					</section>
 				</div>
-				
+
+				<!-- 정책성 -->
 				<div class="tabs__content">
 					<section class="section">
 						<h3 class="section__heading">평가로직 참조 테이블</h3>
@@ -1958,6 +1963,7 @@
 						</article>
 					</section>
 				</div>
+
 			</div>
 		</div>
 
