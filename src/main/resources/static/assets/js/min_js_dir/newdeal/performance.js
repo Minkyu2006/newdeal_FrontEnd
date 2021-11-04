@@ -4253,7 +4253,7 @@ function priceCallList(page,num){
     }else {
 
         if(num === 1){
-            logreg(0,"기초정보","성능개선 사업평가 참조테이블",null);
+            logreg(0,"기초정보","물가지수 리스트 조회",null);
         }
         let url;
 
