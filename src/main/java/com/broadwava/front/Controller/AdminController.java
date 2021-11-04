@@ -44,14 +44,6 @@ public class AdminController {
         return "admin/mastercodereg";
     }
 
-    // 관리자전용 물가배수 등록및조회 페이지
-    @RequestMapping("price")
-    public String price(Model model){
-        model.addAttribute("backend_url", backend_url);
-        model.addAttribute("backend_protocol", backend_protocol);
-        return "admin/price";
-    }
-
     // 생애주기 의사결정 지원 서비스 - 부재별 평균열화율 수치 테이블 관리 페이지
     @RequestMapping("lifetimeall")
     public String lifetimeall(Model model){
