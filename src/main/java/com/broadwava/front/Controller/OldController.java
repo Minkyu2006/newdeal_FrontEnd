@@ -1,0 +1,31 @@
+package com.broadwava.front.Controller;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * @author Minkyu
+ * Date : 2021-11-04
+ * Time :
+ * Remark : 노후화 컨트롤러
+ */
+@Controller
+@RequestMapping("/old")
+public class OldController {
+
+    //호스트링크주입
+    @Value("${newdeal.api.backend_url}")
+    private String backend_url;
+
+    //호스트링크주입
+    @Value("${newdeal.api.backend_protocol}")
+    private String backend_protocol;
+
+    @RequestMapping("old")
+    public String old(){
+        return null;
+    }
+
+}

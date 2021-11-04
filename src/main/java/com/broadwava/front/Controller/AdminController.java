@@ -60,9 +60,11 @@ public class AdminController {
         return "admin/lifetimeall";
     }
     
-    // 성능개선사업평가
+    // 성능개선사업평가 - 참조 테이블 페이지(관리자전용)
     @RequestMapping("performance")
-    public String performance1(){
+    public String performanceReference(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "admin/performance";
     }
 
