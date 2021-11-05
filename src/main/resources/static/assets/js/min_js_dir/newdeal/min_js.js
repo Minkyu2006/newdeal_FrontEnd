@@ -23,7 +23,7 @@ function logreg(num,menuName1,menuName2,data) {
 
         let url;
         url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/userLog/logreg"; // 호출할 백엔드 API
-        console.log("url : " + url);
+        // console.log("url : " + url);
         $.ajax({
             url: url,
             type: 'Post',

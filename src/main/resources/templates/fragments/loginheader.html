@@ -11,23 +11,22 @@
 
 		<nav class="nav">
 			<ul class="nav__list">
-				<li id="adminMenu" class="nav__item">
+				<li class="nav__item">
 					<a href="#" class="nav__link toggle">기초정보</a>
-					<ul class="nav__list-depth">
+					<ul id="header_one" class="nav__list-depth">
 <!--						<li class="nav__item"><a href="/admin/teamreg" onclick="readyPage()" class="nav__link">부서등록</a></li>-->
 <!--						<li class="nav__item"><a href="/admin/accountreg" onclick="readyPage()" class="nav__link">사용자 등록</a></li>-->
 						<li class="nav__item"><a href="/admin/mastercodereg" class="nav__link">마스터코드 관리</a></li>
 						<li class="nav__item"><a href="/admin/teamreg" class="nav__link">부서등록</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">사용자 등록</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">센서 등록</a></li>
-						<li class="nav__item"><a href="/admin/price" class="nav__link">물가배수 등록</a></li>
 						<li class="nav__item"><a href="/admin/lifetimeall" class="nav__link">부재별 평균열화율 수치 등록</a></li>
 						<li class="nav__item"><a href="/admin/performance" class="nav__link">성능개선 사업평가 참조 테이블</a></li>
 					</ul>
 				</li>
 				<li class="nav__item">
 					<a href="#" class="nav__link toggle">의사결정 시스템</a>
-					<ul class="nav__list-depth">
+					<ul id="header_two" class="nav__list-depth">
 						<!-- <li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">장래 예산수요 추정서비스</a></li> -->
 						<li class="nav__item"><a href="/lifetime/input" class="nav__link">유지보수 우선순위 선정서비스</a></li>
 						<li class="nav__item"><a href="/performance/information" class="nav__link">성능개선 사업평가 서비스</a></li>
@@ -40,7 +39,7 @@
 				
 				<li class="nav__item">
 					<a href="#" class="nav__link toggle">노후화 데이터 확보 및 관리 기술</a>
-					<ul class="nav__list-depth">
+					<ul id="header_three" class="nav__list-depth">
 						<li class="nav__item"><a href="/iot" class="nav__link">IoT 센서 데이터 계측</a></li>
 						<li class="nav__item"><a href="/env/envsearch" class="nav__link">환경정보 조회 서비스</a></li>
 						<li class="nav__item"><a href="/ltd/datasearch" class="nav__link">장기조사실험체 계측 데이터 공유 서비스</a></li>
@@ -49,7 +48,7 @@
 				
 				<li class="nav__item">
 					<a href="#" class="nav__link toggle">데이터 기반 가상모델 구축 시스템</a>
-					<ul class="nav__list-depth">
+					<ul id="header_four" class="nav__list-depth">
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">교량 내하성능 추정 서비스</a></li>
 						<!-- <li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">손상 확산 예측 서비스</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">AI기반 확장 열화모델</a></li>-->
@@ -126,15 +125,19 @@
 			$("#userName").text(username);
 			$("#indexUser").text(username);
 			const $userimage = $(".userimage");
-			if(userrole==="관리자"){
-				// console.log("관리자 입니다.");
-				$userimage.attr('src','/assets/images/icon__admin.svg');
-				$userimage.attr("alt","admin");
+			if(username === null){
+				location.href = "/login";
 			}else{
-				// console.log("사용자 입니다.");
-				$userimage.attr('src','/assets/images/icon__user.svg');
-				$userimage.attr("alt","user");
-				$("#adminMenu").css("display","none");
+				if(userrole==="관리자"){
+					// console.log("관리자 입니다.");
+					$userimage.attr('src','/assets/images/icon__admin.svg');
+					$userimage.attr("alt","admin");
+				}else{
+					// console.log("사용자 입니다.");
+					$userimage.attr('src','/assets/images/icon__user.svg');
+					$userimage.attr("alt","user");
+					$("#adminMenu").css("display","none");
+				}
 			}
 		}
 
@@ -144,9 +147,10 @@
 
 		function logout(){
 			setCookie("JwtAccessToken",null, 0);
-			setCookie("JwtRefreshAccessToken",null, 0);
 			setCookie("JwtRefreshToken",null, 0);
 			setCookie("insert_id",null, 0);
+			setCookie("userrole",null, 0);
+			setCookie("username",null, 0);
 			location.href="/login"
 		}
 	</script>

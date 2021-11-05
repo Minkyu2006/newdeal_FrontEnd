@@ -2695,7 +2695,6 @@ function del(autoNum){
     }
 }
 
-
 // 성능개선사업평가 아웃풋 계산값 셋팅 저장함수
 // 기술성
 function techSettingSave(){
@@ -4286,7 +4285,7 @@ function priceCallList(page,num){
                 ajaxErrorMsg(request);
             },
             success: function (res) {
-                console.log("리스트출력");
+                // console.log("리스트출력");
                 if (res.status === 200) {
                     //화면 출력
                     totCnt = res.total_rows;
