@@ -23,10 +23,24 @@ public class ResistanceController {
     @Value("${newdeal.api.backend_protocol}")
     private String backend_protocol;
 
-    @RequestMapping("resistance")
-    public String resistance(){
-        return null;
-//        return "env/envsearch";
+    @RequestMapping("pageselect")
+    public String pageselect(){
+        return "resistance/pageselect";
+    }
+    
+    @RequestMapping("input")
+    public String input(){
+        return "resistance/input";
+    }
+    
+    @RequestMapping("select")
+    public String select(){
+        return "resistance/select";
+    }
+    
+    @RequestMapping("output")
+    public String output(){
+        return "resistance/output";
     }
 
 }

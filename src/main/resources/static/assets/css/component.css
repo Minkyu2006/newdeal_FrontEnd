@@ -27,12 +27,13 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 10px 3px;
     border-bottom: 1px solid #efefef;
     vertical-align: middle;
+    text-align: center;
     line-height: 1.2;
     word-break: break-all;
     word-wrap: break-word;
 }
 .c-table td {
-    height: 35px;
+    height: 41px;
     padding: 5px 3px;
     border-bottom: 1px solid #efefef;
     vertical-align: middle;
@@ -40,6 +41,9 @@ input[type="number"]::-webkit-inner-spin-button {
     word-wrap: break-word;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+}
+.c-table td.vertical-baseline {
+	vertical-align: baseline;
 }
 .c-table td.align--right {
     text-align: right;
@@ -1058,7 +1062,24 @@ a.c-button {
 }
 
 
-
+.c-checkbox-group {
+	position: relative;
+}
+.c-checkbox-group:before {
+	content: " ";
+	display: table;
+}
+.c-checkbox-group:after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+.c-checkbox-group__item {
+	float: left;
+}
+.c-checkbox-group__item + .c-checkbox-group__item {
+	margin-left: 20px;
+}
 
 
 
