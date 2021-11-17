@@ -15,7 +15,9 @@
 <th:block layout:fragment="script">
  	<script>
 		$(function() {
-			
+			$('#close').on('click', function(e) {
+				$('.l-popup').removeClass('open');
+			})
 		});
 
 	</script>
@@ -30,5 +32,18 @@
 		</div>
 	</div>
 	
+	<div class="l-popup open">
+		<div class="l-popup__container">
+			<div class="l-popup__content" style="text-align: center; line-height: 1.6;">
+				<p>해당 서비스는 추후 개발될 서비스의 샘플페이지입니다.</p>
+				<p>실제 동작하지는 않으며 추후 개발될 서비스의 예상페이지 입니다.</p>
+			</div>
+			<div class="l-popup__function">
+				<ul class="l-popup__function-list">
+					<li class="l-popup__function-item"><button id="close" class="c-button c-button--point">닫기</button></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 </html>

@@ -27,5 +27,15 @@ public class OldController {
     public String old(){
         return null;
     }
+    
+    @RequestMapping("input")
+    public String input(){
+        return "old/input";
+    }
+    
+    @RequestMapping("output")
+    public String output(){
+        return "old/output";
+    }
 
 }
