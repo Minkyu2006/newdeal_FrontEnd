@@ -926,6 +926,9 @@ table {
 	display: table;
 	clear: both;
 }
+.talk__list > li + li {
+	margin-top: 10px;
+}
 .talk__list.talk__list--split > li {
 	float: left;
 	position: relative;
@@ -2274,6 +2277,39 @@ h4.l-popup__heading {
 .resistance__text p {
 	line-height: 1.6;
 }
+
+/* 염분량 추정 */
+.salt {
+	position: relative;
+}
+.salt.salt--split {
+	display: flex;
+	justify-content: center;
+}
+.salt__input,
+.salt__output {
+	flex: 1;
+	position: relative;
+}
+.salt__output {
+	display: flex;
+	flex-direction: column;
+	margin-left: 20px;
+}
+.salt__title {
+	font-size: 18px;
+	font-weight: 700;
+}
+.salt__count {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 84px;
+	font-weight: 700;
+	text-align: center;
+}
+
 
 /* flex-layout*/ 
 .flex-layout {

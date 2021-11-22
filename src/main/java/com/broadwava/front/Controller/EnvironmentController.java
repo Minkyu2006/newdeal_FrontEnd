@@ -30,5 +30,17 @@ public class EnvironmentController {
         model.addAttribute("backend_protocol", backend_protocol);
         return "env/envsearch";
     }
+    
+    // 대기중 염분량 추정 서비스
+    @RequestMapping("salt")
+    public String salt(){
+        return "env/salt";
+    }
+    
+    // 열화환경별 염화물 침투
+    @RequestMapping("saltpermeate")
+    public String saltpermeate(){
+        return "env/saltpermeate";
+    }
 
 }
