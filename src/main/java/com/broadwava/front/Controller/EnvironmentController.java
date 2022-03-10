@@ -33,7 +33,9 @@ public class EnvironmentController {
     
     // 대기중 염분량 추정 서비스
     @RequestMapping("salt")
-    public String salt(){
+    public String salt(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "env/salt";
     }
     
