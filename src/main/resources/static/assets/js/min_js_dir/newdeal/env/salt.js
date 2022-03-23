@@ -50,10 +50,10 @@ function seaCheckChange(){
         html += '<option value ="1.2_31">고흥</option>';
         html += '<option value ="0.7_31">장흥</option>';
         html += '<option value ="1.2_31">광양</option>';
-        html += '<option value ="1.6_31">사천</option>';
-        html += '<option value ="3.5_31">거제</option>';
-        html += '<option value ="1.1_32">마산</option>';
-        html += '<option value ="0.9_32">진해</option>';
+        html += '<option value ="1.6_32">사천</option>';
+        html += '<option value ="3.5_32">거제</option>';
+        html += '<option value ="1.1_31">마산</option>';
+        html += '<option value ="0.9_31">진해</option>';
     }
     $seaArea.html(html);
 }
