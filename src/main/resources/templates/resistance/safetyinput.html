@@ -13,6 +13,7 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
+    <script src="/assets/js/min_js_dir/newdeal/safety/safetyInput.js"></script>
     <script>
         $(function() {
             $('.pop__close').on('click', function(e) {
@@ -24,6 +25,8 @@
 </th:block>
 
 <div layout:fragment="content" class="content">
+    <input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+    <input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
     <div class="content__inner">
         <h2 class="content__heading">계측 기반 안전성 추정 데이터 제공</h2>
         <div class="resistance-layout">
@@ -33,6 +36,7 @@
                 </div>
                 <div class="section__content">
                     <article class="article">
+                        <form id="safetyForm" enctype="multipart/form-data">
                         <div class="article__content">
                             <ul class="talk__list">
                                 <li>
@@ -40,7 +44,7 @@
                                         <div class="talk__input-heading">교량명</div>
                                         <div class="talk__input">
                                             <div class="c-search">
-                                                <input type="text" class="c-search__input">
+                                                <input type="text" id="sfName" name="sfName" class="c-search__input">
                                                 <button class="c-search__button">검색</button>
                                             </div>
                                         </div>
@@ -51,11 +55,11 @@
                                         <div class="talk__input-heading">교량형식</div>
                                         <div class="talk__input">
                                             <div class="c-select">
-                                                <select class="c-select__input">
-                                                    <option>RC 슬래브교</option>
-                                                    <option>RC 라멘교</option>
-                                                    <option>PSC I 거더교</option>
-                                                    <option>강박스교</option>
+                                                <select id="sfForm" name="sfForm" class="c-select__input">
+                                                    <option value="RC 슬래브교">RC 슬래브교</option>
+                                                    <option value="RC 라멘교">RC 라멘교</option>
+                                                    <option value="PSC I 거더교">PSC I 거더교</option>
+                                                    <option value="강박스교">강박스교</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -66,10 +70,10 @@
                                         <div class="talk__input-heading">교량 등급</div>
                                         <div class="talk__input">
                                             <div class="c-select">
-                                                <select class="c-select__input">
-                                                    <option>DB-24</option>
-                                                    <option>DB-18</option>
-                                                    <option>DB-13.5</option>
+                                                <select id="sfRank" name="sfRank" class="c-select__input">
+                                                    <option value="DB-24">DB-24</option>
+                                                    <option value="DB-18">DB-18</option>
+                                                    <option value="DB-13.5">DB-13.5</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -80,7 +84,7 @@
                                         <div class="talk__input-heading">총 길이</div>
                                         <div class="talk__input">
                                             <div class="c-text c-text--unit">
-                                                <input type="text" class="c-text__input">
+                                                <input id="sfLength" name="sfLength" type="text" class="c-text__input">
                                                 <span class="c-text__unit">m</span>
                                             </div>
                                         </div>
@@ -91,7 +95,7 @@
                                         <div class="talk__input-heading">총 폭</div>
                                         <div class="talk__input">
                                             <div class="c-text c-text--unit">
-                                                <input type="text" class="c-text__input">
+                                                <input id="sfWidth" name="sfWidth" type="text" class="c-text__input">
                                                 <span class="c-text__unit">m</span>
                                             </div>
                                         </div>
@@ -101,7 +105,9 @@
                                     <div class="talk__input-item">
                                         <div class="talk__input-heading">경간수</div>
                                         <div class="talk__input">
-                                            <div class="c-text"><input type="text" class="c-text__input"></div>
+                                            <div class="c-text">
+                                                <input id="sfNum" name="sfNum" type="text" class="c-text__input">
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -109,7 +115,9 @@
                                     <div class="talk__input-item">
                                         <div class="talk__input-heading">준공년도</div>
                                         <div class="talk__input">
-                                            <div class="c-text"><input type="text" class="c-text__input"></div>
+                                            <div class="c-text">
+                                                <input id="sfCompletionYear" name="sfCompletionYear" type="text" class="c-text__input">
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -118,7 +126,7 @@
                                         <div class="talk__input-heading">안전율</div>
                                         <div class="talk__input">
                                             <div class="c-text c-text--unit">
-                                                <input type="text" class="c-text__input">
+                                                <input id="sfFactor" name="sfFactor" type="text" class="c-text__input">
                                                 <span class="c-text__unit">%</span>
                                             </div>
                                         </div>
@@ -126,6 +134,7 @@
                                 </li>
                             </ul>
                         </div>
+                        </form>
                     </article>
                     <div class="talk__console">
                         <ul>
@@ -133,7 +142,7 @@
                                 <button class="c-button">신규</button>
                             </li>
                             <li>
-                                <button class="c-button c-button--point">저장</button>
+                                <button type="button" onclick="safetySave()" class="c-button c-button--point">저장</button>
                             </li>
                         </ul>
                     </div>

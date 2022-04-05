@@ -45,12 +45,16 @@ public class ResistanceController {
 
     // 계측 기반 안전성 추정 데이터 제공 - 조근희
     @RequestMapping("safetyinput")
-    public String safetyinput(){
+    public String safetyinput(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "resistance/safetyinput";
     }
 
     @RequestMapping("safetyoutput")
-    public String safetyoutput(){
+    public String safetyoutput(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "resistance/safetyoutput";
     }
 

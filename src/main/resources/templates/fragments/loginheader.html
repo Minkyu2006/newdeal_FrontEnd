@@ -49,7 +49,7 @@
 					<a href="#" class="nav__link toggle">데이터 기반 가상모델 구축 시스템</a>
 					<ul id="header_four" class="nav__list-depth">
 						<li class="nav__item"><a href="/resistance/pageselect" class="nav__link">교량 내하성능 추정 서비스</a></li>
-						<li class="nav__item"><a href="/resistance/safetyinput" class="nav__link">계측 기반 안전성 추정 데이터 제공 입력</a></li>
+						<li id="safetyInput" style="display: none" class="nav__item"><a href="/resistance/safetyinput" class="nav__link">계측 기반 안전성 추정 데이터 제공 입력</a></li>
 						<li class="nav__item"><a href="/resistance/safetyoutput" class="nav__link">계측 기반 안전성 추정 데이터 제공 서비스</a></li>
 						<!-- <li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">손상 확산 예측 서비스</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">AI기반 확장 열화모델</a></li>-->
@@ -129,8 +129,8 @@
 		function loginInfo(){
 			const username = getCookie("username");
 			const userrole = getCookie("userrole");
-			// console.log("username : "+username);
-			// console.log("userrole : "+userrole);
+			console.log("username : "+username);
+			console.log("userrole : "+userrole);
 
 			$("#userName").text(username);
 			$("#indexUser").text(username);
@@ -140,6 +140,12 @@
 			}else{
 				if(userrole==="관리자"){
 					// console.log("관리자 입니다.");
+					$("#safetyInput").css("display","block");
+					$userimage.attr('src','/assets/images/icon__admin.svg');
+					$userimage.attr("alt","admin");
+				}else if(userrole==="안전성요원") {
+					// console.log("안전성요원 입니다.");
+					$("#safetyInput").css("display","block");
 					$userimage.attr('src','/assets/images/icon__admin.svg');
 					$userimage.attr("alt","admin");
 				}else{

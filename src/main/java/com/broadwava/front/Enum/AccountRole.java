@@ -8,7 +8,8 @@ package com.broadwava.front.Enum;
  */
 public enum AccountRole {
     ROLE_USER("ROLE_USER", "사용자"),
-    ROLE_ADMIN("ROLE_ADMIN", "관리자");
+    ROLE_ADMIN("ROLE_ADMIN", "관리자"),
+    ROLE_SAFETY("ROLE_SAFETY", "안전성요원");
 
     private final String code;
     private final String desc;
