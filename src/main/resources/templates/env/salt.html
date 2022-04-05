@@ -73,7 +73,7 @@
 							</li>
 							<li>
 								<div class="talk__input-item">
-									<div class="talk__input-heading">높이(m)</div>
+									<div class="talk__input-heading">해수면으로부터 높이(m)</div>
 									<div class="talk__input">
 										<div class="c-text"><input type="text" class="c-text__input" id="seaHeight" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" value="1" /></div>
 									</div>
@@ -90,7 +90,10 @@
 					</div>
 					<div class="salt__output">
 						<h3 class="salt__title">추정 비래염분량</h3>
-						<div class="salt__count" id="seaAirResult">0</div>
+						<div class="salt__count">
+							<span id="seaAirResult">0</span>
+							<span class="salt__unit">mdd</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -147,7 +150,10 @@
 					</div>
 					<div class="salt__output">
 						<h3 class="salt__title">추정 비산염</h3>
-						<div class="salt__count" id="salt2" data-count="11.67">0</div>
+						<div class="salt__count">
+							<span id="salt2">0</span>
+							<span class="salt__unit">mdd</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -216,7 +222,10 @@
 					</div>
 					<div class="salt__output">
 						<h3 class="salt__title">추정 비산염</h3>
-						<div class="salt__count" id="salt3" data-count="1.17">0</div>
+						<div class="salt__count">
+							<span id="salt3">0</span>
+							<span class="salt__unit">mdd</span>
+						</div>
 					</div>
 				</div>
 			</div>

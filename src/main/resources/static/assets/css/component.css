@@ -554,6 +554,49 @@ input[type="number"]::-webkit-inner-spin-button {
 	display: block;
 	margin-bottom: 5px;
 }
+.c-search {
+    position: relative;
+    width: 100%;
+}
+.c-search:before {
+    content: " ";
+    display: table;
+}
+.c-search:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+.c-search__input {
+    float: left;
+    width: calc(100% - 30px);
+    height: 30px;
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    box-sizing: border-box;
+}
+.c-search__button {
+    float: left;
+    width: 30px;
+    height: 30px;
+    text-indent: -9999px;
+    background: #f8f8f8 url(/assets/images/icon__search--b.png) no-repeat;
+    background-size: 22px 22px;
+    background-position: center center;
+    border: 1px solid #d3d3d3;
+    border-left: 0 none;
+    border-radius: 3px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    cursor: pointer;
+}
+.c-search__button:hover {
+    background: #959595 url(/assets/images/icon__search--w.png) no-repeat;
+    background-size: 22px 22px;
+    background-position: center center;
+}
 
 /* field */
 .c-field {
@@ -749,13 +792,31 @@ a.c-button {
     font-weight: 700;
 }
 .c-button.c-button--point:hover {
-	background-color: ##1e3868;
+	background-color: #1e3868;
 	border-color: #1e3868;
 }
 .c-button.c-button--small {
     padding: 2px 5px;
     border-radius: 1px;
     font-size: 12px;
+}
+.c-button.c-button--solid {
+    background-color: #758fc7;
+    border-color: #758fc7;
+    color: #fff;
+}
+.c-button.c-button--red {
+    background-color: #b82c31;
+    border-color: #b82c31;
+    color: #fff
+}
+.c-button.c-button--excel {
+    padding-left: 38px;
+    background: #21a365 url(/assets/images/icon__excel.svg) no-repeat;
+    background-size: 18px 18px;
+    background-position: 10px center;
+    border-color: #01723a;
+    color: #fff;
 }
 
 /* select */

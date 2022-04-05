@@ -2,21 +2,27 @@
 // 계산된값 표출
 function countNum(elimentId, value) {
     const $this = $(elimentId);
+    // 소수점 2번째 자리 올림
+    const integer = value * 10;
+    const up = Math.ceil(integer);
+    const result = up / 10;
+    console.log(result)
 
     $({countNum: $this.text()}).animate({
-            countNum: value
+            countNum: result
         }, {
-            duration: 500,
+            duration: 1000,
             easing:'linear',
             step: function() {
-                $this.text(Math.floor(this.countNum));
+                $this.text(parseFloat(this.countNum).toFixed(1));
             },
             complete: function() {
-                $this.text(this.countNum);
+                $this.text(parseFloat(this.countNum).toFixed(1));
             }
         }
     );
 }
+
 
 // 해역선택후 지역데이터 select 생성
 function seaCheckChange(){

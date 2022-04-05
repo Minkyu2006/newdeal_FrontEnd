@@ -83,6 +83,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+* {
+	box-sizing: border-box;
+	background-repeat: no-repeat;
+}
 
 
 /* header */
@@ -800,6 +804,10 @@ table {
 .talk__console {
 	margin-top: 20px;
 }
+.talk__console:first-child {
+	margin-top: 0;
+	margin-bottom: 20px;
+}
 .talk__console:before,
 .talk__console ul:before {
 	content: " ";
@@ -814,9 +822,16 @@ table {
 .talk__console > ul {
 	float: right;
 }
+.talk__console > ul.talk__console--justify-between {
+	float: none;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
 .talk__console > ul li {
 	float: left;
 }
+
 .talk__console > ul li + li {
 	margin-left: 20px;
 }
@@ -1672,6 +1687,7 @@ table {
 	width: 100vw;
 	height: 100vh;
 	background-color: rgba(0, 0, 0, .4);
+	z-index: 1000;
 }
 .pop.open {
 	display: block;
@@ -2217,7 +2233,7 @@ h4.l-popup__heading {
 /* resistance */
 .resistance-layout {
 	display: flex;
-	jusify-content: center;
+	justify-content: center;
 }
 .resistance-layout .section {
 	height: calc(100vh - 134px);
@@ -2227,7 +2243,7 @@ h4.l-popup__heading {
 	margin-left: 20px;
 }
 .resistance-layout .section .section__content {
-	height: 796px;
+	height: 760px;
 }
 .resistance__chart {
 	height: 240px;
@@ -2308,6 +2324,10 @@ h4.l-popup__heading {
 	font-size: 84px;
 	font-weight: 700;
 	text-align: center;
+}
+.salt__unit {
+	padding-top: 30px;
+	font-size: 48px;
 }
 
 

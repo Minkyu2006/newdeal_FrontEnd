@@ -43,4 +43,15 @@ public class ResistanceController {
         return "resistance/output";
     }
 
+    // 계측 기반 안전성 추정 데이터 제공 - 조근희
+    @RequestMapping("safetyinput")
+    public String safetyinput(){
+        return "resistance/safetyinput";
+    }
+
+    @RequestMapping("safetyoutput")
+    public String safetyoutput(){
+        return "resistance/safetyoutput";
+    }
+
 }
