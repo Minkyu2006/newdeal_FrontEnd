@@ -14,7 +14,17 @@ const dtos = {
 
 /* 서버 API를 AJAX 통신으로 호출하며 커뮤니케이션 하는 함수들 (communications) */
 const comms = {
+    bridgeSearch(condition) {
+        CommonUI.ajax("/api/safety/bridgeDataList", "GET", condition, function (res) {
+            console.log(res);
+        });
+    },
 
+    bridgeSave(information) {
+        CommonUI.ajax("/api/safety/save", "POST", information, function (res) {
+            alertSuccess("교량 저장을 성공하였습니다.");
+        });
+    }
 };
 
 /*
@@ -24,7 +34,7 @@ const comms = {
 const grids = {
     s: { // 그리드 세팅
         id: [
-            "grid_main"
+            "grid_input", "grid_bridgeList"
         ],
         columnLayout: [],
         prop: [],
@@ -36,6 +46,37 @@ const grids = {
             /* 0번 그리드의 레이아웃 */
             grids.s.columnLayout[0] = [
                 {
+                    dataField: "calYyyymmdd",
+                    headerText: "계측일시",
+                }, {
+                    dataField: "calTemperature",
+                    headerText: "온도",
+                }, {
+                    dataField: "calCapacity",
+                    headerText: "공용 내하율",
+                },
+            ];
+
+            /* 0번 그리드의 프로퍼티(옵션) 아래의 링크를 참조
+            * https://www.auisoft.net/documentation/auigrid/DataGrid/Properties.html
+            * */
+            grids.s.prop[0] = {
+                editable : false,
+                selectionMode : "singleRow",
+                noDataMessage : "출력할 데이터가 없습니다.",
+                showAutoNoDataMessage: false,
+                enableColumnResize : false,
+                showRowAllCheckBox: false,
+                showRowCheckColumn: false,
+                showRowNumColumn : false,
+                showStateColumn : false,
+                enableFilter : false,
+                rowHeight : 48,
+                headerHeight : 48,
+            };
+
+            grids.s.columnLayout[1] = [
+                {
                     dataField: "",
                     headerText: "",
                 }, {
@@ -44,10 +85,7 @@ const grids = {
                 },
             ];
 
-            /* 0번 그리드의 프로퍼티(옵션) 아래의 링크를 참조
-            * https://www.auisoft.net/documentation/auigrid/DataGrid/Properties.html
-            * */
-            grids.s.prop[0] = {
+            grids.s.prop[1] = {
                 editable : false,
                 selectionMode : "singleRow",
                 noDataMessage : "출력할 데이터가 없습니다.",
@@ -70,15 +108,41 @@ const grids = {
 const trigs = {
     basic() {
         /* 0번그리드 내의 셀 클릭시 이벤트 */
-        AUIGrid.bind(grids.s.id[0], "cellClick", function (e) {
-            console.log(e.item);
+        // AUIGrid.bind(grids.s.id[0], "cellClick", function (e) {
+        //     console.log(e.item);
+        // });
+
+        $("#sfName").on("keypress", function (e) {
+            if(e.originalEvent.code === "Enter" || e.originalEvent.code === "NumpadEnter") {
+                bridgeSearch();
+            }
+        });
+
+        $("#bridgeSearch").on("click", function () {
+            bridgeSearch();
+        });
+
+        $("#bridgeSave").on("click", function () {
+            bridgeSave();
+        });
+
+        $("#bridgeNew").on("click", function () {
+            resetInput("insert");
+        });
+
+        $("#bridgeCancel").on("click", function () {
+            resetInput("search");
+        });
+
+        $('.pop__close').on('click', function(e) {
+            $('.pop').removeClass('open');
         });
     },
 }
 
 /* 통신 객체로 쓰이지 않는 일반적인 데이터들 정의 (warehouse) */
 const wares = {
-
+    currentBridge: {},
 }
 
 $(function() { // 페이지가 로드되고 나서 실행
@@ -88,13 +152,22 @@ $(function() { // 페이지가 로드되고 나서 실행
 /* 페이지가 로드되고 나서 실행 될 코드들을 담는다. */
 function onPageLoad() {
     grids.f.initialization();
-    // gridFunc.create();
+    gridFunc.create();
 
     trigs.basic();
 }
 
+function bridgeSearch() {
+    const condition = {
+        s_sfName: $("#sfName").val(),
+        s_sfForm: $("#sfForm").val(),
+        s_sfRank: $("#sfRank").val(),
+    }
+    comms.bridgeSearch(condition);
+}
+
 // 계측 기반 안전성 추정 데이터 제공 - 교량등록
-function safetySave(){
+function bridgeSave(){
     if($("#sfName").val()==="") {
         alertCaution("교량명을 입력해주세요.", 1)
         return false;
@@ -123,5 +196,89 @@ function safetySave(){
     if($("#sfFactor").val()==="") {
         alertCaution("안전율를 입력해주세요.", 1)
         return false;
+    }
+
+    const information = new FormData();
+    if(wares.currentBridge.sfId) {
+        information.set("sfId", wares.currentBridge.sfId);
+    }
+    information.set("sfName", $("#sfName").val());
+    information.set("sfForm", $("#sfForm").val());
+    information.set("sfRank", $("#sfRank").val());
+    information.set("sfLength", $("#sfLength").val());
+    information.set("sfWidth", $("#sfWidth").val());
+    information.set("sfNum", $("#sfNum").val());
+    information.set("sfCompletionYear", $("#sfCompletionYear").val());
+    information.set("sfFactor", $("#sfFactor").val());
+
+    comms.bridgeSave(information);
+}
+
+/* 교량 기본정보창의 동작에 따른 상태변경하며 리셋 */
+function resetInput(mode) {
+    const $name = $("#sfName");
+    const $form = $("#sfForm");
+    const $rank = $("#sfRank");
+    const $length = $("#sfLength");
+    const $width = $("#sfWidth");
+    const $num = $("#sfNum");
+    const $completionYear = $("#sfCompletionYear");
+    const $factor = $("#sfFactor");
+
+    $name.val("");
+    $form.val("00");
+    $rank.val("00");
+    $length.val("");
+    $width.val("");
+    $num.val("");
+    $completionYear.val("");
+    $factor.val("");
+
+    switch (mode) {
+        case "search" :
+            $length.prop("readonly", true);
+            $width.prop("readonly", true);
+            $num.prop("readonly", true);
+            $completionYear.prop("readonly", true);
+            $factor.prop("readonly", true);
+            $("#bridgeSearch").show();
+            $("#bridgeNew").parents("li").show();
+            $("#bridgeSave").parents("li").hide();
+            $("#bridgeCancel").parents("li").hide();
+            $("#sfFormTot").prop("disabled", false);
+            $("#sfRankTot").prop("disabled", false);
+            wares.currentBridge = {};
+            gridFunc.clear(0);
+            break;
+        case "modify" :
+            $length.prop("readonly", false);
+            $width.prop("readonly", false);
+            $num.prop("readonly", false);
+            $completionYear.prop("readonly", false);
+            $factor.prop("readonly", false);
+            $("#bridgeSearch").show();
+            $("#bridgeNew").parents("li").show();
+            $("#bridgeSave").parents("li").show();
+            $("#bridgeCancel").parents("li").show();
+            $("#sfFormTot").prop("disabled", false);
+            $("#sfRankTot").prop("disabled", false);
+            break;
+        case "insert" :
+            $length.prop("readonly", false);
+            $width.prop("readonly", false);
+            $num.prop("readonly", false);
+            $completionYear.prop("readonly", false);
+            $factor.prop("readonly", false);
+            $("#bridgeSearch").hide();
+            $("#bridgeNew").parents("li").hide();
+            $("#bridgeSave").parents("li").show();
+            $("#bridgeCancel").parents("li").show();
+            $("#sfFormTot").prop("disabled", true);
+            $("#sfRankTot").prop("disabled", true);
+            $form.val("01");
+            $rank.val("01");
+            wares.currentBridge = {};
+            gridFunc.clear(0);
+            break;
     }
 }
