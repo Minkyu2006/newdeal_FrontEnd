@@ -32,7 +32,6 @@ const grids = {
 
     f: { // 그리드 펑션
         initialization() { // 가시성을 위해 grids.s 의 일부 요소를 여기서 선언한다.
-
             /* 0번 그리드의 레이아웃 */
             grids.s.columnLayout[0] = [
                 {
@@ -62,8 +61,8 @@ const grids = {
                 headerHeight : 48,
             };
         },
-
     },
+
 };
 
 /* 이벤트를 설정하거나 해지하는 함수들을 담는다. */
@@ -91,37 +90,4 @@ function onPageLoad() {
     // gridFunc.create();
 
     trigs.basic();
-}
-
-// 계측 기반 안전성 추정 데이터 제공 - 교량등록
-function safetySave(){
-    if($("#sfName").val()==="") {
-        alertCaution("교량명을 입력해주세요.", 1)
-        return false;
-    }
-
-    if($("#sfLength").val()==="") {
-        alertCaution("총 길이를 입력해주세요.", 1)
-        return false;
-    }
-
-    if($("#sfWidth").val()==="") {
-        alertCaution("총 폭을 입력해주세요.", 1)
-        return false;
-    }
-
-    if($("#sfNum").val()==="") {
-        alertCaution("경간수를 입력해주세요.", 1)
-        return false;
-    }
-
-    if($("#sfCompletionYear").val()==="") {
-        alertCaution("준공년도를 입력해주세요.", 1)
-        return false;
-    }
-
-    if($("#sfFactor").val()==="") {
-        alertCaution("안전율를 입력해주세요.", 1)
-        return false;
-    }
 }
