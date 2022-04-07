@@ -6,6 +6,8 @@
 * 도입 : 2022-04-06
 * */
 class CommonUIClass {
+    name = {};
+
     constructor() {
         /* 숫자만 남긴 후 인트형으로 전환 */
         String.prototype.toInt = function () {
@@ -17,8 +19,28 @@ class CommonUIClass {
             return this.toString() ? this.replace(/[^0-9]/g, "") : "";
         }
 
+        String.prototype.toDecimal = function () {
+            return !isNaN(parseFloat(this)) ? parseFloat(this) : 0;
+        }
+
         this.auiGridFunc();
+        this.nameList();
     }
+
+    nameList() {
+        this.name.sfForm = {
+            "01": "RC 슬래브교",
+            "02": "RC 라멘교",
+            "03": "PSC I 거더교",
+            "04": "강박스교c",
+        };
+
+        this.name.sfRank = {
+            "01": "DB-24",
+            "02": "DB-18",
+            "03": "DB-13.5",
+        };
+    };
 
     /* AUIGrid 용 주요 기능의 공통 사용을 위함 */
     auiGridFunc() {
@@ -29,23 +51,48 @@ class CommonUIClass {
                 }
             },
 
-            get(numOfGrid) { // 해당 배열 번호 그리드의 url.read 를 참조하여 데이터를 그리드에 뿌린다.
-                return AUIGrid.getGridData(grids.s.id[numOfGrid]);
+            get(gridNo) { // 해당 배열 번호 그리드의 url.read 를 참조하여 데이터를 그리드에 뿌린다.
+                return AUIGrid.getGridData(grids.s.id[gridNo]);
             },
 
-            set(numOfGrid, data) { // 해당 배열 번호 그리드의 url.read 를 참조하여 데이터를 그리드에 뿌린다.
-                AUIGrid.setGridData(grids.s.id[numOfGrid], data);
+            set(gridNo, data) { // 해당 배열 번호 그리드의 url.read 를 참조하여 데이터를 그리드에 뿌린다.
+                AUIGrid.setGridData(grids.s.id[gridNo], data);
             },
 
-            clear(numOfGrid) { // 해당 배열 번호 그리드의 데이터 비우기
-                AUIGrid.clearGridData(grids.s.id[numOfGrid]);
+            clear(gridNo) { // 해당 배열 번호 그리드의 데이터 비우기
+                AUIGrid.clearGridData(grids.s.id[gridNo]);
             },
 
-            resize(num) { // 해당 배열 번호 그리드의 크기를 현제 그리드를 감싼 엘리먼트에 맞춰 조절
-                AUIGrid.resize(grids.s.id[num]);
+            resize(gridNo) { // 해당 배열 번호 그리드의 크기를 현제 그리드를 감싼 엘리먼트에 맞춰 조절
+                AUIGrid.resize(grids.s.id[gridNo]);
+            },
+
+            getSelectedItem(gridNo) {
+                const selected = AUIGrid.getSelectedItems(grids.s.id[gridNo]);
+                if(selected.length) {
+                    return selected[0].item;
+                }
+                return "";
+            },
+
+            addRow(gridNo, data = {}) {
+                AUIGrid.addRow(grids.s.id[gridNo], data, "last");
+            },
+
+            removeRow(gridNo, rowIndex = "selectedIndex") {
+                AUIGrid.removeRow(grids.s.id[gridNo], rowIndex);
+            },
+
+            getChangedItems(gridNo) {
+                const changedItems = {
+                    add: AUIGrid.getAddedRowItems(grids.s.id[gridNo]),
+                    update: AUIGrid.getEditedRowItems(grids.s.id[gridNo]),
+                    delete: AUIGrid.getRemovedItems(grids.s.id[gridNo]),
+                };
+                return changedItems;
             },
         }
-    }
+    };
 
     /*
     * 배열에 담긴 DOM ID들에 JqueryUI의 datepicker 를 적용한다.

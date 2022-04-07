@@ -17,12 +17,44 @@ const comms = {
     bridgeSearch(condition) {
         CommonUI.ajax("/api/safety/bridgeDataList", "GET", condition, function (res) {
             console.log(res);
+            const data = res.sendData.gridListData;
+            gridFunc.set(1, data);
+            gridFunc.resize(1);
+            $("#bridgeListPop").addClass("open");
         });
     },
 
     bridgeSave(information) {
         CommonUI.ajax("/api/safety/save", "POST", information, function (res) {
             alertSuccess("교량 저장을 성공하였습니다.");
+        });
+    },
+
+    getBridgeData(target) {
+        CommonUI.ajax("/api/safety/calculationDate", "GET", target, function (res) {
+            const data = res.sendData;
+            console.log(data);
+            wares.currentBridge = data.safetyInfo;
+
+            resetInput("modify");
+            $("#sfName").val(wares.currentBridge.sfName);
+            $("#sfForm").val(wares.currentBridge.sfForm);
+            $("#sfRank").val(wares.currentBridge.sfRank);
+            $("#sfLength").val(wares.currentBridge.sfLength);
+            $("#sfWidth").val(wares.currentBridge.sfWidth);
+            $("#sfNum").val(wares.currentBridge.sfNum);
+            $("#sfCompletionYear").val(wares.currentBridge.sfCompletionYear);
+            $("#sfFactor").val(wares.currentBridge.sfFactor);
+
+            gridFunc.set(0, data.gridListData);
+
+        });
+    },
+
+    saveDetailData(changedItems) {
+        console.log(changedItems);
+        CommonUI.ajax("/api/safety/calculationSave", "MAPPER", changedItems, function (res) {
+            console.log(res);
         });
     }
 };
@@ -34,7 +66,7 @@ const comms = {
 const grids = {
     s: { // 그리드 세팅
         id: [
-            "grid_input", "grid_bridgeList"
+            "grid_detail", "grid_bridgeList"
         ],
         columnLayout: [],
         prop: [],
@@ -48,12 +80,47 @@ const grids = {
                 {
                     dataField: "calYyyymmdd",
                     headerText: "계측일시",
+                    dataType: "date",
+                    defaultFormat : "yyyymmdd",
+                    formatString: "yyyy-mm-dd",
+                    editRenderer : {
+                        type : "CalendarRenderer",
+                        defaultFormat : "yyyymmdd",
+                        showEditorBtn : false,
+                        showEditorBtnOver : false,
+                        onlyCalendar : false,
+                        showExtraDays : true,
+                        validator : function(oldValue, newValue, item, dataField, fromClipboard) {
+                            let isValid = false;
+                            let formDate = newValue.numString().substring(0, 8);
+                            if (formDate.length === 8) {
+                                formDate = formDate.substring(0, 4) + "-" + formDate.substring(4, 6) + "-"
+                                    + formDate.substring(6,8);
+                                newValue = formDate;
+                                isValid = !isNaN(Date.parse(newValue));
+                            }
+                            // 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+                            return { "validate" : isValid, "message"  : "올바른 숫자 8자리를 입력해 주세요" };
+                        }
+                    },
                 }, {
                     dataField: "calTemperature",
-                    headerText: "온도",
+                    headerText: "온도 (℃)",
+                    dataType: "numeric",
+                    autoThousandSeparator: "true",
+                    labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                        if(value) item.calTemperature = value.toString().toDecimal();
+                        return item.calTemperature;
+                    },
                 }, {
                     dataField: "calCapacity",
-                    headerText: "공용 내하율",
+                    headerText: "공용 내하율 (%)",
+                    dataType: "numeric",
+                    autoThousandSeparator: "true",
+                    labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                        if(value) item.calCapacity = value.toString().toDecimal();
+                        return item.calCapacity;
+                    },
                 },
             ];
 
@@ -61,8 +128,8 @@ const grids = {
             * https://www.auisoft.net/documentation/auigrid/DataGrid/Properties.html
             * */
             grids.s.prop[0] = {
-                editable : false,
-                selectionMode : "singleRow",
+                editable : true,
+                selectionMode : "singleCell",
                 noDataMessage : "출력할 데이터가 없습니다.",
                 showAutoNoDataMessage: false,
                 enableColumnResize : false,
@@ -77,11 +144,29 @@ const grids = {
 
             grids.s.columnLayout[1] = [
                 {
-                    dataField: "",
-                    headerText: "",
+                    dataField: "sfName",
+                    headerText: "교량명",
                 }, {
-                    dataField: "",
-                    headerText: "",
+                    dataField: "sfForm",
+                    headerText: "교량형식",
+                    labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                        return CommonUI.name.sfForm[value];
+                    },
+                }, {
+                    dataField: "sfRank",
+                    headerText: "교량등급",
+                    labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                        return CommonUI.name.sfRank[value];
+                    },
+                }, {
+                    dataField: "sfCompletionYear",
+                    headerText: "준공년도",
+                }, {
+                    dataField: "sfFactor",
+                    headerText: "안전율",
+                    labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                        return value + " %";
+                    },
                 },
             ];
 
@@ -122,6 +207,15 @@ const trigs = {
             bridgeSearch();
         });
 
+        $("#bridgeSelect").on("click", function () {
+            const item = gridFunc.getSelectedItem(1);
+            if (item) {
+                bridgeSelect(item);
+            } else {
+                alertCaution("검색된 교량을 선택해 주세요", 1);
+            }
+        });
+
         $("#bridgeSave").on("click", function () {
             bridgeSave();
         });
@@ -138,6 +232,45 @@ const trigs = {
             $('.pop').removeClass('open');
         });
     },
+
+    gridDetail() {
+        $("#rowAdd").on('click', function() {
+            if (wares.currentBridge.id) {
+                gridFunc.addRow(0, {calYyyymmdd: "", calTemperature: "", calCapacity: ""});
+            } else {
+                alertCaution("먼저 교량을 선택해 주세요.", 1);
+            }
+        });
+
+        $("#rowDelete").on('click', function() {
+            if (wares.currentBridge.id) {
+                gridFunc.removeRow(0);
+            } else {
+                alertCaution("먼저 교량을 선택해 주세요.", 1);
+            }
+        });
+
+        $("#detailDataSave").on('click', function() {
+            if (wares.currentBridge.id) {
+                alertYesNo("안정성 추정 데이터를 저장 하시겠습니까?");
+                $("#answerYes").on("click", function () {
+                    detailDataSave();
+                });
+            } else {
+                alertCaution("먼저 교량을 선택해 주세요.", 1);
+            }
+
+        });
+
+        $("#excelUpload").on('click', function() {
+            if (wares.currentBridge.id) {
+
+            } else {
+                alertCaution("먼저 교량을 선택해 주세요.", 1);
+            }
+        });
+    },
+
 }
 
 /* 통신 객체로 쓰이지 않는 일반적인 데이터들 정의 (warehouse) */
@@ -155,6 +288,7 @@ function onPageLoad() {
     gridFunc.create();
 
     trigs.basic();
+    trigs.gridDetail();
 }
 
 function bridgeSearch() {
@@ -164,6 +298,20 @@ function bridgeSearch() {
         s_sfRank: $("#sfRank").val(),
     }
     comms.bridgeSearch(condition);
+}
+
+function bridgeSelect(item) {
+    wares.currentBridge = item;
+    const target = {
+        id: wares.currentBridge.id,
+    }
+    comms.getBridgeData(target);
+    closeBridgeListPop();
+}
+
+function closeBridgeListPop() {
+    $("#bridgeListPop").removeClass("open");
+    gridFunc.clear(1);
 }
 
 // 계측 기반 안전성 추정 데이터 제공 - 교량등록
@@ -199,8 +347,8 @@ function bridgeSave(){
     }
 
     const information = new FormData();
-    if(wares.currentBridge.sfId) {
-        information.set("sfId", wares.currentBridge.sfId);
+    if(wares.currentBridge.id) {
+        information.set("id", wares.currentBridge.id);
     }
     information.set("sfName", $("#sfName").val());
     information.set("sfForm", $("#sfForm").val());
@@ -281,4 +429,11 @@ function resetInput(mode) {
             gridFunc.clear(0);
             break;
     }
+}
+
+function detailDataSave() {
+    const changedItems = gridFunc.getChangedItems(0);
+    changedItems.id = wares.currentBridge.id;
+
+    comms.saveDetailData(changedItems);
 }
