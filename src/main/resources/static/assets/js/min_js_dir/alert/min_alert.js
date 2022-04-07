@@ -18,6 +18,13 @@ $(function() {
         $('#popupId').remove();
     });
 
+    $(document).on("click","#answerYes",function(){
+        $('#popupId').remove();
+    });
+    $(document).on("click","#answerNo",function(){
+        $('#popupId').remove();
+    });
+
     // $(document).on("click","#continueSuccessBtn",function(){
     //     continueSaveCheck()
     // });
@@ -161,6 +168,25 @@ function alertMiddleSaveCheck(text) { // 정말작성할껀지 확인하는창
     html +='<div class="popup__buttons">';
     html +='<button id="checkYesBtn" class="popup__btn popup__btn--success">예</button>';
     html +='<button id="checkNoBtn" class="popup__btn popup__btn--cancel">아니오</button>';
+    html +='</div>';
+    html +='</div>';
+    html +='</div>';
+
+    $('#alertpop').html(html);
+}
+
+function alertYesNo(text) { // 정말작성할껀지 확인하는창
+    let html = '';
+
+    html +='<div id="popupId" class="popup popup--dim">';
+    html +='<div class="popup__box">';
+    html +='<div class="popup__content">';
+    html +='<div class="popup__stat check"></div>';
+    html +='<div class="popup__text">'+text+'</div>';
+    html +='</div>';
+    html +='<div class="popup__buttons">';
+    html +='<button id="answerYes" class="popup__btn popup__btn--success">예</button>';
+    html +='<button id="answerNo" class="popup__btn popup__btn--cancel">아니오</button>';
     html +='</div>';
     html +='</div>';
     html +='</div>';
