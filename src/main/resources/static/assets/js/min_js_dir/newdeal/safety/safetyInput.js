@@ -5,7 +5,23 @@
 * */
 const dtos = {
     send: {
-
+        calculationSave: {
+            id: "n",
+            add: {
+                calCapacity: "n",
+                calTemperature: "n",
+                calYyyymmdd: "s",
+                _$uid: "d",
+            },
+            update: {
+                id: "n",
+                calCapacity: "n",
+                calTemperature: "n",
+                calYyyymmdd: "s",
+                _$uid: "d",
+            },
+            deleteList: "a",
+        },
     },
     receive: {
 
@@ -27,6 +43,7 @@ const comms = {
     bridgeSave(information) {
         CommonUI.ajax("/api/safety/save", "POST", information, function (res) {
             alertSuccess("교량 저장을 성공하였습니다.");
+            resetInput("search");
         });
     },
 
@@ -35,26 +52,19 @@ const comms = {
             const data = res.sendData;
             console.log(data);
             wares.currentBridge = data.safetyInfo;
-
-            resetInput("modify");
-            $("#sfName").val(wares.currentBridge.sfName);
-            $("#sfForm").val(wares.currentBridge.sfForm);
-            $("#sfRank").val(wares.currentBridge.sfRank);
-            $("#sfLength").val(wares.currentBridge.sfLength);
-            $("#sfWidth").val(wares.currentBridge.sfWidth);
-            $("#sfNum").val(wares.currentBridge.sfNum);
-            $("#sfCompletionYear").val(wares.currentBridge.sfCompletionYear);
-            $("#sfFactor").val(wares.currentBridge.sfFactor);
-
+            setInput();
             gridFunc.set(0, data.gridListData);
-
         });
     },
 
     saveDetailData(changedItems) {
-        console.log(changedItems);
+        dv.chk(changedItems, dtos.send.calculationSave, "안정성 추정 데이터 저장 보내기");
         CommonUI.ajax("/api/safety/calculationSave", "MAPPER", changedItems, function (res) {
-            console.log(res);
+            const target = {
+                id: wares.currentBridge.id,
+            }
+            comms.getBridgeData(target);
+            alertSuccess("안정성 추정 데이터 저장을 성공하였습니다.");
         });
     }
 };
@@ -101,7 +111,7 @@ const grids = {
                             }
                             // 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
                             return { "validate" : isValid, "message"  : "올바른 숫자 8자리를 입력해 주세요" };
-                        }
+                        },
                     },
                 }, {
                     dataField: "calTemperature",
@@ -193,12 +203,15 @@ const grids = {
 const trigs = {
     basic() {
         /* 0번그리드 내의 셀 클릭시 이벤트 */
-        // AUIGrid.bind(grids.s.id[0], "cellClick", function (e) {
-        //     console.log(e.item);
-        // });
+        AUIGrid.bind(grids.s.id[1], "cellDoubleClick", function () {
+            const item = gridFunc.getSelectedItem(1);
+            if (item) {
+                bridgeSelect(item);
+            }
+        });
 
         $("#sfName").on("keypress", function (e) {
-            if(e.originalEvent.code === "Enter" || e.originalEvent.code === "NumpadEnter") {
+            if(["search", "modify"].includes(wares.currentInputMode) && (e.originalEvent.code === "Enter" || e.originalEvent.code === "NumpadEnter")) {
                 bridgeSearch();
             }
         });
@@ -262,12 +275,16 @@ const trigs = {
 
         });
 
-        $("#excelUpload").on('click', function() {
+        $("#excelUpload").on('click', function () {
             if (wares.currentBridge.id) {
-
+                $("#excelInput").trigger("click");
             } else {
                 alertCaution("먼저 교량을 선택해 주세요.", 1);
             }
+        });
+
+        $("#excelInput").on('change', function (e) {
+            let file = e.target
         });
     },
 
@@ -276,6 +293,7 @@ const trigs = {
 /* 통신 객체로 쓰이지 않는 일반적인 데이터들 정의 (warehouse) */
 const wares = {
     currentBridge: {},
+    currentInputMode: "search",
 }
 
 $(function() { // 페이지가 로드되고 나서 실행
@@ -364,6 +382,8 @@ function bridgeSave(){
 
 /* 교량 기본정보창의 동작에 따른 상태변경하며 리셋 */
 function resetInput(mode) {
+    wares.currentInputMode = mode;
+
     const $name = $("#sfName");
     const $form = $("#sfForm");
     const $rank = $("#sfRank");
@@ -435,5 +455,24 @@ function detailDataSave() {
     const changedItems = gridFunc.getChangedItems(0);
     changedItems.id = wares.currentBridge.id;
 
+    let deleteList = [];
+    for(const {id} of changedItems.delete) {
+        deleteList.push(id);
+    }
+    delete changedItems.delete;
+    changedItems.deleteList = deleteList;
+
     comms.saveDetailData(changedItems);
+}
+
+function setInput() {
+    resetInput("modify");
+    $("#sfName").val(wares.currentBridge.sfName);
+    $("#sfForm").val(wares.currentBridge.sfForm);
+    $("#sfRank").val(wares.currentBridge.sfRank);
+    $("#sfLength").val(wares.currentBridge.sfLength);
+    $("#sfWidth").val(wares.currentBridge.sfWidth);
+    $("#sfNum").val(wares.currentBridge.sfNum);
+    $("#sfCompletionYear").val(wares.currentBridge.sfCompletionYear);
+    $("#sfFactor").val(wares.currentBridge.sfFactor);
 }

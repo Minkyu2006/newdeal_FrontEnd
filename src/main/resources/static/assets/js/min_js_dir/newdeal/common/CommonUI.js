@@ -235,6 +235,7 @@ class CommonUIClass {
         if (accessToken == null && refreshToken == null && insert_id == null) {
             alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
         }
+
         $(document).ajaxSend(function (e, xhr) {
             xhr.setRequestHeader("JWT_AccessToken", accessToken);
             xhr.setRequestHeader("insert_id",insert_id);
