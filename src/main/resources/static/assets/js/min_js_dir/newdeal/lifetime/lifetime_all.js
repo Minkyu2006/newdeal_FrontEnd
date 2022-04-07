@@ -331,60 +331,7 @@ function lifeAllTimeOutput(id){
                         title.paddingBottom = 8;
 
                         chart.data = request.sendData.chartDataList;
-                        // 차트 데이터 맵으로 가져오면될듯?
-                        // chart.data = [
-                        //     {
-                        //         // "date": new Date(2020, 1, 1),
-                        //         "category": 0,
-                        //         "maintenance": 1.0,
-                        //         "noAction": 1.0,
-                        //     },
-                        //     {
-                        //         "category": 10,
-                        //         "maintenance": 0.91,
-                        //         "noAction": 0.91,
-                        //     },
-                        //     {
-                        //         "category": 20,
-                        //         "maintenance": 0.85,
-                        //         "noAction": 0.63,
-                        //     },
-                        //     {
-                        //         "category": 30,
-                        //         "maintenance": 0.84,
-                        //         "noAction": 0.17,
-                        //     },
-                        //     {
-                        //         "category": 40,
-                        //         "maintenance": 0.82,
-                        //         "noAction": 0,
-                        //     },
-                        //     {
-                        //         "category": 50,
-                        //         "maintenance": 0.80,
-                        //         "noAction": 0,
-                        //     }, {
-                        //         "category": 60,
-                        //         "maintenance": 0.78,
-                        //         "noAction": 0,
-                        //     }, {
-                        //         "category": 70,
-                        //         "maintenance": 0.80,
-                        //         "noAction": 0,
-                        //     }, {
-                        //         "category": 80,
-                        //         "maintenance": 0.64,
-                        //         "noAction": 0,
-                        //     }, {
-                        //         "category": 90,
-                        //         "maintenance": 0.29,
-                        //         "noAction": 0,
-                        //     }, {
-                        //         "category": 100,
-                        //         "maintenance": 0,
-                        //         "noAction": 0,
-                        //     }
-                        // ];
+                        console.log(request.sendData.chartDataList);
 
                         // X축 차트 생성
                         const xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
@@ -429,8 +376,6 @@ function lifeAllTimeOutput(id){
                         createSeries("noAction", "무조치시 열화모델", am4core.color("#1c1d66"),am4core.color("#ffffff")); // 무조치시 열화모델 라인색 설정(완)
                         createSeries("preemptive", "선제적 유지관리", am4core.color("#6889e2"),am4core.color("#000000")); // 선제적 유지관리 라인색 설정(완)
                         createSeries("current", "현행 유지관리", am4core.color("#5fee83"),am4core.color("#000000")); // 현행 유지관리 라인색 설정(완)
-
-                        let label;
 
                         chart.paddingRight = 60;
                         chart.maskBullets = false;
