@@ -196,6 +196,18 @@ const grids = {
             };
         },
 
+        exportToXlsx() {
+            //FileSaver.js 로 로컬 다운로드가능 여부 확인
+            if(!AUIGrid.isAvailableLocalDownload(grids.s.id[0])) {
+                alertCaution("파일 다운로드가 불가능한 브라우저 입니다.", 1);
+                return;
+            }
+            AUIGrid.exportToXlsx(grids.s.id[0], {
+                fileName : "양식다운",
+                progressBar : true,
+            });
+        },
+
     },
 };
 
@@ -283,8 +295,18 @@ const trigs = {
             }
         });
 
-        $("#excelInput").on('change', function (e) {
-            let file = e.target
+        $("#excelInput").on('change', function (e) { // 엑셀을 통한 안정성 추정 데이터 입력부
+            let file = e.target.files[0];
+            const fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                let jsonData;
+                const fileData = e.target.result;
+                const readData = XLSX.read(fileData, {type: "binary"});
+                jsonData = XLSX.utils.sheet_to_json(readData.Sheets["Sheet 1"]);
+                setExcelData(jsonData);
+                $("#excelInput").val("");
+            };
+            fileReader.readAsBinaryString(file);
         });
     },
 
@@ -475,4 +497,127 @@ function setInput() {
     $("#sfNum").val(wares.currentBridge.sfNum);
     $("#sfCompletionYear").val(wares.currentBridge.sfCompletionYear);
     $("#sfFactor").val(wares.currentBridge.sfFactor);
+}
+
+function ProcessExcel(data) {
+    //Read the Excel File data.
+    var workbook = XLSX.read(data, {
+        type: 'binary'
+    });
+
+    //Fetch the name of First Sheet.
+    var firstSheet = workbook.SheetNames[0];
+
+    //Read all rows from First Sheet into an JSON array.
+    var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
+
+    //Create a HTML Table element.
+    var table = document.createElement("table");
+    table.border = "1";
+
+    //Add the header row.
+    var row = table.insertRow(-1);
+
+    //Add the header cells.
+    var headerCell = document.createElement("TH");
+    headerCell.innerHTML = "Id";
+    row.appendChild(headerCell);
+
+    headerCell = document.createElement("TH");
+    headerCell.innerHTML = "Name";
+    row.appendChild(headerCell);
+
+    headerCell = document.createElement("TH");
+    headerCell.innerHTML = "Country";
+    row.appendChild(headerCell);
+
+    //Add the data rows from Excel file.
+    for (var i = 0; i < excelRows.length; i++) {
+        //Add the data row.
+        var row = table.insertRow(-1);
+
+        //Add the data cells.
+        var cell = row.insertCell(-1);
+        cell.innerHTML = excelRows[i].Id;
+
+        cell = row.insertCell(-1);
+        cell.innerHTML = excelRows[i].Name;
+
+        cell = row.insertCell(-1);
+        cell.innerHTML = excelRows[i].Country;
+    }
+
+    var dvExcel = document.getElementById("dvExcel");
+    dvExcel.innerHTML = "";
+    dvExcel.appendChild(table);
+}
+
+function setExcelData(jsonData) {
+    const gridData = gridFunc.get(0);
+    const existDate = [];
+    for(const {calYyyymmdd} of gridData) {
+        existDate.push(calYyyymmdd.numString());
+    }
+
+    const refinedJsonData = [];
+    for(const obj of jsonData) {
+        const refinedObj = {
+            calYyyymmdd: dateValidation(obj["계측일시"]),
+            calTemperature: decimalValidation(obj["온도 (℃)"]),
+            calCapacity: decimalValidation(obj["공용 내하율 (%)"]),
+        };
+
+        if(refinedObj.calYyyymmdd === false) {
+            alertCancel("계측일시 데이터가 비었거나<br>잘못된 행이 존재합니다.<br>업로드 파일을 확인해 주세요.");
+            return false;
+        }
+        if(refinedObj.calTemperature === false) {
+            alertCancel("온도 데이터가 비었거나<br>잘못된 행이 존재합니다.<br>업로드 파일을 확인해 주세요.");
+            return false;
+        }
+        if(refinedObj.calCapacity === false) {
+            alertCancel("공용 내하율 데이터가 비었거나<br>잘못된 행이 존재합니다.<br>업로드 파일을 확인해 주세요.");
+            return false;
+        }
+        if(existDate.includes(refinedObj.calYyyymmdd)) {
+            alertCancel(`계측일시가 (${refinedObj.calYyyymmdd}) 중복됩니다.<br>업로드 파일을 확인해 주세요.`);
+            return false;
+        }
+
+        refinedJsonData.push(refinedObj);
+    }
+
+    for(const obj of refinedJsonData) {
+        gridFunc.addRow(0, obj);
+    }
+
+    alertSuccess("엑셀을 통한 입력을 완료하였습니다.<br>작업을 완료하셨다면 저장을 해주세요.");
+}
+
+function dateValidation(dateString) {
+    if(dateString) {
+        dateString = dateString.toString().numString();
+        const formDate = dateString.substring(0, 4) + "-" + dateString.substring(4, 6) + "-"
+            + dateString.substring(6, 8);
+        if (isNaN(Date.parse(formDate)) || dateString.length !== 8) {
+            return false;
+        } else {
+            return dateString;
+        }
+    } else {
+        return false;
+    }
+}
+
+function decimalValidation(value) {
+    if(value || value === 0) {
+        value = parseFloat(value.toString().replace(/[^0-9-.]/g, ""));
+        if(isNaN(value)) {
+            return false;
+        } else {
+            return value
+        }
+    } else {
+        return false;
+    }
 }
