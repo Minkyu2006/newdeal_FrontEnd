@@ -58,13 +58,13 @@ const comms = {
     },
 
     saveDetailData(changedItems) {
-        dv.chk(changedItems, dtos.send.calculationSave, "안정성 추정 데이터 저장 보내기");
+        dv.chk(changedItems, dtos.send.calculationSave, "안전성 추정 데이터 저장 보내기");
         CommonUI.ajax("/api/safety/calculationSave", "MAPPER", changedItems, function (res) {
             const target = {
                 id: wares.currentBridge.id,
             }
             comms.getBridgeData(target);
-            alertSuccess("안정성 추정 데이터 저장을 성공하였습니다.");
+            alertSuccess("안전성 추정 데이터 저장을 성공하였습니다.");
         });
     }
 };
@@ -89,7 +89,7 @@ const grids = {
             grids.s.columnLayout[0] = [
                 {
                     dataField: "calYyyymmdd",
-                    headerText: "계측일시",
+                    headerText: "계측일",
                     dataType: "date",
                     defaultFormat : "yyyymmdd",
                     formatString: "yyyy-mm-dd",
@@ -148,8 +148,6 @@ const grids = {
                 showRowNumColumn : false,
                 showStateColumn : false,
                 enableFilter : false,
-                rowHeight : 48,
-                headerHeight : 48,
             };
 
             grids.s.columnLayout[1] = [
@@ -191,8 +189,6 @@ const grids = {
                 showRowNumColumn : false,
                 showStateColumn : false,
                 enableFilter : false,
-                rowHeight : 48,
-                headerHeight : 48,
             };
         },
 
@@ -277,7 +273,7 @@ const trigs = {
 
         $("#detailDataSave").on('click', function() {
             if (wares.currentBridge.id) {
-                alertYesNo("안정성 추정 데이터를 저장 하시겠습니까?");
+                alertYesNo("안전성 추정 데이터를 저장 하시겠습니까?");
                 $("#answerYes").on("click", function () {
                     detailDataSave();
                 });
@@ -295,7 +291,7 @@ const trigs = {
             }
         });
 
-        $("#excelInput").on('change', function (e) { // 엑셀을 통한 안정성 추정 데이터 입력부
+        $("#excelInput").on('change', function (e) { // 엑셀을 통한 안전성 추정 데이터 입력부
             let file = e.target.files[0];
             const fileReader = new FileReader();
             fileReader.onload = function (e) {
@@ -474,6 +470,21 @@ function resetInput(mode) {
 }
 
 function detailDataSave() {
+    const gridData = gridFunc.get(0);
+    const existDate = [];
+    for (const {calYyyymmdd} of gridData) {
+        const refinedDate = calYyyymmdd.numString();
+        if (existDate.includes(refinedDate)) {
+            console.log("a");
+            setTimeout(function () {
+                alertCaution("계측일 데이터가 중복됩니다.<br>데이터 입력란을 확인해 주세요.", 1);
+            }, 0);
+            return false;
+        } else {
+            existDate.push(refinedDate);
+        }
+    }
+
     const changedItems = gridFunc.getChangedItems(0);
     changedItems.id = wares.currentBridge.id;
 
@@ -562,13 +573,13 @@ function setExcelData(jsonData) {
     const refinedJsonData = [];
     for(const obj of jsonData) {
         const refinedObj = {
-            calYyyymmdd: dateValidation(obj["계측일시"]),
+            calYyyymmdd: dateValidation(obj["계측일"]),
             calTemperature: decimalValidation(obj["온도 (℃)"]),
             calCapacity: decimalValidation(obj["공용 내하율 (%)"]),
         };
 
         if(refinedObj.calYyyymmdd === false) {
-            alertCancel("계측일시 데이터가 비었거나<br>잘못된 행이 존재합니다.<br>업로드 파일을 확인해 주세요.");
+            alertCancel("계측일 데이터가 비었거나<br>잘못된 행이 존재합니다.<br>업로드 파일을 확인해 주세요.");
             return false;
         }
         if(refinedObj.calTemperature === false) {
@@ -580,7 +591,7 @@ function setExcelData(jsonData) {
             return false;
         }
         if(existDate.includes(refinedObj.calYyyymmdd)) {
-            alertCancel(`계측일시가 (${refinedObj.calYyyymmdd}) 중복됩니다.<br>업로드 파일을 확인해 주세요.`);
+            alertCancel(`계측일이 (${refinedObj.calYyyymmdd}) 중복됩니다.<br>업로드 파일을 확인해 주세요.`);
             return false;
         }
 
