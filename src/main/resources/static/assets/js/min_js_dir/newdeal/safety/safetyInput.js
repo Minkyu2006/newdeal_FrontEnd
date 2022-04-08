@@ -192,18 +192,6 @@ const grids = {
             };
         },
 
-        exportToXlsx() {
-            //FileSaver.js 로 로컬 다운로드가능 여부 확인
-            if(!AUIGrid.isAvailableLocalDownload(grids.s.id[0])) {
-                alertCaution("파일 다운로드가 불가능한 브라우저 입니다.", 1);
-                return;
-            }
-            AUIGrid.exportToXlsx(grids.s.id[0], {
-                fileName : "양식다운",
-                progressBar : true,
-            });
-        },
-
     },
 };
 

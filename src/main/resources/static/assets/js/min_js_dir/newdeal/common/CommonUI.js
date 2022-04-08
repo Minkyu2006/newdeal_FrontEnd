@@ -23,6 +23,10 @@ class CommonUIClass {
             return !isNaN(parseFloat(this)) ? parseFloat(this) : 0;
         }
 
+        $('.pop__close').on('click', function(e) {
+            $('.pop').removeClass('open');
+        })
+
         this.auiGridFunc();
         this.nameList();
     }
