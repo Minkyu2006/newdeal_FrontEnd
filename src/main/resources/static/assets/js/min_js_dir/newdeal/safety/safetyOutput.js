@@ -281,13 +281,13 @@ function getBridgeInfo(num){
 
 function chartDemo(type, data) {
     if(wares[type]) {
-        wares[type].root.container.children.clear();
-    } else {
-        wares[type] = {};
-        // Create root element
-        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        wares[type].root = am5.Root.new(type);
+        wares[type].root.dispose();
     }
+    wares[type] = {};
+    // Create root element
+    // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+    wares[type].root = am5.Root.new(type);
+
     let root = wares[type].root;
 
     // Set themes
