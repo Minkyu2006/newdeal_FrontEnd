@@ -15,7 +15,8 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-	<script src="/assets/js/min_js_dir/newdeal/performance.js"></script>
+	<script src="/assets/js/min_js_dir/newdeal/performance/performanceInput.js"></script>
+	<script src="/assets/js/min_js_dir/newdeal/performance/performanceUpload.js"></script>
  	<script>
 		$(function() {
 			$("#header_two").addClass(' show');
@@ -443,8 +444,8 @@
 					</div>
 					<div class="pop__console">
 							<ul>
+								<li><button class="c-button c-button--point" id="devReady">사유서 PDF 다운로드</button></li>
 								<li><button class="c-button c-button--point" onclick="popClose()">확인</button></li>
-								<li><button class="c-button c-button--point" id="devReady">PDF 다운로드</button></li>
 							</ul>
 						</div>
 				</div>

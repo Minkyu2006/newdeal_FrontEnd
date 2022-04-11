@@ -20,7 +20,9 @@ $(function() {
 
     $(document).on("click","#answerYes",function(){
         $('#popupId').remove();
+        excelSend();
     });
+
     $(document).on("click","#answerNo",function(){
         $('#popupId').remove();
     });
