@@ -63,15 +63,35 @@
 		<h2 class="content__heading">성능개선 사업평가 참조 테이블</h2>
 		<div class="tabs">
 			<div class="tabs__head">
-				<button class="tabs__btn active">기술성</button>
+				<button class="tabs__btn active">가중치</button>
+				<button class="tabs__btn">기술성</button>
 				<button class="tabs__btn">경제성</button>
 				<button class="tabs__btn">정책성</button>
 				<button class="tabs__btn">물가지수</button>
 			</div>
 			<div class="tabs__body">
 
-				<!-- 기술성 -->
+				<!-- 가중치 -->
 				<div class="tabs__content active">
+					<form id="weightForm" enctype="multipart/form-data">
+						<section class="section">
+							<h3 class="section__heading">평가로직 참조 테이블</h3>
+
+				
+
+						</section>
+					</form>
+					<div class="talk__console">
+						<ul>
+							<li>
+								<button onclick="techSettingSave()" class="c-button c-button--point">완료</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- 기술성 -->
+				<div class="tabs__content">
 					<form id="techForm" enctype="multipart/form-data">
 						<section class="section">
 							<h3 class="section__heading">평가로직 참조 테이블</h3>
@@ -1062,9 +1082,9 @@
 												<tr>
 													<th>E</th>
 													<td>
-														<div class="c-text"><input type="number" id="piEcoImproEMax" name="piEcoImproEMax" placeholder="0.5"  class="c-text__input" /></div>
 													</td>
 													<td>
+														<div class="c-text"><input type="number" id="piEcoImproEMax" name="piEcoImproEMax" placeholder="0.5"  class="c-text__input" /></div>
 													</td>
 													<td>
 														<div class="c-text"><input type="number" id="piEcoImproEScore" name="piEcoImproEScore" placeholder="30"  class="c-text__input" /></div>
