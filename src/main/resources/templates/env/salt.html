@@ -19,230 +19,239 @@
 <div layout:fragment="content" class="content">
 	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
-	<div class="content__inner">
-		<h2 class="content__heading">대기중 염분량 추정 서비스</h2>
-		<section class="section non-padding">
-			<div class="section__head">
-				<h3 class="section__heading">해안가 대기중 비래염분 추정</h3>
-			</div>
-			<div class="section__content">
-				<div class="salt salt--split">
-					<div class="salt__input">
-						<ul class="talk__list">
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">해역</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select id="seaCheck" onchange="seaCheckChange();" class="c-select__input">
-												<option value="1">동해안</option>
-												<option value="2">서해안</option>
-												<option value="3">남해안</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">지역</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select id="seaArea" class="c-select__input">
-												<option value="4.3_11">고성</option>
-												<option value="2.4_11">속초</option>
-												<option value="7.7_11">주문진</option>
-												<option value="6.7_11">삼척</option>
-												<option value="5.1_12">울진</option>
-												<option value="3.0_12">영덕</option>
-												<option value="6.2_12">포항</option>
-												<option value="7.6_12">울산</option>
-												<option value="2.2_12">부산</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">해안거리(m)</div>
-									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" id="seaDistance" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" value="250" /></div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">해수면으로부터 높이(m)</div>
-									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" id="seaHeight" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" value="1" /></div>
-									</div>
-								</div>
-							</li>
-						</ul>
-						<div class="talk__console">
-							<ul>
-								<li>
-									<a onclick="seaAir()" class="c-button c-button--point">계산하기</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="salt__output">
-						<h3 class="salt__title">추정 비래염분량</h3>
-						<div class="salt__count">
-							<span id="seaAirResult">0</span>
-							<span class="salt__unit">mdd</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-		<section class="section non-padding">
-			<div class="section__head">
-				<h3 class="section__heading">제설제 비산염 추정</h3>
-			</div>
-			<div class="section__content">
-				<div class="salt salt--split">
-					<div class="salt__input">
-						<ul class="talk__list">
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">지역</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>태안</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">도로와의 이격거리(m)</div>
-									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" value="250" /></div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">도로기준 방향</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>동</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul>
-						<div class="talk__console">
-							<ul>
-								<li>
-									<a href="#salt2" class="c-button c-button--point">계산하기</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="salt__output">
-						<h3 class="salt__title">추정 비산염</h3>
-						<div class="salt__count">
-							<span id="salt2">0</span>
-							<span class="salt__unit">mdd</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-		<section class="section non-padding">
-			<div class="section__head">
-				<h3 class="section__heading">해상교량 높이별 비산염 추정</h3>
-			</div>
-			<div class="section__content">
-				<div class="salt salt--split">
-					<div class="salt__input">
-						<ul class="talk__list">
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">해역</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>서해</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">지역</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>태안</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">해수면으로부터 높이(m)</div>
-									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" value="250" /></div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">교량 진행방향</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>동</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul>
-						<div class="talk__console">
-							<ul>
-								<li>
-									<a href="#salt3" class="c-button c-button--point">계산하기</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="salt__output">
-						<h3 class="salt__title">추정 비산염</h3>
-						<div class="salt__count">
-							<span id="salt3">0</span>
-							<span class="salt__unit">mdd</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
 
-		<div class="l-popup">
-			<div class="l-popup__container">
-				<div class="l-popup__content" style="text-align: center; line-height: 1.6;">
-					<p>해당 서비스는 추후 개발될 서비스의 샘플페이지입니다.</p>
-					<p>실제 동작하지는 않으며 추후 개발될 서비스의 예상페이지 입니다.</p>
+	<h2 class="content__heading">대기중 염분량 추정 서비스</h2>
+	<div class="c-flex">
+		<div class="c-flex__box">
+			<section class="section non-padding">
+				<div class="section__head">
+					<h3 class="section__heading">해안가 대기중 비래염분 추정</h3>
 				</div>
-				<div class="l-popup__function">
-					<ul class="l-popup__function-list">
-						<li class="l-popup__function-item"><button id="close" class="c-button c-button--point">닫기</button></li>
-					</ul>
+				<div class="section__content">
+					<div class="salt salt--split">
+						<div class="salt__input">
+							<ul class="talk__list">
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">해역</div>
+										<div class="talk__input">
+											<div class="c-select">
+												<select id="seaCheck" onchange="seaCheckChange();" class="c-select__input">
+													<option value="1">동해안</option>
+													<option value="2">서해안</option>
+													<option value="3">남해안</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">지역</div>
+										<div class="talk__input">
+											<div class="c-select">
+												<select id="seaArea" class="c-select__input">
+													<option value="4.3_11">고성</option>
+													<option value="2.4_11">속초</option>
+													<option value="7.7_11">주문진</option>
+													<option value="6.7_11">삼척</option>
+													<option value="5.1_12">울진</option>
+													<option value="3.0_12">영덕</option>
+													<option value="6.2_12">포항</option>
+													<option value="7.6_12">울산</option>
+													<option value="2.2_12">부산</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">해안거리(m)</div>
+										<div class="talk__input">
+											<div class="c-text"><input type="text" class="c-text__input" id="seaDistance" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" value="250" /></div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">해수면으로부터 높이(m)</div>
+										<div class="talk__input">
+											<div class="c-text"><input type="text" class="c-text__input" id="seaHeight" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" value="1" /></div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<div class="talk__console">
+								<ul>
+									<li>
+										<a onclick="seaAir()" class="c-button c-button--point">계산하기</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="salt__output">
+							<h3 class="salt__title">추정 비래염분량</h3>
+							<div class="salt__count">
+								<span id="seaAirResult">0</span>
+								<span class="salt__unit">mdd</span>
+							</div>
+						</div>
+					</div>
 				</div>
+			</section>
+
+			<section class="section non-padding">
+				<div class="section__head">
+					<h3 class="section__heading">제설제 비산염 추정</h3>
+				</div>
+				<div class="section__content">
+					<div class="salt salt--split">
+						<div class="salt__input">
+							<ul class="talk__list">
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">지역</div>
+										<div class="talk__input">
+											<div class="c-select">
+												<select class="c-select__input">
+													<option>태안</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">도로와의 이격거리(m)</div>
+										<div class="talk__input">
+											<div class="c-text"><input type="text" class="c-text__input" value="250" /></div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">도로기준 방향</div>
+										<div class="talk__input">
+											<div class="c-select">
+												<select class="c-select__input">
+													<option>동</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<div class="talk__console">
+								<ul>
+									<li>
+										<a href="#salt2" class="c-button c-button--point">계산하기</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="salt__output">
+							<h3 class="salt__title">추정 비산염</h3>
+							<div class="salt__count">
+								<span id="salt2">0</span>
+								<span class="salt__unit">mdd</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="section non-padding">
+				<div class="section__head">
+					<h3 class="section__heading">해상교량 높이별 비산염 추정</h3>
+				</div>
+				<div class="section__content">
+					<div class="salt salt--split">
+						<div class="salt__input">
+							<ul class="talk__list">
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">해역</div>
+										<div class="talk__input">
+											<div class="c-select">
+												<select class="c-select__input">
+													<option>서해</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">지역</div>
+										<div class="talk__input">
+											<div class="c-select">
+												<select class="c-select__input">
+													<option>태안</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">해수면으로부터 높이(m)</div>
+										<div class="talk__input">
+											<div class="c-text"><input type="text" class="c-text__input" value="250" /></div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="talk__input-item">
+										<div class="talk__input-heading">교량 진행방향</div>
+										<div class="talk__input">
+											<div class="c-select">
+												<select class="c-select__input">
+													<option>동</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<div class="talk__console">
+								<ul>
+									<li>
+										<a href="#salt3" class="c-button c-button--point">계산하기</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="salt__output">
+							<h3 class="salt__title">추정 비산염</h3>
+							<div class="salt__count">
+								<span id="salt3">0</span>
+								<span class="salt__unit">mdd</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<div class="c-flex__box" style="margin-left: 20px;">
+			<div class="salt-map" style="width: 100%; height: 823px; border: 1px solid #333;">지도영역</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="l-popup">
+		<div class="l-popup__container">
+			<div class="l-popup__content" style="text-align: center; line-height: 1.6;">
+				<p>해당 서비스는 추후 개발될 서비스의 샘플페이지입니다.</p>
+				<p>실제 동작하지는 않으며 추후 개발될 서비스의 예상페이지 입니다.</p>
+			</div>
+			<div class="l-popup__function">
+				<ul class="l-popup__function-list">
+					<li class="l-popup__function-item"><button id="close" class="c-button c-button--point">닫기</button></li>
+				</ul>
 			</div>
 		</div>
 	</div>
