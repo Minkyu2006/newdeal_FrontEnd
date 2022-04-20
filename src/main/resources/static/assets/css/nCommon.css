@@ -1300,6 +1300,12 @@ table {
 .tabs__content.active {
 	display: block;
 }
+.tabs__content .article > h4 {
+	margin-bottom: 10px;
+}
+.tabs__content .talk__console {
+	padding: 10px;
+}
 .tabs__flex {
 	display: flex;
 }

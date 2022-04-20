@@ -76,9 +76,362 @@
 					<form id="weightForm" enctype="multipart/form-data">
 						<section class="section">
 							<h3 class="section__heading">평가로직 참조 테이블</h3>
+							<article class="article">
+								<h4>노후화 유형</h4>
+								<table class="c-table c-table--border">
+									<colgroup>
+										<col>
+										<col>
+										<col>
+										<col>
+										<col>
+									</colgroup>
+									<thead>
+										<tr>
+											<th>평가 지표</th>
+											<th>항목</th>
+											<th>표준 가중치</th>
+											<th>최소 가중치</th>
+											<th>최대 가중치</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th rowspan="4">기술성</th>
+											<th>안전성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>노후도</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>지체도</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>목표달성도</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th rowspan="2">경제성</th>
+											<th>안전효용 개선 효율성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>자산가치 개선 효율성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th rowspan="3">정책성</th>
+											<th>사업추진 타당성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>민원 및 사고 대응성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>사업효과 범용성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</article>
 
-				
+							<div class="article">
+								<h4>사용성변화 유형</h4>
+								<table class="c-table c-table--border">
+									<colgroup>
+										<col>
+										<col>
+										<col>
+										<col>
+										<col>
+									</colgroup>
+									<thead>
+										<tr>
+											<th>평가 지표</th>
+											<th>항목</th>
+											<th>표준 가중치</th>
+											<th>최소 가중치</th>
+											<th>최대 가중치</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th rowspan="3">기술성</th>
+											<th>안전성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>사용성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>노후도</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th rowspan="2">경제성</th>
+											<th>사업규모 등급</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>사업효율 등급</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th rowspan="3">정책성</th>
+											<th>사업추진 타당성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>민원 및 사고 대응성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>사업효과 범용성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 
+							<div class="article">
+								<h4>기준변화 유형형</h4>
+								<table class="c-table c-table--border">
+									<colgroup>
+										<col>
+										<col>
+										<col>
+										<col>
+										<col>
+									</colgroup>
+									<thead>
+										<tr>
+											<th>평가 지표</th>
+											<th>항목</th>
+											<th>표준 가중치</th>
+											<th>최소 가중치</th>
+											<th>최대 가중치</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th rowspan="2"기술성></th>
+											<th>안전성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>노후도</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th rowspan="2">경제성</th>
+											<th>사업규모 등급</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>사업효율 등급</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th rowspan="2">정책성</th>
+											<th>사업추진 타당성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+										<tr>
+											<th>사업효과 범용성</th>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+											<td>
+												<div class="c-text"><input type="number" class="c-text__input"></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</section>
 					</form>
 					<div class="talk__console">
