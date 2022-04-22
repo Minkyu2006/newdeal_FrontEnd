@@ -21,9 +21,19 @@
 		$(function() {
 			$("#header_two").addClass(' show');
 			logreg(1,"의사결정 시스템","성능개선 사업평가 서비스",null);
-			const  autoNum = $("#autoNum").val();
-			if(autoNum===""){
-				inputMiddleSaveCheck();
+
+			const  autoNum = $("#autoNum");
+			const url = new URL(window.location.href);
+			const params = url.searchParams;
+			if(params.has("autoNum")) {
+				const autoNumParam = params.get("autoNum");
+				console.log("autoNumParam : "+autoNumParam);
+				autoNum.val(autoNumParam);
+				startYesorNo(true);
+			}else{
+				if(autoNum.val()===""){
+					inputMiddleSaveCheck();
+				}
 			}
 
 			$('#devReady').click(function() { // pdf저장 button id

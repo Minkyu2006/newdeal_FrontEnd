@@ -24,6 +24,7 @@
 			techSettingData();
 			ecoSettingData();
 			policySettingData();
+			weightSettingData();
 			priceCallList(1,2);
 
 			logreg(1,"기초정보","성능개선 사업평가 참조테이블",null);
@@ -90,7 +91,7 @@
 										<tr>
 											<th>평가 지표</th>
 											<th>항목</th>
-											<th>표준 가중치</th>
+											<th>기준 가중치</th>
 											<th>최소 가중치</th>
 											<th>최대 가중치</th>
 										</tr>
@@ -100,111 +101,111 @@
 											<th rowspan="4">기술성</th>
 											<th>안전성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldSafetyStan" name="piOldSafetyStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldSafetyMin" name="piOldSafetyMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldSafetyMax" name="piOldSafetyMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>노후도</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldOldStan" name="piOldOldStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldOldMin" name="piOldOldMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldOldMax" name="piOldOldMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>지체도</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldUrgencyStan" name="piOldUrgencyStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldUrgencyMin" name="piOldUrgencyMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldUrgencyMax" name="piOldUrgencyMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>목표달성도</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldGoalStan" name="piOldGoalStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldGoalMin" name="piOldGoalMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldGoalMax" name="piOldGoalMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th rowspan="2">경제성</th>
 											<th>안전효용 개선 효율성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldSafeUtilityStan" name="piOldSafeUtilityStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldSafeUtilityMin" name="piOldSafeUtilityMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldSafeUtilityMax" name="piOldSafeUtilityMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>자산가치 개선 효율성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldCostUtilityStan" name="piOldCostUtilityStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldCostUtilityMin" name="piOldCostUtilityMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldCostUtilityMax" name="piOldCostUtilityMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th rowspan="3">정책성</th>
 											<th>사업추진 타당성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldBusinessStan" name="piOldBusinessStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldBusinessMin" name="piOldBusinessMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldBusinessMax" name="piOldBusinessMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>민원 및 사고 대응성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldComplaintStan" name="piOldComplaintStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldComplaintMin" name="piOldComplaintMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldComplaintMax" name="piOldComplaintMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>사업효과 범용성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldBusinessEffectStan" name="piOldBusinessEffectStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldBusinessEffectMin" name="piOldBusinessEffectMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piOldBusinessEffectMax" name="piOldBusinessEffectMax" class="c-text__input"></div>
 											</td>
 										</tr>
 									</tbody>
@@ -225,7 +226,7 @@
 										<tr>
 											<th>평가 지표</th>
 											<th>항목</th>
-											<th>표준 가중치</th>
+											<th>기준 가중치</th>
 											<th>최소 가중치</th>
 											<th>최대 가중치</th>
 										</tr>
@@ -235,99 +236,99 @@
 											<th rowspan="3">기술성</th>
 											<th>안전성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseSafetyStan" name="piUseSafetyStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseSafetyMin" name="piUseSafetyMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseSafetyMax" name="piUseSafetyMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>사용성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseUsabilityStan" name="piUseUsabilityStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseUsabilityMin" name="piUseUsabilityMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseUsabilityMax" name="piUseUsabilityMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>노후도</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseOldStan" name="piUseOldStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseOldMin" name="piUseOldMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseOldMax" name="piUseOldMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th rowspan="2">경제성</th>
 											<th>사업규모 등급</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessScaleRankStan" name="piUseBusinessScaleRankStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessScaleRankMin" name="piUseBusinessScaleRankMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessScaleRankMax" name="piUseBusinessScaleRankMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>사업효율 등급</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessEffectRankStan" name="piUseBusinessEffectRankStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessEffectRankMin" name="piUseBusinessEffectRankMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessEffectRankMax" name="piUseBusinessEffectRankMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th rowspan="3">정책성</th>
 											<th>사업추진 타당성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessStan" name="piUseBusinessStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessMin" name="piUseBusinessMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessMax" name="piUseBusinessMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>민원 및 사고 대응성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseComplaintStan" name="piUseComplaintStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseComplaintMin" name="piUseComplaintMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseComplaintMax" name="piUseComplaintMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>사업효과 범용성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessEffectStan" name="piUseBusinessEffectStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessEffectMin" name="piUseBusinessEffectMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piUseBusinessEffectMax" name="piUseBusinessEffectMax" class="c-text__input"></div>
 											</td>
 										</tr>
 									</tbody>
@@ -335,7 +336,7 @@
 							</div>
 
 							<div class="article">
-								<h4>기준변화 유형형</h4>
+								<h4>기준변화 유형</h4>
 								<table class="c-table c-table--border">
 									<colgroup>
 										<col>
@@ -348,85 +349,85 @@
 										<tr>
 											<th>평가 지표</th>
 											<th>항목</th>
-											<th>표준 가중치</th>
+											<th>기준 가중치</th>
 											<th>최소 가중치</th>
 											<th>최대 가중치</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<th rowspan="2"기술성></th>
+											<th rowspan="2">기술성</th>
 											<th>안전성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseSafetyStan" name="piBaseSafetyStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseSafetyMin" name="piBaseSafetyMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseSafetyMax" name="piBaseSafetyMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>노후도</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseOldStan" name="piBaseOldStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseOldMin" name="piBaseOldMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseOldMax" name="piBaseOldMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th rowspan="2">경제성</th>
 											<th>사업규모 등급</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessScaleRankStan" name="piBaseBusinessScaleRankStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessScaleRankMin" name="piBaseBusinessScaleRankMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessScaleRankMax" name="piBaseBusinessScaleRankMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>사업효율 등급</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessEffectRankStan" name="piBaseBusinessEffectRankStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessEffectRankMin" name="piBaseBusinessEffectRankMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessEffectRankMax" name="piBaseBusinessEffectRankMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th rowspan="2">정책성</th>
 											<th>사업추진 타당성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessStan" name="piBaseBusinessStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessMin" name="piBaseBusinessMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessMax" name="piBaseBusinessMax" class="c-text__input"></div>
 											</td>
 										</tr>
 										<tr>
 											<th>사업효과 범용성</th>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessEffectStan" name="piBaseBusinessEffectStan" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessEffectMin" name="piBaseBusinessEffectMin" class="c-text__input"></div>
 											</td>
 											<td>
-												<div class="c-text"><input type="number" class="c-text__input"></div>
+												<div class="c-text"><input type="number" id="piBaseBusinessEffectMax" name="piBaseBusinessEffectMax" class="c-text__input"></div>
 											</td>
 										</tr>
 									</tbody>
@@ -437,7 +438,7 @@
 					<div class="talk__console">
 						<ul>
 							<li>
-								<button onclick="techSettingSave()" class="c-button c-button--point">완료</button>
+								<button onclick="weightSettingSave()" class="c-button c-button--point">완료</button>
 							</li>
 						</ul>
 					</div>

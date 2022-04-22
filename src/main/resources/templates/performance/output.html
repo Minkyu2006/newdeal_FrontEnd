@@ -7,11 +7,17 @@
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
 
+	<style>
+		#loader {display:none;z-index:999;width:100%;height:100%;position:fixed;top:0;left:0;background:#000;opacity:.5;}
+		#loader span {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);display: inline-block;color:#fff;font-weight:bold;}
+	</style>
+
 </th:block>
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
 
+	<script src="/assets/js/min_js_dir/newdeal/performance/performanceInput.js"></script>
 	<script src="/assets/js/min_js_dir/newdeal/performance/performanceOutput.js"></script>
 	<script type="text/javascript">
 		$(function() {
@@ -19,42 +25,9 @@
 			const autoNum = $("#autoNum").val();
 			call_performance(autoNum);
 			logreg(1,"의사결정 시스템","대안Output",autoNum);
-
-			$('#devReady').click(function() { // pdf저장 button id
-				html2canvas($('#performance')[0]).then(function(canvas) { //저장 영역 div id
-					// 캔버스를 이미지로 변환
-					const imgData = canvas.toDataURL('image/png');
-					const imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
-					const pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
-					const imgHeight = canvas.height * imgWidth / canvas.width;
-					let heightLeft = imgHeight;
-					const margin = 10; // 출력 페이지 여백설정
-					const doc = new jsPDF('p', 'mm','a4');
-					let position = 0;
-
-					// 첫 페이지 출력
-					doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-					heightLeft -= pageHeight;
-
-					// 한 페이지 이상일 경우 루프 돌면서 출력
-					while (heightLeft >= 20) {
-						position = heightLeft - imgHeight;
-						doc.addPage();
-						doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-						heightLeft -= pageHeight;
-					}
-					// 파일 저장
-					doc.save($("#autoNum").val()+"_PDF파일");
-				});
-			});
-
 		});
-
-		function devReady(){
-			alertCaution("해당 기능은 현재개발중 입니다.",1)
-		}
-
 	</script>
+
 </th:block>
 
 <div layout:fragment="content" class="content">
@@ -62,178 +35,165 @@
 	<input type="hidden" id="backend_url" th:value="${backend_url}" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
 
-	<div class="content__inner">
+	<div id="outputPerformanceDiv" class="content__inner">
+		<div id="loader" style="font-size: 20px"><span>잠시만 기다려주세요...</span></div>
 
-		<div class="performance" id="performance">
+		<div class="performance" id="performance"> <!--	전체 Div 시작 -->
 
-			<div class="talk">
-				<div class="talk__box">
-					<p class="performance-output__comment">본 사업은 사업비용, 시설유형, 적용대상, 중복평가, 의무사업, 확정사업 요건을 보두 충족하는 <span>평가대상 사업</span>입니다.</p>
+			<div class="pdfArea"> <!--	1번째 PDF area Div 시작 -->
+				<div class="talk">
+					<div class="talk__box">
+						<p class="performance-output__comment">본 사업은 사업비용, 시설유형, 적용대상, 중복평가, 의무사업, 확정사업 요건을 보두 충족하는 <span>평가대상 사업</span>입니다.</p>
+					</div>
 				</div>
-			</div>
-			
-			
 
-			<div class="talk">
-				<h2 class="performance-output__heading">도로시설 성능개선 사업성 평가</h2>
-				
-				<h2 class="content__heading">1. 성능개선 사업성 평가 개요</h2>
+				<div class="talk">
 
-				<div class="talk__box">
-					<div class="performance-output">
-						<div class="performance-output__result">
-							가. 본 사업은 법정계획/설계기준에 따른 의무사업으로써, 성능개선 사업 유형 중 노후화 유형 사업에 해당
-							<br />
-							나. 국토부 성능개선 기준에 따라, 성능개선 대안과 유지보수 대안을 설정하고 대안별 기술성, 경제성, 정책성을 평가하여, 사업의 추진여부 및 최적대안을 선정
+					<h2 class="performance-output__heading">도로시설 성능개선 사업성 평가</h2>
+
+					<h2 class="content__heading">1. 성능개선 사업성 평가 개요</h2>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<div id="piBusinessName" class="performance-output__result">
+<!--							가. 본 사업은 법정계획/설계기준에 따른 의무사업으로써, 성능개선 사업 유형 중 노후화 유형 사업에 해당-->
+<!--							<br />-->
+<!--							나. 국토부 성능개선 기준에 따라, 성능개선 대안과 유지보수 대안을 설정하고 대안별 기술성, 경제성, 정책성을 평가하여, 사업의 추진여부 및 최적대안을 선정-->
+							</div>
+						</div>
+					</div>
+
+					<h2 class="content__heading">2. 성능개선 대상시설 및 사업 추진대안 정보</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<div id="typeName" class="performance-output__result">
+<!--							대상 시설은 교량(신응교)으로, 평가에 활용된 시설정보, 이용정보, 사업정보, 여건정보, 평가정보는 이하와 같음-->
+							</div>
+						</div>
+					</div>
+
+					<h2 class="content__heading">표 1. 성능개선 사업 정보</h2>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>시설 정보</h3>
+							<table id="outputTableFacility" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>이용 정보</h3>
+							<table id="outputTableUsage" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>사업 정보</h3>
+							<table id="outputTableBusiness" style="text-align: center" class="c-table c-table--in-border"></table>
 						</div>
 					</div>
 				</div>
+			</div> <!--	1번째 PDF area Div 끝 -->
 
-				<h2 class="content__heading">2. 성능개선 대상시설 및 사업 추진대안 정보</h2>
-				<div class="talk__box">
-					<div class="performance-output">
-						<div class="performance-output__result">
-							대상 시설은 교량(신응교)으로, 평가에 활용된 시설정보, 이용정보, 사업정보, 여건정보, 평가정보는 이하와 같음
+			<div class="pdfArea" style="margin-top: 20px"> <!--	2번째 PDF area Div 시작 -->
+				<div class="talk">
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>여건 정보</h3>
+							<table id="outputTableCondition" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>평가 정보</h3>
+							<table id="outputTableEvaluation" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<h2 class="content__heading">3. 성능개선 사업성 평가 내용</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<div id="explanationName" style="font-size: 15px" class="performance-output__result"></div>
+						</div>
+					</div>
+
+					<h2 class="content__heading">표 2. 이용자 적용 가중치 표</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>기술성</h3>
+							<table id="outputTableWeightT" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>경제성</h3>
+							<table id="outputTableWeightE" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>정책성</h3>
+							<table id="outputTableWeightP" style="text-align: center" class="c-table c-table--in-border"></table>
 						</div>
 					</div>
 				</div>
+			</div> <!--	2번째 PDF area Div 끝 -->
 
-				<h2 class="content__heading">표 1. 성능개선 사업 정보</h2>
-				
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>시설 정보</h3>
-						<table id="outputTableFacility" class="c-table c-table--in-border"></table>
-					</div>
-				</div>
-				
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>이용 정보</h3>
-						<table id="outputTableUsage" class="c-table c-table--in-border"></table>
-					</div>
-				</div>
-				
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>사업 정보</h3>
-						<table id="outputTableBusiness" class="c-table c-table--in-border"></table>
-					</div>
-				</div>
-				
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>여건 정보</h3>
-						<table id="outputTableCondition" class="c-table c-table--in-border"></table>
-					</div>
-				</div>
+			<div class="pdfArea" style="margin-top: 20px"> <!--	3번째 PDF area Div 시작 -->
+				<div class="talk">
+					<h2 class="content__heading">표 3. 사업성 평가결과 부분별 요약 표</h2>
 
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>평가 정보</h3>
-						<table id="outputTableEvaluation" class="c-table c-table--in-border"></table>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>기술성</h3>
+							<table id="technicalityTable" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
 					</div>
-				</div>
-			</div>
 
-			<div class="talk">
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>경제성</h3>
+							<table id="economyTable" style="text-align: center" class="c-table c-table--in-border">
+							</table>
+						</div>
+					</div>
 
-				<h2 class="content__heading">3. 성능개선 사업성 평가 내용</h2>
-				<div class="talk__box">
-					<div class="performance-output">
-						<div class="performance-output__result">
-							가. 본 성능개선 사업성 평가는 스마트 교량 유지관리 플랫폼에서 제공하는 "성능개선사업 간소화 평가 서비스(한국건설기술연구원, 2021)"를
-							<br />
-							적용하여 자동화 평가 시행
-							<br />
-							나. 이용자가 정의한 각 평가지표별 가중치 및 평가결과표는 다음과 같음
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>정책성</h3>
+							<table id="policyTable" style="text-align: center" class="c-table c-table--in-border">
+							</table>
+						</div>
+					</div>
+
+					<h2 class="content__heading">표 4. 사업성 평가결과 종합 표</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>결과</h3>
+							<table id="allScoreRankTable" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<h2 class="content__heading">4. 성능개선 사업성 종합평가 결과</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<div id="resultName" class="performance-output__result"></div>
 						</div>
 					</div>
 				</div>
+			</div> <!--	3번째 PDF area Div 끝 -->
 
-				<h2 class="content__heading">표 2. 이용자 적용 가중치 표</h2>
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>기술성</h3>
-						<table id="outputTableWeightT" class="c-table c-table--in-border"></table>
-					</div>
-				</div>
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>경제성</h3>
-						<table id="outputTableWeightE" class="c-table c-table--in-border"></table>
-					</div>
-				</div>
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>정책성</h3>
-						<table id="outputTableWeightP" class="c-table c-table--in-border"></table>
-					</div>
-				</div>
-			</div>
+		</div> <!--	전체 Div 끝 -->
 
-			<div class="talk">
-				<h2 class="content__heading">표 3. 사업성 평가결과 부분별 요약 표</h2>
-				
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>기술성</h3>
-						<table id="technicalityTable" class="c-table c-table--in-border"></table>
-					</div>
-				</div>
-
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>경제성</h3>
-						<table id="economyTable" class="c-table c-table--in-border">
-						</table>
-					</div>
-				</div>
-				
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>정책성</h3>
-						<table id="policyTable" class="c-table c-table--in-border">
-						</table>
-					</div>
-				</div>
-
-			</div>
-
-			<div class="talk">
-				<h2 class="content__heading">표 4. 사업성 평가결과 종합 표</h2>
-				<div class="talk__box">
-					<div class="performance-output">
-						<h3>결과</h3>
-						<table id="allScoreRankTable" class="c-table c-table--in-border"></table>
-					</div>
-				</div>
-			</div>
-
-			<div class="talk">
-				<h2 class="content__heading">4. 성능개선 사업성 종합평가 결과</h2>
-				<div class="talk__box">
-					<div class="performance-output">
-						<div class="performance-output__result">
-							가. 대안별 사업추진 타당성 평가
-							<br />
-							- 성능개선 대안은 B0(60.3)으로 사업성 충족
-							<br />
-							- 유지보수 대안은 C+(56.9)으로 사업성 충족
-							<br />
-							나. 우수 사업대안 선정
-							<br />
-							- 성능개선 대안이 우수
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<div class="talk__console">
 			<ul>
 				<li>
-					<button class="c-button c-button--point" id="devReady">PDF 다운로드</button>
+					<button class="c-button c-button--point" onclick="createPdf()">PDF 다운로드</button>
+					<button class="c-button c-button--point" onclick="backBtn()">사업내용 조정 및 재평가</button>
 				</li>
 			</ul>
 		</div>

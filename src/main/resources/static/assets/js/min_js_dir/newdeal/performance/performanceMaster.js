@@ -2,6 +2,200 @@
 
 
 // 성능개선사업평가 아웃풋 계산값 셋팅 저장함수
+
+// 가중치
+function weightSettingSave(){
+
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else {
+
+        const formData = new FormData(document.getElementById('weightForm'));
+
+        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/reference/weightSettingSave"; // 호출할 백엔드 API
+        // console.log("url : " + url);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data : formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id", insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                }else if(request.status === 400) {
+                    // console.log("request.status : " + request.status + " => 400에러");
+                    alertCaution("400에러 재로그인 해주세요.", 2);
+                } else {
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                // console.log("status : " + status);
+                if (status === 200) {
+                    // console.log("적용완료");
+                    alertSuccess("적용 완료했습니다.");
+                    weightSettingData();
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
+// 가중치 데이터 호출
+function weightSettingData(){
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        // console.log("callinfo(userid)함수 : 토큰&리플레시&로그인한아이디 Null");
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else if (accessToken == null) {
+        refreshTokenCookie();
+    } else {
+
+        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/reference/weightSettingData"; // 호출할 백엔드 API
+        // console.log("url : " + url);
+        $.ajax({
+            url: url,
+            type: 'GET',
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                }else if(request.status === 400) {
+                    // console.log("request.status : " + request.status + " => 400에러");
+                    alertCaution("400에러 재로그인 해주세요.", 2);
+                } else {
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                // console.log("status : " + status);
+                if (status === 200) {
+
+                    // console.log(request.sendData.weight);
+
+                    $("#piOldSafetyStan").val(request.sendData.weight.piOldSafetyStan);
+                    $("#piOldSafetyMin").val(request.sendData.weight.piOldSafetyMin);
+                    $("#piOldSafetyMax").val(request.sendData.weight.piOldSafetyMax);
+                    $("#piOldOldStan").val(request.sendData.weight.piOldOldStan);
+                    $("#piOldOldMin").val(request.sendData.weight.piOldOldMin);
+                    $("#piOldOldMax").val(request.sendData.weight.piOldOldMax);
+                    $("#piOldUrgencyStan").val(request.sendData.weight.piOldUrgencyStan);
+                    $("#piOldUrgencyMin").val(request.sendData.weight.piOldUrgencyMin);
+                    $("#piOldUrgencyMax").val(request.sendData.weight.piOldUrgencyMax);
+                    $("#piOldGoalStan").val(request.sendData.weight.piOldGoalStan);
+                    $("#piOldGoalMin").val(request.sendData.weight.piOldGoalMin);
+                    $("#piOldGoalMax").val(request.sendData.weight.piOldGoalMax);
+
+                    $("#piOldSafeUtilityStan").val(request.sendData.weight.piOldSafeUtilityStan);
+                    $("#piOldSafeUtilityMin").val(request.sendData.weight.piOldSafeUtilityMin);
+                    $("#piOldSafeUtilityMax").val(request.sendData.weight.piOldSafeUtilityMax);
+                    $("#piOldCostUtilityStan").val(request.sendData.weight.piOldCostUtilityStan);
+                    $("#piOldCostUtilityMin").val(request.sendData.weight.piOldCostUtilityMin);
+                    $("#piOldCostUtilityMax").val(request.sendData.weight.piOldCostUtilityMax);
+
+                    $("#piOldBusinessStan").val(request.sendData.weight.piOldBusinessStan);
+                    $("#piOldBusinessMin").val(request.sendData.weight.piOldBusinessMin);
+                    $("#piOldBusinessMax").val(request.sendData.weight.piOldBusinessMax);
+                    $("#piOldComplaintStan").val(request.sendData.weight.piOldComplaintStan);
+                    $("#piOldComplaintMin").val(request.sendData.weight.piOldComplaintMin);
+                    $("#piOldComplaintMax").val(request.sendData.weight.piOldComplaintMax);
+                    $("#piOldBusinessEffectStan").val(request.sendData.weight.piOldBusinessEffectStan);
+                    $("#piOldBusinessEffectMin").val(request.sendData.weight.piOldBusinessEffectMin);
+                    $("#piOldBusinessEffectMax").val(request.sendData.weight.piOldBusinessEffectMax);
+
+
+                    $("#piUseSafetyStan").val(request.sendData.weight.piUseSafetyStan);
+                    $("#piUseSafetyMin").val(request.sendData.weight.piUseSafetyMin);
+                    $("#piUseSafetyMax").val(request.sendData.weight.piUseSafetyMax);
+                    $("#piUseUsabilityStan").val(request.sendData.weight.piUseUsabilityStan);
+                    $("#piUseUsabilityMin").val(request.sendData.weight.piUseUsabilityMin);
+                    $("#piUseUsabilityMax").val(request.sendData.weight.piUseUsabilityMax);
+                    $("#piUseOldStan").val(request.sendData.weight.piUseOldStan);
+                    $("#piUseOldMin").val(request.sendData.weight.piUseOldMin);
+                    $("#piUseOldMax").val(request.sendData.weight.piUseOldMax);
+
+                    $("#piUseBusinessScaleRankStan").val(request.sendData.weight.piUseBusinessScaleRankStan);
+                    $("#piUseBusinessScaleRankMin").val(request.sendData.weight.piUseBusinessScaleRankMin);
+                    $("#piUseBusinessScaleRankMax").val(request.sendData.weight.piUseBusinessScaleRankMax);
+                    $("#piUseBusinessEffectRankStan").val(request.sendData.weight.piUseBusinessEffectRankStan);
+                    $("#piUseBusinessEffectRankMin").val(request.sendData.weight.piUseBusinessEffectRankMin);
+                    $("#piUseBusinessEffectRankMax").val(request.sendData.weight.piUseBusinessEffectRankMax);
+
+                    $("#piUseBusinessStan").val(request.sendData.weight.piUseBusinessStan);
+                    $("#piUseBusinessMin").val(request.sendData.weight.piUseBusinessMin);
+                    $("#piUseBusinessMax").val(request.sendData.weight.piUseBusinessMax);
+                    $("#piUseComplaintStan").val(request.sendData.weight.piUseComplaintStan);
+                    $("#piUseComplaintMin").val(request.sendData.weight.piUseComplaintMin);
+                    $("#piUseComplaintMax").val(request.sendData.weight.piUseComplaintMax);
+                    $("#piUseBusinessEffectStan").val(request.sendData.weight.piUseBusinessEffectStan);
+                    $("#piUseBusinessEffectMin").val(request.sendData.weight.piUseBusinessEffectMin);
+                    $("#piUseBusinessEffectMax").val(request.sendData.weight.piUseBusinessEffectMax);
+
+
+                    $("#piBaseSafetyStan").val(request.sendData.weight.piBaseSafetyStan);
+                    $("#piBaseSafetyMin").val(request.sendData.weight.piBaseSafetyMin);
+                    $("#piBaseSafetyMax").val(request.sendData.weight.piBaseSafetyMax);
+                    $("#piBaseOldStan").val(request.sendData.weight.piBaseOldStan);
+                    $("#piBaseOldMin").val(request.sendData.weight.piBaseOldMin);
+                    $("#piBaseOldMax").val(request.sendData.weight.piBaseOldMax);
+
+                    $("#piBaseBusinessScaleRankStan").val(request.sendData.weight.piBaseBusinessScaleRankStan);
+                    $("#piBaseBusinessScaleRankMin").val(request.sendData.weight.piBaseBusinessScaleRankMin);
+                    $("#piBaseBusinessScaleRankMax").val(request.sendData.weight.piBaseBusinessScaleRankMax);
+                    $("#piBaseBusinessEffectRankStan").val(request.sendData.weight.piBaseBusinessEffectRankStan);
+                    $("#piBaseBusinessEffectRankMin").val(request.sendData.weight.piBaseBusinessEffectRankMin);
+                    $("#piBaseBusinessEffectRankMax").val(request.sendData.weight.piBaseBusinessEffectRankMax);
+
+                    $("#piBaseBusinessStan").val(request.sendData.weight.piBaseBusinessStan);
+                    $("#piBaseBusinessMin").val(request.sendData.weight.piBaseBusinessMin);
+                    $("#piBaseBusinessMax").val(request.sendData.weight.piBaseBusinessMax);
+                    $("#piBaseBusinessEffectStan").val(request.sendData.weight.piBaseBusinessEffectStan);
+                    $("#piBaseBusinessEffectMin").val(request.sendData.weight.piBaseBusinessEffectMin);
+                    $("#piBaseBusinessEffectMax").val(request.sendData.weight.piBaseBusinessEffectMax);
+
+
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
 // 기술성
 function techSettingSave(){
 

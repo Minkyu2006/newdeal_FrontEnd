@@ -36,20 +36,86 @@ function call_performance(autoNum){
             error: function (request) {
                 if (request.status === 500) {
                     // console.log("request.status : " + request.status + " => 500에러");
-                    alertCaution("500에러 재로그인 해주세요.", 2);
+                    alertCaution("500에러 재로그인 해주세요.", 1);
                 }else if(request.status === 400) {
                     // console.log("request.status : " + request.status + " => 400에러");
-                    alertCaution("400에러 재로그인 해주세요.", 2);
+                    alertCaution("400에러 재로그인 해주세요.", 1);
                 } else {
                     // console.log("request.status : " + request.status + " => 404에러");
-                    alertCaution("404에러 재로그인 해주세요.", 2);
+                    alertCaution("404에러 재로그인 해주세요.", 1);
                 }
             },
             success: function (request) {
                 let status = request.status;
-                // console.log("status : " + status);
+                console.log("status : " + status);
                 if (status === 200) {
-                    // console.log("아웃풋 성공");
+                    console.log("아웃풋 성공");
+                    console.log("");
+
+                    const piBusiness = request.sendData.piBusiness;
+                    const typeName = request.sendData.typeName
+                    console.log("사업구분 : " + piBusiness);
+                    console.log("시설유형 : "+ typeName);
+                    console.log("");
+
+                    console.log("각 데이터");
+                    console.log(request.sendData.weightList);
+                    console.log(request.sendData.performanceList);
+                    console.log("performanceSize : "+request.sendData.performanceSize);
+                    console.log(request.sendData.weightResultList);
+                    console.log("");
+
+                    const weightResultList = request.sendData.weightResultList;
+
+                    console.log("기술성");
+                    console.log(request.sendData.technicalityScore);
+                    console.log(request.sendData.technicalityRank);
+                    console.log("");
+
+                    console.log("경제성");
+                    console.log(request.sendData.economyScore);
+                    console.log(request.sendData.economyRank);
+                    console.log("");
+
+                    console.log("정책성");
+                    console.log(request.sendData.policyScore);
+                    console.log(request.sendData.policyRank);
+                    console.log("");
+
+                    console.log("종합데이터");
+                    console.log(request.sendData.allScroeMap);
+                    console.log(request.sendData.allRankMap);
+                    console.log(request.sendData.allBusinessMap);
+                    console.log("allGreate : "+request.sendData.allGreate);
+                    console.log("");
+
+                    // 성능개선 사업성 평가 개요 Text
+                    const $piBusinessName = $("#piBusinessName");
+                    let piBusinessNameText = "가. 본 사업은 ";
+                    if(request.sendData.performanceList[0].piBusinessObligatory === 1){
+                        piBusinessNameText = piBusinessNameText+"법에 따른 의무사업으로써, ";
+                    }else if(request.sendData.performanceList[0].piBusinessMandatory === 1){
+                        piBusinessNameText = piBusinessNameText+"법정계획에 따른 의무사업으로써, ";
+                    }else if(request.sendData.performanceList[0].piBusinessPlanned === 1){
+                        piBusinessNameText = piBusinessNameText+"자체계획/의결에 따른 사업으로써, ";
+                    }
+
+                    piBusinessNameText = piBusinessNameText+"성능개선 사업 유형 중 "+piBusiness+" 유형 사업에 해당<br />" +
+                        "나. 국토부 성능개선 기준에 따라, 성능개선 대안과 유지보수 대안을 설정하고 대안별 기술성, 경제성, 정책성을 평가하여, 사업의 추진여부 및 최적대안을 선정";
+                    $piBusinessName.html(piBusinessNameText);
+
+                    // 성능개선 대상시설 및 사업 추진대앙 정보 Text
+                    const $typeName = $("#typeName");
+                    let typeNameText = "대상 시설은 "+request.sendData.performanceList[0].piFacilityType+"("+request.sendData.performanceList[0].piType+")으로, "+
+                        "평가에 활용된 시설정보, 이용정보, 사업정보, 여건정보, 평가정보는 이하와 같음";
+                    $typeName.html(typeNameText);
+
+                    // 성능개선 사업성 평가 내용 Text
+                    const $explanationName = $("#explanationName");
+                    let explanationNameText = "가. 본 성능개선 사업성 평가는 스마트 교량 유지관리 플랫폼에서 제공하는 \"성능개선사업 간소화 평가 서비스(한국건설기술연구원, "+
+                        request.sendData.nowYear+")\"를 적용하여 자동화 평가 시행<br />"+
+                        "나. 이용자가 정의한 각 평가지표별 가중치 및 평가결과표는 다음과 같음";
+                    $explanationName.html(explanationNameText);
 
                     // 시설 정보 테이블
                     const $outputTableFacility = $('#outputTableFacility');
@@ -101,12 +167,14 @@ function call_performance(autoNum){
                     }
                     html += '</tr>';
 
-                    html += '<tr>';
-                    html += '<th>'+'취득원가'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html += '<td>'+pushComma(request.sendData.performanceList[j].piErectionCost)+'</td>';
+                    if(piBusiness === "노후화대응") {
+                        html += '<tr>';
+                        html += '<th>' + '취득원가' + '</th>';
+                        for (let j = 0; j < request.sendData.performanceSize; j++) {
+                            html += '<td>' + pushComma(request.sendData.performanceList[j].piErectionCost) + '</td>';
+                        }
+                        html += '</tr>';
                     }
-                    html += '</tr>';
 
                     html += '<tr>';
                     html += '<th>'+'안전등급'+'</th>';
@@ -115,33 +183,37 @@ function call_performance(autoNum){
                     }
                     html += '</tr>';
 
-                    if(request.sendData.typeName==="교량" || request.sendData.typeName==="터널" ){
+                    if(piBusiness === "사용성변화"){
+                        if(typeName==="교량" || typeName==="터널" ){
+                            html += '<tr>';
+                            html += '<th>'+'사용성등급'+'</th>';
+                            for(let j=0; j<request.sendData.performanceSize; j++){
+                                html += '<td>'+request.sendData.performanceList[j].piUsabilityAndGoalLevel+'</td>';
+                            }
+                            html += '</tr>';
+                        }else{
+                            html += '<tr>';
+                            html += '<th>'+'사용성등급'+'</th>';
+                            html += '<td>'+'-'+'</td>';
+                            html += '</tr>';
+                        }
+                    }
+
+                    if(piBusiness === "노후화대응"){
                         html += '<tr>';
-                        html += '<th>'+'사용성등급'+'</th>';
+                        html += '<th>'+'목표 안전등급'+'</th>';
                         for(let j=0; j<request.sendData.performanceSize; j++){
-                            html += '<td>'+request.sendData.performanceList[j].piUsabilityLevel+'</td>';
+                            html += '<td>'+request.sendData.performanceList[j].piUsabilityAndGoalLevel+'</td>';
                         }
                         html += '</tr>';
-                    }else{
+
                         html += '<tr>';
-                        html += '<th>'+'사용성등급'+'</th>';
-                        html += '<td>'+'-'+'</td>';
+                        html += '<th>'+'유지보수 지연기간'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html += '<td>'+request.sendData.performanceList[j].piMaintenanceDelay+'</td>';
+                        }
                         html += '</tr>';
                     }
-
-                    html += '<tr>';
-                    html += '<th>'+'목표등급'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html += '<td>'+request.sendData.performanceList[j].piGoalLevel+'</td>';
-                    }
-                    html += '</tr>';
-
-                    html += '<tr>';
-                    html += '<th>'+'유지보수 지연기간'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html += '<td>'+request.sendData.performanceList[j].piMaintenanceDelay+'</td>';
-                    }
-                    html += '</tr>';
 
                     html += '<tr>';
                     html += '<th>'+'관리주체'+'</th>';
@@ -158,8 +230,9 @@ function call_performance(autoNum){
                     html += '</tr>';
 
                     html += '</tbody>';
-
                     $outputTableFacility.html(html);
+
+
 
                     // 이용 정보 테이블
                     const $outputTableUsage = $('#outputTableUsage');
@@ -179,11 +252,15 @@ function call_performance(autoNum){
                             html2 += '<td>'+pushComma(request.sendData.performanceList[j].piAADT)+'</td>';
                         }
                         html2 += '</tr>';
+
                     html2 += '</tbody>';
                     $outputTableUsage.html(html2);
 
+
+
                     // 사업 정보 테이블
                     const $outputTableBusiness = $('#outputTableBusiness');
+
                     let html3 = '';
                     html3 += '<thead>';
                     html3 += '<tr>';
@@ -196,16 +273,16 @@ function call_performance(autoNum){
                     html3 += '<tbody>';
 
                     html3 += '<tr>';
-                    html3 += '<th>'+'사업구분'+'</th>';
+                    html3 += '<th>'+'사업유형'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html3 += '<td>'+request.sendData.performanceList[j].piBusiness+'</td>';
+                        html3 += '<td>'+request.sendData.performanceList[j].piBusinessType+' 유형'+'</td>';
                     }
                     html3 += '</tr>';
 
                     html3 += '<tr>';
-                    html3 += '<th>'+'사업유형'+'</th>';
+                    html3 += '<th>'+'사업구분'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html3 += '<td>'+request.sendData.performanceList[j].piBusinessType+'</td>';
+                        html3 += '<td>'+request.sendData.performanceList[j].piBusiness+'</td>';
                     }
                     html3 += '</tr>';
 
@@ -230,19 +307,21 @@ function call_performance(autoNum){
                     }
                     html3 += '</tr>';
 
-                    html3 += '<tr>';
-                    html3 += '<th>'+'사업전 부재 안전등급'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html3 += '<td>'+request.sendData.performanceList[j].piBeforeSafetyRating+'</td>';
-                    }
-                    html3 += '</tr>';
+                    if(piBusiness === "노후화대응") {
+                        html3 += '<tr>';
+                        html3 += '<th>' + '사업전 부재 안전등급' + '</th>';
+                        for (let j = 0; j < request.sendData.performanceSize; j++) {
+                            html3 += '<td>' + request.sendData.performanceList[j].piBeforeSafetyRating + '</td>';
+                        }
+                        html3 += '</tr>';
 
-                    html3 += '<tr>';
-                    html3 += '<th>'+'사업후 부재 안전등급'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html3 += '<td>'+request.sendData.performanceList[j].piAfterSafetyRating+'</td>';
+                        html3 += '<tr>';
+                        html3 += '<th>' + '사업후 부재 안전등급' + '</th>';
+                        for (let j = 0; j < request.sendData.performanceSize; j++) {
+                            html3 += '<td>' + request.sendData.performanceList[j].piAfterSafetyRating + '</td>';
+                        }
+                        html3 += '</tr>';
                     }
-                    html3 += '</tr>';
 
                     html3 += '</tbody>';
 
@@ -285,7 +364,7 @@ function call_performance(autoNum){
                     html4 += '</tr>';
 
                     html4 += '<tr>';
-                    html4 += '<th>'+'자제계획/의결에 따른 사업'+'</th>';
+                    html4 += '<th>'+'자체계획/의결에 따른 사업'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
                         if(request.sendData.performanceList[j].piBusinessPlanned===0){
                             html4 += '<td>'+'해당없음'+'</td>';
@@ -295,15 +374,16 @@ function call_performance(autoNum){
                     }
                     html4 += '</tr>';
 
-                    html4 += '<tr>';
-                    html4 += '<th>'+'최근 1년 간 민원 및 사고발생 건수'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html4 += '<td>'+request.sendData.performanceList[j].piWhether+'건'+'</td>';
+                    if(piBusiness !== "기준변화") {
+                        html4 += '<tr>';
+                        html4 += '<th>' + '최근 1년 간 민원 및 사고발생 건수' + '</th>';
+                        for (let j = 0; j < request.sendData.performanceSize; j++) {
+                            html4 += '<td>' + request.sendData.performanceList[j].piWhether + '건' + '</td>';
+                        }
+                        html4 += '</tr>';
                     }
-                    html4 += '</tr>';
 
                     html4 += '</tbody>';
-
                     $outputTableCondition.html(html4);
 
                     // 평가 정보 테이블
@@ -356,50 +436,112 @@ function call_performance(autoNum){
                     let html6 = '';
                     html6 += '<thead>';
                     html6 += '<tr>';
-                    html6 += '<th></th>';
+                    html6 += '<th>'+'평가 지표'+'</th>';
                     html6 += '<th>'+'적용 가중치'+'</th>';
                     html6 += '<th>'+'기준 가중치'+'</th>';
+                    html6 += '<th>'+'변경여부'+'</th>';
+                    html6 += '<th>'+'최소-최대 범위내 지정'+'</th>';
                     html6 += "</tr>";
                     html6 += '</thead>';
 
                     html6 += '<tbody>';
 
-                    html6 += '<tr>';
-                    html6 += '<th>'+'안전성'+'</th>';
-                    html6 += '<td>'+request.sendData.weightList.piWeightSafe+'</td>';
-                    html6 += '<td>'+'0.65'+'</td>';
-                    html6 += '</tr>';
+                    let i = 0;
+                    if(piBusiness === "노후화대응") {
 
-                    if(request.sendData.typeName==="교량" || request.sendData.typeName==="터널" ){
                         html6 += '<tr>';
-                        html6 += '<th>'+'사용성'+'</th>';
-                        html6 += '<td>'+request.sendData.weightList.piWeightUsability+'</td>';
-                        html6 += '<td>'+'0.05'+'</td>';
+                        html6 += '<th>'+'안전성'+'</th>';
+                        html6 += '<td>'+request.sendData.weightList.piWeightSafe+'</td>';
+                        html6 += '<td>'+weightResultList[0][i]+'</td>'
+                        html6 += '<td>'+weightResultList[1][i]+'</td>'
+                        html6 += '<td>'+weightResultList[2][i]+'</td>'
                         html6 += '</tr>';
+                        i++;
+
+                        html6 += '<tr>';
+                        html6 += '<th>'+'노후도'+'</th>';
+                        html6 += '<td>'+request.sendData.weightList.piWeightOld+'</td>';
+                        html6 += '<td>'+weightResultList[0][i]+'</td>'
+                        html6 += '<td>'+weightResultList[1][i]+'</td>'
+                        html6 += '<td>'+weightResultList[2][i]+'</td>'
+                        html6 += '</tr>';
+                        i++;
+
+                        html6 += '<tr>';
+                        html6 += '<th>'+'지체도'+'</th>';
+                        html6 += '<td>'+request.sendData.weightList.piWeightUrgency+'</td>';
+                        html6 += '<td>'+weightResultList[0][i]+'</td>'
+                        html6 += '<td>'+weightResultList[1][i]+'</td>'
+                        html6 += '<td>'+weightResultList[2][i]+'</td>'
+                        html6 += '</tr>';
+                        i++;
+
+                        html6 += '<tr>';
+                        html6 += '<th>'+'목표달성도'+'</th>';
+                        html6 += '<td>'+request.sendData.weightList.piWeightGoal+'</td>';
+                        html6 += '<td>'+weightResultList[0][i]+'</td>'
+                        html6 += '<td>'+weightResultList[1][i]+'</td>'
+                        html6 += '<td>'+weightResultList[2][i]+'</td>'
+                        html6 += '</tr>';
+                        i++;
+
+                    }else if(piBusiness === "사용성변화"){
+
+                        html6 += '<tr>';
+                        html6 += '<th>'+'안전성'+'</th>';
+                        html6 += '<td>'+request.sendData.weightList.piWeightSafe+'</td>';
+                        html6 += '<td>'+weightResultList[0][i]+'</td>'
+                        html6 += '<td>'+weightResultList[1][i]+'</td>'
+                        html6 += '<td>'+weightResultList[2][i]+'</td>'
+                        html6 += '</tr>';
+                        i++;
+
+                        if(request.sendData.typeName==="교량" || request.sendData.typeName==="터널" ){
+                            html6 += '<tr>';
+                            html6 += '<th>'+'사용성'+'</th>';
+                            html6 += '<td>'+request.sendData.weightList.piWeightUsability+'</td>';
+                            html6 += '<td>'+weightResultList[0][i]+'</td>'
+                            html6 += '<td>'+weightResultList[1][i]+'</td>'
+                            html6 += '<td>'+weightResultList[2][i]+'</td>'
+                            html6 += '</tr>';
+                            i++;
+                        }else{
+                            html6 += '<tr>';
+                            html6 += '<th>'+'사용성'+'</th>';
+                            html6 += '<td colspan="4">'+'시설유형이 교량 또는 터널이 아닙니다.'+'</td>';
+                            html6 += '</tr>';
+                        }
+
+                        html6 += '<tr>';
+                        html6 += '<th>'+'노후도'+'</th>';
+                        html6 += '<td>'+request.sendData.weightList.piWeightOld+'</td>';
+                        html6 += '<td>'+weightResultList[0][i]+'</td>'
+                        html6 += '<td>'+weightResultList[1][i]+'</td>'
+                        html6 += '<td>'+weightResultList[2][i]+'</td>'
+                        html6 += '</tr>';
+                        i++;
+
                     }else{
+
                         html6 += '<tr>';
-                        html6 += '<th>'+'사용성'+'</th>';
-                        html6 += '<td>'+'-'+'</td>';
-                        html6 += '<td>'+'-'+'</td>';
+                        html6 += '<th>'+'안전성'+'</th>';
+                        html6 += '<td>'+request.sendData.weightList.piWeightSafe+'</td>';
+                        html6 += '<td>'+weightResultList[0][i]+'</td>'
+                        html6 += '<td>'+weightResultList[1][i]+'</td>'
+                        html6 += '<td>'+weightResultList[2][i]+'</td>'
                         html6 += '</tr>';
+                        i++;
+
+                        html6 += '<tr>';
+                        html6 += '<th>'+'노후도'+'</th>';
+                        html6 += '<td>'+request.sendData.weightList.piWeightOld+'</td>';
+                        html6 += '<td>'+weightResultList[0][i]+'</td>'
+                        html6 += '<td>'+weightResultList[1][i]+'</td>'
+                        html6 += '<td>'+weightResultList[2][i]+'</td>'
+                        html6 += '</tr>';
+                        i++;
+
                     }
-
-                    html6 += '<tr>';
-                    html6 += '<th>'+'노후도'+'</th>';
-                    html6 += '<td>'+request.sendData.weightList.piWeightOld+'</td>';
-                    html6 += '<td>'+'0.2'+'</td>';
-                    html6 += '</tr>';
-
-                    html6 += '<tr>';
-                    html6 += '<th>'+'지체도'+'</th>';
-                    html6 += '<td>'+request.sendData.weightList.piWeightUrgency+'</td>';
-                    html6 += '<td>'+'0.05'+'</td>';
-                    html6 += '</tr>';
-
-                    html6 += '<tr>';
-                    html6 += '<th>'+'목표달성도'+'</th>';
-                    html6 += '<td>'+request.sendData.weightList.piWeightGoal+'</td>';
-                    html6 += '<td>'+'0.05'+'</td>';
                     html6 += '</tr>';
 
                     html6 += '</tbody>';
@@ -410,25 +552,54 @@ function call_performance(autoNum){
                     let html7 = '';
                     html7 += '<thead>';
                     html7 += '<tr>';
-                    html7 += '<th></th>';
+                    html7 += '<th>'+'평가 지표'+'</th>';
                     html7 += '<th>'+'적용 가중치'+'</th>';
                     html7 += '<th>'+'기준 가중치'+'</th>';
+                    html7 += '<th>'+'변경여부'+'</th>';
+                    html7 += '<th>'+'최소-최대 범위내 지정'+'</th>';
                     html7 += "</tr>";
                     html7 += '</thead>';
 
                     html7 += '<tbody>';
 
-                    html7 += '<tr>';
-                    html7 += '<th>'+'안전효용 개선 효율성'+'</th>';
-                    html7 += '<td>'+request.sendData.weightList.piWeightSafeUtility+'</td>';
-                    html7 += '<td>'+'0.7'+'</td>';
-                    html7 += '</tr>';
+                    if(piBusiness === "노후화대응") {
+                        html7 += '<tr>';
+                        html7 += '<th>' + '안전효용 개선 효율성' + '</th>';
+                        html7 += '<td>' + request.sendData.weightList.piWeightSafeUtility + '</td>';
+                        html7 += '<td>'+weightResultList[0][i]+'</td>'
+                        html7 += '<td>'+weightResultList[1][i]+'</td>'
+                        html7 += '<td>'+weightResultList[2][i]+'</td>'
+                        html7 += '</tr>';
+                        i++;
 
-                    html7 += '<tr>';
-                    html7 += '<th>'+'자산가치 개선 효율성'+'</th>';
-                    html7 += '<td>'+request.sendData.weightList.piWeightCostUtility+'</td>';
-                    html7 += '<td>'+'0.3'+'</td>';
-                    html7 += '</tr>';
+                        html7 += '<tr>';
+                        html7 += '<th>' + '자산가치 개선 효율성' + '</th>';
+                        html7 += '<td>' + request.sendData.weightList.piWeightCostUtility + '</td>';
+                        html7 += '<td>'+weightResultList[0][i]+'</td>'
+                        html7 += '<td>'+weightResultList[1][i]+'</td>'
+                        html7 += '<td>'+weightResultList[2][i]+'</td>'
+                        html7 += '</tr>';
+                        i++;
+                    }else{
+
+                        html7 += '<tr>';
+                        html7 += '<th>' + '사업규모 등급' + '</th>';
+                        html7 += '<td>' + request.sendData.weightList.piWeightSafeUtility + '</td>';
+                        html7 += '<td>'+weightResultList[0][i]+'</td>'
+                        html7 += '<td>'+weightResultList[1][i]+'</td>'
+                        html7 += '<td>'+weightResultList[2][i]+'</td>'
+                        html7 += '</tr>';
+                        i++;
+
+                        html7 += '<tr>';
+                        html7 += '<th>' + '사업효율 등급' + '</th>';
+                        html7 += '<td>' + request.sendData.weightList.piWeightCostUtility + '</td>';
+                        html7 += '<td>'+weightResultList[0][i]+'</td>'
+                        html7 += '<td>'+weightResultList[1][i]+'</td>'
+                        html7 += '<td>'+weightResultList[2][i]+'</td>'
+                        html7 += '</tr>';
+                        i++;
+                    }
 
                     html7 += '</tbody>';
                     $outputTableWeightE.html(html7);
@@ -438,41 +609,77 @@ function call_performance(autoNum){
                     let html8 = '';
                     html8 += '<thead>';
                     html8 += '<tr>';
-                    html8 += '<th></th>';
+                    html8 += '<th>'+'평가 지표'+'</th>';
                     html8 += '<th>'+'적용 가중치'+'</th>';
                     html8 += '<th>'+'기준 가중치'+'</th>';
+                    html8 += '<th>'+'변경여부'+'</th>';
+                    html8 += '<th>'+'최소-최대 범위내 지정'+'</th>';
                     html8 += "</tr>";
                     html8 += '</thead>';
 
                     html8 += '<tbody>';
 
-                    html8 += '<tr>';
-                    html8 += '<th>'+'안전효용 개선 효율성'+'</th>';
-                    html8 += '<td>'+request.sendData.weightList.piWeightBusiness+'</td>';
-                    html8 += '<td>'+'0.7'+'</td>';
-                    html8 += '</tr>';
+                    if(piBusiness === "노후화대응" ||  piBusiness === "사용성변화"){
+                        html8 += '<tr>';
+                        html8 += '<th>' + '사업추진 타당성' + '</th>';
+                        html8 += '<td>' + request.sendData.weightList.piWeightBusiness + '</td>';
+                        html8 += '<td>'+weightResultList[0][i]+'</td>'
+                        html8 += '<td>'+weightResultList[1][i]+'</td>'
+                        html8 += '<td>'+weightResultList[2][i]+'</td>'
+                        html8 += '</tr>';
+                        i++;
 
-                    html8 += '<tr>';
-                    html8 += '<th>'+'자산가치 개선 효율성'+'</th>';
-                    html8 += '<td>'+request.sendData.weightList.piWeightComplaint+'</td>';
-                    html8 += '<td>'+'0.2'+'</td>';
-                    html8 += '</tr>';
+                        html8 += '<tr>';
+                        html8 += '<th>' + '민원 및 사고 대응성' + '</th>';
+                        html8 += '<td>' + request.sendData.weightList.piWeightComplaint + '</td>';
+                        html8 += '<td>'+weightResultList[0][i]+'</td>'
+                        html8 += '<td>'+weightResultList[1][i]+'</td>'
+                        html8 += '<td>'+weightResultList[2][i]+'</td>'
+                        html8 += '</tr>';
+                        i++;
 
-                    html8 += '<tr>';
-                    html8 += '<th>'+'자산가치 개선 효율성'+'</th>';
-                    html8 += '<td>'+request.sendData.weightList.piWeightBusinessEffect+'</td>';
-                    html8 += '<td>'+'0.1'+'</td>';
-                    html8 += '</tr>';
+                        html8 += '<tr>';
+                        html8 += '<th>' + '사업효과 범용성' + '</th>';
+                        html8 += '<td>' + request.sendData.weightList.piWeightBusinessEffect + '</td>';
+                        html8 += '<td>'+weightResultList[0][i]+'</td>'
+                        html8 += '<td>'+weightResultList[1][i]+'</td>'
+                        html8 += '<td>'+weightResultList[2][i]+'</td>'
+                        html8 += '</tr>';
+                        i++;
+                    }else {
+                        html8 += '<tr>';
+                        html8 += '<th>' + '사업추진 타당성' + '</th>';
+                        html8 += '<td>' + request.sendData.weightList.piWeightBusiness + '</td>';
+                        html8 += '<td>'+weightResultList[0][i]+'</td>'
+                        html8 += '<td>'+weightResultList[1][i]+'</td>'
+                        html8 += '<td>'+weightResultList[2][i]+'</td>'
+                        html8 += '</tr>';
+                        i++;
+
+                        html8 += '<tr>';
+                        html8 += '<th>' + '사업효과 범용성' + '</th>';
+                        html8 += '<td>' + request.sendData.weightList.piWeightBusinessEffect + '</td>';
+                        html8 += '<td>'+weightResultList[0][i]+'</td>'
+                        html8 += '<td>'+weightResultList[1][i]+'</td>'
+                        html8 += '<td>'+weightResultList[2][i]+'</td>'
+                        html8 += '</tr>';
+                        i++;
+                    }
 
                     html8 += '</tbody>';
                     $outputTableWeightP.html(html8);
 
+
+
+
                     // 노후화_기술성 테이블
                     const $technicalityTable = $('#technicalityTable');
+                    i = 0;
                     let html9 = '';
+
                     html9 += '<thead>';
                     html9 += '<tr>';
-                    html9 += '<th></th>';
+                    html9 += '<th>'+'평가 지표'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
                         html9 += '<td>'+request.sendData.performanceList[j].piBusinessType+' 대안'+'</td>';
                     }
@@ -488,94 +695,107 @@ function call_performance(autoNum){
                     }
                     html9 += '</tr>';
 
+                    if(piBusiness === "노후화대응") {
+                        html9 += '<tr>';
+                        html9 += '<th>'+'안전성'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
+                        }
+                        i++;
+                        html9 += '</tr>';
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'노후도'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
+                        }
+                        i++;
+                        html9 += '</tr>';
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'지체도'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
+                        }
+                        i++;
+                        html9 += '</tr>';
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'목표달성도'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
+                        }
+                        i++;
+                        html9 += '</tr>';
+
+
+
+                    }else if(piBusiness === "사용성변화"){
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'안전성'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
+                        }
+                        i++;
+                        html9 += '</tr>';
+
+                        if(request.sendData.typeName==="교량" || request.sendData.typeName==="터널" ){
+                            html9 += '<tr>';
+                            html9 += '<th>'+'사용성'+'</th>';
+                            for(let j=0; j<request.sendData.performanceSize; j++){
+                                html9 += '<td>'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
+                            }
+                            i++;
+                            html9 += '</tr>';
+                        }
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'노후도'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
+                        }
+                        i++;
+                        html9 += '</tr>';
+
+                    }else{
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'안전성'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
+                        }
+                        i++;
+                        html9 += '</tr>';
+
+                        html9 += '<tr>';
+                        html9 += '<th>'+'노후도'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html9 += '<td>'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
+                        }
+                        i++;
+                        html9 += '</tr>';
+
+                    }
+
                     html9 += '<tr>';
-                    html9 += '<th>'+'안전성'+'</th>';
+                    html9 += '<th style="color: red">'+'기술성 종합점수'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html9 += '<td>'+request.sendData.technicalityRank[j][0]+" / "+request.sendData.technicalityScore[j][0]+'</td>';
+                        html9 += '<td style="color: red">'+request.sendData.technicalityRank[j][i]+" / "+request.sendData.technicalityScore[j][i]+'</td>';
                     }
                     html9 += '</tr>';
-
-                    if(request.sendData.typeName==="교량" || request.sendData.typeName==="터널" ){
-                        html9 += '<tr>';
-                        html9 += '<th>'+'사용성'+'</th>';
-                        for(let j=0; j<request.sendData.performanceSize; j++){
-                            html9 += '<td>'+request.sendData.technicalityRank[j][1]+" / "+request.sendData.technicalityScore[j][1]+'</td>';
-                        }
-                        html9 += '</tr>';
-
-                        html9 += '<tr>';
-                        html9 += '<th>'+'노후도'+'</th>';
-                        for(let j=0; j<request.sendData.performanceSize; j++){
-                            html9 += '<td>'+request.sendData.technicalityRank[j][2]+" / "+request.sendData.technicalityScore[j][2]+'</td>';
-                        }
-                        html9 += '</tr>';
-
-                        html9 += '<tr>';
-                        html9 += '<th>'+'시급성'+'</th>';
-                        for(let j=0; j<request.sendData.performanceSize; j++){
-                            html9 += '<td>'+request.sendData.technicalityRank[j][3]+" / "+request.sendData.technicalityScore[j][3]+'</td>';
-                        }
-                        html9 += '</tr>';
-
-                        html9 += '<tr>';
-                        html9 += '<th>'+'목표성능 달성도'+'</th>';
-                        for(let j=0; j<request.sendData.performanceSize; j++){
-                            html9 += '<td>'+request.sendData.technicalityRank[j][4]+" / "+request.sendData.technicalityScore[j][4]+'</td>';
-                        }
-                        html9 += '</tr>';
-
-                        html9 += '<tr>';
-                        html9 += '<th style="color: red">'+'기술성 종합점수'+'</th>';
-                        for(let j=0; j<request.sendData.performanceSize; j++){
-                            html9 += '<td style="color: red">'+request.sendData.technicalityRank[j][5]+" / "+request.sendData.technicalityScore[j][5]+'</td>';
-                        }
-                        html9 += '</tr>';
-                    }else{
-                        html9 += '<tr>';
-                        html9 += '<th>'+'사용성'+'</th>';
-                        html9 += '<td>'+'-'+'</td>';
-                        html9 += '<td>'+'-'+'</td>';
-                        html9 += '</tr>';
-
-                        html9 += '<tr>';
-                        html9 += '<th>'+'노후도'+'</th>';
-                        for(let j=0; j<request.sendData.performanceSize; j++){
-                            html9 += '<td>'+request.sendData.technicalityRank[j][1]+" / "+request.sendData.technicalityScore[j][1]+'</td>';
-                        }
-                        html9 += '</tr>';
-
-                        html9 += '<tr>';
-                        html9 += '<th>'+'시급성'+'</th>';
-                        for(let j=0; j<request.sendData.performanceSize; j++){
-                            html9 += '<td>'+request.sendData.technicalityRank[j][2]+" / "+request.sendData.technicalityScore[j][2]+'</td>';
-                        }
-                        html9 += '</tr>';
-
-                        html9 += '<tr>';
-                        html9 += '<th>'+'목표성능 달성도'+'</th>';
-                        for(let j=0; j<request.sendData.performanceSize; j++){
-                            html9 += '<td>'+request.sendData.technicalityRank[j][3]+" / "+request.sendData.technicalityScore[j][3]+'</td>';
-                        }
-                        html9 += '</tr>';
-
-                        html9 += '<tr>';
-                        html9 += '<th style="color: red">'+'기술성 종합점수'+'</th>';
-                        for(let j=0; j<request.sendData.performanceSize; j++){
-                            html9 += '<td style="color: red">'+request.sendData.technicalityRank[j][4]+" / "+request.sendData.technicalityScore[j][4]+'</td>';
-                        }
-                        html9 += '</tr>';
-                    }
 
                     html9 += '</tbody>';
                     $technicalityTable.html(html9);
 
                     // 노후화_경제성 테이블
                     const $economyTable = $('#economyTable');
+                    i = 0;
                     let html10 = '';
 
                     html10 += '<thead>';
                     html10 += '<tr>';
-                    html10 += '<th></th>';
+                    html10 += '<th>'+'평가 지표'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
                         html10 += '<td>'+request.sendData.performanceList[j].piBusinessType+' 대안'+'</td>';
                     }
@@ -591,24 +811,44 @@ function call_performance(autoNum){
                     }
                     html10 += '</tr>';
 
-                    html10 += '<tr>';
-                    html10 += '<th>'+'자산가치 개선 효율성'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html10 += '<td>'+request.sendData.economyRank[j][0]+" / "+request.sendData.economyScore[j][0]+'</td>';
-                    }
-                    html10 += '</tr>';
+                    if(piBusiness === "노후화대응") {
+                        html10 += '<tr>';
+                        html10 += '<th>' + '자산가치 개선 효율성' + '</th>';
+                        for (let j = 0; j < request.sendData.performanceSize; j++) {
+                            html10 += '<td>' + request.sendData.economyRank[j][i] + " / " + request.sendData.economyScore[j][i] + '</td>';
+                        }
+                        i++;
+                        html10 += '</tr>';
 
-                    html10 += '<tr>';
-                    html10 += '<th>'+'안전효용 개선 효율성'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html10 += '<td>'+request.sendData.economyRank[j][1]+" / "+request.sendData.economyScore[j][1]+'</td>';
+                        html10 += '<tr>';
+                        html10 += '<th>' + '안전효용 개선 효율성' + '</th>';
+                        for (let j = 0; j < request.sendData.performanceSize; j++) {
+                            html10 += '<td>' + request.sendData.economyRank[j][i] + " / " + request.sendData.economyScore[j][i] + '</td>';
+                        }
+                        i++;
+                        html10 += '</tr>';
+                    }else{
+                        html10 += '<tr>';
+                        html10 += '<th>' + '사업규모 등급' + '</th>';
+                        for (let j = 0; j < request.sendData.performanceSize; j++) {
+                            html10 += '<td>' + request.sendData.economyRank[j][i] + " / " + request.sendData.economyScore[j][i] + '</td>';
+                        }
+                        i++;
+                        html10 += '</tr>';
+
+                        html10 += '<tr>';
+                        html10 += '<th>' + '사업효율 등급' + '</th>';
+                        for (let j = 0; j < request.sendData.performanceSize; j++) {
+                            html10 += '<td>' + request.sendData.economyRank[j][i] + " / " + request.sendData.economyScore[j][i] + '</td>';
+                        }
+                        i++;
+                        html10 += '</tr>';
                     }
-                    html10 += '</tr>';
 
                     html10 += '<tr>';
                     html10 += '<th style="color: red">'+'경제성 종합점수'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html10 += '<td style="color: red">'+request.sendData.economyRank[j][2]+" / "+request.sendData.economyScore[j][2]+'</td>';
+                        html10 += '<td style="color: red">'+request.sendData.economyRank[j][i]+" / "+request.sendData.economyScore[j][i]+'</td>';
                     }
                     html10 += '</tr>';
 
@@ -618,10 +858,12 @@ function call_performance(autoNum){
 
                     // 노후화_정책성 테이블
                     const $policyTable = $('#policyTable');
+                    i = 0;
                     let html11 = '';
+
                     html11 += '<thead>';
                     html11 += '<tr>';
-                    html11 += '<th></th>';
+                    html11 += '<th>'+'평가 지표'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
                         html11 += '<td>'+request.sendData.performanceList[j].piBusinessType+' 대안'+'</td>';
                     }
@@ -640,28 +882,35 @@ function call_performance(autoNum){
                     html11 += '<tr>';
                     html11 += '<th>'+'사업추진 타당성'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html11 += '<td>'+request.sendData.policyRank[j][0]+" / "+request.sendData.policyScore[j][0]+'</td>';
+                        html11 += '<td>'+request.sendData.policyRank[j][i]+" / "+request.sendData.policyScore[j][i]+'</td>';
                     }
+                    i++;
                     html11 += '</tr>';
 
-                    html11 += '<tr>';
-                    html11 += '<th>'+'민원 및 사고 대응성'+'</th>';
-                    for(let j=0; j<request.sendData.performanceSize; j++){
-                        html11 += '<td>'+request.sendData.policyRank[j][1]+" / "+request.sendData.policyScore[j][1]+'</td>';
+                    if(piBusiness === "노후화대응" ||  piBusiness === "사용성변화"){
+
+                        html11 += '<tr>';
+                        html11 += '<th>'+'민원 및 사고 대응성'+'</th>';
+                        for(let j=0; j<request.sendData.performanceSize; j++){
+                            html11 += '<td>'+request.sendData.policyRank[j][i]+" / "+request.sendData.policyScore[j][i]+'</td>';
+                        }
+                        i++;
+                        html11 += '</tr>';
+
                     }
-                    html11 += '</tr>';
 
                     html11 += '<tr>';
                     html11 += '<th>'+'사업효과 범용성'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html11 += '<td>'+request.sendData.policyRank[j][2]+" / "+request.sendData.policyScore[j][2]+'</td>';
+                        html11 += '<td>'+request.sendData.policyRank[j][i]+" / "+request.sendData.policyScore[j][i]+'</td>';
                     }
+                    i++;
                     html11 += '</tr>';
 
                     html11 += '<tr>';
                     html11 += '<th style="color: red">'+'정책성 종합점수'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
-                        html11 += '<td style="color: red">'+request.sendData.policyRank[j][3]+" / "+request.sendData.policyScore[j][3]+'</td>';
+                        html11 += '<td style="color: red">'+request.sendData.policyRank[j][i]+" / "+request.sendData.policyScore[j][i]+'</td>';
                     }
                     html11 += '</tr>';
 
@@ -674,7 +923,7 @@ function call_performance(autoNum){
                     let html12 = '';
                     html12 += '<thead>';
                     html12 += '<tr>';
-                    html12 += '<th></th>';
+                    html12 += '<th>'+'평가 지표'+'</th>';
                     for(let j=0; j<request.sendData.performanceSize; j++){
                         html12 += '<td>'+request.sendData.performanceList[j].piBusinessType+' 대안'+'</td>';
                     }
@@ -719,8 +968,23 @@ function call_performance(autoNum){
 
                     $allScoreRankTable.html(html12);
 
+                    i=0;
+                    // 성능개선 사업성 종합평가 결과 Text
+                    const $resultName = $("#resultName");
+                    let resultNameText = "가. 대안별 사업추진 타당성 평가<br />";
+                    for(let j=0; j<request.sendData.performanceSize; j++){
+                        resultNameText += "- "+request.sendData.performanceList[j].piBusinessType+" 대안은 "+request.sendData.allRankMap[j][0]+
+                            "("+request.sendData.allScroeMap[j][0]+")"+"으로 "+request.sendData.allBusinessMap[j][0]+"<br />";
+                    }
 
-
+                    resultNameText += "나. 우수 사업대안 선정<br />";
+                    for(let j=1; j<request.sendData.performanceSize+1; j++){
+                        if(request.sendData.allGreate[i] !== undefined){
+                            resultNameText += "- "+j+"번 "+request.sendData.performanceList[i].piBusinessType+" 대안이 우수<br />"
+                        }
+                        i++;
+                    }
+                    $resultName.html(resultNameText);
 
                 } else {
                     if (request.err_msg2 === null) {
@@ -732,4 +996,103 @@ function call_performance(autoNum){
             }
         });
     }
+}
+
+
+
+
+// 사업내용 조정 및 재평가(수정하기) 버튼
+function backBtn(){
+    console.log("수정하기 버튼 클릭");
+    location.href = '/performance/input?autoNum='+$("#autoNum").val();
+}
+
+
+
+let renderedImg = [];
+const contWidth = 200; // 너비(mm) (a4에 맞춤)
+const padding = 5; //상하좌우 여백(mm)
+
+//이미지를 pdf로 만들기
+function createPdf() {
+    // console.log("######### PDF 다운로드 시작 #########")
+
+    //로딩 시작
+    document.getElementById("loader").style.display = "block";
+
+    const lists = document.querySelectorAll("#performance > div.pdfArea");
+    const deferreds = [];
+    const doc = new jsPDF("p", "mm", "a4");
+    const listsLeng = lists.length;
+
+    for (let i = 0; i < listsLeng; i++) { // li 개수만큼 이미지 생성
+        const deferred = $.Deferred();
+        deferreds.push(deferred.promise());
+        generateCanvas(i, doc, deferred, lists[i]);
+    }
+
+    // 이미지 렌더링이 끝난 후
+    $.when.apply($, deferreds).then(function () {
+        // 순서대로 정렬
+        const sorted = renderedImg.sort(function (a, b) {
+            return a.num < b.num ? -1 : 1;
+        });
+
+        // 위 여백 (이미지가 들어가기 시작할 y축)
+        let   curHeight = padding;
+        const sortedLeng = sorted.length;
+        for (let i = 0; i < sortedLeng; i++) {
+            // 이미지 높이
+            const sortedHeight = sorted[i].height;
+            // 이미지
+            const sortedImage = sorted[i].image;
+
+            // a4 높이에 맞게 남은 공간이 이미지높이보다 작을 경우 페이지 추가
+            if( curHeight + sortedHeight > 297 - padding * 2 ){
+
+                // 페이지를 추가함
+                doc.addPage();
+
+                // 이미지가 들어갈 y축을 초기 여백값으로 초기화
+                curHeight = padding;
+
+                //이미지 넣기
+                doc.addImage(sortedImage, 'jpeg', padding , curHeight, contWidth, sortedHeight);
+
+                // y축 = 여백 + 새로 들어간 이미지 높이
+                curHeight += sortedHeight;
+            } else { // 페이지에 남은 공간보다 이미지가 작으면 페이지 추가하지 않음
+                //이미지 넣기
+                doc.addImage(sortedImage, 'jpeg', padding , curHeight, contWidth, sortedHeight);
+                // y축 = 기존y축 + 새로들어간 이미지 높이
+                curHeight += sortedHeight;
+            }
+        }
+
+        // PDF파일 저장
+        doc.save($("#autoNum").val()+"_성능개선사업평가_PDF파일");
+
+        //로딩 끝
+        document.getElementById("loader").style.display = "none";
+
+        //y축 초기화
+        curHeight = padding;
+
+        //y축 초기화
+        renderedImg = []; //이미지 배열 초기화
+    });
+}
+
+//페이지를 이미지로 만들기
+function generateCanvas(i, doc, deferred, curList){
+    const pdfWidth = $(curList).outerWidth() * 0.2645; //px -> mm로 변환
+    const pdfHeight = $(curList).outerHeight() * 0.2645;
+    let heightCalc = contWidth * pdfHeight / pdfWidth; //비율에 맞게 높이 조절
+    html2canvas( curList ).then(
+        function (canvas) {
+            const img = canvas.toDataURL('image/jpeg', 1.0); //이미지 형식 지정
+            renderedImg.push({num:i, image:img, height:heightCalc}); //renderedImg 배열에 이미지 데이터 저장(뒤죽박죽 방지)
+            deferred.resolve(); //결과 보내기
+        }
+    );
 }

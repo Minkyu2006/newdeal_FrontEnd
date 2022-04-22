@@ -11,16 +11,16 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-	<script src="/assets/js/min_js_dir/newdeal/performanceList.js"></script>
+	<script src="/assets/js/min_js_dir/newdeal/performance/performanceList.js"></script>
  	<script>
 		$(function() {
 			$("#header_two").addClass(' show');
 			logreg(1,"의사결정 시스템","세부별 등록리스트 조회",null);
 
-			callList(1);
+			performanceList(1);
 			$("#searchBtn").on('click',function(){
 				logreg(0,"의사결정 시스템","세부별 등록리스트 조회",null);
-				callList(1);
+				performanceList(1);
 			});
 
 		});

@@ -343,10 +343,15 @@ function movePage(url) {
 // 선택후 페이지이동 후 팝업 닫기
 function selectMovePage() {
     const url = $('input:radio[name="talk-select"]:checked').val();
+
     if(url===undefined || url===""){
         alertCaution("입력방식을 선택해주세요.",1);
         return false;
+    }else if(url === "/performance/performance2"){
+        alertCaution("현재 재개발중 입니다.<br /> 다음에 이용해 주시길 바랍니다.",1);
+        return false;
     }
+
     const ajaxOption = {
         url : url,
         type : "POST",
@@ -511,7 +516,7 @@ function inputPerformanceNext1(){
         const  autoNum = $("#autoNum").val();
         const formData = new FormData(document.getElementById('performance1'));
 
-        // console.log("중간저장 autoNum : "+autoNum);
+        console.log("중간저장1 autoNum : "+autoNum);
         if(autoNum===""){
             url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/middleSaveUpdate/"+"null"; // 호출할 백엔드 API
         }else{
@@ -545,7 +550,7 @@ function inputPerformanceNext1(){
             },
             success: function (request) {
                 let status = request.status;
-                // console.log("status : " + status);
+                console.log("status : " + status);
                 if (status === 200) {
                     console.log("autoNum : "+request.sendData.autoNum);
                     $("#businessNum").val(request.sendData.businessNum);
@@ -1095,6 +1100,8 @@ function inputPerformanceNext3(){
 
 // 중간저장 데이터 호출하기1
 function middleData(autoNum){
+
+    console.log("일련번호 : "+autoNum);
 
     JWT_Get();
 

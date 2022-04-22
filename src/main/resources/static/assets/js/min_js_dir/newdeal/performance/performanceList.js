@@ -1,7 +1,7 @@
 // * 성능개선사업평가 서비스 자바스크립트 리스트페이지*
 
 // 조회
-function callList(page){
+function performanceList(page){
     JWT_Get();
 
     if (accessToken == null && refreshToken == null && insert_id == null) {
@@ -62,7 +62,7 @@ function callList(page){
                         pageBlock: perArea,
                         currentPage: page + 1,
                         pageTotal: totCnt,
-                        clickEvent: 'callList'
+                        clickEvent: 'performanceList'
                     });
 
                     if (totCnt === 0) {
@@ -142,7 +142,7 @@ function del(autoNum){
                 console.log("리스트출력");
                 if (res.status === 200) {
                     alertSuccess("삭제가 완료되었습니다.");
-                    callList(1);
+                    performanceList(1);
                 }
             }
         });
