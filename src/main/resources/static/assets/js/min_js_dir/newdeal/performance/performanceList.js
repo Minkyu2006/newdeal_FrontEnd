@@ -78,9 +78,9 @@ function performanceList(page){
                         html += '<td >' + echoNull2Blank(value.piFacilityType) + '</td>';
                         html += '<td >' + echoNull2Blank(value.piFacilityName) + '</td>';
                         html += '<td >' + echoNull2Blank(value.piCompletionYear) + '</td>';
-                        html += '<td >' + pushComma(echoNull2Blank(value.piErectionCost)) + '</td>';
+                        html += '<td >' + echoNull2Blank(value.piBusiness) + '</td>';
                         html += '<td >' + echoNull2Blank(value.piSafetyLevel) + '</td>';
-                        html += '<td >' + echoNull2Blank(value.piGoalLevel) + '</td>';
+                        html += '<td >' + echoNull2Blank(value.piType) + '</td>';
                         html += '<td >' + echoNull2Blank(value.piBusinessType) + '</td>';
                         html += '<td >' + pushComma(echoNull2Blank(value.piBusinessExpenses)) + '</td>';
                         html += '<td ><button class="c-button" onclick="outputMove(\'' + echoNull2Blank(value.piAutoNum) + '\');">비교대안 보기</button></td>';
