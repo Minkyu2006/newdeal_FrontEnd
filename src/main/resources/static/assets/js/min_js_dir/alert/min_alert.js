@@ -27,15 +27,57 @@ $(function() {
         $('#popupId').remove();
     });
 
-    // $(document).on("click","#continueSuccessBtn",function(){
-    //     continueSaveCheck()
-    // });
-    //
     $(document).on("click","#checkYesBtn",function(){
         startYesorNo(true)
     });
     $(document).on("click","#checkNoBtn",function(){
         startYesorNo(false)
+    });
+
+    $(document).on("click","#weightCheckYesBtn",function(){
+        $('#popupId').remove();
+
+        const chapter =$("#chapter").val();
+        console.log("chapter : "+chapter);
+
+        const businessNum = $("#businessNum").val();
+        console.log("businessNum : "+businessNum);
+
+        if(chapter === "2"){ // 성능개선 사업구분 별 가중치 기술성
+            upWeightCheckEco();
+        }else if(chapter === "3"){ // 성능개선 사업구분 별 가중치 경제성
+            upWeightCheckPolicy();
+        }else if(chapter === "4"){ // 성능개선 사업구분 별 가중치 정책성
+            downWeightCheckTech();
+        }else if(chapter === "5") { // 평가지표별 가중치 - 사용성
+            downWeightCheckTechUsability(businessNum);
+        }else if(chapter === "6") { // 평가지표별 가중치 - 노후도
+            downWeightCheckTechOld(businessNum);
+        }else if(chapter === "7") { // 평가지표별 가중치 - 지체도
+            downWeightCheckTechUrgency(businessNum);
+        }else if(chapter === "8") { // 평가지표별 가중치 - 목표달성도
+            downWeightCheckTechGoal(businessNum);
+        }
+
+        else if(chapter === "9") { // 평가지표별 가중치 - 안전효용개선 or 사업규모등급
+            downWeightCheckEcoSafeUtility(businessNum);
+        }else if(chapter === "10") { // 평가지표별 가중치 - 자산가치개선 or 사업효율등급
+            downWeightCheckEcoCostUtility(businessNum);
+        }
+
+        else if(chapter === "11") { // 평가지표별 가중치 - 사업추진 타당성
+            downWeightCheckPolicyBusiness(businessNum);
+        } else if(chapter === "12") { // 평가지표별 가중치 - 민원 및 사고 대응성
+            downWeightCheckPolicyComplaint(businessNum);
+        }else if(chapter === "13") { // 평가지표별 가중치 - 사업효과 범용성
+            downWeightCheckPolicyEffect(businessNum);
+        }else if(chapter === "14"){
+            inputPerformanceNext3();
+        }
+
+    });
+    $(document).on("click","#weightCheckNoBtn",function(){
+        $('#popupId').remove();
     });
 
     $(document).on("click","#checkDelSuccessBtn",function(){
@@ -170,6 +212,25 @@ function alertMiddleSaveCheck(text) { // 정말작성할껀지 확인하는창
     html +='<div class="popup__buttons">';
     html +='<button id="checkYesBtn" class="popup__btn popup__btn--success">예</button>';
     html +='<button id="checkNoBtn" class="popup__btn popup__btn--cancel">아니오</button>';
+    html +='</div>';
+    html +='</div>';
+    html +='</div>';
+
+    $('#alertpop').html(html);
+}
+
+function alertWeightCheck(text) { // 가중치 확인하는창
+    let html = '';
+
+    html +='<div id="popupId" class="popup popup--dim">';
+    html +='<div class="popup__box" style="width: 400px">';
+    html +='<div class="popup__content">';
+    html +='<div class="popup__stat check"></div>';
+    html +='<div class="popup__text">'+text+'</div>';
+    html +='</div>';
+    html +='<div class="popup__buttons">';
+    html +='<button id="weightCheckYesBtn" class="popup__btn popup__btn--success">예</button>';
+    html +='<button id="weightCheckNoBtn" class="popup__btn popup__btn--cancel">아니오</button>';
     html +='</div>';
     html +='</div>';
     html +='</div>';

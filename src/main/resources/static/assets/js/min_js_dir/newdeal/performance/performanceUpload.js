@@ -31,7 +31,7 @@ function weightRadioBtn(value){
     }else{
         $("#group1").prop("checked", false);
         $("#group2").prop("checked", true);
-        $('.weight__contents input[type="number"]').attr('readonly', true).val("");
+        $('.weight__contents input[type="number"]').attr('readonly', true);
     }
 }
 

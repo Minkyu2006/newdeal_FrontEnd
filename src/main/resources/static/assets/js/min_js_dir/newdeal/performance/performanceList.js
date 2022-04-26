@@ -81,7 +81,7 @@ function performanceList(page){
                         html += '<td >' + echoNull2Blank(value.piBusiness) + '</td>';
                         html += '<td >' + echoNull2Blank(value.piSafetyLevel) + '</td>';
                         html += '<td >' + echoNull2Blank(value.piType) + '</td>';
-                        html += '<td >' + echoNull2Blank(value.piBusinessType) + '</td>';
+                        html += '<td >' + echoNull2Blank(value.piKind) + '</td>';
                         html += '<td >' + pushComma(echoNull2Blank(value.piBusinessExpenses)) + '</td>';
                         html += '<td ><button class="c-button" onclick="outputMove(\'' + echoNull2Blank(value.piAutoNum) + '\');">비교대안 보기</button></td>';
                         html += '<td ><button class="c-button" onclick="del(\'' + echoNull2Blank(value.piAutoNum) + '\');">삭제</button></td>';
