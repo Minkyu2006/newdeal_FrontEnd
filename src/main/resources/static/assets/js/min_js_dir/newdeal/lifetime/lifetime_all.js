@@ -258,6 +258,7 @@ function lifeAllTimeOutput(id){
                     const year = ltAllCompletionDate.substring(0, 4);
                     const month = ltAllCompletionDate.substring(5,7);
                     $('#ltAllCompletionDate').text(year+'년도 '+month+'월');
+                    $('#ltAllInputDate').text(request.sendData.lifeAllTimeDto.ltAllInputDate);
                     $('#allVolume').text(request.sendData.lifeAllTimeDto.ltAllVolume+'m2');
 
                     // 대표보수 보강공법 수행효과  수행 전 손상지수
@@ -267,16 +268,16 @@ function lifeAllTimeOutput(id){
                     $('#damageERankBefore').text(request.sendData.lifeAllTimeDto.ltDamageERank);
 
                     // 대표보수 보강공법 수행효과  수행 후 손상지수
-                    $('#damageBRankAfter').text(request.sendData.damageRankList[0].toFixed(2));
-                    $('#damageCRankAfter').text(request.sendData.damageRankList[1].toFixed(2));
-                    $('#damageDRankAfter').text(request.sendData.damageRankList[2].toFixed(2));
+                    $('#damageBRankAfter').text(pushComma(request.sendData.damageRankList[0].toFixed(2)));
+                    $('#damageCRankAfter').text(pushComma(request.sendData.damageRankList[1].toFixed(2)));
+                    $('#damageDRankAfter').text(pushComma(request.sendData.damageRankList[2].toFixed(2)));
                     $('#damageERankAfter').text(request.sendData.damageRankList[3]);
 
                     // 대표보수 보강공법 수행효과 비용
-                    $('#damageBCost').text(pushComma(Math.round(request.sendData.costRankList[0])));
-                    $('#damageCCost').text(pushComma(Math.round(request.sendData.costRankList[1])));
-                    $('#damageDCost').text(pushComma(Math.round(request.sendData.costRankList[2])));
-                    $('#damageECost').text(pushComma(Math.round(request.sendData.costRankList[3])));
+                    $('#damageBCost').text(Math.round(request.sendData.costRankList[0]).toLocaleString());
+                    $('#damageCCost').text(Math.round(request.sendData.costRankList[1]).toLocaleString());
+                    $('#damageDCost').text(Math.round(request.sendData.costRankList[2]).toLocaleString());
+                    $('#damageECost').text(Math.round(request.sendData.costRankList[3]).toLocaleString());
 
                     $('#discountRate').text(Number(request.sendData.lifeAllTimeDto.ltDiscountRate*100)+'%');
                     $('#increase').text(Number(request.sendData.lifeAllTimeDto.ltIncrease*100)+'%');
@@ -296,12 +297,13 @@ function lifeAllTimeOutput(id){
                             html += '<td style="text-align: center;">'+request.sendData.periodicCountList[i]+'</td>';
                             html += '<td style="text-align: center;">'+request.sendData.closeCountList[i]+'</td>';
                             html += '<td style="text-align: center;">'+request.sendData.safetyCountList[i]+'</td>';
-                            html += '<td style="text-align: right;">'+pushComma(Math.round(request.sendData.checkCostList[i]))+'</td>';
+                            html += '<td style="text-align: right;">'+Math.round(request.sendData.checkCostList[i]).toLocaleString()+'</td>';
                             html += '<td style="text-align: center;">'+(i+1)+'</td>';
-                            html += '<td style="text-align: center;">'+request.sendData.damageRankYearList[i].toFixed(0)+'</td>';
+                            html += '<td style="text-align: center;">'+pushComma(request.sendData.damageRankYearList[i].toFixed(0))+'</td>';
+                            html += '<td style="text-align: center;">'+request.sendData.performCompletion[i].toFixed(0)+'</td>';
                             html += '<td style="text-align: center;">'+request.sendData.costRank[i]+'</td>';
-                            html += '<td style="text-align: right;">'+pushComma(Math.round(request.sendData.discountAccumulateList[i]))+'</td>';
-                            html += '<td style="text-align: right;">'+pushComma(Math.round(request.sendData.managementCostList[i]))+'</td>';
+                            html += '<td style="text-align: right;">'+Math.round(request.sendData.discountAccumulateList[i]).toLocaleString()+'</td>';
+                            html += '<td style="text-align: right;">'+Math.round(request.sendData.managementCostList[i]).toLocaleString()+'</td>';
                         html += '</tr>';
                     }
                     $diagnosisTable.html(html);
