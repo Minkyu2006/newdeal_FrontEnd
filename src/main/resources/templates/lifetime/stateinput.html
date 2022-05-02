@@ -39,6 +39,22 @@
 				MonthFormat: 'yy-mm'
 			});
 
+			$('#ltAllInputDate').MonthPicker({
+				IsRTL: true,
+				i18n: {
+					year: '',
+					buttonText: '',
+					prevYear: '다음 년도',
+					nextYear: '이전 년도',
+					next12Years: '12년 후',
+					prev12Years: '12년 전',
+					backTo: '',
+					months: ['1월','2월','3월','4월','5월','6월', '7월','8월','9월','10월','11월','12월']
+				},
+				Button: false,
+				MonthFormat: 'yy-mm'
+			});
+
 			absenceSelect();
 		});
 	</script>
@@ -149,6 +165,14 @@
 									<div class="talk__input-heading">준공일자</div>
 									<div class="talk__input">
 										<input type="text" name="ltAllCompletionDate" id="ltAllCompletionDate"  placeholder="연 - 월 선택" class="c-text__input" readonly="readonly" style="background-color: white;color: black"/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="talk__input-item">
+									<div class="talk__input-heading">평가 기준 일자</div>
+									<div class="talk__input">
+										<input type="text" name="ltAllInputDate" id="ltAllInputDate"  placeholder="연 - 월 선택" class="c-text__input" readonly="readonly" style="background-color: white;color: black"/>
 									</div>
 								</div>
 							</li>
