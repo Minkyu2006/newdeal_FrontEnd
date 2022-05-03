@@ -609,6 +609,9 @@ table {
 	max-width: 1080px;
 	margin: 0 auto;
 }
+.content__inner.content__inner--large {
+	max-width: 1440px;
+}
 
 .li-main__head {
 	position: absolute;
@@ -2334,7 +2337,7 @@ h4.l-popup__heading {
 	justify-content: center;
 }
 .resistance-layout .section {
-	height: calc(100vh - 134px);
+	height: 803px;
 }
 .resistance-layout .section + .section {
 	margin-top: 0;
