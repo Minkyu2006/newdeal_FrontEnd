@@ -1021,6 +1021,7 @@ table {
 	width: 300px;
 }
 .talk__comment {
+	position: relative;
 	width: 100%;
 	margin-top: 10px;
 	padding: 5px;
@@ -1034,6 +1035,11 @@ table {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+}
+.talk__comment-skip {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
 }
 .talk__important-color {
 	color: #a30000;
@@ -1208,6 +1214,7 @@ table {
 .article__heading {
 	font-size: 16px;
 	font-weight: 700;
+	line-height: 1.4;
 }
 .article__head-caption {
 	font-size: 12px;
@@ -1641,8 +1648,9 @@ table {
 }
 .performance-report__heading {
 	width: 100%;
-	margin-bottom: 20px;
-	font-size: 24px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	font-size: 28px;
 	font-weight: 700;
 	text-align: center;
 }
@@ -1674,6 +1682,28 @@ table {
 .performance-report__footer {
 	line-height: 1.4;
 }
+.performance-report__footer > p {
+	margin-bottom: 20px;
+}
+.performance-report__sign-area {
+	width: 100%;
+}
+.performance-report__sign-area:before {
+	content: " ";
+	display: table;
+}
+.performance-report__sign-area:after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+.performance-report__date {
+	float: left;
+}
+.performance-report__sign {
+	float: right;
+}
+
 
 /* resistance 내하성능 */
 .select {
