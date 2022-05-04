@@ -43,7 +43,15 @@ $(function() {
         const businessNum = $("#businessNum").val();
         console.log("businessNum : "+businessNum);
 
-        if(chapter === "2"){ // 성능개선 사업구분 별 가중치 기술성
+        if(chapter === "0") { // 사업평가 대상이 아님에도 평가를 시행할지(확인)
+            $('#choicePop').addClass('open');
+        }
+
+        else if(chapter === "1"){ // 안전등급, 목표안전등급 그대로진행 물음
+            inputPerformanceNext1();
+        }
+
+        else if(chapter === "2"){ // 성능개선 사업구분 별 가중치 기술성
             upWeightCheckEco();
         }else if(chapter === "3"){ // 성능개선 사업구분 별 가중치 경제성
             upWeightCheckPolicy();
@@ -78,6 +86,14 @@ $(function() {
     });
     $(document).on("click","#weightCheckNoBtn",function(){
         $('#popupId').remove();
+
+        const chapter =$("#chapter").val();
+
+        if(chapter === "0") { // 사업평가 대상이 아님에도 평가를 시행할지(취소)
+            $("#piInputSkip").val("0");
+            $('#falseRadio').addClass('open');
+        }
+
     });
 
     $(document).on("click","#checkDelSuccessBtn",function(){
