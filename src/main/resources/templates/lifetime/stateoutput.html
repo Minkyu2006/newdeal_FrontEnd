@@ -37,7 +37,7 @@
 	<input type="hidden" id="getid" th:value="${getid}" readonly="readonly" />
 	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
-	<div class="content__inner">
+	<div class="content__inner content__inner--large">
 		<div class="lifetime" id="lifetime">
 			<div class="talk">
 				<div class="talk__box">
@@ -217,15 +217,15 @@
 						<h4>단계별 유지관리 결과(보수·보강수행시점 기준)</h4>
 						<table class="c-table c-table--border">
 							<colgroup>
-								<col />
-								<col />
-								<col />
-								<col />
-								<col />
-								<col />
-								<col />
-								<col />
-								<col />
+								<col style="width: 40px;" />
+								<col style="width: 80px;" />
+								<col style="width: 80px;" />
+								<col style="width: 80px;" />
+								<col style="width: 120px;" />
+								<col style="width: 110px;" />
+								<col style="width: 100px;" />
+								<col style="width: 110px;" />
+								<col style="width: 80px;" />
 								<col />
 								<col />
 								<col />
@@ -233,9 +233,9 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th  style="text-align: center;">단계</th>
-									<th style="text-align: center;">정기점검 횟수</th>
-									<th style="text-align: center;">정밀점검 횟수</th>
+									<th style="text-align: center;">단계</th>
+									<th style="text-align: center;">정기점검<br />횟수</th>
+									<th style="text-align: center;">정밀점검<br />횟수</th>
 									<th style="text-align: center;">정밀안전<br />진단횟수</th>
 									<th style="text-align: center;">[할인율 적용]<br />총 점검비용(원)</th>
 									<th style="text-align: center;">누적 보수·보강<br />수행 횟수</th>
