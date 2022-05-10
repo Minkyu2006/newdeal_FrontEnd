@@ -42,7 +42,7 @@ function piBusinessClick(val){
 
     if(val===1){
         $piErectionCostList.css('visibility','inherit');
-        $piUsabilityAndGoalLevelName.text("목표 안전등급")
+        $piUsabilityAndGoalLevelName.text("목표 종합 안전등급")
         $piUsabilityAndGoalLevel.val("A")
         $("#rankA").css('display','block');
         $("#rankB").css('display','block');
@@ -58,9 +58,12 @@ function piBusinessClick(val){
         $("#delay2").css('display','block');
         $("#delay3").css('display','block');
         $("#delayNo").css('display','none');
+
+        $("#stepComment").css('display','block');
+
     }else if(val===2){
         $piErectionCostList.css('visibility','hidden');
-        $piUsabilityAndGoalLevelName.text("목표 안전등급")
+        $piUsabilityAndGoalLevelName.text("목표 종합 안전등급")
         $piUsabilityAndGoalLevel.val("해당안됨")
         $("#rankA").css('display','none');
         $("#rankB").css('display','none');
@@ -76,6 +79,8 @@ function piBusinessClick(val){
         $("#delay2").css('display','none');
         $("#delay3").css('display','none');
         $("#delayNo").css('display','block');
+
+        $("#stepComment").css('display','none');
     }else{
         $piErectionCostList.css('visibility','hidden');
         $piUsabilityAndGoalLevelName.text("사용성등급")
@@ -94,6 +99,8 @@ function piBusinessClick(val){
         $("#delay2").css('display','none');
         $("#delay3").css('display','none');
         $("#delayNo").css('display','block');
+
+        $("#stepComment").css('display','none');
     }
 }
 
@@ -111,7 +118,7 @@ function piTypeClick(idVal,data){
         html += "<option value='거더교'>"+"거더교"+"</option>";
         html += "<option value='라멘교'>"+"라멘교"+"</option>";
         html += "<option value='사장교'>"+"사장교"+"</option>";
-        html += "<option value='사장교'>"+"사장교"+"</option>";
+        html += "<option value='현수교'>"+"현수교"+"</option>";
         html += "<option value='엑스트라도즈드교'>"+"엑스트라도즈드교"+"</option>";
         html += "<option value='보도육교'>"+"보도육교"+"</option>";
         $piType.html(html);
@@ -246,11 +253,19 @@ function radioPopOpen(){
 
     if(popOpenClonse===1){
         $("#business_dissatisfaction").text(business_dissatisfaction);
-        $('#falseRadio').addClass('open');
+        $("#chapter").val("0");
+        $("#piInputSkip").val("1");
+        alertWeightCheck("사업평가 대상이 아님에도 평가를 사행하시겠습니까?");
     }else{
         $('#choicePop').addClass('open');
     }
 
+}
+
+// 스킵버튼
+function skipBtn(){
+    $("#piInputSkip").val("2");
+    $('#choicePop').addClass('open');
 }
 
 function choicePopClose(){
@@ -410,10 +425,16 @@ function inputMiddleSaveCheck(){
                 let status = request.status;
                 // console.log("status : " + status);
                 if (status === 200) {
+
+                    $("#createDate").text(request.sendData.nowDate);
+                    $("#createName").text(request.sendData.accountData.username);
+                    $("#createTeam").text(request.sendData.accountData.teamname);
+
                     if(request.sendData.middleSave===1){
                         console.log("중간저장 게시물이 존재함");
                         $("#autoNum").val(request.sendData.piAutoNum);
                         $("#businessNum").val(request.sendData.piBusiness);
+                        $("#piInputSkip").val(request.sendData.piInputSkip);
                         alertMiddleSaveCheck("작성중 완료되지 않은 대안이 존재합니다.<BR>계속 작성하시겠습니까?");
                     }
                 } else {
@@ -428,6 +449,100 @@ function inputMiddleSaveCheck(){
     }
 }
 
+function inputPerformanceNext1Check(){
+    const $piType = $("#piType").val();
+
+    if(document.getElementById("piBusiness-1").checked===false && document.getElementById("piBusiness-2").checked===false && document.getElementById("piBusiness-3").checked===false){
+        alertCaution("사업구분을을 선택해주세요.",1);
+        return false;
+    }
+
+    if($piType===""){
+        alertCaution("시설물 유형을 선택해주세요.",1);
+        return false;
+    }
+
+    const $piFacilityName = $("#piFacilityName").val();
+    if($piFacilityName===""){
+        alertCaution("시설명을 입력해주세요.",1);
+        return false;
+    }
+
+    const $piErectionCost = $("#piErectionCost");
+    if(document.getElementById("piBusiness-1").checked===true){
+        if($piErectionCost.val()===""){
+            alertCaution("취득원가를 입력해주세요.",1);
+            return false;
+        }else{
+            $piErectionCost.val($piErectionCost.val().replaceAll(",",""));
+            if($piErectionCost.val().length>=15){
+                $piErectionCost.val(0);
+                alertCaution("취득원가를 한계치가 넘었습니다.<br>다시 확인해주시고 입력해주세요..",1);
+                return false;
+            }
+        }
+    }else{
+        $piErectionCost.val(0);
+    }
+
+    const $piCompletionYear = $("#piCompletionYear").val();
+    if($piCompletionYear===""){
+        alertCaution("준공연도를 입력해주세요.",1);
+        return false;
+    }
+
+    const $piAADT = $("#piAADT");
+    if($piAADT.val()===""){
+        alertCaution("연평균일교통량(AADT)를 입력해주세요.",1);
+        return false;
+    }else{
+        $piAADT.val($piAADT.val().replaceAll(",",""));
+        if($piAADT.val().length>=8){
+            alertCaution("연평균일교통량(AADT) 한계치가 넘었습니다.<br>다시 확인해주시고 입력해주세요..",1);
+            return false;
+        }
+    }
+
+    const $piRaterBaseYear = $("#piRaterBaseYear").val();
+    if($piRaterBaseYear===""){
+        alertCaution("평가 기준년도를 입력해주세요.",1);
+        return false;
+    }
+
+    const $piSafetyLevel = $("#piSafetyLevel").val();
+    const $piUsabilityAndGoalLevel = $("#piUsabilityAndGoalLevel").val();
+
+    if(document.getElementById("piBusiness-1").checked===true){
+        if($piSafetyLevel==="A"){
+            if($piUsabilityAndGoalLevel==="B" || $piUsabilityAndGoalLevel==="C" || $piUsabilityAndGoalLevel==="D" || $piUsabilityAndGoalLevel==="E"){
+                $("#chapter").val("1");
+                alertWeightCheck("현재 안전등급이 목표 안전등급보다<br>좋은 것으로 입력되었습니다.<br>그래도 진행하시겠습니까?");
+                return false;
+            }
+        }else if($piSafetyLevel==="B"){
+            if($piUsabilityAndGoalLevel==="C" || $piUsabilityAndGoalLevel==="D" || $piUsabilityAndGoalLevel==="E"){
+                $("#chapter").val("1");
+                alertWeightCheck("현재 안전등급이 목표 안전등급보다<br>좋은 것으로 입력되었습니다.<br>그래도 진행하시겠습니까?");
+                return false;
+            }
+        }else if($piSafetyLevel==="C"){
+            if($piUsabilityAndGoalLevel==="D" || $piUsabilityAndGoalLevel==="E"){
+                $("#chapter").val("1");
+                alertWeightCheck("현재 안전등급이 목표 안전등급보다<br>좋은 것으로 입력되었습니다.<br>그래도 진행하시겠습니까?");
+                return false;
+            }
+        }else if($piSafetyLevel==="D"){
+            if($piUsabilityAndGoalLevel==="E"){
+                $("#chapter").val("1");
+                alertWeightCheck("현재 안전등급이 목표 안전등급보다<br>좋은 것으로 입력되었습니다.<br>그래도 진행하시겠습니까?");
+                return false;
+            }
+        }
+    }
+
+    inputPerformanceNext1()
+}
+
 // Input 첫번째 NEXT버튼 첫번째 구간(중간저장)
 function inputPerformanceNext1(){
     JWT_Get();
@@ -439,82 +554,9 @@ function inputPerformanceNext1(){
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else {
 
-        const $piSafetyLevel = $("#piSafetyLevel").val();
-        const $piUsabilityAndGoalLevel = $("#piUsabilityAndGoalLevel").val();
-
-        const $piType = $("#piType").val();
-
-        if(document.getElementById("piBusiness-1").checked===false && document.getElementById("piBusiness-2").checked===false && document.getElementById("piBusiness-3").checked===false){
-            alertCaution("사업구분을을 선택해주세요.",1);
-            return false;
-        }
-
-        if($piType===""){
-            alertCaution("시설물 유형을 선택해주세요.",1);
-            return false;
-        }
-
-
-        const $piFacilityName = $("#piFacilityName").val();
-        if($piFacilityName===""){
-            alertCaution("시설명을 입력해주세요.",1);
-            return false;
-        }
-
-        const $piErectionCost = $("#piErectionCost");
-        if(document.getElementById("piBusiness-1").checked===true){
-            if($piSafetyLevel==="A"){
-                if($piUsabilityAndGoalLevel==="B" || $piUsabilityAndGoalLevel==="C"){
-                    alertCaution("안전등급 보다 목표안전등급이 낮을 수 없습니다.",1);
-                    return false;
-                }
-            }else if($piSafetyLevel==="B"){
-                if($piUsabilityAndGoalLevel==="C"){
-                    alertCaution("안전등급 보다 목표안전등급이 낮을 수 없습니다.",1);
-                    return false;
-                }
-            }
-
-            if($piErectionCost.val()===""){
-                alertCaution("취득원가를 입력해주세요.",1);
-                return false;
-            }else{
-                $piErectionCost.val($piErectionCost.val().replaceAll(",",""));
-                if($piErectionCost.val().length>=15){
-                    alertCaution("취득원가를 한계치가 넘었습니다.<br>다시 확인해주시고 입력해주세요..",1);
-                    return false;
-                }
-            }
-        }else{
-            $piErectionCost.val(0);
-        }
-
-        const $piCompletionYear = $("#piCompletionYear").val();
-        if($piCompletionYear===""){
-            alertCaution("준공연도를 입력해주세요.",1);
-            return false;
-        }
-
-        const $piAADT = $("#piAADT");
-        if($piAADT.val()===""){
-            alertCaution("연평균일교통량(AADT)를 입력해주세요.",1);
-            return false;
-        }else{
-            $piAADT.val($piAADT.val().replaceAll(",",""));
-            if($piAADT.val().length>=8){
-                alertCaution("연평균일교통량(AADT) 한계치가 넘었습니다.<br>다시 확인해주시고 입력해주세요..",1);
-                return false;
-            }
-        }
-
-        const $piRaterBaseYear = $("#piRaterBaseYear").val();
-        if($piRaterBaseYear===""){
-            alertCaution("평가 기준년도를 입력해주세요.",1);
-            return false;
-        }
-
         const  autoNum = $("#autoNum").val();
         const formData = new FormData(document.getElementById('performance1'));
+        formData.set("piInputSkip",$("#piInputSkip").val());
 
         console.log("중간저장1 autoNum : "+autoNum);
         if(autoNum===""){
@@ -638,25 +680,14 @@ function inputPerformanceNext2(){
                 }
             }
 
-            if(document.getElementById("piBusinessObligatory"+x).checked===false && document.getElementById("piBusinessObligatory"+y).checked===false){
-                alertCaution(text+"의 법의 따른 의무사업을 <br>선택해주세요.",1);
-                return false;
-            }
-            if(document.getElementById("piBusinessMandatory"+x).checked===false && document.getElementById("piBusinessMandatory"+y).checked===false){
-                alertCaution(text+"의 법정계획/설계기준에 따른 <br>의무사업을 선택해주세요.",1);
-                return false;
-            }
-            if(document.getElementById("piBusinessPlanned"+x).checked===false && document.getElementById("piBusinessPlanned"+y).checked===false){
-                alertCaution(text+"의 자체계획/의결에 따른 <br>사업을 선택해주세요.",1);
-                return false;
-            }
-            if($("#piWhether"+j).val()==="") {
-                alertCaution(text+"의 최근 1년 간 민원 및 사고발생 <br>건수를 작성해주세요.",1);
-                return false;
-            }
             j++
             x=x+2;
             y=y+2;
+        }
+
+        if($("#piWhether").val()==="") {
+            alertCaution("최근 1년 간 민원 및 사고발생 <br>건수를 작성해주세요.",1);
+            return false;
         }
 
         for(i=1; i<5; i++){
@@ -741,7 +772,20 @@ function upWeightCheckAdd(){
     const $piWeightEconomy = $("#piWeightEconomy");
     const $piWeightPolicy = $("#piWeightPolicy");
 
+    if($piWeightTechnicality.val()===""){
+        $piWeightTechnicality.val($piWeightTechnicality.attr('placeholder'));
+    }
+
+    if($piWeightEconomy.val()===""){
+        $piWeightEconomy.val($piWeightEconomy.attr('placeholder'));
+    }
+
+    if($piWeightPolicy.val()===""){
+        $piWeightPolicy.val($piWeightPolicy.attr('placeholder'));
+    }
+
     weightAdd = new Decimal(Number($piWeightTechnicality.val())+Number($piWeightEconomy.val())+Number($piWeightPolicy.val()));
+    console.log("선응개선 사업구분 별 가중치 합 : "+weightAdd);
     if(1 < weightAdd){
         alertCaution("사업구분별 가중치의 합이 초과했습니다.<br>"+"가중치의 합은 '1'로 해주시길 바랍니다. ",1);
         return false;
@@ -760,18 +804,14 @@ function upWeightCheckTech(){
     const $piWeightTechnicalityMin = $("#piWeightTechnicalityMin");
     const $piWeightTechnicalityMax = $("#piWeightTechnicalityMax");
 
-    if($piWeightTechnicality.val()===""){
-        $piWeightTechnicality.val($piWeightTechnicality.attr('placeholder'));
-        upWeightCheckEco();
+    if(Number($piWeightTechnicality.val()) < Number($piWeightTechnicalityMin.text()) || Number($piWeightTechnicality.val()) > Number($piWeightTechnicalityMax.text())) {
+        $("#chapter").val("2");
+        alertWeightCheck("사업구분별 가중치의 기술성 가중치가 초과했습니다.<br>" + $piWeightTechnicalityMin.text() + "~" + $piWeightTechnicalityMax.text() + " 사이로 입력해주세요.<br>그래도 계속 작성하시겠습니까?");
+        return false;
     }else{
-        if(Number($piWeightTechnicality.val()) < Number($piWeightTechnicalityMin.text()) || Number($piWeightTechnicality.val()) > Number($piWeightTechnicalityMax.text())) {
-            $("#chapter").val("2");
-            alertWeightCheck("사업구분별 가중치의 기술성 가중치가 초과했습니다.<br>" + $piWeightTechnicalityMin.text() + "~" + $piWeightTechnicalityMax.text() + " 사이로 입력해주세요.<br>그래도 계속 작성하시겠습니까?");
-            return false;
-        }else{
-            upWeightCheckEco();
-        }
+        upWeightCheckEco();
     }
+
 }
 
 // 상단 경제성 - 가중치 입력칸 맞는지 확인하는 함수2
@@ -781,17 +821,12 @@ function upWeightCheckEco(){
     const $piWeightEconomyMin = $("#piWeightEconomyMin");
     const $piWeightEconomyMax = $("#piWeightEconomyMax");
 
-    if($piWeightEconomy.val()===""){
-        $piWeightEconomy.val($piWeightEconomy.attr('placeholder'));
-        upWeightCheckPolicy();
+    if(Number($piWeightEconomy.val()) < Number($piWeightEconomyMin.text()) || Number($piWeightEconomy.val()) > Number($piWeightEconomyMax.text())){
+        $("#chapter").val("3");
+        alertWeightCheck("사업구분별 가중치의 경제성 가중치가 초과했습니다.<br>" + $piWeightEconomyMin.text() + "~" + $piWeightEconomyMax.text() + " 사이로 입력해주세요.<br>그래도 계속 작성하시겠습니까?");
+        return false;
     }else{
-        if(Number($piWeightEconomy.val()) < Number($piWeightEconomyMin.text()) || Number($piWeightEconomy.val()) > Number($piWeightEconomyMax.text())){
-            $("#chapter").val("3");
-            alertWeightCheck("사업구분별 가중치의 경제성 가중치가 초과했습니다.<br>" + $piWeightEconomyMin.text() + "~" + $piWeightEconomyMax.text() + " 사이로 입력해주세요.<br>그래도 계속 작성하시겠습니까?");
-            return false;
-        }else{
-            upWeightCheckPolicy();
-        }
+        upWeightCheckPolicy();
     }
 }
 
@@ -802,18 +837,14 @@ function upWeightCheckPolicy(){
     const $piWeightPolicyMin = $("#piWeightPolicyMin");
     const $piWeightPolicyMax = $("#piWeightPolicyMax");
 
-    if($piWeightPolicy.val()===""){
-        $piWeightPolicy.val($piWeightPolicy.attr('placeholder'));
-        downWeightCheckTech();
+    if(Number($piWeightPolicy.val()) < Number($piWeightPolicyMin.text()) || Number($piWeightPolicy.val()) > Number($piWeightPolicyMax.text())){
+        $("#chapter").val("4");
+        alertWeightCheck("사업구분별 가중치의 정책성가 초과했습니다.<br>" + $piWeightPolicyMin.text() + "~" + $piWeightPolicyMax.text() + " 사이로 입력해주세요.<br>그래도 계속 작성하시겠습니까?");
+        return false;
     }else{
-        if(Number($piWeightPolicy.val()) < Number($piWeightPolicyMin.text()) || Number($piWeightPolicy.val()) > Number($piWeightPolicyMax.text())){
-            $("#chapter").val("4");
-            alertWeightCheck("사업구분별 가중치의 정책성가 초과했습니다.<br>" + $piWeightPolicyMin.text() + "~" + $piWeightPolicyMax.text() + " 사이로 입력해주세요.<br>그래도 계속 작성하시겠습니까?");
-            return false;
-        }else{
-            downWeightCheckTech();
-        }
+        downWeightCheckTech();
     }
+
 }
 
 // 하단 가중치 기술성 합 검증함수 - 가중치 입력칸 맞는지 확인하는 함수4
@@ -841,18 +872,58 @@ function downWeightCheckTech(){
 
     if(businessNum==="노후화대응"){
         $piWeightUsability.val("0");
+
+        if($piWeightSafe.val()===""){
+            $piWeightSafe.val($piWeightSafe.attr('placeholder'));
+        }
+
+        if($piWeightOld.val()===""){
+            $piWeightOld.val($piWeightOld.attr('placeholder'));
+        }
+
+        if($piWeightUrgency.val()===""){
+            $piWeightUrgency.val($piWeightUrgency.attr('placeholder'));
+        }
+
+        if($piWeightGoal.val()===""){
+            $piWeightGoal.val($piWeightGoal.attr('placeholder'));
+        }
+
         weightAdd = new Decimal(Number($piWeightSafe.val())+Number($piWeightOld.val())+Number($piWeightUrgency.val())+Number($piWeightGoal.val()));
     }else if(businessNum==="기준변화"){
         $piWeightUsability.val("0");
         $piWeightUrgency.val("0");
         $piWeightGoal.val("0");
+
+        if($piWeightSafe.val()===""){
+            $piWeightSafe.val($piWeightSafe.attr('placeholder'));
+        }
+
+        if($piWeightOld.val()===""){
+            $piWeightOld.val($piWeightOld.attr('placeholder'));
+        }
+
         weightAdd = new Decimal(Number($piWeightSafe.val())+Number($piWeightOld.val()));
     }else{
         $piWeightUrgency.val("0");
         $piWeightGoal.val("0");
+
+        if($piWeightSafe.val()===""){
+            $piWeightSafe.val($piWeightSafe.attr('placeholder'));
+        }
+
+        if($piWeightOld.val()===""){
+            $piWeightOld.val($piWeightOld.attr('placeholder'));
+        }
+
+        if($piWeightUsability.val()===""){
+            $piWeightUsability.val($piWeightUsability.attr('placeholder'));
+        }
+
         weightAdd = new Decimal(Number($piWeightSafe.val())+Number($piWeightUsability.val())+Number($piWeightOld.val()));
     }
 
+    console.log("평가지표별 가중치 기술성 합 : "+weightAdd)
     if(1 < weightAdd){
         alertCaution("평가지표별 기술성 합이 '1' 초과했습니다.<br>"+"가중치의 합은 '1'로 해주시길 바랍니다. ",1);
         return false;
@@ -880,7 +951,16 @@ function downWeightCheckEco(businessNum){
     // 자산가치 개선 효율성, 사업효율 등급
     const $piWeightCostUtility = $("#piWeightCostUtility");
 
+    if($piWeightSafeUtility.val()===""){
+        $piWeightSafeUtility.val($piWeightSafeUtility.attr('placeholder'));
+    }
+
+    if($piWeightCostUtility.val()===""){
+        $piWeightCostUtility.val($piWeightCostUtility.attr('placeholder'));
+    }
+
     weightAdd = new Decimal(Number($piWeightSafeUtility.val())+Number($piWeightCostUtility.val()));
+    console.log("평가지표별 가중치 경제성 합 : "+weightAdd)
     if(1 < weightAdd){
         alertCaution("평가지표별 경제성 합이 '1' 초과했습니다.<br>"+"가중치의 합은 '1'로 해주시길 바랍니다. ",1);
         return false;
@@ -913,11 +993,30 @@ function downWeightCheckPolicy(businessNum){
 
     if(businessNum==="기준변화"){
         $piWeightComplaint.val("0");
+        if($piWeightBusiness.val()===""){
+            $piWeightBusiness.val($piWeightBusiness.attr('placeholder'));
+        }
+
+        if($piWeightBusinessEffect.val()===""){
+            $piWeightBusinessEffect.val($piWeightBusinessEffect.attr('placeholder'));
+        }
         weightAdd = new Decimal(Number($piWeightBusiness.val())+Number($piWeightBusinessEffect.val()));
     }else{
+        if($piWeightBusiness.val()===""){
+            $piWeightBusiness.val($piWeightBusiness.attr('placeholder'));
+        }
+
+        if($piWeightBusinessEffect.val()===""){
+            $piWeightBusinessEffect.val($piWeightBusinessEffect.attr('placeholder'));
+        }
+
+        if($piWeightComplaint.val()===""){
+            $piWeightComplaint.val($piWeightComplaint.attr('placeholder'));
+        }
         weightAdd = new Decimal(Number($piWeightBusiness.val())+Number($piWeightComplaint.val()+Number($piWeightBusinessEffect.val())));
     }
 
+    console.log("평가지표별 가중치 정책성 합 : "+weightAdd)
     if(1 < weightAdd){
         alertCaution("평가지표별 정책성 합이 '1' 초과했습니다.<br>"+"가중치의 합은 '1'로 해주시길 바랍니다. ",1);
         return false;
@@ -1354,6 +1453,8 @@ function middleData(autoNum){
                         $('#piSafetyLevel').val('E').prop("selected",true);
                     }
 
+                    console.log("데이터 테스트");
+                    console.log(request.sendData.performanceData.piUsabilityAndGoalLevel);
                     if(request.sendData.performanceData.piUsabilityAndGoalLevel==="A"){
                         $('#piUsabilityAndGoalLevel').val('A').prop("selected",true);
                     }else if(request.sendData.performanceData.piUsabilityAndGoalLevel==="B"){
@@ -1480,26 +1581,8 @@ function middleDataBusiness(autoNum){
                             $("#piBeforeSafetyRating"+j).val(request.sendData.performance[i].piBeforeSafetyRating);
                             $("#piAfterSafetyRating"+j).val(request.sendData.performance[i].piAfterSafetyRating);
 
-                            const piBusinessObligatory = request.sendData.performance[i].piBusinessObligatory;
-                            if(piBusinessObligatory===1){
-                                $("#piBusinessObligatory"+x).prop("checked", true);
-                            }else if(piBusinessObligatory===0){
-                                $("#piBusinessObligatory"+y).prop("checked", true);
-                            }
-
-                            const piBusinessMandatory = request.sendData.performance[i].piBusinessMandatory;
-                            if(piBusinessMandatory===1){
-                                $("#piBusinessMandatory"+x).prop("checked", true);
-                            }else if(piBusinessMandatory===0){
-                                $("#piBusinessMandatory"+y).prop("checked", true);
-                            }
-
-                            const piBusinessPlanned = request.sendData.performance[i].piBusinessPlanned;
-                            if(piBusinessPlanned===1){
-                                $("#piBusinessPlanned"+x).prop("checked", true);
-                            }else if(piBusinessPlanned===0){
-                                $("#piBusinessPlanned"+y).prop("checked", true);
-                            }
+                            const piBusinessValidity = request.sendData.performance[i].piBusinessValidity;
+                            $("#piBusinessValidity"+j).val(piBusinessValidity);
 
                             j++
                             x=x+2;

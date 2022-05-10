@@ -43,7 +43,9 @@
 			<div class="pdfArea"> <!--	1번째 PDF area Div 시작 -->
 				<div class="talk">
 					<div class="talk__box">
-						<p class="performance-output__comment">본 사업은 사업비용, 시설유형, 적용대상, 중복평가, 의무사업, 확정사업 요건을 보두 충족하는 <span>평가대상 사업</span>입니다.</p>
+						<div class="performance-output">
+							<p id="skipText" class="performance-output__result"></p>
+						</div>
 					</div>
 				</div>
 
@@ -55,23 +57,18 @@
 
 					<div class="talk__box">
 						<div class="performance-output">
-							<div id="piBusinessName" class="performance-output__result">
-<!--							가. 본 사업은 법정계획/설계기준에 따른 의무사업으로써, 성능개선 사업 유형 중 노후화 유형 사업에 해당-->
-<!--							<br />-->
-<!--							나. 국토부 성능개선 기준에 따라, 성능개선 대안과 유지보수 대안을 설정하고 대안별 기술성, 경제성, 정책성을 평가하여, 사업의 추진여부 및 최적대안을 선정-->
-							</div>
+							<div id="piBusinessName" class="performance-output__result"></div>
 						</div>
 					</div>
 
 					<h2 class="content__heading">2. 성능개선 대상시설 및 사업 추진대안 정보</h2>
 					<div class="talk__box">
 						<div class="performance-output">
-							<div id="typeName" class="performance-output__result">
-<!--							대상 시설은 교량(신응교)으로, 평가에 활용된 시설정보, 이용정보, 사업정보, 여건정보, 평가정보는 이하와 같음-->
-							</div>
+							<div id="typeName" class="performance-output__result"></div>
 						</div>
 					</div>
 
+					<!-- 표 1 시작 -->
 					<h2 class="content__heading">표 1. 성능개선 사업 정보</h2>
 
 					<div class="talk__box">
@@ -94,29 +91,24 @@
 							<table id="outputTableBusiness" style="text-align: center" class="c-table c-table--in-border"></table>
 						</div>
 					</div>
+
 				</div>
 			</div> <!--	1번째 PDF area Div 끝 -->
 
 			<div class="pdfArea" style="margin-top: 20px"> <!--	2번째 PDF area Div 시작 -->
 				<div class="talk">
-					<div class="talk__box">
-						<div class="performance-output">
-							<h3>여건 정보</h3>
-							<table id="outputTableCondition" style="text-align: center" class="c-table c-table--in-border"></table>
-						</div>
-					</div>
 
-					<div class="talk__box">
-						<div class="performance-output">
-							<h3>평가 정보</h3>
-							<table id="outputTableEvaluation" style="text-align: center" class="c-table c-table--in-border"></table>
-						</div>
-					</div>
+<!--					<div class="talk__box">-->
+<!--						<div class="performance-output">-->
+<!--							<h3>여건 정보</h3>-->
+<!--							<table id="outputTableCondition" style="text-align: center" class="c-table c-table&#45;&#45;in-border"></table>-->
+<!--						</div>-->
+<!--					</div>-->
 
 					<h2 class="content__heading">3. 성능개선 사업성 평가 내용</h2>
 					<div class="talk__box">
 						<div class="performance-output">
-							<div id="explanationName" style="font-size: 15px" class="performance-output__result"></div>
+							<div id="explanationName" class="performance-output__result"></div>
 						</div>
 					</div>
 
@@ -139,13 +131,8 @@
 							<table id="outputTableWeightP" style="text-align: center" class="c-table c-table--in-border"></table>
 						</div>
 					</div>
-				</div>
-			</div> <!--	2번째 PDF area Div 끝 -->
 
-			<div class="pdfArea" style="margin-top: 20px"> <!--	3번째 PDF area Div 시작 -->
-				<div class="talk">
 					<h2 class="content__heading">표 3. 사업성 평가결과 부분별 요약 표</h2>
-
 					<div class="talk__box">
 						<div class="performance-output">
 							<h3>기술성</h3>
@@ -161,6 +148,12 @@
 						</div>
 					</div>
 
+				</div>
+			</div> <!--	2번째 PDF area Div 끝 -->
+
+			<div class="pdfArea" style="margin-top: 20px"> <!--	3번째 PDF area Div 시작 -->
+				<div class="talk">
+
 					<div class="talk__box">
 						<div class="performance-output">
 							<h3>정책성</h3>
@@ -169,7 +162,7 @@
 						</div>
 					</div>
 
-					<h2 class="content__heading">표 4. 사업성 평가결과 종합 표</h2>
+					<h2 class="content__heading">표 4. 사업성 평가결과 요약 표</h2>
 					<div class="talk__box">
 						<div class="performance-output">
 							<h3>결과</h3>
@@ -177,12 +170,21 @@
 						</div>
 					</div>
 
-					<h2 class="content__heading">4. 성능개선 사업성 종합평가 결과</h2>
+					<h2 class="content__heading">4. 성능개선 사업성 평가결과</h2>
 					<div class="talk__box">
 						<div class="performance-output">
-							<div id="resultName" class="performance-output__result"></div>
+							<div id="resultName" style="font-weight: bold;font-size: 18px;" class="performance-output__result"></div>
 						</div>
 					</div>
+
+					<h2 class="content__heading">5. 사업성 평가자 정보</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>평가 정보</h3>
+							<table id="outputTableEvaluation" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
 				</div>
 			</div> <!--	3번째 PDF area Div 끝 -->
 
