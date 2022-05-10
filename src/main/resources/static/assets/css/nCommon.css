@@ -2430,6 +2430,11 @@ h4.l-popup__heading {
 	padding-top: 30px;
 	font-size: 48px;
 }
+.salt__comment {
+	color: #888;
+	font-size: 14px;
+	line-height: 1.4;
+}
 
 
 /* flex-layout*/ 

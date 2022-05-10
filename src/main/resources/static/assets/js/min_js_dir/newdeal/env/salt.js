@@ -30,7 +30,7 @@ function seaCheckChange(){
     const $seaArea = $("#seaArea");
     let html = '';
     if($seaCheck.val() === "1"){
-        html += '<option value ="4.3_11">고성</option>';
+        html += '<option value ="4.3_11" >고성</option>';
         html += '<option value ="2.4_11">속초</option>';
         html += '<option value ="7.7_11">주문진</option>';
         html += '<option value ="6.7_11">삼척</option>';
@@ -120,3 +120,19 @@ function seaAir(){
         });
     }
 }
+
+$(document).ready(function() {
+    // 탭
+    const $tabsBtn = $('.c-tabs__item');
+    const $tabsContent = $('.c-tabs-body__item');
+
+    $tabsBtn.on('click', function() {
+        const idx = $(this).index();
+
+        $tabsBtn.removeClass('active');
+        $tabsBtn.eq(idx).addClass('active');
+        $tabsContent.removeClass('active');
+        $tabsContent.eq(idx).addClass('active');
+    });
+})
+
