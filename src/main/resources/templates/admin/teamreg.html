@@ -74,7 +74,6 @@
 				},
 				success: function(){
 					console.log("저장되었습니다.");
-					document.getElementById("teamFile").value = "";
 					alert('저장되었습니다. ');
 					init();
 					callList(1);
@@ -328,7 +327,6 @@
 					<div class="c-function__item"><button class="c-button c-button--point" id="btnNew">신규</button></div>
 					<div class="c-function__item"><button class="c-button c-button--point" id="btnSave">저장</button></div>
 					<div class="c-function__item"><button class="c-button" id="btnDel">삭제</button></div>
-					<div class="c-function__item"><button class="c-button" onclick="accessTokenCookieGet()">쿠키토큰값확인</button></div>
 				</div>
 			</div>
 		</article>

@@ -33,8 +33,11 @@
 		$(function(){
 			initialOL();
 			// console.log(GeoJSON);
+
+			seaAdminCheck();
 			$("#header_five").addClass(' show');
 			logreg(1,"열화환경 서비스","대기중 염분량 추정 서비스",null);
+
 			$.ajax({
 				'async': false,
 				'global': false,

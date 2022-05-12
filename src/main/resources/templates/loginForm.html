@@ -81,7 +81,7 @@
 				},
 				success: function (res) {
 					setCookie("username",res.sendData.accountData.username, 10); // 발행시간은 5시간으로설정
-					setCookie("userrole",res.sendData.accountData.role, 10); // 발행시간은 5시간으로설정
+					setCookie("teamcode",res.sendData.accountData.teamcode, 10); // 발행시간은 5시간으로설정
 					location.href="/loginindex"
 				}
 			});

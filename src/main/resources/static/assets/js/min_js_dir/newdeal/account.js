@@ -1,7 +1,7 @@
 
 // 회원가입 시작
 function registerSave(){
-    // console.log("회원가입 시작");
+    console.log("회원가입 시작");
 
     if($("#userid").val()==="") {
         alertCaution("아이디를 입력해주세요.", 1)
@@ -28,7 +28,7 @@ function registerSave(){
         return false;
     }
 
-    if($("#teamcode").val()==="") {
+    if($("#team").val()==="") {
         alertCaution("부서를 선택해주세요.", 1)
         return false;
     }

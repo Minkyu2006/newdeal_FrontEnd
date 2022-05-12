@@ -128,7 +128,7 @@
 
 		function loginInfo(){
 			const username = getCookie("username");
-			const userrole = getCookie("userrole");
+			const teamcode = getCookie("teamcode");
 			// console.log("username : "+username);
 			// console.log("userrole : "+userrole);
 
@@ -138,18 +138,18 @@
 			if(username === null){
 				location.href = "/login";
 			}else{
-				if(userrole==="관리자"){
-					// console.log("관리자 입니다.");
+				if(teamcode==="T00001"){
+					console.log("관리자 입니다.");
 					$("#safetyInput").css("display","block");
 					$userimage.attr('src','/assets/images/icon__admin.svg');
 					$userimage.attr("alt","admin");
-				}else if(userrole==="안전성요원") {
-					// console.log("안전성요원 입니다.");
+				}else if(teamcode==="T00005") {
+					console.log("안전성요원 입니다.");
 					$("#safetyInput").css("display","block");
 					$userimage.attr('src','/assets/images/icon__safety.svg');
 					$userimage.attr("alt","admin");
 				}else{
-					// console.log("사용자 입니다.");
+					console.log("사용자 입니다.");
 					$userimage.attr('src','/assets/images/icon__user.svg');
 					$userimage.attr("alt","user");
 					$("#adminMenu").css("display","none");
@@ -165,8 +165,9 @@
 			setCookie("JwtAccessToken",null, 0);
 			setCookie("JwtRefreshToken",null, 0);
 			setCookie("insert_id",null, 0);
-			setCookie("userrole",null, 0);
 			setCookie("username",null, 0);
+			setCookie("teamcode",null, 0);
+			setCookie("teamname",null, 0);
 			location.href="/login"
 		}
 	</script>

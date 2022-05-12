@@ -114,6 +114,60 @@ function seaCheckChange(num){
         $bridgeSeaArea.html(html);
     }
 }
+
+// 열화환경 관리자인지 확인하는 함수
+function seaAdminCheck(){
+
+    console.log("열화환경 관리자인지 확인하는 함수");
+    JWT_Get();
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    } else {
+        // console.log("계산시작");
+        let url;
+        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/env/salt/seaAdminCheck"; // 호출할 백엔드 API
+
+        $.ajax({
+            url: url,
+            type: 'get',
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id",insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    alertCaution("500에러 재로그인 해주세요.", 2);
+                } else {
+                    alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                if (request.status === 200) {
+                    console.log(request);
+                    const $locationHeight1 = $("#locationHeight1");
+                    const $locationHeight2 = $("#locationHeight2");
+                    if(request.sendData.result === "1"){
+                        console.log("관리자 입니다.")
+                        $locationHeight1.css('display','block');
+                        $locationHeight2.css('display','block');
+                    }else{
+                        console.log("일반사용자 입니다.")
+                    }
+
+                }else{
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}
+
 // 해안가 대기중 비래염분 추정 계산 함수
 function seaAir(){
 
@@ -157,10 +211,10 @@ function seaAir(){
                     console.log("dataResult : "+res.sendData.dataResult);
                     countNum("#seaAirResult", res.sendData.dataResult)
                 }else{
-                    if (request.err_msg2 === null) {
-                        alertCaution(request.err_msg, 1);
+                    if (res.err_msg2 === null) {
+                        alertCaution(res.err_msg, 1);
                     } else {
-                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                        alertCaution(res.err_msg + "<br>" + res.err_msg2, 1);
                     }
                 }
             }
@@ -215,10 +269,10 @@ function locationSea(){
                     console.log("dataResult : "+res.sendData.dataResult);
                     countNum("#seaAirResult3", res.sendData.dataResult)
                 }else{
-                    if (request.err_msg2 === null) {
-                        alertCaution(request.err_msg, 1);
+                    if (res.err_msg2 === null) {
+                        alertCaution(res.err_msg, 1);
                     } else {
-                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                        alertCaution(res.err_msg + "<br>" + res.err_msg2, 1);
                     }
                 }
             }
@@ -273,10 +327,10 @@ function bridgeSea(){
                     console.log("dataResult : "+res.sendData.dataResult);
                     countNum("#seaAirResult4", res.sendData.dataResult)
                 }else{
-                    if (request.err_msg2 === null) {
-                        alertCaution(request.err_msg, 1);
+                    if (res.err_msg2 === null) {
+                        alertCaution(res.err_msg, 1);
                     } else {
-                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                        alertCaution(res.err_msg + "<br>" + res.err_msg2, 1);
                     }
                 }
             }

@@ -8,21 +8,48 @@
 	<script src="/assets/js/min_js_dir/newdeal/account.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$('#btn_search').on('click', function(e) {
-				$('#pop_search').addClass('open');
-				callTeamListPopup(1);
-				e.preventDefault();
-			});
+			// $('#btn_search').on('click', function(e) {
+			// 	$('#pop_search').addClass('open');
+			// 	callTeamListPopup(1);
+			// 	e.preventDefault();
+			// });
 
-			$('.l-popup__close').on('click', function(e) {
-				$('.l-popup').removeClass('open');
-				e.preventDefault();
-			});
+			// $('.l-popup__close').on('click', function(e) {
+			// 	$('.l-popup').removeClass('open');
+			// 	e.preventDefault();
+			// });
 
-			$("#btnTeamSearch").on('click',function(){
-				callTeamListPopup(1);
-			});
+			// $("#btnTeamSearch").on('click',function(){
+			// 	callTeamListPopup(1);
+			// });
+			callTeamList();
 		});
+
+		// NEWDEAL 부서리스트 불러오기
+		function callTeamList(){
+			console.log("NEWDEAL 부서리스트 불러오기");
+
+			let url = $("#backend_protocol").val()+"://"+$("#backend_url").val() + "/api/team/registerTeamList"; // 호출할 백엔드 API
+
+			$.ajax({
+				url : url,
+				type : 'GET',
+				cache : false,
+				error:function(request){
+					ajaxErrorMsg(request);
+				},
+				success: function(res){
+					console.log(res);
+					let html = '';
+					$.each(res.sendData.teams, function(key, value){
+						html += '<option value ='+value.teamcode+'>'+value.teamname+'</option>';
+					});
+					const $team = $('#team');
+					$team.html(html);
+				}
+			});
+		}
+
 	</script>
 </th:block>
 
@@ -65,6 +92,14 @@
 							<input type="text" class="c-text__input" id="email" name="email" />
 						</div>
 					</div>
+					<div class="join__form-item">
+						<div class="c-text">
+							<label for="email" class="c-text__label">소속(부서)</label>
+							<select class="c-select__input" id="team" name="team">
+							</select>
+						</div>
+					</div>
+
 				</div>
 				
 <!--				<div class="join__form__article">-->
@@ -79,14 +114,7 @@
 <!--&lt;!&ndash;							</select>&ndash;&gt;-->
 <!--						</div>-->
 <!--					</div>-->
-<!--					<div class="join__form-item">-->
-<!--						<label for="teamname" class="c-text__label">부서</label>-->
-<!--						<div class="c-text c-text&#45;&#45;duo">-->
-<!--							<input type="text" class="c-text__input" readonly="readonly" placeholder="부서코드" id="teamcode" name="teamcode"/>-->
-<!--							<input type="text" class="c-text__input" readonly="readonly" placeholder="부서명" id="teamname" name="teamname"/>-->
-<!--							<button class="c-text__button" id="btn_search">검색</button>-->
-<!--						</div>-->
-<!--					</div>-->
+
 <!--				</div>-->
 
 			</form>
