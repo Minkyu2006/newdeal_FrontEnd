@@ -55,6 +55,8 @@ function performanceList(page){
             success: function (res) {
                 console.log("성능개선사업평가 등록 글 출력");
                 if (res.status === 200) {
+                    logreg(2,"의사결정 시스템","세부별 등록리스트 조회",$("#piFacilityName").val());
+
                     //화면 출력
                     totCnt = res.total_rows;
                     $("#performancePaging").jqueryPager({

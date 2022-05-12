@@ -3,15 +3,13 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="layout/default2">
-
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
 	<link rel="stylesheet" href="/assets/js/openlayers/ol.css">
 	<style>
-		
+
 	</style>
 </th:block>
-
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
 	<script src="/assets/js/openlayers/ol.js"></script>
@@ -35,10 +33,8 @@
 		$(function(){
 			initialOL();
 			// console.log(GeoJSON);
-
 			$("#header_five").addClass(' show');
 			logreg(1,"열화환경 서비스","대기중 염분량 추정 서비스",null);
-
 			$.ajax({
 				'async': false,
 				'global': false,
@@ -49,17 +45,14 @@
 				}
 			});
 			// console.log(sig);
-
 			let selectGeoJson = {
 				bbox: [124.7893154389517,33.17261058239259,130.96325546758288,38.54261253850525],
 				features: [],
 				type: "FeatureCollection",
 			}
-
 			// let selectGeoJson = {
 			// 	features: [],
 			// }
-
 			for(const obj of sig.features) {
 				const sigCd = obj.properties.SIG_CD;
 				// console.log(obj.properties.SIG_CD);
@@ -70,7 +63,6 @@
 				}
 			}
 			console.log(selectGeoJson);
-
 			// style
 			const airStyle = {
 				fill: new Fill({
@@ -81,24 +73,19 @@
 					width: 2
 				})
 			}
-
 			// style 여러개
 			// 벡터소스도 여러개 분리
 			// clear 되는지 여부 판단
-
 			const airSource = new VectorSource({
 				// format: new GeoJSON(),
 				// url: "/assets/js/openlayers/geoJson/TL_SCCO_SIG.json",
 				features: new GeoJSON().readFeatures(selectGeoJson),
 			});
-
 			// console.log(vectorSource)
-
 			const airLayer = new VectorLayer({
 				source: airSource,
 				style: new Style(airStyle),
 			});
-
 			const map = new Map({
 				target: 'map',
 				layers: [
@@ -113,19 +100,15 @@
 					projection: "EPSG:4326"
 				})
 			});
-
 			airSource.clear(false);
-
 			airSource.addFeature(new Feature(new Polygon(selectGeoJson.features[0].geometry.coordinates)));
-
 		})
 	</script>
 </th:block>
-
 <div layout:fragment="content" class="content">
 	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
-
+	<input type="hidden" id="accountRole" readonly="readonly" />
 	<h2 class="content__heading">대기중 염분량 추정 서비스</h2>
 	<div class="c-flex">
 		<div class="c-flex__box">
@@ -142,7 +125,7 @@
 										<div class="talk__input-heading">해역</div>
 										<div class="talk__input">
 											<div class="c-select">
-												<select id="seaCheck" onchange="seaCheckChange();" class="c-select__input">
+												<select id="seaCheck" onchange="seaCheckChange(1);" class="c-select__input">
 													<option value="1">동해안</option>
 													<option value="2">서해안</option>
 													<option value="3">남해안</option>
@@ -206,7 +189,6 @@
 					</div>
 				</div>
 			</section>
-
 			<section class="section non-padding">
 				<div class="section__head">
 					<h3 class="section__heading">제설제 비산염 추정</h3>
@@ -259,14 +241,13 @@
 						<div class="salt__output">
 							<h3 class="salt__title">추정 비산염</h3>
 							<div class="salt__count">
-								<span id="salt2">0</span>
+								<span id="seaAirResult2">0</span>
 								<span class="salt__unit">mdd</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
-
 			<section class="section non-padding">
 				<div class="section__head">
 					<h3 class="section__heading">해상교량 대기중 비래염분 추정</h3>
@@ -290,8 +271,10 @@
 												<div class="talk__input-heading">해역</div>
 												<div class="talk__input">
 													<div class="c-select">
-														<select class="c-select__input">
-															<option>서해</option>
+														<select id="locationSeaCheck" onchange="seaCheckChange(2);" class="c-select__input">
+															<option value="1">동해안</option>
+															<option value="2">서해안</option>
+															<option value="3">남해안</option>
 														</select>
 													</div>
 												</div>
@@ -302,27 +285,39 @@
 												<div class="talk__input-heading">지역</div>
 												<div class="talk__input">
 													<div class="c-select">
-														<select class="c-select__input">
-															<option>태안</option>
+														<select id="locationSeaArea" class="c-select__input">
+															<option value ="1" >속초</option>
+															<option value ="1">영덕</option>
+															<option value ="1">부산</option>
+															<option value ="2">고성</option>
+															<option value ="2">주문진</option>
+															<option value ="2">삼척</option>
+															<option value ="2">울진</option>
+															<option value ="2">포항</option>
+															<option value ="2">울산</option>
 														</select>
 													</div>
 												</div>
 											</div>
 										</li>
 										<!-- 관리자모드 -->
-										<li>
+										<li id="locationHeight1" style="display: none">
 											<div class="talk__input-item">
 												<div class="talk__input-heading">추정식 구분용 높이1(m)</div>
 												<div class="talk__input">
-													<div class="c-text"><input type="text" class="c-text__input" value="3" /></div>
+													<div class="c-text">
+														<input type="text" id="locationCalculationHeight1" class="c-text__input" value="3" />
+													</div>
 												</div>
 											</div>
 										</li>
-										<li>
+										<li id="locationHeight2" style="display: none">
 											<div class="talk__input-item">
 												<div class="talk__input-heading">추정식 구분용 높이2(m)</div>
 												<div class="talk__input">
-													<div class="c-text"><input type="text" class="c-text__input" value="5" /></div>
+													<div class="c-text">
+														<input type="text" id="locationCalculationHeight2" class="c-text__input" value="5" />
+													</div>
 												</div>
 											</div>
 										</li>
@@ -331,7 +326,7 @@
 											<div class="talk__input-item">
 												<div class="talk__input-heading">해수면으로부터 높이(m)</div>
 												<div class="talk__input">
-													<div class="c-text"><input type="text" class="c-text__input" value="250" /></div>
+													<div class="c-text"><input type="text" id="locationHeight" class="c-text__input" value="10" /></div>
 												</div>
 											</div>
 										</li>
@@ -339,7 +334,7 @@
 									<div class="talk__console">
 										<ul>
 											<li>
-												<a href="#salt3" class="c-button c-button--point">계산하기</a>
+												<a onclick="locationSea()" class="c-button c-button--point">계산하기</a>
 											</li>
 										</ul>
 									</div>
@@ -347,7 +342,7 @@
 								<div class="salt__output">
 									<h3 class="salt__title">추정 비래염분량</h3>
 									<div class="salt__count">
-										<span id="salt3">0</span>
+										<span id="seaAirResult3">0</span>
 										<span class="salt__unit">mdd</span>
 									</div>
 									<div class="salt__comment">본 시스템에서 추정된 비래염분량은 교량의 차도 높이까지 최적화되어 있음</div>
@@ -363,8 +358,9 @@
 												<div class="talk__input-heading">해역</div>
 												<div class="talk__input">
 													<div class="c-select">
-														<select class="c-select__input">
-															<option>서해안</option>
+														<select id="bridgeSeaCheck" onchange="seaCheckChange(3);" class="c-select__input">
+															<option value="1">남해안</option>
+															<option value="2">서해안</option>
 														</select>
 													</div>
 												</div>
@@ -375,8 +371,12 @@
 												<div class="talk__input-heading">교량</div>
 												<div class="talk__input">
 													<div class="c-select">
-														<select class="c-select__input">
-															<option>목포대교</option>
+														<select id="bridgeSeaArea" class="c-select__input">
+															<option value ="1">거북선대교</option>
+															<option value ="1">돌산대교</option>
+															<option value ="2">노량대교</option>
+															<option value ="3">거금대교</option>
+															<option value ="3">소록대교</option>
 														</select>
 													</div>
 												</div>
@@ -386,7 +386,9 @@
 											<div class="talk__input-item">
 												<div class="talk__input-heading">해수면으로부터 높이(m)</div>
 												<div class="talk__input">
-													<div class="c-text"><input type="text" class="c-text__input" value="250" /></div>
+													<div class="c-text">
+														<input type="text" id="bridgeHeight" class="c-text__input" value="100" />
+													</div>
 												</div>
 											</div>
 										</li>
@@ -394,7 +396,7 @@
 									<div class="talk__console">
 										<ul>
 											<li>
-												<a href="#salt3" class="c-button c-button--point">계산하기</a>
+												<a onclick="bridgeSea()" class="c-button c-button--point">계산하기</a>
 											</li>
 										</ul>
 									</div>
@@ -402,7 +404,7 @@
 								<div class="salt__output">
 									<h3 class="salt__title">추정 비래염분량</h3>
 									<div class="salt__count">
-										<span id="salt3">0</span>
+										<span id="seaAirResult4">0</span>
 										<span class="salt__unit">mdd</span>
 									</div>
 									<div class="salt__comment">본 시스템에서 추정된 비래염분량은 교량의 차도 높이까지 최적화되어 있음</div>
@@ -410,19 +412,13 @@
 							</div>
 						</li>
 					</ul>
-
 				</div>
 			</section>
 		</div>
-
 		<div class="c-flex__box" style="margin-left: 20px;">
 			<div class="salt-map" id="map" style="width: 100%; height: 836px; border: 1px solid #333;"></div>
 		</div>
 	</div>
-
-
-
-
 	<div class="l-popup">
 		<div class="l-popup__container">
 			<div class="l-popup__content" style="text-align: center; line-height: 1.6;">
@@ -436,6 +432,5 @@
 			</div>
 		</div>
 	</div>
-	
 </div>
 </html>

@@ -16,8 +16,8 @@ function userCount(){
             let status = request.status;
             // console.log("status : " + status);
             if (status === 200) {
-                // console.log("유저 수 가져오기 성공");
-                // console.log("유저 수 : "+request.sendData.userCount);
+                console.log("유저 수 가져오기 성공");
+                console.log("유저 수 : "+request.sendData.userCount);
                 let item = document.querySelector('#userCount');
                 item.setAttribute('data-count',request.sendData.userCount);
 
@@ -51,8 +51,8 @@ function dataLogCount(){
             let status = request.status;
             // console.log("status : " + status);
             if (status === 200) {
-                // console.log("데이터 조회 수 가져오기 성공");
-                // console.log("데이터 조회 수 : "+request.sendData.dataSearchCount);
+                console.log("데이터 조회 수 가져오기 성공");
+                console.log("데이터 조회 수 : "+request.sendData.dataSearchCount);
                 let item = document.querySelector('#dataSearchCount');
                 item.setAttribute('data-count',request.sendData.dataSearchCount);
                 indexDataCount("dataSearchCount");
