@@ -14,10 +14,10 @@ function countNum(elimentId, value) {
             duration: 1000,
             easing:'linear',
             step: function() {
-                $this.text(parseFloat(this.countNum).toFixed(2));
+                $this.text(parseFloat(this.countNum).toFixed(1));
             },
             complete: function() {
-                $this.text(parseFloat(this.countNum).toFixed(2));
+                $this.text(parseFloat(this.countNum).toFixed(1));
             }
         }
     );

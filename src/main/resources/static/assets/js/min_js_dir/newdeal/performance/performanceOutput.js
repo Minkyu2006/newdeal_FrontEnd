@@ -207,7 +207,7 @@ function call_performance(autoNum){
                         }else{
                             html += '<tr>';
                                 html += '<th>'+'사용성등급'+'</th>';
-                                html += '<td>'+'-'+'</td>';
+                                html += "<td colspan='2'>"+'-'+'</td>';
                             html += '</tr>';
                         }
                     }

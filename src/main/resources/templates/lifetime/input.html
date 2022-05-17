@@ -40,7 +40,8 @@
 	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="content__inner">
-		<h2 class="content__heading">생애주기 의사결정 지원 서비스</h2>
+<!--		<h2 class="content__heading">생애주기 의사결정 지원 서비스</h2>-->
+		<h2 class="content__heading">유지보수 우선순위 선정서비스</h2>
 		<div class="lifetime" id="lifetime">
 			<div class="talk">
 				<div class="talk__box">
@@ -49,15 +50,6 @@
 					</div>
 					<div class="talk__contents">
 						<ul class="talk__question">
-							<li>
-								<h4>부재를 선택해주세요</h4>
-								<div class="c-select">
-									<select id="absence" class="c-select__input">
-										<option value="girder">거더</option>
-										<option value="plate">바닥판</option>
-									</select>
-								</div>
-							</li>
 							<li>
 								<h4>해당 부재를 평가할 열화 인자를 선택해주세요</h4>
 								<ul class="c-radio-group">
@@ -74,6 +66,15 @@
 										</div>
 									</li>
 								</ul>
+							</li>
+							<li>
+								<h4>부재를 선택해주세요</h4>
+								<div class="c-select">
+									<select id="absence" class="c-select__input">
+										<option value="girder">거더</option>
+										<option value="plate">바닥판</option>
+									</select>
+								</div>
 							</li>
 						</ul>
 					</div>
