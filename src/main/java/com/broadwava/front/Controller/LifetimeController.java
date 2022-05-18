@@ -7,21 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-
 /**
  * @author JK
  * Date : 2021-07-30
@@ -73,7 +58,7 @@ public class LifetimeController{
         model.addAttribute("absence", absence);
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
-        return "lifetime/detailinput";
+        return "lifetime/detail/input/"+absence;
     }
 
     // 상태평가 전체부분 output

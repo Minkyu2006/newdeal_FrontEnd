@@ -161,6 +161,11 @@ function lifeDetailTimeSave(){
     }
 }
 
+// 세부부분 뒤로가기 버튼
+function lifeDetailInputBack(){
+    location.href = "/lifetime/input"
+}
+
 // 성공알림창 버튼 누르면 화면이동하는 함수
 function alertLink(id) {
     $(document).on("click","#successBtn",function(){
@@ -440,22 +445,22 @@ function recoverySelectBox(){
     const $ltRecoverySix = $("#ltRecoverySix");
 
     if($ltRecoveryOne.val()!=="") {
-        html += '<option value='+$ltRecoveryOne.val()+'>'+$ltRecoveryOne.val()+'</option>'
+        html += '<option value='+$ltRecoveryOne.val()+'>'+Number($ltRecoveryOne.val()*100)+'%'+'</option>'
     }
     if($ltRecoveryTwo.val()!=="") {
-        html += '<option value='+$ltRecoveryTwo.val()+'>'+$ltRecoveryTwo.val()+'</option>'
+        html += '<option value='+$ltRecoveryTwo.val()+'>'+Number($ltRecoveryTwo.val()*100)+'%'+'</option>'
     }
     if($ltRecoveryThree.val()!=="") {
-        html += '<option value='+$ltRecoveryThree.val()+'>'+$ltRecoveryThree.val()+'</option>'
+        html += '<option value='+$ltRecoveryThree.val()+'>'+Number($ltRecoveryThree.val()*100)+'%'+'</option>'
     }
     if($ltRecoveryFour.val()!=="") {
-        html += '<option value='+$ltRecoveryFour.val()+'>'+$ltRecoveryFour.val()+'</option>'
+        html += '<option value='+$ltRecoveryFour.val()+'>'+Number($ltRecoveryFour.val()*100)+'%'+'</option>'
     }
     if($ltRecoveryFive.val()!=="") {
-        html += '<option value='+$ltRecoveryFive.val()+'>'+$ltRecoveryFive.val()+'</option>'
+        html += '<option value='+$ltRecoveryFive.val()+'>'+Number($ltRecoveryFive.val()*100)+'%'+'</option>'
     }
     if($ltRecoverySix.val()!=="") {
-        html += '<option value='+$ltRecoverySix.val()+'>'+$ltRecoverySix.val()+'</option>'
+        html += '<option value='+$ltRecoverySix.val()+'>'+Number($ltRecoverySix.val()*100)+'%'+'</option>'
     }
 
     $ltRecoveryPercent.html(html);

@@ -16,22 +16,48 @@
  	<script>
 		$(function() {
 			$("#header_two").addClass(' show');
-			logreg(1,"의사결정 시스템","생애주기 의사결정 지원 서비스 Input",null);
+			// logreg(1,"의사결정 시스템","생애주기 의사결정 지원 서비스 Input",null);
 		});
+
+		// 평가할 열화인자 선택 후 부재생성
+		function choseServiceOnchange(num){
+			const $absence = $("#absence");
+
+			let html = '';
+			if(num === 0){
+				html += '<option value="plateInput">바닥판</option>';
+			}else if(num === 1){
+				html += '<option value="plateInput">바닥판</option>';
+				html += '<option value="hardnessInput">반발경도</option>';
+				html += '<option value="carbonationInput">탄산화깊이</option>';
+				html += '<option value="crackInput">균열깊이</option>';
+				html += '<option value="deteriorationInput">열화물침투량</option>';
+			}else{
+				html += '<option value="">평가할 열화인자를 선택해주세요.</option>';
+			}
+			$absence.html(html);
+		}
 
 		// 이진혁박사 인풋페이지 이동
 		function stateinput(){
-			const $absence = $("#absence").val();
+			let $absence = $("#absence").val();
 			const $service = $('input:radio[name="choseService"]:checked').val();
+			if($absence === null){
+				$absence = "";
+			}
 			// console.log("service : "+$service);
-			if($service==="all"){
-				location.href = "/lifetime/stateinput/"+$absence;
-			}else if($service==="detail"){
-				location.href = "/lifetime/detailinput/"+$absence;
+			// console.log("absence : "+$absence);
+			if($absence !== ""){
+				if($service==="all"){
+					location.href = "/lifetime/stateinput/"+$absence;
+				}else{
+					location.href = "/lifetime/detailinput/"+$absence;
+				}
 			}else{
+				$('input:radio[name="choseService"]:checked').prop('checked', false);
+				choseServiceOnchange(2);
 				alertCaution("평가할 열화 인자를 선택해주세요.",1)
 			}
-
 		}
 	</script>
 </th:block>
@@ -55,13 +81,13 @@
 								<ul class="c-radio-group">
 									<li class="c-radio-group__item">
 										<div class="c-radio">
-											<input type="radio" id="allChose" name="choseService" value="all" class="c-radio__input" />
+											<input type="radio" id="allChose" onchange=choseServiceOnchange(0) name="choseService" value="all" class="c-radio__input" />
 											<label for="allChose" class="c-radio__label">전체</label>
 										</div>
 									</li>
 									<li class="c-radio-group__item">
 										<div class="c-radio">
-											<input type="radio" id="detailChose" name="choseService" value="detail" class="c-radio__input" />
+											<input type="radio" id="detailChose" onchange=choseServiceOnchange(1) name="choseService" value="detail" class="c-radio__input" />
 											<label for="detailChose" class="c-radio__label">세부</label>
 										</div>
 									</li>
@@ -71,8 +97,7 @@
 								<h4>부재를 선택해주세요</h4>
 								<div class="c-select">
 									<select id="absence" class="c-select__input">
-										<option value="girder">거더</option>
-										<option value="plate">바닥판</option>
+										<option value="">평가할 열화인자를 선택해주세요.</option>
 									</select>
 								</div>
 							</li>

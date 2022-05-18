@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2" xmlns="http://www.w3.org/1999/html">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<style>
+		
+	</style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script src="/assets/js/min_js_dir/newdeal/lifetime/lifetime_detail.js"></script>
+ 	<script>
+		$(function() {
+
+			$("#header_two").addClass(' show');
+			$('#ltRecoveryOne').focusout(function() {
+				recoverySelectBox();
+			});
+			$('#ltRecoveryTwo').focusout(function() {
+				recoverySelectBox();
+			});
+			$('#ltRecoveryThree').focusout(function() {
+				recoverySelectBox();
+			});
+			$('#ltRecoveryFour').focusout(function() {
+				recoverySelectBox();
+			});
+			$('#ltRecoveryFive').focusout(function() {
+				recoverySelectBox();
+			});
+			$('#ltRecoverySix').focusout(function() {
+				recoverySelectBox();
+			});
+
+		});
+	</script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<input type="hidden" id="absence" th:value="${absence}" readonly="readonly" />
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
+	<div class="content__inner">
+		<h2 class="content__heading">생애주기 의사결정 지원 서비스 - 부재 세부부분 - 탄산화깊이</h2>
+		<div class="lifetime">
+			<div class="talk">
+
+				<form id="lifeDetailTimeForm" enctype="multipart/form-data">
+
+				<div class="talk__box">
+					<div class="talk__header">
+						<h3>1. 바닥판 입력 변수</h3>
+					</div>
+					<div class="talk__contents">
+						<table class="c-table c-table--border">
+							<colgroup>
+								<col />
+								<col />
+								<col />
+								<col />
+								<col />
+							</colgroup>
+							<thead>
+							<tr>
+								<th colspan="2">바닥판 휨 성능 평가 - 입력 변수</th>
+								<th>평균값</th>
+								<th>변동계수</th>
+								<th>표준편차</th>
+							</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>fy</th>
+									<th>철근 항복강도</th>
+									<td>
+										<div class="c-text"><input type="text" name="ltFyAverage" id="ltFyAverage" placeholder="ex) 386.1" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+                                    <td>
+                                        <div class="c-text">
+                                            <div class="c-text c-text--unit"><input type="text" name="ltFyVariance" id="ltFyVariance" class="c-text__input" placeholder="ex) 11" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
+                                        </div>
+                                    </td>
+									<td>
+										<div class="c-text"><input type="text" name="ltFyStandard" id="ltFyStandard" placeholder="ex) 42.47" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+								</tr>
+								<tr>
+									<th>fc</th>
+									<th>콘크리트 압축강도</th>
+									<td>
+										<div class="c-text"><input type="text" name="ltFcAverage" placeholder="ex) 19" id="ltFcAverage" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+                                    <td>
+                                        <div class="c-text">
+                                            <div class="c-text c-text--unit"><input type="text" name="ltFcVariance" id="ltFcVariance" class="c-text__input" placeholder="ex) 18" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
+                                        </div>
+                                    </td>
+									<td>
+										<div class="c-text"><input type="text" name="ltFcStandard" placeholder="ex) 3.42" id="ltFcStandard" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+								</tr>
+								<tr>
+									<th>A</th>
+									<th>철근 단면적</th>
+									<td>
+										<div class="c-text"><input type="text" name="ltSectionAverage" id="ltSectionAverage" placeholder="ex) 1.24" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+                                    <td>
+                                        <div class="c-text">
+                                            <div class="c-text c-text--unit"><input type="text" name="ltSectionVariance" id="ltSectionVariance" class="c-text__input" placeholder="ex) 2" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
+                                        </div>
+                                    </td>
+									<td>
+										<div class="c-text"><input type="text" name="ltSectionStandard" id="ltSectionStandard" placeholder="ex) 0.02" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+								</tr>
+								<tr>
+									<th>Mdeck</th>
+									<th>차량하중</th>
+									<td>
+										<div class="c-text"><input type="text" name="ltVehicleAverage" id="ltVehicleAverage" class="c-text__input" placeholder="ex) 108" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+                                    <td>
+                                        <div class="c-text">
+                                            <div class="c-text c-text--unit"><input type="text" name="ltVehicleVariance" id="ltVehicleVariance" class="c-text__input" placeholder="ex) 5" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
+                                        </div>
+                                    </td>
+									<td>
+										<div class="c-text"><input type="text" name="ltVehicleStandard" id="ltVehicleStandard" class="c-text__input" placeholder="ex) 5.4" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+								</tr>
+								<tr>
+<!--								<tr>-->
+<!--									<th>ymfc</th>-->
+<!--									<th>바닥판 모델링 불확실성 인자</th>-->
+<!--									<td>-->
+<!--										<div class="c-text"><input type="text" class="c-text__input" value="1.02" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>-->
+<!--									</td>-->
+<!--                                    <td>-->
+<!--                                        <div class="c-text c-text&#45;&#45;unit"><input type="text" class="c-text__input" value="6.0" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>-->
+<!--                                    </td>-->
+<!--									<td>-->
+<!--										<div class="c-text"><input type="text" class="c-text__input" value="0.06" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>-->
+<!--									</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<th>λasph</th>-->
+<!--									<th>아스콘 중량 불확실성 인자</th>-->
+<!--									<td>-->
+<!--										<div class="c-text"><input type="text" class="c-text__input" value="1.00" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>-->
+<!--									</td>-->
+<!--                                    <td>-->
+<!--                                        <div class="c-text c-text&#45;&#45;unit"><input type="text" class="c-text__input" value="25.0" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>-->
+<!--                                    </td>-->
+<!--									<td>-->
+<!--										<div class="c-text"><input type="text" class="c-text__input" value="0.25" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>-->
+<!--									</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<th>λconc</th>-->
+<!--									<th>콘크리트 중량 불확실성 인자</th>-->
+<!--									<td>-->
+<!--										<div class="c-text"><input type="text" value="1.05" class="c-text__input" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>-->
+<!--									</td>-->
+<!--                                    <td>-->
+<!--                                        <div class="c-text c-text&#45;&#45;unit"><input type="text" class="c-text__input" value="10.0" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>-->
+<!--                                    </td>-->
+<!--									<td>-->
+<!--										<div class="c-text"><input type="text" value="0.11" class="c-text__input" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>-->
+<!--									</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<th>Are</th>-->
+<!--									<th>철근 단면적 감소율</th>-->
+<!--									<td>-->
+<!--										<div class="c-text"><input type="text" value="0.015" class="c-text__input" readonly=readonly  onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>-->
+<!--									</td>-->
+<!--									<td>-->
+<!--                                        <div class="c-text c-text&#45;&#45;unit"><input type="text" class="c-text__input" value="10.0" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>-->
+<!--									</td>-->
+<!--									<td>-->
+<!--										<div class="c-text"><input type="text" value="0.002" class="c-text__input" readonly=readonly onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>-->
+<!--									</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<th colspan="4" style="text-align: center">시뮬레이션 수</th>-->
+<!--									<td>-->
+<!--										<div class="c-text"><input type="text" class="c-text__input" readonly=readonly  value="100" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /></div>-->
+<!--									</td>-->
+<!--								</tr>-->
+								<tr>
+									<th colspan="4" style="text-align: center">보수보강 총길이(m)</th>
+									<td>
+										<div class="c-text">
+											<input type="text" name="ltRepairLength" id="ltRepairLength" class="c-text__input" placeholder="ex) 10" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th colspan="4" style="text-align: center">생애주기 목표값(성능유지 기준값)</th>
+									<td>
+										<div class="c-select">
+											<select name="ltTargetValue" id="ltTargetValue" class="c-select__input">
+												<option value="1.5">1.5</option>
+												<option value="1.75">1.75</option>
+												<option value="2.0">2.0</option>
+												<option value="2.25">2.25</option>
+												<option value="2.5">2.5</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th colspan="4" style="text-align: center">보수·보강 회복율</th>
+									<td>
+										<div class="c-select">
+											<select name="ltRecoveryPercent" id="ltRecoveryPercent" class="c-select__input">
+												<option value="">회복율을 입력해주세요.</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+					<div class="talk__box">
+						<div class="talk__header">
+							<h3>2. 보수보강 비용 입력표</h3>
+						</div>
+						<div class="talk__contents">
+							<table class="c-table c-table--border">
+								<colgroup>
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+								</colgroup>
+								<thead>
+								<tr>
+									<th></th>
+									<th>보수1</th>
+									<th>보수2</th>
+									<th>보수3</th>
+									<th>보강1</th>
+									<th>보강2</th>
+									<th>교체</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<th>회복율</th>
+									<td>
+										<div class="c-text"><input type="text" name="ltRecoveryOne" id="ltRecoveryOne" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltRecoveryTwo" id="ltRecoveryTwo" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltRecoveryThree" id="ltRecoveryThree" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltRecoveryFour" id="ltRecoveryFour" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltRecoveryFive" id="ltRecoveryFive" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltRecoverySix" id="ltRecoverySix" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+								</tr>
+								<tr>
+									<th>비용(만원/m)</th>
+									<td>
+										<div class="c-text"><input type="text" name="ltCostOne" id="ltCostOne" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltCostTwo" id="ltCostTwo" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltCostThree" id="ltCostThree" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltCostFour" id="ltCostFour" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltCostFive" id="ltCostFive" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltCostSix" id="ltCostSix" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+			</form>
+
+				<div class="talk__console">
+					<ul>
+						<li>
+							<button onclick=lifeDetailInputBack() class="c-button c-button--point">뒤로</button>
+							<button onclick="lifeDetailTimeSave()" class="c-button c-button--point">완료</button>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+</div>
+</html>
