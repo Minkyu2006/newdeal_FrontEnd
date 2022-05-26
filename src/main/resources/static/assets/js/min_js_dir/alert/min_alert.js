@@ -27,6 +27,14 @@ $(function() {
         $('#popupId').remove();
     });
 
+    $(document).on("click","#answerYesSnw",function(){
+        $('#popupId').remove();
+    });
+
+    $(document).on("click","#answerNoSnw",function(){
+        $('#popupId').remove();
+    });
+
     $(document).on("click","#checkYesBtn",function(){
         startYesorNo(true)
     });
@@ -266,6 +274,25 @@ function alertYesNo(text) { // 정말작성할껀지 확인하는창
     html +='<div class="popup__buttons">';
     html +='<button id="answerYes" class="popup__btn popup__btn--success">예</button>';
     html +='<button id="answerNo" class="popup__btn popup__btn--cancel">아니오</button>';
+    html +='</div>';
+    html +='</div>';
+    html +='</div>';
+
+    $('#alertpop').html(html);
+}
+
+function alertYesNoSnw(text) { // 예 아니오 범용창
+    let html = '';
+
+    html +='<div id="popupId" class="popup popup--dim">';
+    html +='<div class="popup__box">';
+    html +='<div class="popup__content">';
+    html +='<div class="popup__stat check"></div>';
+    html +='<div class="popup__text">'+text+'</div>';
+    html +='</div>';
+    html +='<div class="popup__buttons">';
+    html +='<button id="answerYesSnw" class="popup__btn popup__btn--success">예</button>';
+    html +='<button id="answerNoSnw" class="popup__btn popup__btn--cancel">아니오</button>';
     html +='</div>';
     html +='</div>';
     html +='</div>';

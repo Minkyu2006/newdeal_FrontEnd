@@ -47,6 +47,14 @@ const comms = {
         });
     },
 
+    bridgeDelete(target) {
+        console.log(target);
+        // CommonUI.ajax("/api/safety/delete", "POST", information, function (res) {
+        //     alertSuccess("교량이 삭제되었습니다.");
+        //     resetInput("search");
+        // });
+    },
+
     getBridgeData(target) {
         CommonUI.ajax("/api/safety/calculationDate", "GET", target, function (res) {
             const data = res.sendData;
@@ -124,7 +132,7 @@ const grids = {
                     },
                 }, {
                     dataField: "calCapacity",
-                    headerText: "공용 내하율 (%)",
+                    headerText: "공용 내하율",
                     dataType: "numeric",
                     autoThousandSeparator: "true",
                     labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
@@ -173,7 +181,7 @@ const grids = {
                     dataField: "sfFactor",
                     headerText: "안전율",
                     labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
-                        return value + " %";
+                        return value;
                     },
                 },
             ];
@@ -207,7 +215,7 @@ const trigs = {
         });
 
         $("#sfName").on("keypress", function (e) {
-            if(["search", "modify"].includes(wares.currentInputMode) && (e.originalEvent.code === "Enter" || e.originalEvent.code === "NumpadEnter")) {
+            if(["search"].includes(wares.currentInputMode) && (e.originalEvent.code === "Enter" || e.originalEvent.code === "NumpadEnter")) {
                 bridgeSearch();
             }
         });
@@ -227,6 +235,13 @@ const trigs = {
 
         $("#bridgeSave").on("click", function () {
             bridgeSave();
+        });
+
+        $("#bridgeDelete").on("click", function () {
+            alertYesNoSnw("해당 교량을 삭제 하시겠습니까?");
+            $("#answerYesSnw").on("click", function () {
+                bridgeDelete();
+            });
         });
 
         $("#bridgeNew").on("click", function () {
@@ -261,8 +276,8 @@ const trigs = {
 
         $("#detailDataSave").on('click', function() {
             if (wares.currentBridge.id) {
-                alertYesNo("안전성 추정 데이터를 저장 하시겠습니까?");
-                $("#answerYes").on("click", function () {
+                alertYesNoSnw("안전성 추정 데이터를 저장 하시겠습니까?");
+                $("#answerYesSnw").on("click", function () {
                     detailDataSave();
                 });
             } else {
@@ -383,6 +398,12 @@ function bridgeSave(){
     information.set("sfCompletionYear", $("#sfCompletionYear").val());
     information.set("sfFactor", $("#sfFactor").val());
 
+    /* 이미지의 폼데이터 첨부 */
+    const file = $('#sfImage')[0].files[0];
+    if (file) {
+        information.set("sfImage", file, file.name);
+    }
+
     comms.bridgeSave(information);
 }
 
@@ -398,6 +419,8 @@ function resetInput(mode) {
     const $num = $("#sfNum");
     const $completionYear = $("#sfCompletionYear");
     const $factor = $("#sfFactor");
+    const $existImageSection = $("#existImageSection");
+    const $uploadImageSection = $("#uploadImageSection");
 
     $name.val("");
     $form.val("00");
@@ -407,6 +430,8 @@ function resetInput(mode) {
     $num.val("");
     $completionYear.val("");
     $factor.val("");
+    $("#sfImageUploaded").val("");
+    $("#sfImage").val(null);
 
     switch (mode) {
         case "search" :
@@ -418,9 +443,12 @@ function resetInput(mode) {
             $("#bridgeSearch").show();
             $("#bridgeNew").parents("li").show();
             $("#bridgeSave").parents("li").hide();
+            $("#bridgeDelete").parents("li").hide();
             $("#bridgeCancel").parents("li").hide();
             $("#sfFormTot").prop("disabled", false);
             $("#sfRankTot").prop("disabled", false);
+            $existImageSection.show();
+            $uploadImageSection.hide();
             wares.currentBridge = {};
             gridFunc.clear(0);
             break;
@@ -430,12 +458,15 @@ function resetInput(mode) {
             $num.prop("readonly", false);
             $completionYear.prop("readonly", false);
             $factor.prop("readonly", false);
-            $("#bridgeSearch").show();
+            $("#bridgeSearch").hide();
             $("#bridgeNew").parents("li").show();
             $("#bridgeSave").parents("li").show();
+            $("#bridgeDelete").parents("li").show();
             $("#bridgeCancel").parents("li").show();
             $("#sfFormTot").prop("disabled", false);
             $("#sfRankTot").prop("disabled", false);
+            $existImageSection.show();
+            $uploadImageSection.show();
             break;
         case "insert" :
             $length.prop("readonly", false);
@@ -446,9 +477,12 @@ function resetInput(mode) {
             $("#bridgeSearch").hide();
             $("#bridgeNew").parents("li").hide();
             $("#bridgeSave").parents("li").show();
+            $("#bridgeDelete").parents("li").hide();
             $("#bridgeCancel").parents("li").show();
             $("#sfFormTot").prop("disabled", true);
             $("#sfRankTot").prop("disabled", true);
+            $existImageSection.hide();
+            $uploadImageSection.show();
             $form.val("01");
             $rank.val("01");
             wares.currentBridge = {};
@@ -563,7 +597,7 @@ function setExcelData(jsonData) {
         const refinedObj = {
             calYyyymmdd: dateValidation(obj["계측일"]),
             calTemperature: decimalValidation(obj["온도 (℃)"]),
-            calCapacity: decimalValidation(obj["공용 내하율 (%)"]),
+            calCapacity: decimalValidation(obj["공용 내하율"]),
         };
 
         if(refinedObj.calYyyymmdd === false) {
@@ -619,4 +653,11 @@ function decimalValidation(value) {
     } else {
         return false;
     }
+}
+
+function bridgeDelete() {
+    const target = {
+        id: wares.currentBridge.id,
+    };
+    comms.bridgeDelete(target);
 }

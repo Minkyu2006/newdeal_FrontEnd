@@ -16,7 +16,8 @@
     <script src="/assets/js/min_js_dir/newdeal/safety/safetyInput.js"></script>
     <!-- 엑셀 브라우저에서 읽기 기능을 사용하기 위함 -->
     <script src="/assets/js/min_js_dir/newdeal/common/xlsx.mini.js"></script>
-
+    <!-- 엑셀 다운로드 기능을 사용하기 위함 -->
+    <script src="/assets/js/filesaver/FileSaver.min.js"></script>
     <script>
         $(function(){
             $("#header_four").addClass(' show');
@@ -131,7 +132,26 @@
                                         <div class="talk__input">
                                             <div class="c-text c-text--unit">
                                                 <input id="sfFactor" name="sfFactor" type="text" class="c-text__input" readonly>
-                                                <span class="c-text__unit">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="existImageSection">
+                                    <div class="talk__input-item">
+                                        <div class="talk__input-heading">사진</div>
+                                        <div class="talk__input">
+                                            <div class="c-text c-text--unit">
+                                                <input id="sfImageUploaded" type="text" class="c-text__input" placeholder="사진을 업로드 해 주세요" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="uploadImageSection" style="display: none">
+                                    <div class="talk__input-item">
+                                        <div class="talk__input-heading">사진 업로드</div>
+                                        <div class="talk__input">
+                                            <div class="c-text c-text--unit">
+                                                <input id="sfImage" name="sfImage" type="file" class="c-text__input">
                                             </div>
                                         </div>
                                     </div>
@@ -146,6 +166,9 @@
                             </li>
                             <li style="display: none;">
                                 <button id="bridgeSave" type="button" class="c-button c-button--point">저장</button>
+                            </li>
+                            <li style="display: none;">
+                                <button id="bridgeDelete" type="button" class="c-button c-button--red">삭제</button>
                             </li>
                             <li style="display: none;">
                                 <button id="bridgeCancel" type="button" class="c-button c-button--red">취소</button>

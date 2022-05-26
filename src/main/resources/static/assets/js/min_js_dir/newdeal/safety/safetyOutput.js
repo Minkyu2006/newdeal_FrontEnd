@@ -61,6 +61,15 @@ const grids = {
                         },
                     },
                 }, {
+                    dataField: "calCapacity",
+                    headerText: "공용 내하율",
+                    dataType: "numeric",
+                    autoThousandSeparator: "true",
+                    labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                        if(value) item.calCapacity = value.toString().toDecimal();
+                        return item.calCapacity;
+                    },
+                }, {
                     dataField: "calTemperature",
                     headerText: "온도 (℃)",
                     dataType: "numeric",
@@ -68,15 +77,6 @@ const grids = {
                     labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
                         if(value) item.calTemperature = value.toString().toDecimal();
                         return item.calTemperature;
-                    },
-                }, {
-                    dataField: "calCapacity",
-                    headerText: "공용 내하율 (%)",
-                    dataType: "numeric",
-                    autoThousandSeparator: "true",
-                    labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
-                        if(value) item.calCapacity = value.toString().toDecimal();
-                        return item.calCapacity;
                     },
                 },
             ];
@@ -136,6 +136,17 @@ const trigs = {
 /* 통신 객체로 쓰이지 않는 일반적인 데이터들 정의 (warehouse) */
 const wares = {
     currentBridge: {},
+    formName: {
+        "01": "RC 슬래브교",
+        "02": "RC 라멘교",
+        "03": "PSC I 거더교",
+        "04": "강박스교",
+    },
+    rankName: {
+        "01": "DB-24",
+        "02": "DB-18",
+        "03": "DB-13.5",
+    },
 }
 
 $(function() { // 페이지가 로드되고 나서 실행
@@ -243,8 +254,8 @@ function getBridgeInfo(num){
                         const  temperatureData = request.sendData.temperatureData;
                         const  capacityData = request.sendData.capacityData;
 
-                        $("#sfForm").val(safetyInfo.sfForm);
-                        $("#sfRank").val(safetyInfo.sfRank);
+                        $("#sfForm").val(wares.formName[safetyInfo.sfForm]);
+                        $("#sfRank").val(wares.rankName[safetyInfo.sfRank]);
                         $("#sfLength").val(safetyInfo.sfLength);
                         $("#sfWidth").val(safetyInfo.sfWidth);
                         $("#sfNum").val(safetyInfo.sfNum);
