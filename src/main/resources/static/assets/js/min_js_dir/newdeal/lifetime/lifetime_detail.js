@@ -1,5 +1,34 @@
 // * 생애주기 의사결정 지원 서비스 자바스크립트 세부부분 *
 
+// 탄산화속도계수 계산 메소드
+function aSpeedCalculate(num1, num2){
+    if(num1 === ""){
+        num1 = 0;
+    }
+    if(num2 === ""){
+        num2 = 1;
+    }
+    const result = num2/Math.sqrt(num1);
+    $("#ltAAverage").val(result.toFixed(2));
+}
+
+// 표준편차 계산 메소드
+function lifeStandardCalculate(average, variance, resultId){
+
+    let num1 = $("#"+average).val();
+    let num2 =    $("#"+variance).val();
+
+    if(num1 === ""){
+        num1 = 1;
+    }
+    if(num2 === ""){
+        num2 = 1;
+    }
+
+    const result = (num1 * num2)/100;
+    $("#"+resultId).val(result.toFixed(2));
+}
+
 // 세부부분 저장버튼
 function lifeDetailTimeSave(){
     JWT_Get();
@@ -7,118 +36,82 @@ function lifeDetailTimeSave(){
     if (accessToken == null || refreshToken == null || insert_id == null) {
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else {
+        const $ltDetailType = $("#ltDetailType").val();
+        let controllerUrl;
 
-        if($("#ltFyAverage").val()==="") {
-            alertCaution("철근 항복강도 평균값을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltFyVariance").val()==="") {
-            alertCaution("철근 항복강도 변동계수를 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltFyStandard").val()==="") {
-            alertCaution("철근 항복강도 표준편차를 작성해주세요.", 1)
-            return false;
-        }
+        console.log($ltDetailType)
 
-        if($("#ltFcAverage").val()==="") {
-            alertCaution("콘크리트 압축강도 평균값을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltFcVariance").val()==="") {
-            alertCaution("콘크리트 압축강도 변동계수를 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltFcStandard").val()==="") {
-            alertCaution("콘크리트 압축강도 표준편차를 작성해주세요.", 1)
-            return false;
-        }
+        // 탄산화깊이 저장
+        if($ltDetailType === "2"){
+            if($("#ltTdAverage").val()==="") {
+                alertCaution("실측피복두께 평균값을 입력해주세요.", 1)
+                return false;
+            }
 
-        if($("#ltSectionAverage").val()==="") {
-            alertCaution("철근 단면적 평균값을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltSectionVariance").val()==="") {
-            alertCaution("철근 단면적 변동계수를 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltSectionStandard").val()==="") {
-            alertCaution("철근 단면적 표준편차를 작성해주세요.", 1)
-            return false;
-        }
+            if($("#ltTdVariance").val()==="") {
+                alertCaution("실측피복두께 변동계수를 입력해주세요.", 1)
+                return false;
+            }
 
-        if($("#ltVehicleAverage").val()==="") {
-            alertCaution("차량하중 평균값을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltVehicleVariance").val()==="") {
-            alertCaution("차량하중 변동계수를 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltVehicleStandard").val()==="") {
-            alertCaution("차량하중 표준편차를 작성해주세요.", 1)
-            return false;
-        }
+            if($("#ltYAverage").val()==="") {
+                alertCaution("공용연수 평균값을 입력해주세요.", 1)
+                return false;
+            }
 
-        if($("#ltRepairLength").val()==="") {
-            alertCaution("보수보강 총길이를 작성해주세요.", 1)
-            return false;
-        }
+            if($("#ltYVariance").val()==="") {
+                alertCaution("공용연수 변동계수를 입력해주세요.", 1)
+                return false;
+            }
 
-        if($("#ltRecoveryOne").val()==="") {
-            alertCaution("회복율 보수1을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltRecoveryTwo").val()==="") {
-            alertCaution("회복율 보수2를 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltRecoveryThree").val()==="") {
-            alertCaution("회복율 보수3을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltRecoveryFour").val()==="") {
-            alertCaution("회복율 보강1을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltRecoveryFive").val()==="") {
-            alertCaution("회복율 보강2를 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltRecoverySix").val()==="") {
-            alertCaution("회복율 교체를 작성해주세요.", 1)
-            return false;
+            if($("#ltAVariance").val()==="") {
+                alertCaution("탄산화속도계수 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltCAverage").val()==="") {
+                alertCaution("탄산화깊이 평균값를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltCVariance").val()==="") {
+                alertCaution("탄산화깊이 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            // Infinity
+
+            const $ltAAverage = $("#ltAAverage");
+            if($ltAAverage.val()==="Infinity" || $ltAAverage.val() ===0.0) {
+                aSpeedCalculate($("#ltYAverage").val(),$("#ltCAverage").val());
+            }
+
+            const $ltTdStandard = $("#ltTdStandard").val();
+            if($ltTdStandard==="Infinity" || $ltTdStandard ===0.0) {
+                lifeStandardCalculate('ltTdAverage', 'ltTdVariance', 'ltTdStandard')
+            }
+
+            const $ltYStandard = $("#ltYStandard").val();
+            if($ltYStandard==="Infinity" || $ltYStandard ===0.0) {
+                lifeStandardCalculate('ltYAverage', 'ltYVariance', 'ltYStandard')
+            }
+
+            const $ltAStandard = $("#ltAStandard").val();
+            if($ltAStandard==="Infinity" || $ltAStandard ===0.0) {
+                lifeStandardCalculate('ltAAverage', 'ltAVariance', 'ltAStandard')
+            }
+
+            const $ltCStandard = $("#ltCStandard").val();
+            if($ltCStandard==="Infinity" || $ltCStandard ===0.0) {
+                lifeStandardCalculate('ltCAverage', 'ltCVariance', 'ltCStandard')
+            }
+
+            controllerUrl = "/api/lifedetail/cabonation/save"
         }
 
-        if($("#ltCostOne").val()==="") {
-            alertCaution("비용 보수1을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltCostTwo").val()==="") {
-            alertCaution("비용 보수2를 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltCostThree").val()==="") {
-            alertCaution("비용 보수3을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltCostFour").val()==="") {
-            alertCaution("비용 보강1을 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltCostFive").val()==="") {
-            alertCaution("비용 보강2를 작성해주세요.", 1)
-            return false;
-        }
-        if($("#ltCostSix").val()==="") {
-            alertCaution("비용 교체를 작성해주세요.", 1)
-            return false;
-        }
-
-        const formData = new FormData(document.getElementById('lifeDetailTimeForm'));
+        const formData = new FormData(document.getElementById('lifeDetailForm'));
 
         let url;
-        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/lifedetailtime/save"; // 호출할 백엔드 API
+        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + controllerUrl; // 호출할 백엔드 API
         console.log("url : "+url);
 
         $.ajax({
@@ -135,19 +128,19 @@ function lifeDetailTimeSave(){
             },
             error: function (request) {
                 if (request.status === 500) {
-                    // console.log("request.status : " + request.status + " => 500에러");
-                    alertCaution("500에러 재로그인 해주세요.", 2);
+                    console.log("request.status : " + request.status + " => 500에러");
+                    // alertCaution("500에러 재로그인 해주세요.", 2);
                 } else {
-                    // console.log("request.status : " + request.status + " => 404에러");
-                    alertCaution("404에러 재로그인 해주세요.", 2);
+                    console.log("request.status : " + request.status + " => 404에러");
+                    // alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
                 let status = request.status;
                 console.log("status : " + status);
                 if (status === 200) {
-                    // console.log("저장성공");
-                    alertLink(request.sendData.getId);
+                    console.log("저장성공");
+                    alertLink($("#absence").val(), request.sendData.autoNum);
                     alertSuccess("등록을 완료했습니다.");
                 } else {
                     if (request.err_msg2 === null) {
@@ -167,14 +160,15 @@ function lifeDetailInputBack(){
 }
 
 // 성공알림창 버튼 누르면 화면이동하는 함수
-function alertLink(id) {
+function alertLink(type, autoNum) {
     $(document).on("click","#successBtn",function(){
-        location.href = "/lifetime/detailoutput/" + id;
+        location.href = "/lifetime/detail/" +type +"/"+ autoNum;
         $('#popupId').remove();
     });
 }
 
-function lifeDetailTimeOutput(id){
+// 세부부분 아웃풋데이터 표출 -> API호출
+function lifeDetailTimeOutput(autoNum){
 
     JWT_Get();
 
@@ -182,14 +176,14 @@ function lifeDetailTimeOutput(id){
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
     } else {
 
-        // console.log("호출성공 id : "+id);
+        console.log("호출성공 autoNum : "+autoNum);
 
         const params = {
-            id : id,
+            autoNum : autoNum,
         }
 
         let url;
-        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/lifedetailtime/output"; // 호출할 백엔드 API
+        url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/lifedetail/output"; // 호출할 백엔드 API
         console.log("url : "+url);
 
         $.ajax({
@@ -210,36 +204,37 @@ function lifeDetailTimeOutput(id){
             },
             success: function (request) {
                 let status = request.status;
-                // console.log("status : " + status);
+                console.log("status : " + status);
                 if (status === 200) {
-                    // console.log("아웃풋 호출성공");
+                    console.log("아웃풋 호출성공");
 
-                    $('#ltRecoveryOne').text(request.sendData.lifeDetailTimeDto.ltRecoveryOne);
-                    $('#ltRecoveryTwo').text(request.sendData.lifeDetailTimeDto.ltRecoveryTwo);
-                    $('#ltRecoveryThree').text(request.sendData.lifeDetailTimeDto.ltRecoveryThree);
-                    $('#ltRecoveryFour').text(request.sendData.lifeDetailTimeDto.ltRecoveryFour);
-                    $('#ltRecoveryFive').text(request.sendData.lifeDetailTimeDto.ltRecoveryFive);
-                    $('#ltRecoverySix').text(request.sendData.lifeDetailTimeDto.ltRecoverySix);
+                    $('#ltRecoveryOne').text(request.sendData.ltRecoveryList[0]);
+                    $('#ltRecoveryTwo').text(request.sendData.ltRecoveryList[1]);
+                    $('#ltRecoveryThree').text(request.sendData.ltRecoveryList[2]);
+                    $('#ltRecoveryFour').text(request.sendData.ltRecoveryList[3]);
+                    $('#ltRecoveryFive').text(request.sendData.ltRecoveryList[4]);
+                    $('#ltRecoverySix').text(request.sendData.ltRecoveryList[5]);
 
-                    $('#ltCostOne').text(request.sendData.lifeDetailTimeDto.ltCostOne);
-                    $('#ltCostTwo').text(request.sendData.lifeDetailTimeDto.ltCostTwo);
-                    $('#ltCostThree').text(request.sendData.lifeDetailTimeDto.ltCostThree);
-                    $('#ltCostFour').text(request.sendData.lifeDetailTimeDto.ltCostFour);
-                    $('#ltCostFive').text(request.sendData.lifeDetailTimeDto.ltCostFive);
-                    $('#ltCostSix').text(request.sendData.lifeDetailTimeDto.ltCostSix);
+                    $('#ltCostOne').text(request.sendData.ltCostList[0]);
+                    $('#ltCostTwo').text(request.sendData.ltCostList[1]);
+                    $('#ltCostThree').text(request.sendData.ltCostList[2]);
+                    $('#ltCostFour').text(request.sendData.ltCostList[3]);
+                    $('#ltCostFive').text(request.sendData.ltCostList[4]);
+                    $('#ltCostSix').text(request.sendData.ltCostList[5]);
 
                     $('#ltRepairLength').text(request.sendData.ltRepairLength);
-                    $('#repairNumber').text(request.sendData.repairNumber);
+                    $('#repairNum').text(request.sendData.repairNum);
                     $('#repairCost').text(request.sendData.repairCost);
 
-                    $('#pfmax').text(request.sendData.pfmax);
-                    $('#pfmin').text(request.sendData.pfmin);
+
+                    $('#pf_max').text(request.sendData.pf_max);
+                    $('#pf_min').text(request.sendData.pf_min);
 
                     $('#bmax').text(request.sendData.bmax);
-                    $('#bmin').text(request.sendData.bmin);
+                    $('#ltTargetValue').text(request.sendData.ltTargetValue);
 
                     $('#ltRecoveryPercent').text(request.sendData.ltRecoveryPercent+"%");
-                    $('#maintenanceYear').text(request.sendData.maintenanceYear);
+                    $('#maxYear').text(request.sendData.maxYear);
 
                     const $noActionTable = $('#noActionTable');
                     let html = "";
@@ -278,10 +273,15 @@ function lifeDetailTimeOutput(id){
                     html2 += '</tr>';
                     $actionTable.html(html2);
 
-                    // console.log("무조치 시 차트데이터 : "+request.sendData.noactionChartDataList);
-                    // console.log("유지보수 시 차트데이터 : "+request.sendData.actionChartDataList);
-                    // amChart
+                    let chartName;
+                    if(request.sendData.chartName === "carbonation"){
+                        chartName = "탄산화에 따른 철근부식 내구성";
+                    }
 
+                    console.log("무조치 시 차트데이터 : "+request.sendData.noactionChartDataList);
+                    console.log("유지보수 시 차트데이터 : "+request.sendData.actionChartDataList);
+
+                    // amChart
                     chartResult(1);
                     chartResult(2);
                     function chartResult(num) {
@@ -306,23 +306,23 @@ function lifeDetailTimeOutput(id){
                                 chart.data = request.sendData.noactionChartDataList;
 
                                 title = chart.titles.create();
-                                title.text = "철근부식 바닥판 휨 성능 - 유지보수 무조치 시";
+                                title.text = chartName+" - 유지보수 무조치 시";
 
                                 xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
                                 yAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-                                createSeries("noaction", "무조치 시 성능지수", am4core.color("#4b4dff"), am4core.color("#ffffff")); // 무조치 시
+                                createSeries("noaction", "무조치 시 성능지수", am4core.color("#2b2b8d"), am4core.color("#ffffff")); // 무조치 시
                             } else {
                                 chart = am4core.create("amChart2", am4charts.XYChart);
                                 chart.data = request.sendData.actionChartDataList;
 
                                 title = chart.titles.create();
-                                title.text = "철근부식 바닥판 휨 성능 - 유지보수 유지보수 개입 시";
+                                title.text = chartName+" - 유지보수 유지보수 개입 시";
 
                                 xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
                                 yAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-                                createSeries("action", "유지보수 개입 시 성능지수", am4core.color("#338f35"), am4core.color("#ffffff")); // 유지보수 개입시
+                                createSeries("action", "유지보수 개입 시 성능지수", am4core.color("#309830"), am4core.color("#ffffff")); // 유지보수 개입시
                             }
 
                             // 차트 제목
@@ -344,10 +344,9 @@ function lifeDetailTimeOutput(id){
                                 series.dataFields.categoryX = "publicYear";
                                 series.dataFields.valueY = field;
                                 series.name = name;
-                                series.tooltipText = "[bold]{name}[/] \n 공용연수 : [b]{categoryX}년[/] \n 상태지수 : [b]{valueY}[/]";
+                                // series.tooltipText = "[bold]{name}[/] \n 공용연수 : [b]{categoryX}년[/] \n 상태지수 : [b]{valueY}[/]";
                                 series.strokeWidth = 2;
                                 series.smoothing = "monotoneX";
-                                series.stroke = lineColor;
                                 series.tooltip.getFillFromObject = false;
                                 series.tooltip.background.fill = lineColor;
                                 series.tooltip.label.fill = textColor;
@@ -416,7 +415,6 @@ function lifeDetailTimeOutput(id){
                             }];
                         });
                     }
-
                     $("#noactionLoadingBar").hide();
                     $("#actionLoadingBar").hide();
 

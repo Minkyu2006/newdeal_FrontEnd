@@ -53,7 +53,7 @@ public class LifetimeController{
     }
 
     // 상태평가 세부부분 input
-    @RequestMapping("detailinput/{absence}")
+    @RequestMapping("detail/{absence}")
     public String detail_input(Model model,@PathVariable String absence){
         model.addAttribute("absence", absence);
         model.addAttribute("backend_url", backend_url);
@@ -61,13 +61,13 @@ public class LifetimeController{
         return "lifetime/detail/input/"+absence;
     }
 
-    // 상태평가 전체부분 output
-    @RequestMapping("detailoutput/{id}")
-    public String detail_output(Model model,@PathVariable Long id){
-        model.addAttribute("getid", id);
+    // 상태평가 세부부분 output
+    @RequestMapping("detail/{absence}/{autoNum}")
+    public String detail_output(Model model, @PathVariable String autoNum){
+        model.addAttribute("autoNum", autoNum);
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
-        return "lifetime/detailoutput";
+        return "lifetime/detail/output/detailoutput";
     }
 
 }
