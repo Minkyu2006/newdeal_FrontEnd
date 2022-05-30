@@ -236,6 +236,27 @@ function lifeDetailTimeOutput(autoNum){
                     $('#ltRecoveryPercent').text(request.sendData.ltRecoveryPercent+"%");
                     $('#maxYear').text(request.sendData.maxYear);
 
+                    const publicYear = request.sendData.publicYear;
+                    const $noActionHeaderTable = $('#noActionHeaderTable');
+                    let html4= "";
+                    html4 += '<tr>';
+                    html4 += '<th style="width: 57px;text-align: center">'+'Time(Years)'+'</th>';
+                    for(let i=publicYear; i<publicYear+21; i++){
+                        html4 += '<th style="text-align: center;">'+i+'</th>';
+                    }
+                    html4 += '</tr>';
+                    $noActionHeaderTable.html(html4);
+
+                    const $actionHeaderTable = $('#actionHeaderTable');
+                    let html3 = "";
+                    html3 += '<tr>';
+                    html3 += '<th style="width: 57px;text-align: center">'+'Time(Years)'+'</th>';
+                    for(let i=publicYear; i<publicYear+21; i++){
+                        html3 += '<th style="text-align: center;">'+i+'</th>';
+                    }
+                    html3 += '</tr>';
+                    $actionHeaderTable.html(html3);
+
                     const $noActionTable = $('#noActionTable');
                     let html = "";
                     html += '<tr>';
@@ -255,7 +276,6 @@ function lifeDetailTimeOutput(autoNum){
                     }
                     html += '</tr>';
                     $noActionTable.html(html);
-
 
                     const $actionTable = $('#actionTable');
                     let html2 = "";
