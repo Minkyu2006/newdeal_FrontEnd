@@ -981,6 +981,14 @@ table {
 	display: table;
 	clear: both;
 }
+.talk__image {
+	overflow: hidden;
+	border: 1px solid #c8c8c8;
+	border-radius: 10px;
+}
+.talk__image img {
+	width: 100%;
+}
 .talk__input-heading {
 	float: left;
 	width: 250px;
@@ -2330,6 +2338,26 @@ h4.l-popup__heading {
 	.c-radio__label {
 		font-size: 14px;
 	}
+}
+
+/* intro */
+.intro {
+	position: relative;
+	width: 100%;
+	padding: 20px;
+}
+.intro__img {
+	width: 100%;
+	text-align: center;
+}
+.intro__img img {
+	width: 100%;
+}
+.intro__list {
+	list-style: disc;
+	padding-left: 20px;
+	font-size: 16px;
+	line-height: 1.6;
 }
 
 /* resistance */
