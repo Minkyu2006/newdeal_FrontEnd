@@ -13,14 +13,41 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
+	<script src="/assets/js/openlayers/ol.js"></script>
  	<script>
+		function initialOL() {
+			window.GeoJSON = ol.format.GeoJSON;
+			window.VectorSource =ol.source.Vector;
+			window.VectorLayer = ol.layer.Vector;
+			window.Tile = ol.layer.Tile;
+			window.View = ol.View;
+			window.Style = ol.style.Style;
+			window.Fill = ol.style.Fill;
+			window.Stroke = ol.style.Stroke;
+			window.Polygon = ol.geom.Polygon;
+			window.Feature = ol.Feature;
+			window.OSM = ol.source.OSM;
+			window.Map = ol.Map;
+		}
+
 		$(function() {
-			$(function() {
-				$('#close').on('click', function(e) {
-					$('.l-popup').removeClass('open');
-				});
-				
-				
+			$('#close').on('click', function(e) {
+				$('.l-popup').removeClass('open');
+			});
+
+			initialOL();
+			const map = new Map({
+				target: 'map',
+				layers: [
+					new Tile({
+						source: new OSM()
+					}),
+				],
+				view: new View({
+					center: [128.01270, 36],
+					zoom: 6.8,
+					projection: "EPSG:4326"
+				})
 			});
 		});
 
@@ -64,135 +91,13 @@
 				</div>
 			</div>
 		</section>
-		
-		<!-- 
-		<section class="section non-padding">
-			<div class="section__head">
-				<h3 class="section__heading">제설제 비산염 추정</h3>
-			</div>
-			<div class="section__content">
-				<div class="salt salt--split">
-					<div class="salt__input">
-						<ul class="talk__list">
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">지역</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>태안</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">도로와의 이격거리(m)</div>
-									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" value="250" /></div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">도로기준 방향</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>동</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul>
-						<div class="talk__console">
-							<ul>
-								<li>
-									<a href="#salt2" class="c-button c-button--point">계산하기</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="salt__output">
-						<h3 class="salt__title">추정 비산염</h3>
-						<div class="salt__count" id="salt2" data-count="11.67">0</div>
-					</div>
-				</div>
-			</div>
+
+		<section class="section">
+			<article class="article">
+				<div id="map" style="height: 400px;"></div>
+			</article>
 		</section>
-		
-		<section class="section non-padding">
-			<div class="section__head">
-				<h3 class="section__heading">해상교량 높이별 비산염 추정</h3>
-			</div>
-			<div class="section__content">
-				<div class="salt salt--split">
-					<div class="salt__input">
-						<ul class="talk__list">
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">해역</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>서해</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">지역</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>태안</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">해수면으로부터 높이(m)</div>
-									<div class="talk__input">
-										<div class="c-text"><input type="text" class="c-text__input" value="250" /></div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="talk__input-item">
-									<div class="talk__input-heading">교량 진행방향</div>
-									<div class="talk__input">
-										<div class="c-select">
-											<select class="c-select__input">
-												<option>동</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul>
-						<div class="talk__console">
-							<ul>
-								<li>
-									<a href="#salt3" class="c-button c-button--point">계산하기</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="salt__output">
-						<h3 class="salt__title">추정 비산염</h3>
-						<div class="salt__count" id="salt3" data-count="1.17">0</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-		 -->
+
 		 
 		<div class="l-popup open">
 			<div class="l-popup__container">

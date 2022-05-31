@@ -38,6 +38,12 @@ public class EnvironmentController {
         model.addAttribute("backend_protocol", backend_protocol);
         return "env/salt";
     }
+
+    // 열화환경 데이터 서비스
+    @RequestMapping("envdata")
+    public String envdata(){
+        return "env/envdata";
+    }
     
     // 열화환경별 염화물 침투
     @RequestMapping("saltpermeate")

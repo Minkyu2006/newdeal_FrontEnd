@@ -594,7 +594,8 @@ table {
 }
 .header.login + .content {
 	overflow: auto;
-	width: 1620px;
+	width: calc(100vw - 300px);
+	min-width: 1600px;
 	height: 100vh;
 	margin-left: 300px;
 	padding: 20px;
