@@ -261,6 +261,11 @@ function getBridgeInfo(num){
                         $("#sfNum").val(safetyInfo.sfNum);
                         $("#sfCompletionYear").val(safetyInfo.sfCompletionYear);
                         $("#sfFactor").val(safetyInfo.sfFactor);
+                        if(safetyInfo.sfFilePath) {
+                            $("#bridgeImage").attr("src", safetyInfo.sfFilePath + safetyInfo.sfFileName).parents("li").show();
+                        } else {
+                            $("#bridgeImage").parents("li").hide();
+                        }
 
                         gridFunc.set(0, gridListData);
 
@@ -273,8 +278,8 @@ function getBridgeInfo(num){
 
                         console.log(capacityData);
                         console.log(temperatureData);
-                        chartDemo("calCapacity", capacityData);
-                        chartDemo("calTemperature", temperatureData);
+                        makeChart("calCapacity", capacityData, "공용 내하율");
+                        makeChart("calTemperature", temperatureData, "온도 (℃)");
 
                     } else{
                         if (request.err_msg2 === null) {
@@ -290,7 +295,7 @@ function getBridgeInfo(num){
 }
 
 
-function chartDemo(type, data) {
+function makeChart(type, data, titleName) {
     if(wares[type]) {
         wares[type].root.dispose();
     }
@@ -306,7 +311,6 @@ function chartDemo(type, data) {
     root.setThemes([
         am5themes_Animated.new(root)
     ]);
-
 
     // Create chart
     // https://www.amcharts.com/docs/v5/charts/xy-chart/
@@ -325,6 +329,15 @@ function chartDemo(type, data) {
     }));
     cursor.lineY.set("visible", false);
 
+    // Chart title
+    var title = chart.plotContainer.children.push(am5.Label.new(root, {
+        text: titleName,
+        fontSize: 18,
+        fontWeight: "500",
+        x: am5.p50,
+        centerX: am5.p50
+    }));
+
     // Create axes
     // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
     var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
@@ -334,7 +347,28 @@ function chartDemo(type, data) {
             count: 1
         },
         renderer: am5xy.AxisRendererX.new(root, {}),
-        tooltip: am5.Tooltip.new(root, {})
+        tooltip: am5.Tooltip.new(root, {}),
+        dateFormats: {
+            "millisecond": "mm:ss SSS",
+            "second": "HH:mm:ss",
+            "minute": "HH:mm",
+            "hour": "HH:mm",
+            "day": "M월 dd일",
+            "week": "M월 dd일",
+            "month": "M월",
+            "year": "yyyy"
+        },
+        tooltipDateFormat: "yyyy-MM-dd",
+        periodChangeDateFormats: {
+            "millisecond": "mm:ss SSS",
+            "second": "HH:mm:ss",
+            "minute": "HH:mm",
+            "hour": "HH:mm",
+            "day": "M월 dd일",
+            "week": "M월 dd일",
+            "month": "yy년 M월",
+            "year": "yyyy"
+        },
     }));
 
     var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
@@ -374,7 +408,6 @@ function chartDemo(type, data) {
     });
 
     series.data.setAll(data);
-
 
     // Make stuff animate on load
     // https://www.amcharts.com/docs/v5/concepts/animations/

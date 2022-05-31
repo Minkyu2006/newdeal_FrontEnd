@@ -49,10 +49,11 @@ const comms = {
 
     bridgeDelete(target) {
         console.log(target);
-        // CommonUI.ajax("/api/safety/delete", "POST", information, function (res) {
-        //     alertSuccess("교량이 삭제되었습니다.");
-        //     resetInput("search");
-        // });
+        CommonUI.ajax("/api/safety/bridgeDataDelete", "PARAM", target, function (res) {
+            alertSuccess("교량이 삭제되었습니다.");
+            gridFunc.clear(0);
+            resetInput("search");
+        });
     },
 
     getBridgeData(target) {
@@ -106,7 +107,7 @@ const grids = {
                         defaultFormat : "yyyymmdd",
                         showEditorBtn : false,
                         showEditorBtnOver : false,
-                        onlyCalendar : false,
+                        onlyCalendar : true,
                         showExtraDays : true,
                         validator : function(oldValue, newValue, item, dataField, fromClipboard) {
                             let isValid = false;
@@ -307,6 +308,7 @@ const trigs = {
             };
             fileReader.readAsBinaryString(file);
         });
+
     },
 
 }
@@ -430,8 +432,8 @@ function resetInput(mode) {
     $num.val("");
     $completionYear.val("");
     $factor.val("");
-    $("#sfImageUploaded").val("");
     $("#sfImage").val(null);
+    $("#bridgeImage").attr("src", "").parents("li").hide();
 
     switch (mode) {
         case "search" :
@@ -530,6 +532,10 @@ function setInput() {
     $("#sfNum").val(wares.currentBridge.sfNum);
     $("#sfCompletionYear").val(wares.currentBridge.sfCompletionYear);
     $("#sfFactor").val(wares.currentBridge.sfFactor);
+
+    if(wares.currentBridge.sfFilePath) {
+        $("#bridgeImage").attr("src", wares.currentBridge.sfFilePath + wares.currentBridge.sfFileName).parents("li").show();
+    }
 }
 
 function ProcessExcel(data) {
