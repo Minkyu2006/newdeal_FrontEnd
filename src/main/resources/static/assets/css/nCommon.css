@@ -779,6 +779,9 @@ table {
 	padding: 0 10px;
 	border-bottom: 1px solid #333;
 }
+.talk__header.talk__header--margin {
+	margin: 10px 0;
+}
 .talk__header h3 {
 	font-size: 18px;
 	font-weight: 700;
@@ -1031,6 +1034,12 @@ table {
 	right: 0;
 	bottom: 0;
 	width: 300px;
+}
+.talk__input-comment {
+	margin-top: 5px;
+	color: #b8b8b8;
+	font-size: 12px;
+	text-align: right;
 }
 .talk__comment {
 	position: relative;
