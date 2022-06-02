@@ -31,6 +31,26 @@
     <input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
     <div class="content__inner">
         <h2 class="content__heading">계측 기반 안전성 추정 데이터 제공</h2>
+        <div class="talk__box" style="margin-bottom: 20px;">
+            <div class="c-accordion">
+                <div class="c-accordion__head" id="accordion">
+                    <h3>기술소개자료</h3>
+                </div>
+                <div class="c-accordion__body">
+                    <div class="intro">
+                        <div class="intro__img">
+                            <img src="/assets/images/intro/introSafety.png" alt="계측 기반 안전성 추정 데이터 제공 서비스 기술 소개 자료" />
+                        </div>
+                        <ul class="intro__list">
+                            <li>IoT 센서로부터 계측된 가속도 데이터만으로 교량 안전성을 추정</li>
+                            <li>사용 상태의 교량 응답을 계측하므로 별도의 교통통제 불필요</li>
+                            <li>자체 개발한 해석엔진을 사용함으로써 외부 상용 해석엔진에 대한 의존성 제거</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="resistance-layout">
             <section class="section non-padding">
                 <div class="section__head">
@@ -123,9 +143,11 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li style="display: none">
+                                <li style="display: none;">
                                     <div class="talk__input-item">
-                                        <img id="bridgeImage" src="">
+                                        <div class="talk__image">
+                                            <img id="bridgeImage" src="">
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
@@ -153,6 +175,10 @@
                 </div>
             </section>
         </div>
+        <div class="talk__box" style="margin-top: 20px;">
+            <div class="performance-output">※ 상기 교량에 대한 안전성 추정 데이터는 교량의 배근 상세를 가정하여 산정한 것으로 실제와 다를 수 있습니다.</div>
+        </div>
+
 
 
         <!-- 교량찾기 팝업 -->

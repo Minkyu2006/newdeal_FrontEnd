@@ -132,6 +132,9 @@ input[type="number"]::-webkit-inner-spin-button {
 	margin-top: 10px;
 	text-align: center;
 }
+.c-table-caption.c-table-caption--right {
+    text-align: right;
+}
 
 /* table scroll */
 .table-scroll {
@@ -1985,9 +1988,13 @@ input[type=text]-ms-clear {
     font-weight: 700;
     line-height: 40px;
 }
-c-accordion__body {
+.c-accordion__body {
     overflow: hidden;
-    display: none;
+    max-height: 0;
+    transition: all .4s;
+}
+.c-accordion__body.active {
+    max-height: none;
 }
 
 

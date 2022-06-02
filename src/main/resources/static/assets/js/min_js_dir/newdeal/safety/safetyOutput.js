@@ -130,6 +130,12 @@ const trigs = {
                 alertCaution("다운로드 하실 교량을 선택해 주세요", 1);
             }
         });
+
+        // 아코디언
+        $(".c-accordion__head").on("click", function() {
+            $(this).toggleClass("active");
+            $(this).next(".c-accordion__body").toggleClass("active");
+        })
     },
 }
 
