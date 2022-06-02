@@ -162,6 +162,11 @@ function call_performance(autoNum){
                     html += "<tbody>";
 
                     html += "<tr>";
+                    html += '<th>'+'시설명'+'</th>';
+                    html += "<td colspan='2'>"+request.sendData.performanceList[0].piFacilityName+'</td>';
+                    html += '</tr>';
+
+                    html += "<tr>";
                         html += '<th>'+'시설유형'+'</th>';
                         html += "<td colspan='2'>"+request.sendData.performanceList[0].piFacilityType+'</td>';
                     html += '</tr>';
@@ -311,18 +316,18 @@ function call_performance(autoNum){
 
                     if(piBusiness === "노후화대응") {
                         html3 += '<tr>';
-                        html3 += '<th>' + '사업전 안전등급' + '</th>';
+                        html3 += '<th>' + '사업전/사업후 안전등급' + '</th>';
                         for (let j = 0; j < request.sendData.performanceSize; j++) {
-                            html3 += '<td>' + request.sendData.performanceList[j].piBeforeSafetyRating + '</td>';
+                            html3 += '<td>' + request.sendData.performanceList[j].piBeforeSafetyRating+ ' / ' +request.sendData.performanceList[j].piAfterSafetyRating + '</td>';
                         }
                         html3 += '</tr>';
 
-                        html3 += '<tr>';
-                        html3 += '<th>' + '사업후 안전등급' + '</th>';
-                        for (let j = 0; j < request.sendData.performanceSize; j++) {
-                            html3 += '<td>' + request.sendData.performanceList[j].piAfterSafetyRating + '</td>';
-                        }
-                        html3 += '</tr>';
+                        // html3 += '<tr>';
+                        // html3 += '<th>' + '사업후 안전등급' + '</th>';
+                        // for (let j = 0; j < request.sendData.performanceSize; j++) {
+                        //     html3 += '<td>' + request.sendData.performanceList[j].piAfterSafetyRating + '</td>';
+                        // }
+                        // html3 += '</tr>';
                     }
 
                     html3 += '<tr>';

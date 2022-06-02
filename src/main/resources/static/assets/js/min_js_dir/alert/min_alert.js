@@ -52,6 +52,7 @@ $(function() {
         console.log("businessNum : "+businessNum);
 
         if(chapter === "0") { // 사업평가 대상이 아님에도 평가를 시행할지(확인)
+            $("#choiceText").text("성능개선 사업평가를 시작합니다.");
             $('#choicePop').addClass('open');
         }
 
@@ -247,7 +248,7 @@ function alertWeightCheck(text) { // 가중치 확인하는창
     let html = '';
 
     html +='<div id="popupId" class="popup popup--dim">';
-    html +='<div class="popup__box" style="width: 400px">';
+    html +='<div class="popup__box" style="width: 410px">';
     html +='<div class="popup__content">';
     html +='<div class="popup__stat check"></div>';
     html +='<div class="popup__text">'+text+'</div>';
