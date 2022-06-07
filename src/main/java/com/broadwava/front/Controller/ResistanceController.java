@@ -43,6 +43,12 @@ public class ResistanceController {
         return "resistance/output";
     }
 
+    // 내진성능
+    @RequestMapping("earthquake")
+    public String earthquake(){
+        return "resistance/earthquake";
+    }
+
     // 계측 기반 안전성 추정 데이터 제공 - 조근희
     @RequestMapping("safetyinput")
     public String safetyinput(Model model){
