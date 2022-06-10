@@ -537,11 +537,11 @@
 	function formDownload(){
 		const $weight_Category = $("#weight_Category").val();
 		if($weight_Category==="노후화대응"){
-			location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%EB%85%B8%ED%9B%84%ED%99%94%EB%8C%80%EC%9D%91_%EC%9C%A0%ED%98%95_%EC%96%91%EC%8B%9D.xlsx";
+			location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%E1%84%82%E1%85%A9%E1%84%92%E1%85%AE%E1%84%92%E1%85%AA%E1%84%83%E1%85%A2%E1%84%8B%E1%85%B3%E1%86%BC_%E1%84%8B%E1%85%B2%E1%84%92%E1%85%A7%E1%86%BC_%E1%84%8B%E1%85%A3%E1%86%BC%E1%84%89%E1%85%B5%E1%86%A8.xlsx";
 		}else if($weight_Category==="기준변화") {
-			location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%EA%B8%B0%EC%A4%80%EB%B3%80%ED%99%94_%EC%9C%A0%ED%98%95_%EC%96%91%EC%8B%9D.xlsx";
+			location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%8C%E1%85%AE%E1%86%AB%E1%84%87%E1%85%A7%E1%86%AB%E1%84%92%E1%85%AA_%E1%84%8B%E1%85%B2%E1%84%92%E1%85%A7%E1%86%BC_%E1%84%8B%E1%85%A3%E1%86%BC%E1%84%89%E1%85%B5%E1%86%A8.xlsx";
 		}else if($weight_Category==="사용성변화") {
-			location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%EC%82%AC%EC%9A%A9%EC%84%B1%EB%B3%80%ED%99%94_%EC%9C%A0%ED%98%95_%EC%96%91%EC%8B%9D.xlsx";
+			location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%E1%84%89%E1%85%A1%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A7%E1%86%AB%E1%84%92%E1%85%AA_%E1%84%8B%E1%85%B2%E1%84%92%E1%85%A7%E1%86%BC_%E1%84%8B%E1%85%A3%E1%86%BC%E1%84%89%E1%85%B5%E1%86%A8.xlsx";
 		}else{
 			alertCaution("유형을 선택해주세요.",1)
 			return false;

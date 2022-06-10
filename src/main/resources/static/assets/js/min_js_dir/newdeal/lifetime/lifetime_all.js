@@ -1,5 +1,24 @@
 // * 생애주기 의사결정 지원 서비스 자바스크립트 전체부분 *
 
+// 준공일자, 평가기준일자 월-일 입력 포커스아웃 함수
+function dateFocuseOut(name, val){
+    let $name = $("#"+name);
+    let value;
+    if(val.length === 5) {
+        if(val.substring(4,5) === "0"){
+            $name.val("");
+            alertCaution("월을 다시 입력해주시길 바랍니다.",1);
+        }else{
+            value = val.substring(0,4)+"-0"+val.substring(4,5);
+        }
+    }else if(val.length === 6) {
+        value = val.substring(0,4)+"-"+val.substring(4,7);
+    }else if(val.length >= 1 && val.length !== 7) {
+        alertCaution("연도와 월을 입력해주시길 바랍니다.<br>현재 입력값 : "+val,1);
+    }
+    $name.val(value);
+}
+
 // 부재의 따른 세부부재 select box 생성
 function absenceSelect(){
     const $absence = $("#absence").val();
@@ -264,7 +283,7 @@ function lifeAllTimeOutput(id){
                     const month2 = ltAllInputDate.substring(5,7);
                     $('#ltAllInputDate').text(year2+'년도 '+month2+'월');
 
-                    $('#allVolume').text(request.sendData.lifeAllTimeDto.ltAllVolume+'m2');
+                    $('#allVolume').text(request.sendData.lifeAllTimeDto.ltAllVolume+'m²');
 
                     // 대표보수 보강공법 수행효과  수행 전 손상지수
                     $('#damageBRankBefore').text(request.sendData.lifeAllTimeDto.ltDamageBRank);
@@ -273,9 +292,9 @@ function lifeAllTimeOutput(id){
                     $('#damageERankBefore').text(request.sendData.lifeAllTimeDto.ltDamageERank);
 
                     // 대표보수 보강공법 수행효과  수행 후 손상지수
-                    $('#damageBRankAfter').text(pushComma(request.sendData.damageRankList[0].toFixed(2)));
-                    $('#damageCRankAfter').text(pushComma(request.sendData.damageRankList[1].toFixed(2)));
-                    $('#damageDRankAfter').text(pushComma(request.sendData.damageRankList[2].toFixed(2)));
+                    $('#damageBRankAfter').text(request.sendData.damageRankList[0].toFixed(2));
+                    $('#damageCRankAfter').text(request.sendData.damageRankList[1].toFixed(2));
+                    $('#damageDRankAfter').text(request.sendData.damageRankList[2].toFixed(2));
                     $('#damageERankAfter').text(request.sendData.damageRankList[3]);
 
                     // 대표보수 보강공법 수행효과 비용
@@ -383,8 +402,8 @@ function lifeAllTimeOutput(id){
                             return series;
                         }
                         createSeries("noAction", "무조치시 열화모델", am4core.color("#1c1d66"),am4core.color("#ffffff")); // 무조치시 열화모델 라인색 설정(완)
-                        createSeries("preemptive", "선제적 유지관리", am4core.color("#6889e2"),am4core.color("#000000")); // 선제적 유지관리 라인색 설정(완)
                         createSeries("current", "현행 유지관리", am4core.color("#5fee83"),am4core.color("#000000")); // 현행 유지관리 라인색 설정(완)
+                        createSeries("preemptive", "선제적 유지관리", am4core.color("#6889e2"),am4core.color("#000000")); // 선제적 유지관리 라인색 설정(완)
 
                         chart.paddingRight = 60;
                         chart.maskBullets = false;
@@ -412,9 +431,10 @@ function lifeAllTimeOutput(id){
                                 labelBullet.label.text = request.sendData.bRankValue+"(B)";
                             }else if(number===3){
                                 labelBullet.label.text = request.sendData.cRankValue+"(C)";
-                            }else{
+                            }else if(number===4){
                                 labelBullet.label.text = request.sendData.dRankValue+"(D)";
                             }
+
                             labelBullet.fontSize = 17;
                             labelBullet.horizontalCenter = "left";
                             labelBullet.label.horizontalCenter = "left";
@@ -423,11 +443,49 @@ function lifeAllTimeOutput(id){
 
                             return series;
                         }
-
                         dashSeries("aRank", am4core.color("#ff7979"),true,1); // A등급 점선 설정(완)
                         dashSeries("bRank", am4core.color("#ff7979"),true,2); // B등급 점선 설정(완)
                         dashSeries("cRank", am4core.color("#ff7979"),true,3); // C등급 점선 설정(완)
                         dashSeries("dRank", am4core.color("#ff7979"),true,4); // D등급 점선 설정(완)
+
+                        // // 테스트
+                        // function dashSeries2(field,color, dashed,number) {
+                        //     const series = chart.series.push(new am4charts.LineSeries());
+                        //     series.dataFields.categoryX = "publicYear";
+                        //     series.dataFields.valueY = field;
+                        //     series.smoothing = "monotoneX";
+                        //     series.stroke = color;
+                        //
+                        //     // series.hiddenInLegend = true; // legend 숨기기
+                        //     series.name = "수행 시기 : ";
+                        //     series.strokeWidth = 3;
+                        //
+                        //     // 점선 옵션
+                        //     if (dashed) {
+                        //         series.strokeDasharray = "5 3";
+                        //     }
+                        //
+                        //     const labelBullet = series.bullets.push(new am4charts.LabelBullet());
+                        //     labelBullet.disabled = true;
+                        //     if(number===5){
+                        //         labelBullet.label.text = name+request.sendData.test1Value;
+                        //     }else if(number===6){
+                        //         labelBullet.label.text = name+request.sendData.test2Value;
+                        //     }else if(number===7){
+                        //         labelBullet.label.text = name+request.sendData.test3Value;
+                        //     }
+                        //     labelBullet.fontSize = 17;
+                        //     labelBullet.horizontalCenter = "left";
+                        //     labelBullet.label.horizontalCenter = "left";
+                        //     labelBullet.label.paddingLeft = 10;
+                        //     labelBullet.propertyFields.disabled = "bulletDisabled";
+                        //
+                        //     return series;
+                        // }
+                        // dashSeries2("test1", am4core.color("#000000"),true,5); // 세로 눈금 테스트
+
+                        // dashSeries2("test2", am4core.color("#000000"),true,6); // 세로 눈금 테스트
+                        // dashSeries2("test3", am4core.color("#000000"),true,7); // 세로 눈금 테스트
 
                         chart.legend = new am4charts.Legend(); // 항목 상단 오른쪽으로 배치(완)
                         chart.legend.position = "top";

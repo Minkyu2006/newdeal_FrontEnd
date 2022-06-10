@@ -54,12 +54,22 @@ function logreg(num,menuName1,menuName2,data) {
 
 //한글을 지우는 함수
 function delHangle(evt){
-    var objTarget = evt.srcElement || evt.target;
-    var _value = event.srcElement.value;
+    const objTarget = evt.srcElement || evt.target;
+    const _value = event.srcElement.value;
     if(/[ㄱ-ㅎㅏ-ㅡ가-핳]/g.test(_value)) {
         objTarget.value = null;
     }
 }
+
+// 한글, 영어, 특수문자 제거 함수
+function delHangleEng(evt){
+    const objTarget = evt.srcElement || evt.target;
+    const _value = event.srcElement.value;
+    if(/[^0-9]/gi.test(_value)) {
+        objTarget.value = null;
+    }
+}
+
 // 소수점한개로 제한한 실수값입력할수있게하는 함수
 function isNumberKey(evt,num) {
     const charCode = (evt.which) ? evt.which : event.keyCode;

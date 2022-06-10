@@ -302,14 +302,14 @@ function excelSend() {
             },
             error: function (request) {
                 if (request.status === 500) {
-                    // console.log("request.status : " + request.status + " => 500에러");
-                    alertCaution("500에러 재로그인 해주세요.", 2);
+                    console.log("request.status : " + request.status + " => 500에러");
+                    // alertCaution("500에러 재로그인 해주세요.", 2);
                 }else if(request.status === 400) {
-                    // console.log("request.status : " + request.status + " => 400에러");
-                    alertCaution("400에러 재로그인 해주세요.", 2);
+                    console.log("request.status : " + request.status + " => 400에러");
+                    // alertCaution("400에러 재로그인 해주세요.", 2);
                 } else {
-                    // console.log("request.status : " + request.status + " => 404에러");
-                    alertCaution("404에러 재로그인 해주세요.", 2);
+                    console.log("request.status : " + request.status + " => 404에러");
+                    // alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
@@ -320,22 +320,22 @@ function excelSend() {
                     $('.c-file__input').val('');
                     // console.log("엑셀 데이터 전송 성공");
                     // console.log("autoNum : "+request.sendData.autoNum)
-                    $piWeightTechnicality.val("");
-                    $piWeightEconomy.val("");
-                    $piWeightPolicy.val("");
+                    $("#piWeightTechnicality").val("");
+                    $("#piWeightEconomy").val("");
+                    $("#piWeightPolicy").val("");
 
-                    $piWeightSafe.val("");
-                    $piWeightUsability.val("");
-                    $piWeightOld.val("");
-                    $piWeightUrgency.val("");
-                    $piWeightGoal.val("");
+                    $("#piWeightSafe").val("");
+                    $("#piWeightUsability").val("");
+                    $("#piWeightOld").val("");
+                    $("#piWeightUrgency").val("");
+                    $("#piWeightGoal").val("");
 
-                    $piWeightSafeUtility.val("");
-                    $piWeightCostUtility.val("");
+                    $("#piWeightSafeUtility").val("");
+                    $("#piWeightCostUtility").val("");
 
-                    $piWeightBusiness.val("");
-                    $piWeightComplaint.val("");
-                    $piWeightBusinessEffect.val("");
+                    $("#piWeightBusiness").val("");
+                    $("#piWeightComplaint").val("");
+                    $("#piWeightBusinessEffect").val("");
                     alertLink(request.sendData.autoNum);
                     alertSuccess("업로드를 완료했습니다.");
                 } else {
