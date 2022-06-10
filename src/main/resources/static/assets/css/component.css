@@ -37,6 +37,7 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 5px 3px;
     border-bottom: 1px solid #efefef;
     vertical-align: middle;
+    line-height: 1.4;
     word-break: break-all;
     word-wrap: break-word;
     -webkit-box-sizing: border-box;
@@ -1684,6 +1685,15 @@ input[type=text]-ms-clear {
     flex: 1;
     position: relative;
 }
+.c-flex__box.c-flex__box--2 {
+    flex: 2;
+}
+.c-flex__box.c-flex__box--margin-left {
+    margin-left: 20px;
+}
+.c-flex__box.c-flex__box--padding {
+    padding: 20px;
+}
 .c-flex__box > .c-function.position-bottom {
 	position: absolute;
 	bottom: 0;
@@ -1961,10 +1971,16 @@ input[type=text]-ms-clear {
     background-color: transparent;
     transition: all 0.4s;
 }
+.c-accordion__head.c-accordion__head--border-bottom:before {
+    left: 0;
+}
 .c-accordion__head.active:before {
     bottom: 1px;
     width: calc(100% - 20px);
     background-color: #333;
+}
+.c-accordion__head.c-accordion__head--border-bottom.active:before {
+    width: 100%;
 }
 .c-accordion__head:after {
     content: " ";

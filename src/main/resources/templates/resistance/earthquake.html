@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default2">
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+
+    </style>
+</th:block>
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script src="/assets/js/min_js_dir/newdeal/resistance/earthquake.js"></script>
+    <script>
+        $(function() {
+            $('#close').on('click', function (e) {
+                $('.l-popup').removeClass('open');
+            });
+        });
+    </script>
+</th:block>
+<div layout:fragment="content" class="content">
+    <h2 class="content__heading">교량의 내진성능 추정 서비스</h2>
+    <section class="section non-padding">
+        <div class="section__head">
+            <h3 class="section__heading">교량 정보 입력</h3>
+        </div>
+        <div class="section__content">
+            <div class="c-function">
+                <div class="c-function__group c-function__group--right">
+                    <div class="c-function__item">
+                        <button class="c-button c-button--excel">양식 다운로드</button>
+                    </div>
+                    <div class="c-function__item">
+                        <div class="c-file">
+                            <input type="text" class="c-file__input" readonly="readonly">
+                            <label class="c-file__button" style="text-align: center;">업로드
+                                <input type="file" id="excelfile" name="excelfile">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="c-table c-table--border" style="margin-top: 20px;">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>교량 검색</th>
+                        <th>대상 지역</th>
+                        <th>내진등급</th>
+                        <th>주 경간장</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="c-search">
+                                <input type="text" class="c-search__input" />
+                                <button class="c-search__button">검색</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="c-select">
+                                <select class="c-select__input">
+                                    <option>서울</option>
+                                    <option>인천</option>
+                                    <option>대전</option>
+                                    <option>부산</option>
+                                    <option>대구</option>
+                                    <option>울산</option>
+                                    <option>광주</option>
+                                    <option>세종</option>
+                                    <option>경기</option>
+                                    <option>충북</option>
+                                    <option>충남</option>
+                                    <option>경북</option>
+                                    <option>경남</option>
+                                    <option>전북</option>
+                                    <option>전남</option>
+                                    <option>강원 남부</option>
+                                    <option>강원 북부</option>
+                                    <option>제주</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="c-select">
+                                <select class="c-select__input">
+                                    <option>내진특등급</option>
+                                    <option>내진I등급</option>
+                                    <option>내진II등급</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="c-select">
+                                <select class="c-select__input">
+                                    <option>150m 이상</option>
+                                    <option>150m 미만</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th>경간 구성</th>
+                        <th>교각기둥 구성</th>
+                        <th>주형 구분</th>
+                        <th>거더형식</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="c-select">
+                                <select class="c-select__input">
+                                    <option>단일 경간</option>
+                                    <option>다중 경간</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="c-select">
+                                <select class="c-select__input">
+                                    <option>단일 기둥</option>
+                                    <option>다중 기둥</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="c-select">
+                                <select class="c-select__input">
+                                    <option>단순교</option>
+                                    <option>연속교</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="c-select">
+                                <select class="c-select__input">
+                                    <option>콘크리트</option>
+                                    <option>강재</option>
+                                    <option>PSC</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="c-function__group c-function__group--right" style="margin-top: 20px;">
+                <div class="c-function__item">
+                    <button class="c-button c-button--solid">내진성능 추정</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section non-padding">
+        <div class="c-accordion">
+            <div class="c-accordion__head c-accordion__head--border-bottom active">
+                <h3>교량 입력 정보 참고사항</h3>
+            </div>
+            <div class="c-accordion__body active">
+                <div class="c-flex">
+                    <div class="c-flex__box c-flex__box--2 c-flex__box--padding">
+                        <h4>1) 교량의 내진등급 기준</h4>
+                        <table class="c-table c-table--border" style="margin-top: 20px;">
+                            <colgroup>
+                                <col style="width: 140px;">
+                                <col>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>내진등급</th>
+                                <th>교량</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>내진특등급</td>
+                                <td>
+                                    <ul class="earthquake__reference-list">
+                                        <li>- 내진I등급 중에서, 국방, 방재상 매우 중요한 교량 또는 지진 피해시 사회경제적으로 영향이 매우 큰 교량</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>내진I등급</td>
+                                <td>
+                                    <ul class="earthquake__reference-list">
+                                        <li>- 고속도로, 자동차전용도로, 특별시도, 광역시도 또는 일반국도상의 교량 및 이들 도로 위를 횡단하는 교량</li>
+                                        <li>- 지방도, 시도 및 군도 중 지역의 방재계획상 필요한 도로에 건설된 교량 및 이들 도로 위를 횡단하는 교량</li>
+                                        <li>- 해당도로의 일일계획교통량을 기준으로 판단했을 때 중요한 교량</li>
+                                        <li>- 설계지진 발생 후에도 기능을 유지해야 할 철도교</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>내진II등급</td>
+                                <td>
+                                    <ul class="earthquake__reference-list">
+                                        <li>- 내진특등급 및 내진I등급에 속하지 않는 교량</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="c-flex__box c-flex__box--margin-left c-flex__box--padding">
+                        <ul class="earthquake__reference-list">
+                            <li>
+                                <h4>2) 주경간장</h4>
+                                <p>- 교량의 경간 구성 중 메인이 되는 경간장</p>
+                            </li>
+                            <li>
+                                <h4>3) 경간구성</h4>
+                                <p>- 교량 경간의 구성 형태</p>
+                            </li>
+                            <li>
+                                <h4>4) 교각기둥</h4>
+                                <p>- 교량 교각기둥의 형태</p>
+                            </li>
+                            <li>
+                                <h4>5) 주형</h4>
+                                <p>- 단순교 : 경간과 경간 사이가 분리된 형태</p>
+                                <p>- 연속교 : 경간과 경간 사이가 이어진 형태</p>
+                            </li>
+                            <li>
+                                <h4>6) 거더형식</h4>
+                                <p>- 교량 거더의 형식</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="c-flex__box c-flex__box--margin-left c-flex__box--padding">
+                        <img src="/assets/images/" alt="참고사항 이미지">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section non-padding">
+        <div class="section__head">
+            <h3 class="section__heading">해당교량의 내진성능 추정</h3>
+        </div>
+        <div class="section__content">
+            <div class="c-flex">
+                <div class="c-flex__box c-flex__box--padding">
+                    <div class="earthquake__astimate">
+                        <p class="earthquake__result">해당교량은 규모 <span>00</span>의 지진에도 <br>저항할 수 있도록 <br>내진설계가 적용되어 있다고 추정되며,
+                            <br>국내에서 발생한 경주, 포항 지진인 <br>규모 <span>00</span>의 지진에도 저항할 수 있다고 추정된다.</p>
+                        <p class="earthquake__result-ps">※ 단, 교량의 정확한 내진성능은 내진성능평가 수행 후 검토해야 함.</p>
+                    </div>
+                </div>
+
+                <div class="c-flex__box c-flex__box--padding">
+                    <table class="c-table c-table--border">
+                        <colgroup>
+                            <col style="width: 100px;">
+                            <col>
+                            <col style="width: 160px;">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>등급</th>
+                                <th>진도 등급별 현상</th>
+                                <th>최대 가속도</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>I</td>
+                            <td>대부분의 사람들은 느낄 수 없으나, 지진계에는 기록된다.</td>
+                            <td>g &#60; 0.0007</td>
+                        </tr>
+                        <tr>
+                            <td>II</td>
+                            <td>조용한 상태나 건물 위층에 있는 소수의 사람만 느낀다.</td>
+                            <td>0.0007 ≤ g &#60; 0.0023</td>
+                        </tr>
+                        <tr>
+                            <td>III</td>
+                            <td>실내, 특히 건물 위층에 있는 사람이 현저하게 느끼며, 정지하고 있는 차가 약간 흔들린다.</td>
+                            <td>0.0023 ≤ g &#60; 0.0076</td>
+                        </tr>
+                        <tr>
+                            <td>IV</td>
+                            <td>실내에서 많은 사람이 느끼고, 밤에는 잠에서 깨기도 하며, 그릇과 창문 등이 흔들린다.</td>
+                            <td>0.0076 ≤ g &#60; 0.0256</td>
+                        </tr>
+                        <tr>
+                            <td>V</td>
+                            <td>거의 모든 사람이 진동을 느끼고, 그릇, 창문 등이 깨지기도 하며, 불안정한 물체는 넘어진다.</td>
+                            <td>0.0256 ≤ g &#60; 0.0686</td>
+                        </tr>
+                        <tr>
+                            <td>VI</td>
+                            <td>모든 사람이 느끼고, 일부 무거운 가구가 움직이며, 벽의 석회가 떨어지기도 한다.</td>
+                            <td>0.0686 ≤ g &#60; 0.1473</td>
+                        </tr>
+                        <tr>
+                            <td>VII</td>
+                            <td>일반 건물에 약간의 피해가 발생하며, 부실한 건물에는 상당한 피해가 발생한다.</td>
+                            <td>0.1473 ≤ g &#60; 0.3166</td>
+                        </tr>
+                        <tr>
+                            <td>VIII</td>
+                            <td>일반 건물에 부분적 붕괴 등 상당한 피해가 발생하며, 부실한 건물에는 심각한 피해가 발생한다.</td>
+                            <td>0.3166 ≤ g &#60; 0.6801</td>
+                        </tr>
+                        <tr>
+                            <td>IX</td>
+                            <td>잘 설계된 건물에도 상당한 피해가 발생하며, 일반 건축물에는 붕괴 등 큰 피해가 발생한다.</td>
+                            <td>0.6801 ≤ g &#60; 1.4614</td>
+                        </tr>
+                        <tr>
+                            <td>X</td>
+                            <td>대부분의 석조 및 골조 건물이 파괴되고, 기차선로가 휘어진다.</td>
+                            <td>1.4614 ≤ g &#60; 3.14</td>
+                        </tr>
+                        <tr>
+                            <td>XI</td>
+                            <td>남아있는 구조물이 거의 없으며, 다리가 무너지고, 기차선로가 심각하게 휘어진다.</td>
+                            <td rowspan="2">3.14 ≤ g</td>
+                        </tr>
+                        <tr>
+                            <td>XII</td>
+                            <td>모든 것이 피해를 입고, 지표면이 심각하게 뒤틀리며, 물체가 공중으로 튀어 오른다.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="l-popup open">
+        <div class="l-popup__container">
+            <div class="l-popup__content" style="text-align: center; line-height: 1.6;">
+                <p>해당 서비스는 추후 개발될 서비스의 샘플페이지입니다.</p>
+                <p>실제 동작하지는 않으며 추후 개발될 서비스의 예상페이지 입니다.</p>
+            </div>
+            <div class="l-popup__function">
+                <ul class="l-popup__function-list">
+                    <li class="l-popup__function-item"><button id="close" class="c-button c-button--point">닫기</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
