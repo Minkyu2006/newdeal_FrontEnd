@@ -1794,6 +1794,33 @@ table {
     transition: fill 0.4s;
 }
 
+/* earthquake */
+.earthquake__reference-list {
+	line-height: 1.6;
+}
+.earthquake__reference-list li + li {
+	margin-top: 10px;
+}
+.earthquake__astimate {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: relative;
+	height: 100%;
+}
+.earthquake__result {
+	font-size: 2rem;
+	line-height: 1.4;
+}
+.earthquake__result span {
+	color: #b82c31;
+	font-weight: 700;
+}
+.earthquake__result-ps {
+	margin-top: 40px;
+	color: #b82c31;
+	text-align: right;
+}
 
 
 
