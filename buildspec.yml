@@ -18,6 +18,7 @@ phases:
       - echo Building the Docker image...
       - docker build -t newdeal-frontend .
       - docker tag newdeal-frontend:latest 093272453328.dkr.ecr.ap-northeast-2.amazonaws.com/newdeal-frontend:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - cp ./src/main/resources/static/assets/js/AUIGrid/AUIGridLicense-release.js ./src/main/resources/static/assets/js/AUIGrid/AUIGridLicense.js
   post_build:
     commands:
       - echo Build completed on `date`

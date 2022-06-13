@@ -14,10 +14,14 @@
     <script src="/assets/js/min_js_dir/newdeal/resistance/earthquake.js"></script>
     <script>
         $(function() {
-            $('#close').on('click', function (e) {
-                $('.l-popup').removeClass('open');
-            });
+            $("#header_four").addClass(' show');
+
+            // $('#close').on('click', function (e) {
+            //     $('.l-popup').removeClass('open');
+            // });
+
         });
+
     </script>
 </th:block>
 <div layout:fragment="content" class="content">
@@ -30,7 +34,7 @@
             <div class="c-function">
                 <div class="c-function__group c-function__group--right">
                     <div class="c-function__item">
-                        <button class="c-button c-button--excel">양식 다운로드</button>
+                        <button onclick="formDownload()" class="c-button c-button--excel">양식 다운로드</button>
                     </div>
                     <div class="c-function__item">
                         <div class="c-file">
@@ -341,18 +345,19 @@
         </div>
     </section>
 
-    <div class="l-popup open">
-        <div class="l-popup__container">
-            <div class="l-popup__content" style="text-align: center; line-height: 1.6;">
-                <p>해당 서비스는 추후 개발될 서비스의 샘플페이지입니다.</p>
-                <p>실제 동작하지는 않으며 추후 개발될 서비스의 예상페이지 입니다.</p>
-            </div>
-            <div class="l-popup__function">
-                <ul class="l-popup__function-list">
-                    <li class="l-popup__function-item"><button id="close" class="c-button c-button--point">닫기</button></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<!--    <div class="l-popup open">-->
+<!--        <div class="l-popup__container">-->
+<!--            <div class="l-popup__content" style="text-align: center; line-height: 1.6;">-->
+<!--                <p>해당 서비스는 추후 개발될 서비스의 샘플페이지입니다.</p>-->
+<!--                <p>실제 동작하지는 않으며 추후 개발될 서비스의 예상페이지 입니다.</p>-->
+<!--            </div>-->
+<!--            <div class="l-popup__function">-->
+<!--                <ul class="l-popup__function-list">-->
+<!--                    <li class="l-popup__function-item"><button id="close" class="c-button c-button&#45;&#45;point">닫기</button></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
 </div>
 </html>

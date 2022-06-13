@@ -448,41 +448,41 @@ function lifeAllTimeOutput(id){
                         dashSeries("cRank", am4core.color("#ff7979"),true,3); // C등급 점선 설정(완)
                         dashSeries("dRank", am4core.color("#ff7979"),true,4); // D등급 점선 설정(완)
 
-                        // // 테스트
-                        // function dashSeries2(field,color, dashed,number) {
-                        //     const series = chart.series.push(new am4charts.LineSeries());
-                        //     series.dataFields.categoryX = "publicYear";
-                        //     series.dataFields.valueY = field;
-                        //     series.smoothing = "monotoneX";
-                        //     series.stroke = color;
-                        //
-                        //     // series.hiddenInLegend = true; // legend 숨기기
-                        //     series.name = "수행 시기 : ";
-                        //     series.strokeWidth = 3;
-                        //
-                        //     // 점선 옵션
-                        //     if (dashed) {
-                        //         series.strokeDasharray = "5 3";
-                        //     }
-                        //
-                        //     const labelBullet = series.bullets.push(new am4charts.LabelBullet());
-                        //     labelBullet.disabled = true;
-                        //     if(number===5){
-                        //         labelBullet.label.text = name+request.sendData.test1Value;
-                        //     }else if(number===6){
-                        //         labelBullet.label.text = name+request.sendData.test2Value;
-                        //     }else if(number===7){
-                        //         labelBullet.label.text = name+request.sendData.test3Value;
-                        //     }
-                        //     labelBullet.fontSize = 17;
-                        //     labelBullet.horizontalCenter = "left";
-                        //     labelBullet.label.horizontalCenter = "left";
-                        //     labelBullet.label.paddingLeft = 10;
-                        //     labelBullet.propertyFields.disabled = "bulletDisabled";
-                        //
-                        //     return series;
-                        // }
-                        // dashSeries2("test1", am4core.color("#000000"),true,5); // 세로 눈금 테스트
+                        // 테스트
+                        function dashSeries2(field,color, dashed,number) {
+                            const series = chart.series.push(new am4charts.LineSeries());
+                            series.dataFields.categoryX = "publicYear";
+                            series.dataFields.valueY = field;
+                            series.smoothing = "monotoneX";
+                            series.stroke = color;
+
+                            // series.hiddenInLegend = true; // legend 숨기기
+                            series.name = "수행 시기";
+                            series.strokeWidth = 3;
+
+                            // 점선 옵션
+                            if (dashed) {
+                                series.strokeDasharray = "5 3";
+                            }
+
+                            const labelBullet = series.bullets.push(new am4charts.LabelBullet());
+                            labelBullet.disabled = true;
+                            if(number===5){
+                                labelBullet.label.text = name+request.sendData.test1Value;
+                            }else if(number===6){
+                                labelBullet.label.text = name+request.sendData.test2Value;
+                            }else if(number===7){
+                                labelBullet.label.text = name+request.sendData.test3Value;
+                            }
+                            labelBullet.fontSize = 17;
+                            labelBullet.horizontalCenter = "left";
+                            labelBullet.label.horizontalCenter = "left";
+                            labelBullet.label.paddingLeft = 10;
+                            labelBullet.propertyFields.disabled = "bulletDisabled";
+
+                            return series;
+                        }
+                        dashSeries2("test1", am4core.color("#000000"),true,5); // 세로 눈금 테스트
 
                         // dashSeries2("test2", am4core.color("#000000"),true,6); // 세로 눈금 테스트
                         // dashSeries2("test3", am4core.color("#000000"),true,7); // 세로 눈금 테스트
