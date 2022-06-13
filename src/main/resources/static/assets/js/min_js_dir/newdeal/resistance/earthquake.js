@@ -108,7 +108,13 @@ const trigs = {
         $(".c-accordion__head").on("click", function() {
             $(this).toggleClass("active");
             $(this).next(".c-accordion__body").toggleClass("active");
-        })
+        });
+
+        // 업로드할 파일명 불러오기
+        $('#excelfile').change(function() {
+            const file = $(this).val().split('\\').pop();
+            $('.c-file__input').val(file);
+        });
     },
 }
 

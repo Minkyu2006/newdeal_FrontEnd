@@ -253,6 +253,12 @@ const trigs = {
             resetInput("search");
         });
 
+        // 업로드할 파일명 불러오기
+        $('#sfImage').change(function() {
+            const file = $(this).val().split('\\').pop();
+            $('.c-file__input').val(file);
+        });
+
         $('.pop__close').on('click', function(e) {
             $('.pop').removeClass('open');
         });
