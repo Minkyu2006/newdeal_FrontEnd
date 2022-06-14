@@ -138,3 +138,77 @@ function onPageLoad() {
 function formDownload(){
     location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%E1%84%82%E1%85%A2%E1%84%8C%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A5%E1%86%BC%E1%84%82%E1%85%B3%E1%86%BC_%E1%84%8E%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3_%E1%84%8B%E1%85%A3%E1%86%BC%E1%84%89%E1%85%B5%E1%86%A8.xlsx";
 }
+
+// 엑셀 파일 올렸는지 확인
+function bridgeFilesend() {
+    const excelfile = $("#excelfile").val();
+    if (excelfile === "" || excelfile == null) {
+        // 파일이 선택되지 않은 경우
+        alertCaution("파일을 선택해주세요.",1);
+        return false;
+    } else if (!checkFileType(excelfile)) {
+        // checkFileType 에서 Excel 확장자가 아닌경우
+        alertCaution("엑셀파일이 아닙니다.",1);
+        return false;
+    }else{
+        bridgeExcelSend();
+    }
+}
+
+
+// 교량 엑셀파일 업로드
+function bridgeExcelSend() {
+    JWT_Get();
+
+    let url;
+
+    if (accessToken == null && refreshToken == null && insert_id == null) {
+        alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
+    }
+    else {
+
+        const formData = new FormData(document.getElementById('bridgeFileSendForm'));
+
+        url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/earth/filesave"; // 호출할 백엔드 API
+        console.log("url : " + url);
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                xhr.setRequestHeader("insert_id",insert_id);
+            },
+            error: function (request) {
+                if (request.status === 500) {
+                    console.log("request.status : " + request.status + " => 500에러");
+                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                }else if(request.status === 400) {
+                    console.log("request.status : " + request.status + " => 400에러");
+                    // alertCaution("400에러 재로그인 해주세요.", 2);
+                } else {
+                    console.log("request.status : " + request.status + " => 404에러");
+                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                }
+            },
+            success: function (request) {
+                let status = request.status;
+                console.log("status : " + status);
+                if (status === 200) {
+                    // logreg(2,"데이터기반 가상모델 구출 시스템 시스템","내진성능 추정 서비스",null); // 데이터조회 API에 조회성공시 추가할 것 to. 성낙원
+                    // alertSuccess("업로드를 완료했습니다.");
+                } else {
+                    if (request.err_msg2 === null) {
+                        alertCaution(request.err_msg, 1);
+                    } else {
+                        alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
+                    }
+                }
+            }
+        });
+    }
+}

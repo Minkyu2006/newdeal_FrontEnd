@@ -241,12 +241,6 @@ function weightRadioBtn(value){
     }
 }
 
-// 엑셀파일인지 검사
-function checkFileType(filePath) {
-    const fileFormat = filePath.split(".");
-    return fileFormat[1] === "xlsx" || fileFormat[1] === "xls";
-}
-
 // 엑셀 파일 올렸는지 확인
 function filesend() {
     const excelfile = $("#excelfile").val();
@@ -302,19 +296,19 @@ function excelSend() {
             },
             error: function (request) {
                 if (request.status === 500) {
-                    console.log("request.status : " + request.status + " => 500에러");
-                    // alertCaution("500에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 500에러");
+                    alertCaution("500에러 재로그인 해주세요.", 2);
                 }else if(request.status === 400) {
-                    console.log("request.status : " + request.status + " => 400에러");
-                    // alertCaution("400에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 400에러");
+                    alertCaution("400에러 재로그인 해주세요.", 2);
                 } else {
-                    console.log("request.status : " + request.status + " => 404에러");
-                    // alertCaution("404에러 재로그인 해주세요.", 2);
+                    // console.log("request.status : " + request.status + " => 404에러");
+                    alertCaution("404에러 재로그인 해주세요.", 2);
                 }
             },
             success: function (request) {
                 let status = request.status;
-                console.log("status : " + status);
+                // console.log("status : " + status);
                 if (status === 200) {
                     $("#excelfile").val('');
                     $('.c-file__input').val('');

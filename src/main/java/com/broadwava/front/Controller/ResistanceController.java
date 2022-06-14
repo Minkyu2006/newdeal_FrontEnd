@@ -45,7 +45,9 @@ public class ResistanceController {
 
     // 내진성능
     @RequestMapping("earthquake")
-    public String earthquake(){
+    public String earthquake(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "resistance/earthquake";
     }
 

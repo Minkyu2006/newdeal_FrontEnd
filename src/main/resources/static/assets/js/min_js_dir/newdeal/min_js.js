@@ -122,3 +122,9 @@ function pushComma(num){
         point += 3;
     } return str;
 }
+
+// 엑셀파일인지 검사
+function checkFileType(filePath) {
+    const fileFormat = filePath.split(".");
+    return fileFormat[1] === "xlsx" || fileFormat[1] === "xls";
+}
