@@ -14,7 +14,37 @@ const dtos = {
 
 /* 서버 API를 AJAX 통신으로 호출하며 커뮤니케이션 하는 함수들 (communications) */
 const comms = {
+    getBridgeList(searchCondition) {
+        CommonUI.ajax('/api/earth/list', 'GET', searchCondition, function (res) {
+            const data = res.sendData.gridListData;
+            if (data.length === 1) {
+                estimateSeismicPerformance(data[0]);
+            } else if (data.length > 1) {
+                grids.f.set(0, data);
+                gridFunc.resize(0);
+                $("#bridgeListPop").addClass("open");
+            } else {
 
+            }
+        });
+    },
+
+    getEstimatedSeismicPerformanceData(targetBridge) {
+        CommonUI.ajax('/api/earth/earthQuekePerformance', 'GET', targetBridge, function (res) {
+            const data = res.sendData;
+            console.log(data);
+            wares.currentBridge = data;
+            setElementsByBridgeInfo(data);
+            alertSuccess('내진성능을 추정 완료 하였습니다.');
+            logreg(2,"데이터기반 가상모델 구출 시스템 시스템","내진성능 추정 서비스",null); // 데이터조회 API에 조회성공시 추가할 것 to. 성낙원
+        });
+    },
+
+    modifyBridge(modifyData) {
+        CommonUI.ajax('/api/earth/update', 'MAPPER', modifyData, function (res) {
+            comms.getEstimatedSeismicPerformanceData({eqBridge: modifyData.eqBridge});
+        });
+    },
 };
 
 /*
@@ -25,7 +55,7 @@ const grids = {
     /* 그리드 세팅 */
     s: {
         id: [
-            'grid_main',
+            'grid_bridgeList',
         ],
         columnLayout: [],
         prop: [],
@@ -35,36 +65,34 @@ const grids = {
     f: {
         /* 가시성을 위해 grids.s 의 일부 요소를 여기서 선언한다. */
         initialization() {
-
-            /* 0번 그리드의 레이아웃 */
             grids.s.columnLayout[0] = [
                 {
-                    dataField: '',
-                    headerText: '',
+                    dataField: "eqBridge",
+                    headerText: "교량명",
                 }, {
-                    dataField: '',
-                    headerText: '',
+                    dataField: "eqLocation",
+                    headerText: "대상 지역",
+                }, {
+                    dataField: "eqRank",
+                    headerText: "내진등급",
+                }, {
+                    dataField: "eqLength",
+                    headerText: "주 경간장",
                 },
             ];
 
-            /* 0번 그리드의 프로퍼티(옵션) 아래의 링크를 참조
-            * https://www.auisoft.net/documentation/auigrid/DataGrid/Properties.html
-            * */
             grids.s.prop[0] = {
                 editable : false,
-                selectionMode : 'singleRow',
-                noDataMessage : '출력할 데이터가 없습니다.',
+                selectionMode : "singleRow",
+                noDataMessage : "출력할 데이터가 없습니다.",
                 showAutoNoDataMessage: false,
-                enableColumnResize : true,
+                enableColumnResize : false,
                 showRowAllCheckBox: false,
                 showRowCheckColumn: false,
                 showRowNumColumn : false,
                 showStateColumn : false,
                 enableFilter : false,
-                rowHeight : 48,
-                headerHeight : 48,
             };
-
         },
 
         /* 그리드 동작 처음 빈 그리드를 생성 */
@@ -100,8 +128,18 @@ const grids = {
 const trigs = {
     basic() {
         /* 0번그리드 내의 셀 클릭시 이벤트 */
-        AUIGrid.bind(grids.s.id[0], "cellClick", function (e) {
-            console.log(e.item);
+        AUIGrid.bind(grids.s.id[0], "cellDoubleClick", function () {
+            const item = gridFunc.getSelectedItem(0);
+            if (item) {
+                $('.pop').removeClass('open');
+                estimateSeismicPerformance(item);
+            }
+        });
+
+        $("#eqBridge").on("keypress", function (e) {
+            if(e.originalEvent.code === "Enter" || e.originalEvent.code === "NumpadEnter") {
+                getBridgeList();
+            }
         });
 
         // 아코디언
@@ -115,23 +153,36 @@ const trigs = {
             const file = $(this).val().split('\\').pop();
             $('.c-file__input').val(file);
         });
+
+        $('#searchBridgeBtn').on('click', function () {
+            getBridgeList();
+        });
+
+        $("#bridgeSelect").on("click", function () {
+            const item = gridFunc.getSelectedItem(0);
+            if (item) {
+                $('.pop').removeClass('open');
+                estimateSeismicPerformance(item);
+            } else {
+                alertCaution("검색된 교량을 선택해 주세요", 1);
+            }
+        });
+
+        $('.pop__close').on('click', function() {
+            $('.pop').removeClass('open');
+        });
+
+        $('#modifyBridge').on('click', function () {
+            modifyBridge();
+        });
     },
 }
 
 /* 통신 객체로 쓰이지 않는 일반적인 데이터들 정의 (warehouse) */
 const wares = {
-
-}
-
-$(function() { // 페이지가 로드되고 나서 실행
-    onPageLoad();
-});
-
-/* 페이지가 로드되고 나서 실행 될 코드들을 담는다. */
-function onPageLoad() {
-    grids.f.initialization();
-
-    trigs.basic();
+    currentBridge: {
+        earthQuakeDto: {}
+    },
 }
 
 // 양식 다운로드
@@ -199,8 +250,8 @@ function bridgeExcelSend() {
                 let status = request.status;
                 console.log("status : " + status);
                 if (status === 200) {
-                    // logreg(2,"데이터기반 가상모델 구출 시스템 시스템","내진성능 추정 서비스",null); // 데이터조회 API에 조회성공시 추가할 것 to. 성낙원
-                    // alertSuccess("업로드를 완료했습니다.");
+                    $('.c-file__input, #excelfile').val(null);
+                    alertSuccess("교량 저장을 완료했습니다.");
                 } else {
                     if (request.err_msg2 === null) {
                         alertCaution(request.err_msg, 1);
@@ -211,4 +262,70 @@ function bridgeExcelSend() {
             }
         });
     }
+}
+
+const getBridgeList = function() {
+    const searchCondition = {
+        eqBridge: $('#eqBridge').val(),
+    }
+    comms.getBridgeList(searchCondition);
+}
+
+/* 교량 정보에 맞추어 내진성능 추정 */
+const estimateSeismicPerformance = function (data) {
+    const targetBridge = {
+        eqBridge: data.eqBridge,
+    }
+    comms.getEstimatedSeismicPerformanceData(targetBridge);
+}
+
+/* 선택된 교량에 맞추어 인풋과 결과내용을 채우고 활성화한다. */
+const setElementsByBridgeInfo = function(data) {
+    $('#eqBridge').val(data.earthQuakeDto.eqBridge);
+    $('#eqLocation').val(data.earthQuakeDto.eqLocation).prop('disabled', false);
+    $('#eqRank').val(data.earthQuakeDto.eqRank).prop('disabled', false);
+    $('#eqLength').val(data.earthQuakeDto.eqLength).prop('disabled', false);
+    $('#eqConfiguration').val(data.earthQuakeDto.eqConfiguration).prop('disabled', false);
+    $('#eqPillar').val(data.earthQuakeDto.eqPillar).prop('disabled', false);
+    $('#eqDivision').val(data.earthQuakeDto.eqDivision).prop('disabled', false);
+    $('#eqGirder').val(data.earthQuakeDto.eqGirder).prop('disabled', false);
+
+    let resultText;
+    if (data.result === '1') {
+        resultText = `해당교량은 리히터 규모 <span>${data.earthScale}(${data.earthDesign})</span> 의 지진에도 저항할 수 있도록 내진설계가 적용되어 있다고 추정된다.`;
+    } else {
+        resultText = `해당교량은 지진에 취약할 수 있는 교량으로 내진성능평가를 수행하도록 권장한다.`;
+    }
+    $('#resultText').html(resultText);
+}
+
+const modifyBridge = function () {
+    if (wares.currentBridge.earthQuakeDto.id) {
+        const modifyData = {
+            id: wares.currentBridge.id,
+            eqBridge: $('#eqBridge').val(),
+            eqLocation: $('#eqLocation').val(),
+            eqRank: $('#eqRank').val(),
+            eqLength: $('#eqLength').val(),
+            eqConfiguration: $('#eqConfiguration').val(),
+            eqPillar: $('#eqPillar').val(),
+            eqDivision:$('#eqDivision').val(),
+            eqGirder: $('#eqGirder').val(),
+        }
+        comms.modifyBridge(modifyData);
+    } else {
+        alertCaution('먼저, 정보를 수정할 교량을 선택해 주세요.', 1);
+    }
+}
+
+$(function() { // 페이지가 로드되고 나서 실행
+    onPageLoad();
+});
+
+/* 페이지가 로드되고 나서 실행 될 코드들을 담는다. */
+function onPageLoad() {
+    grids.f.initialization();
+    grids.f.create();
+
+    trigs.basic();
 }
