@@ -804,6 +804,11 @@ a.c-button {
     border-radius: 1px;
     font-size: 12px;
 }
+.c-button.c-button--supersmall {
+    padding: 0 5px;
+    border-radius: 1px;
+    font-size: 12px;
+}
 .c-button.c-button--solid {
     background-color: #758fc7;
     border-color: #758fc7;
@@ -822,6 +827,7 @@ a.c-button {
     border-color: #01723a;
     color: #fff;
 }
+
 
 /* select */
 .c-select {
