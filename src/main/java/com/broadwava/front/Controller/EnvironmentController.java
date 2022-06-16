@@ -47,7 +47,9 @@ public class EnvironmentController {
     
     // 열화환경별 염화물 침투
     @RequestMapping("saltpermeate")
-    public String saltpermeate(){
+    public String saltpermeate(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
         return "env/saltpermeate";
     }
 
