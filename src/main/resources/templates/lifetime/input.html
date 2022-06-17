@@ -51,7 +51,22 @@
 					location.href = "/lifetime/stateinput/"+$absence;
 				}else{
 					if($absence === "carbonation"){
-						location.href = "/lifetime/detail/"+$absence;
+						const $carbonationLi = $('input:radio[name="carbonationLi"]:checked').val();
+						// console.log("$carbonationLi : "+$carbonationLi);
+
+						if($carbonationLi !== undefined){
+
+							if($carbonationLi === "carbonation"){
+								location.href = "/lifetime/detail/"+$carbonationLi;
+							}else if($carbonationLi === "carbonationPlate"){
+								location.href = "/lifetime/detail/"+$carbonationLi;
+							}else{
+								alertCaution("해당 페이지는 개발중입니다.",1)
+							}
+
+						}else{
+							alertCaution("추가부재를 선택해주세요.",1)
+						}
 					}else{
 						alertCaution("해당 페이지는 개발중입니다.",1)
 					}
@@ -62,6 +77,13 @@
 				alertCaution("평가할 열화 인자를 선택해주세요.",1)
 			}
 		}
+
+		function absenceOnchange(){
+			if($("#absence").val() ==="carbonation"){
+				$("#carbonationLi").css("display","block");
+			}
+		}
+
 	</script>
 </th:block>
 
@@ -79,7 +101,7 @@
 					<div class="talk__contents">
 						<ul class="talk__question">
 							<li>
-								<h4>해당 부재를 평가할 열화 인자를 선택해주세요</h4>
+								<h4>해당 부재를 평가할 열화 인자를 선택해주세요.</h4>
 								<ul class="c-radio-group">
 									<li class="c-radio-group__item">
 										<div class="c-radio">
@@ -96,12 +118,53 @@
 								</ul>
 							</li>
 							<li>
-								<h4>부재를 선택해주세요</h4>
+								<h4>부재를 선택해주세요.</h4>
 								<div class="c-select">
-									<select id="absence" class="c-select__input">
+									<select id="absence" class="c-select__input" onchange=absenceOnchange()>
 										<option value="">평가할 열화인자를 선택해주세요.</option>
 									</select>
 								</div>
+							</li>
+							<li id="carbonationLi" style="display: none">
+								<h4>추가부재를 선택해주세요.</h4>
+								<ul class="c-radio-group">
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="0" name="carbonationLi" value="carbonation" class="c-radio__input" />
+											<label for="0" class="c-radio__label">기본평가</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="1" name="carbonationLi" value="carbonationPlate" class="c-radio__input" />
+											<label for="1" class="c-radio__label">바닥판 3개</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="2" name="carbonationLi" value="test2" class="c-radio__input" />
+											<label for="2" class="c-radio__label">바닥판 4개</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="3" name="carbonationLi" value="test3" class="c-radio__input" />
+											<label for="3" class="c-radio__label">바닥판 5개</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="4" name="carbonationLi" value="test4" class="c-radio__input" />
+											<label for="4" class="c-radio__label">교량 3경간 Series</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="5" name="carbonationLi" value="test5" class="c-radio__input" />
+											<label for="5" class="c-radio__label">교량 3경간 Parallel</label>
+										</div>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</div>
