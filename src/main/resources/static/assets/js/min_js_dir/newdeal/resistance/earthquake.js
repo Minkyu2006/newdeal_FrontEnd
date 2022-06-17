@@ -41,7 +41,7 @@ const comms = {
     },
 
     modifyBridge(modifyData) {
-        CommonUI.ajax('/api/earth/update', 'MAPPER', modifyData, function (res) {
+        CommonUI.ajax('/api/earth/update', 'PARAM', modifyData, function (res) {
             comms.getEstimatedSeismicPerformanceData({eqBridge: modifyData.eqBridge});
         });
     },
