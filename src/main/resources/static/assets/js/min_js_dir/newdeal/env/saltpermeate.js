@@ -19,7 +19,6 @@ const dtos = {
             stLocation1: 's',
             stLocation2: 's',
             stFreeze: 'n',
-            stSalt: 'n',
             stSnow: 'n',
         },
     },
@@ -209,11 +208,12 @@ function openPopSelectBridge(data) {
 // 교량 정보
 function setEnvData(data) {
     const bridge = data.stBridge;
-    const freeze = data.stFreeze;
-    const snow = data.stSnow;
-    const salt = data.stSalt;
     const x = data.stCoordinateX;
     const y = data.stCoordinateY;
+    const freeze = data.stFreeze;
+    const snow = data.stSnow;
+    let freezeLevel;
+    let snowLevel;
 
     // 교량의 위치정보가 없을 때
     if (x === "" && y === "" || freeze === "0" && snow === "0" && salt === "0") {
@@ -221,22 +221,40 @@ function setEnvData(data) {
         return false;
     }
 
+    // 동결융해 등급 산정
+    if (3 > freeze) {
+        freezeLevel = 'a';
+    } else if (50 > freeze && freeze >= 3) {
+        freezeLevel = 'b';
+    } else {
+        freezeLevel = 'c';
+    }
+
+    // 제설제 등급 산정
+    if (7 > snow) {
+        snowLevel = 'a';
+    } else if (14 > snow && snow >= 7) {
+        snowLevel = 'b';
+    } else {
+        snowLevel = 'c';
+    }
+
+
     // 교량정보 임시저장
     wares.bridgeInfo = data;
 
     // 열화환경 정보 넣기
-    inputEnvData(bridge, freeze, snow, salt);
+    inputEnvData(bridge, freezeLevel, snowLevel);
 
     // 좌표 변환
     transformCoordinate(x, y);
 };
 
 // 교량 열화환경 정보 넣기
-function inputEnvData(bridge, freeze, snow, salt) {
+function inputEnvData(bridge, freeze, snow) {
     $('#bridgeName').val(bridge);
     $('#stFreeze').val(freeze);
     $('#stSnow').val(snow);
-    $('#stSalt').val(salt);
 }
 
 // proj4js
@@ -364,13 +382,3 @@ const onPageLoad = function() {
 
     trigs.basic();
 };
-
-
-
-
-
-
-
-
-
-
