@@ -211,7 +211,7 @@
 			<div class="talk">
 				<div class="talk__box">
 					<div class="talk__header">
-						<h3>총 생애주기 유지관리비용(선제적 유지관리 결과)</h3>
+						<h3>총 생애주기 유지관리비용</h3>
 					</div>
 					<div class="talk__contents">
 						<h4>단계별 유지관리 결과(보수·보강수행시점 기준)</h4>
@@ -255,8 +255,66 @@
 				</div>
 
 				<div class="talk__box">
+					<div class="performance-output" style="font-size: 20px;font-weight: bold;">
+						결과 : <span id="result1" style="color: red"></span> 분석 결과, 무조치시 사용수명은 <span id="result2" style="color: red"></span>이고,
+						현행 유지관리 시, 총 <span id="result3" style="color: red"></span>의 보수보강을 수행하며, 생애주기비용은 <span id="result4" style="color: red"></span> 입니다.
+					</div>
+				</div>
+
+				<div class="talk__box">
 					<div class="talk__contents">
 						<div id="amChart"></div>
+					</div>
+				</div>
+
+				<div class="talk__box">
+
+					<div class="talk__contents">
+						<h4>100년간 보수보강 수행 공용연수</h4>
+
+						<table class="c-table c-table--border" style="text-align: center;">
+							<tr id="repairResult1">
+								<th></th>
+								<th>1차</th>
+								<th>2차</th>
+								<th>3차</th>
+								<th>4차</th>
+								<th>5차</th>
+								<th>6차</th>
+								<th>7차</th>
+								<th>8차</th>
+								<th>9차</th>
+								<th>10차</th>
+							</tr>
+							<tbody>
+								<tr id="repairResult2">
+									<th>현행 유지관리</th>
+									<td id="1">23년</td>
+									<td id="2">39년</td>
+									<td id="3">54년</td>
+									<td id="4">70년</td>
+									<td id="5"></td>
+									<td id="6"></td>
+									<td id="17"></td>
+									<td id="18"></td>
+									<td id="19"></td>
+									<td id="20"></td>
+								</tr>
+								<tr id="repairResult3">
+									<th>선제적 유지관리</th>
+									<td id="7">17년</td>
+									<td id="8">26년</td>
+									<td id="9">35년</td>
+									<td id="10">45년</td>
+									<td id="11">54년</td>
+									<td id="12">62년</td>
+									<td id="13">71년</td>
+									<td id="14">80년</td>
+									<td id="15">88년</td>
+									<td id="16">97년</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 

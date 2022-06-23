@@ -449,40 +449,40 @@ function lifeAllTimeOutput(id){
                         dashSeries("dRank", am4core.color("#ff7979"),true,4); // D등급 점선 설정(완)
 
                         // 테스트
-                        function dashSeries2(field,color, dashed,number) {
-                            const series = chart.series.push(new am4charts.LineSeries());
-                            series.dataFields.categoryX = "publicYear";
-                            series.dataFields.valueY = field;
-                            series.smoothing = "monotoneX";
-                            series.stroke = color;
-
-                            // series.hiddenInLegend = true; // legend 숨기기
-                            series.name = "수행 시기";
-                            series.strokeWidth = 3;
-
-                            // 점선 옵션
-                            if (dashed) {
-                                series.strokeDasharray = "5 3";
-                            }
-
-                            const labelBullet = series.bullets.push(new am4charts.LabelBullet());
-                            labelBullet.disabled = true;
-                            if(number===5){
-                                labelBullet.label.text = name+request.sendData.test1Value;
-                            }else if(number===6){
-                                labelBullet.label.text = name+request.sendData.test2Value;
-                            }else if(number===7){
-                                labelBullet.label.text = name+request.sendData.test3Value;
-                            }
-                            labelBullet.fontSize = 17;
-                            labelBullet.horizontalCenter = "left";
-                            labelBullet.label.horizontalCenter = "left";
-                            labelBullet.label.paddingLeft = 10;
-                            labelBullet.propertyFields.disabled = "bulletDisabled";
-
-                            return series;
-                        }
-                        dashSeries2("test1", am4core.color("#000000"),true,5); // 세로 눈금 테스트
+                        // function dashSeries2(field,color, dashed,number) {
+                        //     const series = chart.series.push(new am4charts.LineSeries());
+                        //     series.dataFields.categoryX = "publicYear";
+                        //     series.dataFields.valueY = field;
+                        //     series.smoothing = "monotoneX";
+                        //     series.stroke = color;
+                        //
+                        //     // series.hiddenInLegend = true; // legend 숨기기
+                        //     series.name = "수행 시기";
+                        //     series.strokeWidth = 3;
+                        //
+                        //     // 점선 옵션
+                        //     if (dashed) {
+                        //         series.strokeDasharray = "5 3";
+                        //     }
+                        //
+                        //     const labelBullet = series.bullets.push(new am4charts.LabelBullet());
+                        //     labelBullet.disabled = true;
+                        //     if(number===5){
+                        //         labelBullet.label.text = name+request.sendData.test1Value;
+                        //     }else if(number===6){
+                        //         labelBullet.label.text = name+request.sendData.test2Value;
+                        //     }else if(number===7){
+                        //         labelBullet.label.text = name+request.sendData.test3Value;
+                        //     }
+                        //     labelBullet.fontSize = 17;
+                        //     labelBullet.horizontalCenter = "left";
+                        //     labelBullet.label.horizontalCenter = "left";
+                        //     labelBullet.label.paddingLeft = 10;
+                        //     labelBullet.propertyFields.disabled = "bulletDisabled";
+                        //
+                        //     return series;
+                        // }
+                        // dashSeries2("test1", am4core.color("#000000"),true,5); // 세로 눈금 테스트
 
                         // dashSeries2("test2", am4core.color("#000000"),true,6); // 세로 눈금 테스트
                         // dashSeries2("test3", am4core.color("#000000"),true,7); // 세로 눈금 테스트
@@ -523,6 +523,46 @@ function lifeAllTimeOutput(id){
 
                     }); // am4core 끝
 
+                    $("#result1").html(request.sendData.lifeAllTimeDto.ltBridgeName);
+                    $("#result2").html(request.sendData.result2.toFixed(0)+"년");
+                    $("#result3").html(request.sendData.result3+"회");
+                    $("#result4").html(pushComma(request.sendData.result4.toFixed(0))+"원");
+
+
+                    const teableSize = request.sendData.resultTableCnt;
+                    // console.log("총 테이블 수 : "+teableSize);
+
+                    const $repairResult1 = $('#repairResult1');
+                    let html1 = "";
+                    html1 += '<th></th>';
+                    for(let i=0; i<teableSize; i++){
+                        html1 += '<th>'+Number(i+1)+'차'+'</th>';
+                    }
+                    $repairResult1.html(html1);
+
+                    const $repairResult2 = $('#repairResult2');
+                    let html2 = "";
+                    html2 += '<th>현행 유지관리</th>';
+                    for(let i=0; i<teableSize; i++){
+                        if(request.sendData.damageRankYearList2[i] < 100){
+                            html2 += '<td>'+request.sendData.damageRankYearList2[i].toFixed(0)+'년'+'</td>';
+                        }else{
+                            html2 += '<td></td>';
+                        }
+                    }
+                    $repairResult2.html(html2);
+
+                    const $repairResult3 = $('#repairResult3');
+                    let html3 = "";
+                    html3 += '<th>선제적 유지관리</th>';
+                    for(let i=0; i<teableSize; i++){
+                        if(request.sendData.damageRankYearList[i]<100){
+                            html3 += '<td>'+request.sendData.damageRankYearList[i].toFixed(0)+'년'+'</td>';
+                        }else{
+                            html3 += '<td></td>';
+                        }
+                    }
+                    $repairResult3.html(html3);
 
                 } else {
                     if (request.err_msg2 === null) {
