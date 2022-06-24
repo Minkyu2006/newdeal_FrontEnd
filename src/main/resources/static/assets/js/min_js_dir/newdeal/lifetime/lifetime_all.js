@@ -282,6 +282,7 @@ function lifeAllTimeOutput(id){
                     const year2 = ltAllInputDate.substring(0, 4);
                     const month2 = ltAllInputDate.substring(5,7);
                     $('#ltAllInputDate').text(year2+'년도 '+month2+'월');
+                    $('#ltAllStage').text(request.sendData.lifeAllTimeDto.ltAllStage);
 
                     $('#allVolume').text(request.sendData.lifeAllTimeDto.ltAllVolume+'m²');
 
@@ -439,7 +440,7 @@ function lifeAllTimeOutput(id){
                             labelBullet.horizontalCenter = "left";
                             labelBullet.label.horizontalCenter = "left";
                             labelBullet.label.paddingLeft = 10;
-                            labelBullet.propertyFields.disabled = "bulletDisabled";
+                            // labelBullet.propertyFields.disabled = "bulletDisabled";
 
                             return series;
                         }

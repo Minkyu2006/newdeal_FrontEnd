@@ -29,6 +29,20 @@
 				dateFocuseOut("ltAllInputDate", $("#ltAllInputDate").val());
 			});
 
+			$('#ltAllStage').focusout(function() {
+				const $ltAllStage = $("#ltAllStage");
+				if($ltAllStage.val()<=0){
+					alertCaution("1단계 이상으로 입력해주세요.",1);
+					$ltAllStage.val("");
+				}else if($ltAllStage.val()>25){
+					alertCaution("25단계 이하로 입력해주세요.",1);
+					$ltAllStage.val("");
+				}else if($ltAllStage.val()<10){
+					alertCaution("알림 : 계산수행 단계가 '10'미만인<br>경우 평가 정확성이 떨어집니다.",1);
+				}
+
+			});
+
 			//몬쓰픽커
 			// $('#ltAllCompletionDate').MonthPicker({
 			// 	IsRTL: true,
@@ -163,7 +177,7 @@
 								<div class="talk__input-item">
 									<div class="talk__input-heading">전체물량(㎡)</div>
 									<div class="talk__input">
-										<div class="c-text c-text--unit"><input type="text" name="ltAllVolume" id="ltAllVolume" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">m2</span></div>
+										<div class="c-text c-text--unit"><input type="text" name="ltAllVolume" id="ltAllVolume" class="c-text__input" onkeypress="return isNumberKey(event)" onkeyup="return delHangle(event)" /><span class="c-text__unit">m²</span></div>
 									</div>
 								</div>
 							</li>
@@ -187,7 +201,7 @@
 								<div class="talk__input-item">
 									<div class="talk__input-heading">계산수행 단계</div>
 									<div class="talk__input">
-										<input type="text" name="ltAllInputStage" id="ltAllInputStage"  placeholder="최대 25단계" maxlength='2' class="c-text__input" onkeyup="return delHangleEng(event)" />
+										<input type="text" name="ltAllStage" id="ltAllStage" placeholder="최소 1단계 ~ 최대 25단계" maxlength='2' class="c-text__input" onkeyup="return delHangleEng(event)" />
 									</div>
 								</div>
 							</li>
