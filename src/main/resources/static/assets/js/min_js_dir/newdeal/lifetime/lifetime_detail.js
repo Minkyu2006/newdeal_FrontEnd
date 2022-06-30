@@ -12,21 +12,71 @@ function aSpeedCalculate(num1, num2){
     $("#ltAAverage").val(result.toFixed(2));
 }
 
+// 세부부분 뒤로가기 버튼
+function lifeDetailInputBack(){
+    location.href = "/lifetime/input"
+}
+
 // 표준편차 계산 메소드
 function lifeStandardCalculate(average, variance, resultId){
+    const $ltDetailType = $("#ltDetailType").val();
 
-    let num1 = $("#"+average).val();
-    let num2 =    $("#"+variance).val();
+    if($ltDetailType === "2"){
+        // 탄산화깊이
+        let num1 = $("#"+average).val();
+        let num2 =    $("#"+variance).val();
 
-    if(num1 === ""){
-        num1 = 1;
+        if(num1 === ""){
+            num1 = 1;
+        }
+        if(num2 === ""){
+            num2 = 1;
+        }
+
+        const result = (num1 * num2)/100;
+        $("#"+resultId).val(result.toFixed(2));
+
+    }else if($ltDetailType === "5"){
+        // 탄산화깊이 바닥판 3개
+        let num1 = $("#"+average).val();
+        let num2 =  variance
+
+        if(num1 === ""){
+            num1 = 1;
+        }
+
+        let result;
+        if(variance === "0.1"){
+            const $ltPublicYear = $("#ltPublicYear").val();
+            // console.log("$ltPublicYear : "+$ltPublicYear);
+            if($ltPublicYear !== "" || $ltPublicYear > 0) {
+                result = num1 * num2;
+                const standardResult = (num1/Math.sqrt($ltPublicYear)).toFixed(2);
+                const averagerResult = (standardResult*variance).toFixed(2)
+
+                if (average === "ltCStandardPlate1") {
+                    $("#ltCAveragePlate1").val(result.toFixed(2));
+                    $("#ltAStandardPlate1").val(standardResult);
+                    $("#ltAAveragePlate1").val(averagerResult);
+                } else if (average === "ltCStandardPlate2") {
+                    $("#ltCAveragePlate2").val(result.toFixed(2));
+                    $("#ltAStandardPlate2").val(standardResult);
+                    $("#ltAAveragePlate2").val(averagerResult);
+                } else {
+                    $("#ltCAveragePlate3").val(result.toFixed(2));
+                    $("#ltAStandardPlate3").val(standardResult);
+                    $("#ltAAveragePlate3").val(averagerResult);
+                }
+            }else{
+                alertCaution("공용연수를 입력해주세요.", 1)
+            }
+        }else{
+            result = num1 * num2;
+            $("#"+resultId).val(result.toFixed(2));
+        }
+
     }
-    if(num2 === ""){
-        num2 = 1;
-    }
 
-    const result = (num1 * num2)/100;
-    $("#"+resultId).val(result.toFixed(2));
 }
 
 // 세부부분 저장버튼
@@ -39,7 +89,7 @@ function lifeDetailTimeSave(){
         const $ltDetailType = $("#ltDetailType").val();
         let controllerUrl;
 
-        console.log($ltDetailType)
+        // console.log($ltDetailType)
 
         // 탄산화깊이 저장
         if($ltDetailType === "2"){
@@ -78,8 +128,6 @@ function lifeDetailTimeSave(){
                 return false;
             }
 
-            // Infinity
-
             const $ltAAverage = $("#ltAAverage");
             if($ltAAverage.val()==="Infinity" || $ltAAverage.val() ===0.0) {
                 aSpeedCalculate($("#ltYAverage").val(),$("#ltCAverage").val());
@@ -106,6 +154,66 @@ function lifeDetailTimeSave(){
             }
 
             controllerUrl = "/api/lifedetail/cabonation/save"
+        }
+        // 탄산화깊이 바닥판 3개 저장
+        else if($ltDetailType === "5"){
+
+            if($("#ltTdStandardPlate1").val()==="") {
+                alertCaution("바닥판1의 실측피복두께의<br>표준편차를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltAStandardPlate1").val()==="") {
+                alertCaution("바닥판1의 탄산화속도계수를 <br>표준편차를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltCStandardPlate1").val()==="") {
+                alertCaution("바닥판1의 탄산화깊이를 <br>표준편차를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltTdStandardPlate2").val()==="") {
+                alertCaution("바닥판2의 실측피복두께<br>표준편차를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltAStandardPlate2").val()==="") {
+                alertCaution("바닥판2의 탄산화속도계수 <br>표준편차를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltCStandardPlate2").val()==="") {
+                alertCaution("바닥판2의 탄산화깊이 <br>표준편차를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltTdStandardPlate3").val()==="") {
+                alertCaution("바닥판3의 실측피복두께<br>평균값을 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltAStandardPlate3").val()==="") {
+                alertCaution("바닥판3의 탄산화속도계수를 <br>입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltCStandardPlate3").val()==="") {
+                alertCaution("바닥판3의 탄산화깊이를 <br>입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltPublicYear").val()==="") {
+                alertCaution("공용연수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltYStandard").val()==="") {
+                alertCaution("공용연수 조정계수의<br>표준편차를 입력해주세요.", 1)
+                return false;
+            }
+
+            controllerUrl = "/api/lifedetail/cabonationThreePlate/save"
         }
 
         const formData = new FormData(document.getElementById('lifeDetailForm'));
@@ -152,11 +260,6 @@ function lifeDetailTimeSave(){
             }
         });
     }
-}
-
-// 세부부분 뒤로가기 버튼
-function lifeDetailInputBack(){
-    location.href = "/lifetime/input"
 }
 
 // 성공알림창 버튼 누르면 화면이동하는 함수

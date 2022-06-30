@@ -53,10 +53,31 @@
 		</div>
 		<div class="talk__contents">
 			<div class="weight">
-				<div class="weight__head">
-					<h4 class="weight__heading">* 제안된 기준 가중치와 사업성 기준점수를 그대로 적용할지, 변경할지를 결정합니다. <br />* 성능개선 유형을 선택하시면 각 유형별 표준가중치와 최소-최대 범위를 불러옵니다.</h4>
+				<div class="weight__head" style="margin-bottom: 0">
+					<h4 class="weight__heading">* 성능개선 유형을 선택하시면 각 유형별 표준가중치와 최소-최대 범위를 불러옵니다.<br />* 제안된 기준 가중치와 사업성 기준점수를 그대로 적용할지, 변경할지를 결정합니다.</h4>
 				</div>
+				<div class="weight__head" style="margin-bottom: 0">
+					<h4 class="weight__heading">가중치를 수정하시겠습니까?</h4>
+				</div>
+				<div class="weight__head" style="margin-bottom: 0">
+					<ul class="c-radio-group">
+						<li class="c-radio-group__item">
+							<div class="c-radio">
+								<input type="radio" class="c-radio__input" onclick="weightRadioBtn(value)" id="group1" value="yes" />
+								<label for="group1" class="c-radio__label">Yes</label>
+							</div>
+						</li>
+						<li class="c-radio-group__item">
+							<div class="c-radio">
+								<input type="radio" class="c-radio__input" onclick="weightRadioBtn(value)" id="group2" value="no"  />
+								<label for="group2" class="c-radio__label">No</label>
+							</div>
+						</li>
+					</ul>
+				</div>
+
 				<div class="weight__contents">
+					<h4 class="weight__heading" style="margin-top: 30px">1. 평가 지표 가중치</h4>
 					<table class="c-table c-table--border">
 						<colgroup>
 							<col />
@@ -80,7 +101,7 @@
 							<th>기술성</th>
 							<td>
 								<div class="c-text">
-									<input type="number"  id="piWeightTechnicality" name="piWeightTechnicality" class="c-text__input" />
+									<input type="number"  id="piWeightTechnicality" name="piWeightTechnicality" class="c-text__input" readonly="readonly" />
 								</div>
 							</td>
 							<td id="piWeightTechnicalityMin" style="text-align: right"></td>
@@ -90,7 +111,7 @@
 							<th>경제성</th>
 							<td>
 								<div class="c-text">
-									<input type="number" id="piWeightEconomy"  name="piWeightEconomy" class="c-text__input" />
+									<input type="number" id="piWeightEconomy"  name="piWeightEconomy" class="c-text__input" readonly="readonly" />
 								</div>
 							</td>
 							<td id="piWeightEconomyMin" style="text-align: right"></td>
@@ -100,7 +121,7 @@
 							<th>정책성</th>
 							<td>
 								<div class="c-text">
-									<input type="number" id="piWeightPolicy"  name="piWeightPolicy" class="c-text__input" />
+									<input type="number" id="piWeightPolicy"  name="piWeightPolicy" class="c-text__input" readonly="readonly" />
 								</div>
 							</td>
 							<td id="piWeightPolicyMin" style="text-align: right"></td>
@@ -118,27 +139,8 @@
 			</div>
 			
 			<div id="weightDiv" class="weight" style="display: none">
-				<div class="weight__head">
-					<h4 class="weight__heading">가중치를 수정하시겠습니까?</h4>
-				</div>
-				<div class="weight__head">
-					<ul class="c-radio-group">
-						<li class="c-radio-group__item">
-							<div class="c-radio">
-								<input type="radio" class="c-radio__input" onclick="weightRadioBtn(value)" id="group1" value="yes" />
-								<label for="group1" class="c-radio__label">Yes</label>
-							</div>
-						</li>
-						<li class="c-radio-group__item">
-							<div class="c-radio">
-								<input type="radio" class="c-radio__input" onclick="weightRadioBtn(value)" id="group2" value="no"  />
-								<label for="group2" class="c-radio__label">No</label>
-							</div>
-						</li>
-					</ul>
-				</div>
-
 				<div class="weight__contents">
+					<h4 class="weight__heading">2. 평가 항목 가중치</h4>
 					<table class="c-table c-table--border">
 						<colgroup>
 							<col />
