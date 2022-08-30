@@ -4,16 +4,546 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="layout/default2">
 
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/assets/js/openlayers/ol.css">
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
+	<script src="/assets/js/proj4js/proj4js-combined.min.js"></script>
+	<script src="/assets/js/openlayers/ol.js"></script>
+	<script src="/assets/js/min_js_dir/newdeal/testpage.js"></script>
 	<script type="text/javascript">
 		console.log("backend_url : "+$("#backend_url").val());
 		console.log("backend_protocol : "+$("#backend_protocol").val());
+
+		$(function(){
+			$("#header_five").addClass(' show');
+			logreg(1,"열화환경 서비스","열화환경 맵핑 서비스",null);
+		})
 	</script>
 </th:block>
 
 <div layout:fragment="content" class="content">
 	<input type="hidden" id="backend_url" th:value="${backend_url}" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
+
+	<section class="section">
+		<article class="article">
+			<h3 class="article__head">열화환경 맵핑 서비스</h3>
+			<div class="l-map">
+				<!-- 맵 콘솔 -->
+				<div class="l-map__console">
+					<!-- 교량, 터널, 기상계측점 마커 -->
+					<div class="map__markers">
+						<ul class="map__markers-category">
+							<li>
+								<div class="c-toggle">
+									<input type="checkbox" class="c-toggle__input" id="bridge" value="bridge" />
+									<label for="bridge" class="c-toggle__label">교량</label>
+								</div>
+							</li>
+							<li>
+								<div class="c-toggle">
+									<input type="checkbox" class="c-toggle__input" id="tunnel" value="tunnel" />
+									<label for="tunnel" class="c-toggle__label">터널</label>
+								</div>
+							</li>
+							<li>
+								<div class="c-toggle">
+									<input type="checkbox" class="c-toggle__input" id="point" value="point" />
+									<label for="point" class="c-toggle__label">기상계측점</label>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+					<!-- 열화환경 선택 -->
+					<div class="map__radio">
+						<ul>
+							<li>
+								<div class="c-radio">
+									<input type="radio" id="total" class="c-radio__input" name="layergroup" value="TOTAL" checked="checked">
+									<label for="total" class="c-radio__label">종합염분환경</label>
+								</div>
+							</li>
+							<li>
+								<div class="c-radio">
+									<input type="radio" id="nacl" class="c-radio__input" name="layergroup" value="NACL">
+									<label for="nacl" class="c-radio__label">비래염분</label>
+								</div>
+							</li>
+							<li>
+								<div class="c-radio">
+									<input type="radio" id="dm" class="c-radio__input" name="layergroup" value="DM">
+									<label for="dm" class="c-radio__label">제설제</label>
+								</div>
+							</li>
+							<li>
+								<div class="c-radio">
+									<input type="radio" id="fte" class="c-radio__input" name="layergroup" value="FTe">
+									<label for="fte" class="c-radio__label">동결융해</label>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- 원본 맵 -->
+				<div class="l-map__origin">
+					<div class="map" id="map1">
+						<div id="popupTunnel" class="map-popup">
+							<h5 class="map-popup__title name"></h5>
+							<ul>
+								<li><span class="map-popup__item-title">시설명</span><span class="popup__item-value name"></span></li>
+								<li><span class="map-popup__item-title">종합등급</span><span class="popup__item-value total"></span></li>
+								<li><span class="map-popup__item-title">동해환경</span><span class="popup__item-value east"></span></li>
+								<li><span class="map-popup__item-title">제설제</span><span class="popup__item-value snow"></span></li>
+								<li><span class="map-popup__item-title">염해환경</span><span class="popup__item-value salt"></span></li>
+								<li><span class="map-popup__item-title">교통량</span><span class="popup__item-value trafficrating"></span></li>
+							</ul>
+							<a href="#" class="map-popup__close"><img src="/assets/images/icon__x.png" alt="팝업닫기"></a>
+						</div>
+
+						<div id="popupPoint" class="map-popup">
+							<h5 class="map-popup__title name"></h5>
+							<ul>
+								<li><span class="map-popup__item-title">지점명</span><span class="popup__item-value name"></span></li>
+								<li><span class="map-popup__item-title">지점번호</span><span class="popup__item-value number"></span></li>
+								<li><span class="map-popup__item-title">해발고도</span><span class="popup__item-value altitude"></span></li>
+							</ul>
+							<a href="#" class="map-popup__close"><img src="/assets/images/icon__x.png" alt="팝업닫기"></a>
+						</div>
+
+						<div id="popupBridge" class="map-popup">
+							<h5 class="map-popup__title bridgeName"></h5>
+							<ul>
+								<li><span class="map-popup__item-title">교량명</span><span class="popup__item-value bridgeName"></span></li>
+								<li><span class="map-popup__item-title">종합등급</span><span class="popup__item-value bridgeTotal"></span></li>
+								<li><span class="map-popup__item-title">동해환경</span><span class="popup__item-value bridgeEast"></span></li>
+								<li><span class="map-popup__item-title">제설제</span><span class="popup__item-value bridgeSnow"></span></li>
+								<li><span class="map-popup__item-title">염화환경</span><span class="popup__item-value bridgeSalt"></span></li>
+								<li><span class="map-popup__item-title">교통량</span><span class="popup__item-value bridgeTraffic"></span></li>
+							</ul>
+							<a href="#" class="map-popup__close"><img src="/assets/images/icon__x.png" alt="팝업닫기"></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="l-map__sub">
+					<!-- 확대 맵 -->
+					<div class="l-map__zoom" id="map2"></div>
+
+					<!-- 범례 -->
+					<div class="l-map__legend">
+						<div class="map__legend">
+							<div class="map__legend-total open">
+								<span class="map__legend-total-color"></span>
+								<p>색이 진할수록 염분환경이 나쁨</p>
+							</div>
+
+							<div class="map__legend-nacl">
+								<table class="">
+									<colgroup>
+										<col />
+										<col />
+										<col />
+										<col />
+									</colgroup>
+									<thead>
+									<tr>
+										<th></th>
+										<th>동해안</th>
+										<th>서해안</th>
+										<th>남해안</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<th><span class="color color--a"></span></th>
+										<td>500m 이상</td>
+										<td>1000m 이상</td>
+										<td>100m 이상</td>
+									</tr>
+									<tr>
+										<th><span class="color color--b"></span></th>
+										<td>250 &lt; X &le; 500</td>
+										<td>500m &lt; X &le; 1000m</td>
+										<td>50 &lt; X &le; 100</td>
+									</tr>
+									<tr>
+										<th><span class="color color--c"></span></th>
+										<td>비말대 &lt; X &le; 250</td>
+										<td>비말대 &lt; X &le; 500</td>
+										<td>비말대 &lt; X &le; 50</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<ul class="map__legend-dm">
+								<li>
+									<span class="color"></span><span class="legend">3일 미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">3일 이상 - 7일 미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">7일 이상 - 11일 미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">11일 이상 - 14일 미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">14일 이상 - 18일 미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">18일 이상</span>
+								</li>
+							</ul>
+
+							<ul class="map__legend-fte">
+								<li>
+									<span class="color"></span><span class="legend">1 미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">1 이상 - 3 미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">3 이상 - 29 미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">29 이상 - 50미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">50 이상 - 76 미만</span>
+								</li>
+								<li>
+									<span class="color"></span><span class="legend">76 이상</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- 시설정보 -->
+					<div class="l-map__facility">
+						<div class="l-map__facility-item">
+							<h4 class="article__head"><span id="pointName">시설명</span></h4>
+							<table class="c-table">
+								<colgroup>
+									<col style="width: 100px;" />
+									<col />
+									<col style="width: 100px;" />
+									<col />
+								</colgroup>
+								<tbody>
+								<tr>
+									<th>지점번호</th>
+									<td><span id="pointNumber"></span></td>
+									<th>해발고도</th>
+									<td><span id="pointAlitude"></span></td>
+								</tr>
+								<tr>
+									<th>주소</th>
+									<td colspan="3"><span id="pointAddress"></span></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="l-map__facility-item active">
+							<h4 class="article__head"><span id="structureName">시설명</span></h4>
+							<table class="c-table">
+								<colgroup>
+									<col style="width: 100px;" />
+									<col />
+									<col style="width: 100px;" />
+									<col />
+								</colgroup>
+								<tbody>
+								<tr>
+									<th>도로종류</th>
+									<td><span id="roadType"></span></td>
+									<th>노선명</th>
+									<td><span id="route"></span></td>
+								</tr>
+								<tr>
+									<th>주소</th>
+									<td colspan="3"><span id="address"></span></td>
+								</tr>
+								<tr>
+									<th>연장</th>
+									<td><span id="length"></span></td>
+									<th>총폭</th>
+									<td><span id="totalWidth"></span></td>
+								</tr>
+								<tr>
+									<th>유효폭</th>
+									<td><span id="advanceWidth"></span></td>
+									<th>높이</th>
+									<td><span id="height"></span></td>
+								</tr>
+								<tr>
+									<th>공수</th>
+									<td><span id="hands"></span></td>
+									<th>준공년도</th>
+									<td><span id="year"></span></td>
+
+								</tr>
+								<tr>
+									<th>종합등급</th>
+									<td><span id="rating"></span></td>
+									<th>동해환경</th>
+									<td><span id="environment"></span></td>
+								</tr>
+								<tr>
+									<th>제설제</th>
+									<td><span id="snow"></span></td>
+									<th>염해환경</th>
+									<td><span id="salty"></span></td>
+								</tr>
+								<tr>
+									<th>교통량</th>
+									<td><span id="traffic01"></span></td>
+									<th>교통량</th>
+									<td><span id="traffic02"></span></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="l-map__facility-item">
+							<h4 class="article__head"><span id="bridgeName">시설명</span></h4>
+							<table class="c-table">
+								<colgroup>
+									<col style="width: 100px;" />
+									<col />
+									<col style="width: 100px;" />
+									<col />
+								</colgroup>
+								<tbody>
+								<tr>
+									<th>행정구역</th>
+									<td><span id="bridgeCity"></span></td>
+									<th>시설물연장</th>
+									<td><span id="bridgeContinuation"></span></td>
+								</tr>
+								<tr>
+									<th>주소</th>
+									<td colspan="3"><span id="bridgeAddress"></span></td>
+								</tr>
+								<tr>
+									<th>종합등급</th>
+									<td><span id="bridgeTotal"></span></td>
+									<th>동해환경</th>
+									<td><span id="bridgeEast"></span></td>
+								</tr>
+								<tr>
+									<th>제설제</th>
+									<td><span id="bridgeSnow"></span></td>
+									<th>염해환경</th>
+									<td><span id="bridgeSalt"></span></td>
+								</tr>
+								<tr>
+									<th>교통량</th>
+									<td><span id="bridgeTraffic"></span></td>
+									<th>준공년도</th>
+									<td><span id="bridgeCompletion"></span></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<!-- 설명 -->
+				<div class="l-map__descriptive">
+					<div class="l-map__info">
+						<div class="l-map__info-item active">
+							<h3>동해 환경지도</h3>
+							<ul class="Environmental">
+								<li>
+									<span class="item__title">정의 :</span>
+									<span class="item__text">여기서 동해는 수분과 접하는 구조물이 겨울철에 동결과 융해를 반복하면서(동결융해 싸이클) 콘크리트 표면부터 손상이 발생하는 것을 말함 <br />→ 따라서, 동결융해 싸이클 수가 많은 지역에서는 동해에 의해 손상이 많이 일어나는 지역으로 판단함</span>
+								</li>
+								<li>
+									<span class="item__title">동결융해 싸이클 수 :</span>
+									<span class="item__text">우리나라 전국의 94개 기상관측점에서 측정된 최근 10년간 “일 최저기온이 –2.2℃보다 낮으면서, 일 최고기온이 0℃인 연평균 일수” 해당 지역의 동결융해 싸이클 수로 설정함</span>
+								</li>
+								<li>
+									<span class="item__title">동해 환경 평가기준 :</span>
+									<span class="item__text">동해 환경 평가기준은 a, b, c등급이 있으며, 아래 표와 같은 기준을 가짐. 추후 연구결과에 따라 등급기준은 수정될 수 있음</span>
+								</li>
+							</ul>
+							<table class="c-table">
+								<colgroup>
+									<col />
+									<col />
+								</colgroup>
+								<tbody>
+								<tr>
+									<th>등급</th>
+									<td>연간 동결융해 반복지수(X)</td>
+								</tr>
+								<tr>
+									<th>a</th>
+									<td>X ＜ 3</td>
+								</tr>
+								<tr>
+									<th>b</th>
+									<td>3 ≤ X ＜ 50</td>
+								</tr>
+								<tr>
+									<th>c</th>
+									<td>50 ≤ X</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="l-map__info-item">
+							<h3>제설제 염해 환경지도</h3>
+							<ul class="Environmental">
+								<li>
+									<span class="item__title">정의 :</span>
+									<span class="item__text">제설제에 의한 염해는 겨울철 강설에 대응하여 살포되는 제설제에 포함된 염분이 구조물에 침투하여 철근을 부식시키는 영향을 고려한 것임 <br />→ 따라서, 눈이 많이 올수록 제설제를 자주 뿌리게 되어 염해의 위험성과 강도가 높아지게 됨</span>
+								</li>
+								<li>
+									<span class="item__title">제설제 살포 :</span>
+									<span class="item__text">강설이 있는 경우 무조건 제설제를 살포하는 것으로 가정하되, 당일 추가살포는 고려하지 않음. 따라서, 강설이 있는 경우 1회 살포횟수로 가정하며, 살포량에 대한 기준은 적용하지 않음</span>
+								</li>
+								<li>
+									<span class="item__title">강설일수 :</span>
+									<span class="item__text">제설제 살포횟수를 각 담당기관으로부터 입수하는 것은 번거롭고, 쉽지 않기 때문에 기상청의 강설일수를 참조하여 제설제 염해 환경평가에 활용함. 대상지점의 기상관측소는 대상구조물의 가장 가까운 관측소를 설정함</span>
+								</li>
+								<li>
+									<span class="item__title">제설제 염해 환경 평가기준 :</span>
+									<span class="item__text">제설제 염해 환경 평가기준은 a, b, c 등급이 있으며, 아래 표와 같은 기준을 가짐. 추후 연구결과에 따라 등급기준은 수정될 수 있음</span>
+								</li>
+							</ul>
+							<table class="c-table">
+								<colgroup>
+									<col />
+									<col />
+								</colgroup>
+								<tbody>
+								<tr>
+									<th>등급</th>
+									<td>강설일수(일)</td>
+								</tr>
+								<tr>
+									<th>a</th>
+									<td>강설일수 ＜ 7</td>
+								</tr>
+								<tr>
+									<th>b</th>
+									<td>7 ≤ 강설일수 ＜ 14</td>
+								</tr>
+								<tr>
+									<th>c</th>
+									<td>14 ≤ 강설일수</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="l-map__info-item">
+							<h3>비래염분 염해 환경지도</h3>
+							<ul class="Environmental">
+								<li>
+									<span class="item__title">정의 :</span>
+									<span class="item__text">비래염분에 의한 염해는 해안가에서 파도 등에 의해 발생하는 비산염분이 구조물로 날아 들어와 표면에 부착하고 이것이 내부로 침투하여 철근은 부식시키는 염해환경을 고려한 것임 <br />→ 따라서, 해안에서 멀어질수록 염해의 강도는 약해지게 되며, 각 해역(동해, 서해, 남해)별 특성 및 지역에 따라 해안거리별 대기중 염분의 감소경향은 달라지게 됨</span>
+								</li>
+								<li>
+									<span class="item__title">비래염분 :</span>
+									<span class="item__text">비래염분은 “구조물로 날아오는 대기중의 염분”을 나타내는 것으로 과거에는 해안에서 파도에 의해 발생하는 대기중의 염분만을 지칭하였으나, 최근에 내륙에서도 제설제 등에 의한 비산되는 염분이 구조물에 영향을 줌에 따라 이러한 염분까지 포함할 수도 있음. 다만, 여기서는 해안가에서 발생한 대기중의 염분만을 일컬음</span>
+								</li>
+								<li>
+									<span class="item__title">비래염분 염해 환경의 평가기준(해안거리) :</span>
+									<span class="item__text">제설제 염해 환경 평가기준은 a, b, c등급이 있으며, 아래 표와 같은 기준을 가짐. 추후 연구결과에 따라 등급기준은 수정될 수 있음<br />→ 아래 표의 데이터는 국내 해안가 27개 지역, 72개 지점에서 매월 3년간 측정한 해안가 대기중의 염분량을 분석한 결과로서 도출된 것임</span>
+								</li>
+							</ul>
+							<table class="c-table">
+								<colgroup>
+									<col />
+									<col style="width: 70px;" />
+									<col style="width: 100px;" />
+									<col />
+									<col />
+								</colgroup>
+								<thead>
+								<tr>
+									<th>항목</th>
+									<th>등급</th>
+									<th>해안</th>
+									<th>적용지역</th>
+									<th>해안으로부터의 거리 X(m)</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td rowspan="9">해안거리에 따른<br />비래염분 염해환경</td>
+									<td rowspan="3">a</td>
+									<td>동해안</td>
+									<td>전지역</td>
+									<td>500 초과</td>
+								</tr>
+								<tr>
+									<td>서해안</td>
+									<td>고창, 태안 그 외 지역</td>
+									<td>1,000 초과<br />300 초과</td>
+								</tr>
+								<tr>
+									<td>남해안</td>
+									<td>사천, 거제 그 외 지역</td>
+									<td>100 초과<br />20 초과</td>
+								</tr>
+								<tr>
+									<td rowspan="3">b</td>
+									<td>동해안</td>
+									<td>전지역</td>
+									<td>250 ＜  X ≤ 500</td>
+								</tr>
+								<tr>
+									<td>서해안</td>
+									<td>고창, 태안 그 외 지역</td>
+									<td>500 ＜  X ≤ 1000 <br />120 ＜  X ≤ 300</td>
+								</tr>
+								<tr>
+									<td>남해안</td>
+									<td>사천, 거제 그 외 지역</td>
+									<td>50 ＜  X ≤ 100 <br />10 ＜ X ≤ 20</td>
+								</tr>
+								<tr>
+									<td rowspan="3">c</td>
+									<td>동해안</td>
+									<td>전지역</td>
+									<td>비말대* ＜  X ≤ 250</td>
+								</tr>
+								<tr>
+									<td>서해안</td>
+									<td>고창, 태안 그 외 지역</td>
+									<td>비말대 ＜ X ≤ 500 <br />비말대 ＜ X ≤ 120</td>
+								</tr>
+								<tr>
+									<td>남해안</td>
+									<td>사천, 거제 그 외 지역</td>
+									<td>비말대 ＜ X ≤ 50 <br />비말대 ＜ X ≤ 10</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</section>
+
+	<div class="section">
+		<iframe src="https://play.grafana.org/d-solo/000000012/grafana-play-home?orgId=1&from=1657254588592&to=1657258188592&panelId=2" width="450" height="200" frameborder="0"></iframe>
+	</div>
+
 </div>
 
 </html>

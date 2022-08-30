@@ -32,10 +32,21 @@ public class OldController {
     public String input(){
         return "old/input";
     }
-    
+
     @RequestMapping("output")
     public String output(){
         return "old/output";
+    }
+
+    // 노후도평가 새 버젼
+    @RequestMapping("newinput")
+    public String newinput(){
+        return "old/newinput";
+    }
+    // 노후도평가 새 버젼
+    @RequestMapping("newoutput")
+    public String newoutput(){
+        return "old/newoutput";
     }
 
 }

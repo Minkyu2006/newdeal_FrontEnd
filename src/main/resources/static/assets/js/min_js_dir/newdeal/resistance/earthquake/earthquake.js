@@ -37,7 +37,7 @@ const comms = {
             setElementsByBridgeInfo(data);
             $("#bridgeName").text("교량명");
             alertSuccess('내진성능을 추정 완료 하였습니다.');
-            logreg(2,"데이터기반 가상모델 구출 시스템 시스템","내진성능 추정 서비스",null); // 데이터조회 API에 조회성공시 추가할 것 to. 성낙원
+            logreg(2,"데이터기반 가상모델 구축 시스템","내진성능 추정 서비스",null); // 데이터조회 API에 조회성공시 추가할 것 to. 성낙원
         });
     },
 

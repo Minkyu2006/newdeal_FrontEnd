@@ -35,13 +35,6 @@ $(function() {
         $('#popupId').remove();
     });
 
-    $(document).on("click","#checkYesBtn",function(){
-        startYesorNo(true)
-    });
-    $(document).on("click","#checkNoBtn",function(){
-        startYesorNo(false)
-    });
-
     $(document).on("click","#weightCheckYesBtn",function(){
         $('#popupId').remove();
 
@@ -157,7 +150,23 @@ function alertSuccess(text) { //성공창(삭제성공시),저장성공시
     html +='</div>';
 
     $('#alertpop').html(html);
+}
 
+function alertSuccess2(text) { //성공창(삭제성공시),저장성공시
+    let html = '';
+    html +='<div id="popupId" class="popup popup--dim">';
+    html +='<div class="popup__box">';
+    html +='<div class="popup__content">';
+    html +='<div class="popup__stat success"></div>';
+    html +='<div class="popup__text">'+text+'</div>';
+    html +='</div>';
+    html +='<div class="popup__buttons">';
+    html +='<button id="successBtn2" class="popup__btn popup__btn--success">확인</button>';
+    html +='</div>';
+    html +='</div>';
+    html +='</div>';
+
+    $('#alertpop').html(html);
 }
 
 function alertCancel(text) { //에러창(로그인만료),오류

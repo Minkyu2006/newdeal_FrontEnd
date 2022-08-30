@@ -48,7 +48,7 @@ public class ResistanceController {
     public String earthquake(Model model){
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
-        return "resistance/earthquake";
+        return "resistance/earthquake/earthquake";
     }
 
     // 계측 기반 안전성 추정 데이터 제공 - 조근희
@@ -56,14 +56,42 @@ public class ResistanceController {
     public String safetyinput(Model model){
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
-        return "resistance/safetyinput";
+        return "resistance/safety/safetyinput";
     }
 
     @RequestMapping("safetyoutput")
     public String safetyoutput(Model model){
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
-        return "resistance/safetyoutput";
+        return "resistance/safety/safetyoutput";
+    }
+
+    @RequestMapping("predictintro")
+    public String predictintro(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "resistance/predict/predictintro";
+    }
+
+    @RequestMapping("predictinput")
+    public String predictinput(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "resistance/predict/predictinput";
+    }
+
+    @RequestMapping("predictnext")
+    public String predictnext(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "resistance/predict/predictnext";
+    }
+
+    @RequestMapping("costprediction")
+    public String costprection(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "resistance/costprediction";
     }
 
 }

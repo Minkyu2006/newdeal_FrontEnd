@@ -400,6 +400,26 @@ input[type="number"]::-webkit-inner-spin-button {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
+.c-text.c-text--duo.c-text--half .c-text__input:first-child {
+    width: 50%;
+}
+.c-text.c-text--duo.c-text--half .c-text__input+.c-text__input {
+    width: 50%;
+}
+.c-text.c-text--duo.c-text--symbol .c-text__input:first-child {
+    width: calc(50% - 10px);
+}
+.c-text.c-text--duo.c-text--symbol span {
+    float: left;
+    display: block;
+    width: 20px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+.c-text.c-text--duo.c-text--symbol .c-text__input:last-child {
+    width: calc(50% - 10px);
+}
 .c-text.c-text--duo .c-text__input+.c-text__input[readonly] {
     border-left-color: #fff;
 }
@@ -1153,10 +1173,9 @@ a.c-button {
 }
 
 
-
-
 /* tree */
 .c-tree {
+    overflow-y: auto;
 	height: 100%;
 	padding: 10px;
 	border: 3px double #696b71;
@@ -1167,9 +1186,17 @@ a.c-button {
 .c-tree li {
     position: relative;
     padding: 5px 0 5px 20px;
+    font-size: 14px;
+    color: #333;
 }
 .c-tree__nested {
-    display: none;
+    /*display: none;*/
+    overflow: hidden;
+    height: 0;
+    transition: all 0.4s;
+}
+.c-tree__nested.active {
+    height: auto;
 }
 .c-tree__toggle {
     color: #222;
@@ -1229,7 +1256,6 @@ a.c-button {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-
 .c-file__input {
   /* -webkit-box-flex: 1;
       -ms-flex: 1;
@@ -1244,7 +1270,6 @@ a.c-button {
             box-sizing: border-box;
     outline: none;
 }
-
 .c-file__button {
     float: left;
     width: 84px;
@@ -1261,7 +1286,8 @@ a.c-button {
     -webkit-transition: background-color .2s;
     transition: background-color .2s;
 }
-.c-file__button input[type="file"] {
+.c-file__button input[type="file"],
+.c-file__input-file {
   display: none;
 }
 .c-file__button:hover,
@@ -1407,7 +1433,7 @@ a.c-button {
 }
 
 
-
+/* accordion table */
 .c-accordiion-table {
 
 }

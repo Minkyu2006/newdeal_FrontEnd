@@ -1,6 +1,5 @@
 package com.broadwava.front.Controller;
 
-import com.broadwava.front.Enum.AccountRole;
 import com.broadwava.front.bscodes.CodeType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,6 +57,14 @@ public class AdminController {
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
         return "admin/performance";
+    }
+
+    // 공지사항 등록
+    @RequestMapping("noticewrite")
+    public String noticewrite(Model model){
+        model.addAttribute("backend_url", backend_url);
+        model.addAttribute("backend_protocol", backend_protocol);
+        return "board/write";
     }
 
 }

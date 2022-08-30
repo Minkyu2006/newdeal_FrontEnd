@@ -21,11 +21,11 @@ function dateFocuseOut(name, val){
 
 // 부재의 따른 세부부재 select box 생성
 function absenceSelect(){
-    const $absence = $("#absence").val();
-    // console.log("absence : "+$absence);
+    const $choseAbsence = $("#choseAbsence").val();
+    console.log("choseAbsence : "+$choseAbsence);
     const $ltAbsenceCode = $("#ltAbsenceCode");
     let html = "";
-    if($absence==="plate"){
+    if($choseAbsence==="plate"){
         html += "<option value='D1'>"+"콘크리트 바닥판"+"</option>";
         html += "<option value='D2'>"+"강 바닥판"+"</option>";
         html += "<option value='D3'>"+"프리스트레스 콘크리트 바닥판"+"</option>";
@@ -161,10 +161,33 @@ function lifeAllTimeSave(){
             $ltSafetyCost.val($ltSafetyCost.val().replaceAll(",",""));
         }
 
+        const $ltAbsence = $("#ltAbsence");
+        if($ltAbsence.val() === "1") {
+            $ltAbsence.val("RC 슬래브교");
+        }else if($ltAbsence.val() === "2") {
+            $ltAbsence.val("라멘교");
+        }else if($ltAbsence.val() === "3") {
+            $ltAbsence.val("PSC I형교");
+        }else if($ltAbsence.val() === "4") {
+            $ltAbsence.val("강상자형교");
+        }else if($ltAbsence.val() === "5") {
+            $ltAbsence.val("RC T형교");
+        }else if($ltAbsence.val() === "6") {
+            $ltAbsence.val("PSC Box형교");
+        }else if($ltAbsence.val() === "7") {
+            $ltAbsence.val("PSC 슬래브교");
+        }else if($ltAbsence.val() === "8") {
+            $ltAbsence.val("Preflex형교");
+        }else{
+            $ltAbsence.val("형식없음");
+        }
+
         const formData = new FormData(document.getElementById('lifeAllTimeForm'));
 
         let url;
         url = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/lifealltime/save"; // 호출할 백엔드 API
+
+
         console.log("url : "+url);
 
         $.ajax({
@@ -210,7 +233,7 @@ function lifeAllTimeSave(){
 // 성공알림창 버튼 누르면 화면이동하는 함수
 function alertLink(id) {
     $(document).on("click","#successBtn",function(){
-        location.href = "/lifetime/stateoutput/" + id;
+        location.href = "/lifetime/all/" + id;
         $('#popupId').remove();
     });
 }
@@ -265,6 +288,8 @@ function lifeAllTimeOutput(id){
 
                     $('#ltBridgeCode').text(request.sendData.lifeAllTimeDto.ltBridgeCode);
                     $('#ltBridgeName').text(request.sendData.lifeAllTimeDto.ltBridgeName);
+                    $('#ltAbsence').text(request.sendData.lifeAllTimeDto.ltAbsence);
+                    $('#ltAllRank').text(request.sendData.lifeAllTimeDto.ltAllRank);
                     $('#ltSpanNum').text(request.sendData.lifeAllTimeDto.ltSpanNum);
                     $('#ltAbsenceName').text(request.sendData.ltAbsenceName);
 
@@ -284,19 +309,23 @@ function lifeAllTimeOutput(id){
                     $('#ltAllInputDate').text(year2+'년도 '+month2+'월');
                     $('#ltAllStage').text(request.sendData.lifeAllTimeDto.ltAllStage);
 
-                    $('#allVolume').text(request.sendData.lifeAllTimeDto.ltAllVolume+'m²');
+                    $('#allVolume').text(request.sendData.lifeAllTimeDto.ltAllLength*request.sendData.lifeAllTimeDto.ltAllArea+'m²');
 
                     // 대표보수 보강공법 수행효과  수행 전 손상지수
-                    $('#damageBRankBefore').text(request.sendData.lifeAllTimeDto.ltDamageBRank);
-                    $('#damageCRankBefore').text(request.sendData.lifeAllTimeDto.ltDamageCRank);
-                    $('#damageDRankBefore').text(request.sendData.lifeAllTimeDto.ltDamageDRank);
-                    $('#damageERankBefore').text(request.sendData.lifeAllTimeDto.ltDamageERank);
+                    $('#damageBScoreBefore').text(request.sendData.lifeAllTimeDto.ltDamageBRank);
+                    $('#damageCScoreBefore').text(request.sendData.lifeAllTimeDto.ltDamageCRank);
+                    $('#damageDScoreBefore').text(request.sendData.lifeAllTimeDto.ltDamageDRank);
+                    $('#damageEScoreBefore').text(request.sendData.lifeAllTimeDto.ltDamageERank);
 
                     // 대표보수 보강공법 수행효과  수행 후 손상지수
-                    $('#damageBRankAfter').text(request.sendData.damageRankList[0].toFixed(2));
-                    $('#damageCRankAfter').text(request.sendData.damageRankList[1].toFixed(2));
-                    $('#damageDRankAfter').text(request.sendData.damageRankList[2].toFixed(2));
-                    $('#damageERankAfter').text(request.sendData.damageRankList[3]);
+                    $('#damageBScoreAfter').text(request.sendData.damageScoreList[0].toFixed(2));
+                    $('#damageCScoreAfter').text(request.sendData.damageScoreList[1].toFixed(2));
+                    $('#damageDScoreAfter').text(request.sendData.damageScoreList[2].toFixed(2));
+                    $('#damageEScoreAfter').text(request.sendData.damageScoreList[3].toFixed(2));
+                    $('#damageBRankAfter').text(request.sendData.damageRankListAfter[0]);
+                    $('#damageCRankAfter').text(request.sendData.damageRankListAfter[1]);
+                    $('#damageDRankAfter').text(request.sendData.damageRankListAfter[2]);
+                    $('#damageERankAfter').text(request.sendData.damageRankListAfter[3]);
 
                     // 대표보수 보강공법 수행효과 비용
                     $('#damageBCost').text(Math.round(request.sendData.costRankList[0]).toLocaleString());
@@ -307,12 +336,15 @@ function lifeAllTimeOutput(id){
                     $('#discountRate').text(Number(request.sendData.lifeAllTimeDto.ltDiscountRate*100)+'%');
                     $('#increase').text(Number(request.sendData.lifeAllTimeDto.ltIncrease*100)+'%');
 
-                    $('#ltPeriodicFrequency').text(request.sendData.lifeAllTimeDto.ltPeriodicFrequency);
+                    $('#ltPeriodicFrequency').text((request.sendData.lifeAllTimeDto.ltPeriodicYear/request.sendData.lifeAllTimeDto.ltPeriodicNum).toFixed(2));
                     $('#ltPeriodicCost').text(pushComma(request.sendData.lifeAllTimeDto.ltPeriodicCost));
-                    $('#ltCloseFrequency').text(request.sendData.lifeAllTimeDto.ltCloseFrequency);
+                    $('#ltPeriodicYearNum').text(request.sendData.lifeAllTimeDto.ltPeriodicYear+"년에 "+request.sendData.lifeAllTimeDto.ltPeriodicNum+"회");
+                    $('#ltCloseFrequency').text((request.sendData.lifeAllTimeDto.ltCloseYear/request.sendData.lifeAllTimeDto.ltCloseNum).toFixed(2));
                     $('#ltCloseCost').text(pushComma(request.sendData.lifeAllTimeDto.ltCloseCost));
-                    $('#ltSafetyFrequency').text(request.sendData.lifeAllTimeDto.ltSafetyFrequency);
+                    $('#ltCloseYearNum').text(request.sendData.lifeAllTimeDto.ltCloseYear+"년에 "+request.sendData.lifeAllTimeDto.ltCloseNum+"회");
+                    $('#ltSafetyFrequency').text((request.sendData.lifeAllTimeDto.ltSafetyYear/request.sendData.lifeAllTimeDto.ltSafetyNum).toFixed(2));
                     $('#ltSafetyCost').text(pushComma(request.sendData.lifeAllTimeDto.ltSafetyCost));
+                    $('#ltSafetyYearNum').text(request.sendData.lifeAllTimeDto.ltSafetyYear+"년에 "+request.sendData.lifeAllTimeDto.ltSafetyNum+"회");
 
                     const $diagnosisTable = $('#diagnosisTable');
                     let html = "";
@@ -366,7 +398,7 @@ function lifeAllTimeOutput(id){
                         const xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
                         xAxis.dataFields.category = "publicYear";
                         // xAxis.renderer.grid.template.location = 0;
-                        xAxis.renderer.minGridDistance = 91; // 범위 조절옵션
+                        xAxis.renderer.minGridDistance = 63; // 범위 조절옵션, fix: 22.07.21 -> 5년단위로 수정
                         xAxis.title.text = "공용연수(Years)";
                         xAxis.renderer.grid.template.disabled = false // x축 라인 제거
                         // xAxis.renderer.labels.template.disabled = true;
@@ -525,10 +557,11 @@ function lifeAllTimeOutput(id){
                     }); // am4core 끝
 
                     $("#result1").html(request.sendData.lifeAllTimeDto.ltBridgeName);
-                    $("#result2").html(request.sendData.result2.toFixed(0)+"년");
+                    // $("#result2").html(request.sendData.result2.toFixed(0)+"년");
                     $("#result3").html(request.sendData.result3+"회");
                     $("#result4").html(pushComma(request.sendData.result4.toFixed(0))+"원");
-
+                    $("#result5").html(request.sendData.lifeAllTimeDto.ltBridgeName);
+                    $("#result6").html(pushComma(request.sendData.result6.toFixed(0))+"원");
 
                     const teableSize = request.sendData.resultTableCnt;
                     // console.log("총 테이블 수 : "+teableSize);

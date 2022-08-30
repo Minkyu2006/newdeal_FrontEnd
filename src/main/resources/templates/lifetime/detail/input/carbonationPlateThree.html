@@ -65,7 +65,7 @@
 							<tr>
 								<th colspan="6" style="font-weight: bold">공용연수 필수 입력 구간</th>
 								<td colspan="2">
-									<div class="c-text c-text--unit">
+									<div class="c-text c-text--unfit">
 										<input style="text-align: center" type="number" name="ltPublicYear" id="ltPublicYear" class="c-text__input" />
 										<span class="c-text__unit">년</span>
 									</div>
@@ -78,12 +78,12 @@
 								<th colspan="2">바닥판(S3)</th>
 							</tr>
 							<tr>
-								<th>표준편차</th>
 								<th>평균값</th>
 								<th>표준편차</th>
 								<th>평균값</th>
 								<th>표준편차</th>
 								<th>평균값</th>
+								<th>표준편차</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -92,7 +92,7 @@
 									<td style="text-align: center">실측피복두께(mm)</td>
 									<td>
 										<div class="c-text">
-											<input type="text" class="c-text__input" name="ltTdStandardPlate1" id="ltTdStandardPlate1" onfocusout="lifeStandardCalculate('ltTdStandardPlate1','0.13','ltTdAveragePlate1')" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+											<input type="text" class="c-text__input" name="ltTdStandardPlate1" id="ltTdStandardPlate1" onfocusout="lifeStandardCalculate('ltTdStandardPlate1',0.13,'ltTdAveragePlate1')" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
 										</div>
 									</td>
 									<td>
@@ -203,7 +203,7 @@
 							<thead>
 								<tr>
 									<th>시뮬레이션 횟수</th>
-									<th>공용연수 조정계수<br />표준편차 / 평균값</th>
+									<th>공용연수 조정계수<br />평균값 / 표준편차</th>
 									<th>보수보강 총길이(m)</th>
 									<th>생애주기 목표값<br />(성능유지 기준값)</th>
 									<th>보수·보강 회복율</th>
@@ -213,12 +213,13 @@
 								<tr>
 									<td>
 										<div class="c-text">
-											<input type="text" name="ltSimulation" id="ltSimulation" value="50000" style="text-align: center" class="c-text__input" readonly />
+											<input type="text" name="ltSimulation" id="ltSimulation" value="50000" style="text-align: center" class="c-text__input" readonly="readonly" />
 										</div>
 									</td>
 									<td>
-										<div class="c-text">
+										<div class="c-text c-text--duo c-text--symbol c-text--division">
 											<input type="text" name="ltYStandard" id="ltYStandard" onfocusout="lifeStandardCalculate('ltYStandard','0.02','ltYAverage')" style="text-align: center" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+											<span>/</span>
 											<input type="text" name="ltYAverage" id="ltYAverage" style="text-align: center;color: black" class="c-text__input" placeholder="자동계산" readonly />
 										</div>
 									</td>

@@ -1,4 +1,29 @@
 
+// 현재 개발중인 서비스입니다.
+function developing(){
+	alertCaution("현재 개발중인 서비스입니다.",1);
+}
+
+// 날짜 포맷(yyyy-mm-dd)
+function dateFormat(date) {
+	let month = date.getMonth() + 1;
+	let day = date.getDate();
+
+	month = month >= 10 ? month : '0' + month;
+	day = day >= 10 ? day : '0' + day;
+
+	return date.getFullYear() + '-' + month + '-' + day;
+}
+
+// 입력값 최소 - 최대 변경 함수
+function numValueChange(id, num, value){
+	const $id = $("#"+id);
+	if(value < num){
+		$id.val(value);
+	}else if(num <= 0 || num==="00" || num==="000"){
+		$id.val("1");
+	}
+}
 
 // *********************************************************************************
 Date.prototype.format = function(f) {

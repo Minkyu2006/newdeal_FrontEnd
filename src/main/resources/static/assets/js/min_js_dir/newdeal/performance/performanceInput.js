@@ -1,5 +1,12 @@
 // * 성능개선사업평가 서비스 자바스크립트 인풋페이지*
 
+$(document).on("click","#checkYesBtn",function(){
+    startYesorNo(true,1)
+});
+$(document).on("click","#checkNoBtn",function(){
+    startYesorNo(false,1)
+});
+
 // 팝업창 닫기
 function popClose(){
     $('.pop').removeClass('open');
@@ -277,10 +284,14 @@ function choicePopClose(){
 }
 
 // 중간저장 계속할껀지 안할껀지 여부묻고 페이지이동 or 게시물삭제후 새로저장
-function startYesorNo(check){
+function startYesorNo(check, num){
     $('#popupId').remove();
     if(check){
-        movePage('/performance/performance3')
+        if(num===1){
+            movePage('/performance/performance3')
+        }else{
+            movePage('/performance/performance2')
+        }
     }else{
 
         JWT_Get();
@@ -363,10 +374,6 @@ function movePage(url) {
 function selectMovePage() {
     const url = $('input:radio[name="talk-select"]:checked').val();
 
-    $("#choiceText").text("입력하신 성능개선 사업은 국토교통부 『도로시설 성능개선 기준』에서 정하는 평가대상 요건인 " +
-        "1)시설유형, 2)부재유형, 3)보수유형, 4)사업유형, 5)사업규모, 6)사업평가 중복성, 7)당연사업 면제사유 " +
-        "조건을 모두 충족함에 따라 성능개선사업 평가 대상으로 판정되었습니다.");
-
     if(url===undefined || url===""){
         alertCaution("입력방식을 선택해주세요.",1);
         return false;
@@ -375,6 +382,10 @@ function selectMovePage() {
     //     alertCaution("현재 재개발중 입니다.<br /> 다음에 이용해 주시길 바랍니다.",1);
     //     return false;
     // }
+
+    // $("#choiceText").text("입력하신 성능개선 사업은 국토교통부 『도로시설 성능개선 기준』에서 정하는 평가대상 요건인 " +
+    //     "1)시설유형, 2)부재유형, 3)보수유형, 4)사업유형, 5)사업규모, 6)사업평가 중복성, 7)당연사업 면제사유 " +
+    //     "조건을 모두 충족함에 따라 성능개선사업 평가 대상으로 판정되었습니다.");
 
     const ajaxOption = {
         url : url,
@@ -566,6 +577,7 @@ function inputPerformanceNext1(){
         const  autoNum = $("#autoNum").val();
         const formData = new FormData(document.getElementById('performance1'));
         formData.set("piInputSkip",$("#piInputSkip").val());
+        formData.set("piFileYn",$("#piFileYn").val());
 
         console.log("중간저장1 autoNum : "+autoNum);
         if(autoNum===""){
@@ -1713,7 +1725,8 @@ function weightGet(){
         const $businessNum = $("#businessNum").val();
         const params = {
             autoNum : autoNum,
-            businessNum : $businessNum
+            businessNum : $businessNum,
+            uploadYn: "N"
         }
 
         console.log("가중치 셋팅값 가져오기 autoNum : "+autoNum);

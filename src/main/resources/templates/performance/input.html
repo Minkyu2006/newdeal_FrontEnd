@@ -27,10 +27,17 @@
 			const params = url.searchParams;
 			if(params.has("autoNum")) {
 				const autoNumParam = params.get("autoNum");
-				console.log("autoNumParam : "+autoNumParam);
+				const piFileYn = params.get("piFileYn");
+				// console.log("autoNumParam : "+autoNumParam);
+				// console.log("piFileYn : "+piFileYn);
 				autoNum.val(autoNumParam);
-				startYesorNo(true);
+				if(piFileYn === "Y"){
+					startYesorNo(true,2);
+				}else{
+					startYesorNo(true,1);
+				}
 			}else{
+				console.log("여기로다가");
 				if(autoNum.val()===""){
 					inputMiddleSaveCheck();
 				}
@@ -69,10 +76,11 @@
 </th:block>
 
 <div layout:fragment="content" class="content">
-	<input type="hidden" id="autoNum" readonly="readonly" />
+	<input type="hidden" id="autoNum" th:value="${autoNum}" readonly="readonly" />
 	<input type="hidden" id="businessNum" readonly="readonly" />
 	<input type="hidden" id="chapter" value="0" readonly="readonly" />
 	<input type="hidden" id="piInputSkip" value="0" readonly="readonly" />
+	<input type="hidden" id="piFileYn" value="N" readonly="readonly" />
 	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="content__inner">

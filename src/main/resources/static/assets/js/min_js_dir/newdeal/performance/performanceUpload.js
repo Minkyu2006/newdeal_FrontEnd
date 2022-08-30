@@ -1,7 +1,7 @@
 // * 성능개선사업평가 서비스 자바스크립트 파일업로드페이지*
 
 // Input 업로드방식 등록용 가중치 셋팅값 가져오기
-function weightUploadGet(){
+function weightUploadGet(num){
 
     JWT_Get();
 
@@ -101,12 +101,13 @@ function weightUploadGet(){
                     const $piWeightBusinessEffectMax = $("#piWeightBusinessEffectMax");
 
                     // 사업추진 임계점수
-                    $("#piWeightCriticalScore").attr("placeholder", 50);
+                    const $piWeightCriticalScore = $("#piWeightCriticalScore");
+                    $piWeightCriticalScore.attr("placeholder", 50);
 
                     // 성능개선 사업구분 노후화대응 가중치
                     if($weight_Category==="노후화대응"){
                         const weightOldSetting = request.sendData.weightSettingOldDto
-                        console.log("노후화대응 : "+weightOldSetting);
+                        // console.log("노후화대응 : "+weightOldSetting);
 
                         // 성능개선 사업구분 노후화대응 가중치
                         $piWeightSafe.attr("placeholder", weightOldSetting.piOldSafetyStan);
@@ -149,7 +150,7 @@ function weightUploadGet(){
                     // 성능개선 사업구분 기준변화 가중치
                     else if($weight_Category==="기준변화"){
                         const weightBaseSetting = request.sendData.weightSettingBaseDto;
-                        console.log("기준변화 : "+weightBaseSetting);
+                        // console.log("기준변화 : "+weightBaseSetting);
 
                         $piWeightSafe.attr("placeholder", weightBaseSetting.piBaseSafetyStan);
                         $piWeightSafeMin.val(weightBaseSetting.piBaseSafetyMin);
@@ -179,7 +180,7 @@ function weightUploadGet(){
                     // 성능개선 사업구분 사용성변화 가중치
                     else{
                         const weightUseSetting = request.sendData.weightSettingUseDto;
-                        console.log("사용성변화 : "+weightUseSetting);
+                        // console.log("사용성변화 : "+weightUseSetting);
 
                         // 성능개선 사업구분 사용성변화 가중치
                         $piWeightSafe.attr("placeholder", weightUseSetting.piUseSafetyStan);
@@ -215,6 +216,78 @@ function weightUploadGet(){
                         $piWeightBusinessEffectMax.val(weightUseSetting.piUseBusinessEffectMax);
                     }
 
+                    // num이 1일경우 해당 값의 가중치값을 가져온다.
+                    if(num===1) {
+
+                        const autoNum = $("#autoNum").val();
+                        const params = {
+                            autoNum: autoNum,
+                            businessNum: $weight_Category,
+                            uploadYn: "Y"
+                        }
+
+                        console.log("가중치 셋팅값 가져오기 autoNum : " + autoNum);
+
+                        let weightUrl = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/performance/weightGet"; // 호출할 백엔드 API
+
+                        $.ajax({
+                            url: weightUrl,
+                            type: 'POST',
+                            data: params,
+                            cache: false,
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("JWT_AccessToken", accessToken);
+                                xhr.setRequestHeader("insert_id", insert_id);
+                            },
+                            error: function (request) {
+                                if (request.status === 500) {
+                                    // console.log("request.status : " + request.status + " => 500에러");
+                                    alertCaution("500에러 재로그인 해주세요.", 2);
+                                } else if (request.status === 400) {
+                                    // console.log("request.status : " + request.status + " => 400에러");
+                                    alertCaution("400에러 재로그인 해주세요.", 2);
+                                } else {
+                                    // console.log("request.status : " + request.status + " => 404에러");
+                                    alertCaution("404에러 재로그인 해주세요.", 2);
+                                }
+                            },
+                            success: function (request) {
+                                let status = request.status;
+                                // console.log("status : " + status);
+
+                                if (status === 200) {
+                                    const weight = request.sendData.weightDto;
+                                    let weightValue = 0;
+                                    // console.log(weight);
+                                    if(weight !== null){
+                                        // console.log("가중치값 셋팅");
+                                        weightValue = 1;
+                                    }
+                                    // 평가지표별 가중치
+                                    if(weightValue === 1){
+                                        const $piWeightTechnicality = $("#piWeightTechnicality");
+                                        const $piWeightEconomy = $("#piWeightEconomy");
+                                        const $piWeightPolicy = $("#piWeightPolicy");
+
+                                        $piWeightTechnicality.val(weight.piWeightTechnicality);
+                                        $piWeightEconomy.val(weight.piWeightEconomy);
+                                        $piWeightPolicy.val(weight.piWeightPolicy);
+                                        $piWeightSafe.val(weight.piWeightSafe);
+                                        $piWeightOld.val(weight.piWeightOld);
+                                        $piWeightUsability.val(weight.piWeightUsability);
+                                        $piWeightUrgency.val(weight.piWeightUrgency);
+                                        $piWeightGoal.val(weight.piWeightGoal);
+                                        $piWeightSafeUtility.val(weight.piWeightSafeUtility);
+                                        $piWeightCostUtility.val(weight.piWeightCostUtility);
+                                        $piWeightBusiness.val(weight.piWeightBusiness);
+                                        $piWeightComplaint.val(weight.piWeightComplaint);
+                                        $piWeightBusinessEffect.val(weight.piWeightBusinessEffect);
+                                        $piWeightCriticalScore.val(weight.piWeightCriticalScore);
+                                    }
+                                }
+                            }
+                        })
+                    }
                 } else {
                     if (request.err_msg2 === null) {
                         alertCaution(request.err_msg, 1);
@@ -222,9 +295,8 @@ function weightUploadGet(){
                         alertCaution(request.err_msg + "<br>" + request.err_msg2, 1);
                     }
                 }
-
             }
-        });
+        })
     }
 }
 
@@ -279,9 +351,10 @@ function excelSend() {
 
         const formData = new FormData(document.getElementById('fileSendForm'));
         formData.set("piInputSkip",$("#piInputSkip").val());
+        formData.set("piAutoNum",$("#autoNum").val());
 
         url = $("#backend_protocol").val()+"://" + $("#backend_url").val() + "/api/performance/excelUpload"; // 호출할 백엔드 API
-        console.log("url : " + url);
+        // console.log("url : " + url);
         $.ajax({
             url: url,
             type: 'post',
@@ -351,3 +424,159 @@ function alertLink(autoNum) {
         $('#popupId').remove();
     });
 }
+
+// 유형변결할때마다 가중치 표가 바뀌는 함수
+function categoryClick(category, num) {
+    const $wightBox = $("#wightBox");
+    const $weight_Category = category;
+    const $weightDiv = $("#weightDiv");
+
+    const $choseCategory = $("#choseCategory");
+    const $piWeightTechnicality = $("#piWeightTechnicality");
+    const $piWeightEconomy = $("#piWeightEconomy");
+    const $piWeightPolicy = $("#piWeightPolicy");
+
+    const $piWeightTechnicalityMin = $("#piWeightTechnicalityMin");
+    const $piWeightTechnicalityMax = $("#piWeightTechnicalityMax");
+
+    const $piWeightEconomyMin = $("#piWeightEconomyMin");
+    const $piWeightEconomyMax = $("#piWeightEconomyMax");
+
+    const $piWeightPolicyMin = $("#piWeightPolicyMin");
+    const $piWeightPolicyMax = $("#piWeightPolicyMax");
+
+    const $techTable = $("#techTable");
+    const $ecoTable = $("#ecoTable");
+    const $polTable = $("#polTable");
+
+    const $techUsabilityTr = $("#techUsabilityTr");
+    const $techUrgencyTr = $("#techUrgencyTr");
+    const $techGoalTr = $("#techGoalTr");
+
+    const $ecoTh1 = $("#ecoTh1");
+    const $ecoTh2 = $("#ecoTh2");
+
+    const $polComplaintTr = $("#polComplaintTr");
+
+    if($weight_Category==="노후화대응"){
+
+        weightUploadGet(num);
+
+        $piWeightTechnicality.attr("placeholder", "0.66");
+        $piWeightEconomy.attr("placeholder", "0.2");
+        $piWeightPolicy.attr("placeholder", "0.14");
+
+        $piWeightTechnicalityMin.text(0.52);
+        $piWeightTechnicalityMax.text(0.79);
+        $piWeightEconomyMin.text(0.15);
+        $piWeightEconomyMax.text(0.29);
+        $piWeightPolicyMin.text(0.07);
+        $piWeightPolicyMax.text(0.2);
+
+        $choseCategory.text("노후화대응 유형");
+
+        $wightBox.css("display","block");
+        $weightDiv.css("display","block");
+
+        $techTable.attr("rowspan",4);
+        $techUsabilityTr.css('display', 'none');
+        $techUrgencyTr.css("display","revert");
+        $techGoalTr.css("display","revert");
+
+        $ecoTable.attr("rowspan",2);
+        $ecoTh1.text("안전효용 개선 효율성");
+        $ecoTh2.text("자산가치 개선 효율성");
+
+        $polTable.attr("rowspan",3);
+        $polComplaintTr.css("display","revert");
+
+    }
+    else if($weight_Category==="기준변화") {
+
+        weightUploadGet(num);
+
+        $piWeightTechnicality.attr("placeholder", "0.24");
+        $piWeightEconomy.attr("placeholder", "0.48");
+        $piWeightPolicy.attr("placeholder", "0.28");
+
+        $piWeightTechnicalityMin.text(0.17);
+        $piWeightTechnicalityMax.text(0.3);
+        $piWeightEconomyMin.text(0.36);
+        $piWeightEconomyMax.text(0.58);
+        $piWeightPolicyMin.text(0.17);
+        $piWeightPolicyMax.text(0.39);
+
+        $wightBox.css("display","block");
+        $weightDiv.css("display","block");
+        $choseCategory.text("기준변화 유형");
+
+        $techTable.attr("rowspan",2);
+        $techUsabilityTr.css("display","none");
+        $techUrgencyTr.css("display","none");
+        $techGoalTr.css("display","none");
+
+        $ecoTable.attr("rowspan",2);
+        $ecoTh1.text("사업규모 등급");
+        $ecoTh2.text("사업효율 등급");
+
+        $polTable.attr("rowspan",2);
+        $polComplaintTr.css("display","none");
+
+    }
+    else if($weight_Category==="사용성변화") {
+
+        weightUploadGet(num);
+
+        $piWeightTechnicality.attr("placeholder", "0.19");
+        $piWeightEconomy.attr("placeholder", "0.39");
+        $piWeightPolicy.attr("placeholder", "0.42");
+
+        $piWeightTechnicalityMin.text(0.12);
+        $piWeightTechnicalityMax.text(0.29);
+        $piWeightEconomyMin.text(0.24);
+        $piWeightEconomyMax.text(0.47);
+        $piWeightPolicyMin.text(0.32);
+        $piWeightPolicyMax.text(0.5);
+
+        $wightBox.css("display","block");
+        $weightDiv.css("display","block");
+        $choseCategory.text("사용성변화 유형");
+
+        $techTable.attr("rowspan",3);
+        $techUsabilityTr.css("display","revert");
+        $techUrgencyTr.css("display","none");
+        $techGoalTr.css("display","none");
+
+        $ecoTable.attr("rowspan",2);
+        $ecoTh1.text("사업규모 등급");
+        $ecoTh2.text("사업효율 등급");
+
+        $polTable.attr("rowspan",3);
+        $polComplaintTr.css("display","revert");
+    }
+    else{
+        $wightBox.css("display","none");
+        $weightDiv.css("display","none");
+        $choseCategory.text("선택된 유형");
+        $piWeightTechnicality.val();
+        $piWeightEconomy.val();
+        $piWeightPolicy.val();
+    }
+}
+
+// 엑셀양식 다운로드
+function formDownload(){
+    const $weight_Category = $("#weight_Category").val();
+    if($weight_Category==="노후화대응"){
+        location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%EB%85%B8%ED%9B%84%ED%99%94%EB%8C%80%EC%9D%91_%EC%9C%A0%ED%98%95_%EC%96%91%EC%8B%9D.xlsx";
+    }else if($weight_Category==="기준변화") {
+        location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%EA%B8%B0%EC%A4%80%EB%B3%80%ED%99%94_%EC%9C%A0%ED%98%95_%EC%96%91%EC%8B%9D.xlsx";
+    }else if($weight_Category==="사용성변화") {
+        location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%EC%82%AC%EC%9A%A9%EC%84%B1%EB%B3%80%ED%99%94_%EC%9C%A0%ED%98%95_%EC%96%91%EC%8B%9D.xlsx";
+    }else{
+        alertCaution("유형을 선택해주세요.",1)
+        return false;
+    }
+}
+
+

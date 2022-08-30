@@ -21,8 +21,49 @@ function lifeDetailInputBack(){
 function lifeStandardCalculate(average, variance, resultId){
     const $ltDetailType = $("#ltDetailType").val();
 
-    if($ltDetailType === "2"){
-        // 탄산화깊이
+    // 반발경도
+    if($ltDetailType === "1"){
+        let num1 = $("#"+average).val();
+        let num2 =    $("#"+variance).val();
+
+        if(num1 === ""){
+            num1 = 1;
+        }
+        if(num2 === ""){
+            num2 = 1;
+        }
+
+        if (average === "ltYserviceAverage") {
+            const $ltYAverage = $("#ltYAverage");
+            if(num1<0.011){
+                $ltYAverage.val(1.9);
+            }else if(num1<0.010){
+                $ltYAverage.val(1.72);
+            }else if(num1<0.041){
+                $ltYAverage.val(1.32);
+            }else if(num1<0.077){
+                $ltYAverage.val(1);
+            }else if(num1<0.137){
+                $ltYAverage.val(0.87);
+            }else if(num1<0.274){
+                $ltYAverage.val(0.78);
+            }else if(num1<0.822){
+                $ltYAverage.val(0.7);
+            }else if(num1<1.37){
+                $ltYAverage.val(0.67);
+            }else if(num1<2.74){
+                $ltYAverage.val(0.65);
+            }else{
+                $ltYAverage.val(0.63);
+            }
+        }
+
+        const result = (num1 * num2)/100;
+        $("#"+resultId).val(result.toFixed(2));
+
+    }
+    // 탄산화깊이
+    else if($ltDetailType === "2" || $ltDetailType === "3" || $ltDetailType === "4"){
         let num1 = $("#"+average).val();
         let num2 =    $("#"+variance).val();
 
@@ -36,8 +77,9 @@ function lifeStandardCalculate(average, variance, resultId){
         const result = (num1 * num2)/100;
         $("#"+resultId).val(result.toFixed(2));
 
-    }else if($ltDetailType === "5"){
-        // 탄산화깊이 바닥판 3개
+    }
+    // 탄산화깊이 바닥판 3개
+    else if($ltDetailType === "5"){
         let num1 = $("#"+average).val();
         let num2 =  variance
 
@@ -69,9 +111,11 @@ function lifeStandardCalculate(average, variance, resultId){
                 }
             }else{
                 alertCaution("공용연수를 입력해주세요.", 1)
+                num1.val("");
             }
         }else{
             result = num1 * num2;
+            console.log("결과 : "+result);
             $("#"+resultId).val(result.toFixed(2));
         }
 
@@ -91,6 +135,65 @@ function lifeDetailTimeSave(){
 
         // console.log($ltDetailType)
 
+        // 반발경도 저장
+        if($ltDetailType === "1"){
+            if($("#ltFdAverage").val()==="") {
+                alertCaution("설계압축강도 평균값을 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltFdVariance").val()==="") {
+                alertCaution("설계압축강도 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltYserviceAverage").val()==="") {
+                alertCaution("공용연수 평균값을 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltYserviceVariance").val()==="") {
+                alertCaution("공용연수 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltYVariance").val()==="") {
+                alertCaution("재령계수 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltSAverage").val()==="") {
+                alertCaution("측량반발경도 평균값를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltSVariance").val()==="") {
+                alertCaution("측량반발경도 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            const $ltFdStandard = $("#ltFdStandard").val();
+            if($ltFdStandard==="Infinity" || $ltFdStandard ===0.0) {
+                lifeStandardCalculate('ltFdAverage', 'ltFdVariance', 'ltFdStandard')
+            }
+
+            const $ltYserviceStandard = $("#ltYserviceStandard").val();
+            if($ltYserviceStandard==="Infinity" || $ltYserviceStandard ===0.0) {
+                lifeStandardCalculate('ltYserviceAverage', 'ltYserviceVariance', 'ltYserviceStandard')
+            }
+
+            const $ltYStandard = $("#ltYStandard").val();
+            if($ltYStandard==="Infinity" || $ltYStandard ===0.0) {
+                lifeStandardCalculate('ltYAverage', 'ltYVariance', 'ltYStandard')
+            }
+
+            const $ltSStandard = $("#ltSStandard").val();
+            if($ltSStandard==="Infinity" || $ltSStandard ===0.0) {
+                lifeStandardCalculate('ltSAverage', 'ltSVariance', 'ltSStandard')
+            }
+
+            controllerUrl = "/api/lifedetail/hardness/save"
+        }
         // 탄산화깊이 저장
         if($ltDetailType === "2"){
             if($("#ltTdAverage").val()==="") {
@@ -157,34 +260,33 @@ function lifeDetailTimeSave(){
         }
         // 탄산화깊이 바닥판 3개 저장
         else if($ltDetailType === "5"){
-
             if($("#ltTdStandardPlate1").val()==="") {
-                alertCaution("바닥판1의 실측피복두께의<br>표준편차를 입력해주세요.", 1)
+                alertCaution("바닥판1의 실측피복두께의<br>평균값을 입력해주세요.", 1)
                 return false;
             }
 
             if($("#ltAStandardPlate1").val()==="") {
-                alertCaution("바닥판1의 탄산화속도계수를 <br>표준편차를 입력해주세요.", 1)
+                alertCaution("바닥판1의 탄산화속도계수를 <br>평균값을 입력해주세요.", 1)
                 return false;
             }
 
             if($("#ltCStandardPlate1").val()==="") {
-                alertCaution("바닥판1의 탄산화깊이를 <br>표준편차를 입력해주세요.", 1)
+                alertCaution("바닥판1의 탄산화깊이를 <br>평균값을 입력해주세요.", 1)
                 return false;
             }
 
             if($("#ltTdStandardPlate2").val()==="") {
-                alertCaution("바닥판2의 실측피복두께<br>표준편차를 입력해주세요.", 1)
+                alertCaution("바닥판2의 실측피복두께<br>평균값을 입력해주세요.", 1)
                 return false;
             }
 
             if($("#ltAStandardPlate2").val()==="") {
-                alertCaution("바닥판2의 탄산화속도계수 <br>표준편차를 입력해주세요.", 1)
+                alertCaution("바닥판2의 탄산화속도계수 <br>평균값을 입력해주세요.", 1)
                 return false;
             }
 
             if($("#ltCStandardPlate2").val()==="") {
-                alertCaution("바닥판2의 탄산화깊이 <br>표준편차를 입력해주세요.", 1)
+                alertCaution("바닥판2의 탄산화깊이 <br>평균값을 입력해주세요.", 1)
                 return false;
             }
 
@@ -209,11 +311,99 @@ function lifeDetailTimeSave(){
             }
 
             if($("#ltYStandard").val()==="") {
-                alertCaution("공용연수 조정계수의<br>표준편차를 입력해주세요.", 1)
+                alertCaution("공용연수 조정계수의<br>평균값을 입력해주세요.", 1)
                 return false;
             }
 
             controllerUrl = "/api/lifedetail/cabonationThreePlate/save"
+        }
+        // 균열깊이 저장
+        else if($ltDetailType === "3"){
+            if($("#ltTdAverage").val()==="") {
+                alertCaution("설계피복두께 평균값을 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltTdVariance").val()==="") {
+                alertCaution("설계피복두께 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltLAverage").val()==="") {
+                alertCaution("발·수신자 사이의 거리의<br>평균값을 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltLVariance").val()==="") {
+                alertCaution("발·수신자 사이의 거리의<br>변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltTcAverage").val()==="") {
+                alertCaution("균열이 있는경우 전달시간의<br>평균값을 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltTcVariance").val()==="") {
+                alertCaution("균열이 있는경우 전달시간의<br>변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltToAverage").val()==="") {
+                alertCaution("균열이 없는경우 전달시간의<br>평균값을 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltToVariance").val()==="") {
+                alertCaution("균열이 없는경우 전달시간의<br>변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltPublicYear").val()==="") {
+                alertCaution("공용연수를 입력해주세요.", 1)
+                return false;
+            }
+
+            controllerUrl = "/api/lifedetail/crack/save"
+        }
+        // 열화물침투량 저장
+        else if($ltDetailType === "4"){
+            if($("#ltFdAverage").val()==="") {
+                alertCaution("설계압축강도 평균값을 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltFdVariance").val()==="") {
+                alertCaution("설계압축강도 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltYserviceAverage").val()==="") {
+                alertCaution("공용연수 평균값을 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltYserviceVariance").val()==="") {
+                alertCaution("공용연수 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltYVariance").val()==="") {
+                alertCaution("재령계수 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltSAverage").val()==="") {
+                alertCaution("측량반발경도 평균값를 입력해주세요.", 1)
+                return false;
+            }
+
+            if($("#ltSVariance").val()==="") {
+                alertCaution("측량반발경도 변동계수를 입력해주세요.", 1)
+                return false;
+            }
+
+            controllerUrl = "/api/lifedetail/chloride/save"
         }
 
         const formData = new FormData(document.getElementById('lifeDetailForm'));
@@ -277,8 +467,8 @@ function lifeDetailTimeOutput(autoNum){
 
     if (accessToken == null || refreshToken == null || insert_id == null) {
         alertCaution("토큰이 만료되었습니다.<BR>다시 로그인해주세요.", 2);
-    } else {
-
+    }
+    else {
         console.log("호출성공 autoNum : "+autoNum);
 
         const params = {
@@ -316,104 +506,181 @@ function lifeDetailTimeOutput(autoNum){
                         console.log();
                         console.log(request.sendData.deviceData);
                         console.log();
-                    }else{
-                        $('#ltRecoveryOne').text(request.sendData.ltRecoveryList[0]);
-                        $('#ltRecoveryTwo').text(request.sendData.ltRecoveryList[1]);
-                        $('#ltRecoveryThree').text(request.sendData.ltRecoveryList[2]);
-                        $('#ltRecoveryFour').text(request.sendData.ltRecoveryList[3]);
-                        $('#ltRecoveryFive').text(request.sendData.ltRecoveryList[4]);
-                        $('#ltRecoverySix').text(request.sendData.ltRecoveryList[5]);
-
-                        $('#ltCostOne').text(request.sendData.ltCostList[0]);
-                        $('#ltCostTwo').text(request.sendData.ltCostList[1]);
-                        $('#ltCostThree').text(request.sendData.ltCostList[2]);
-                        $('#ltCostFour').text(request.sendData.ltCostList[3]);
-                        $('#ltCostFive').text(request.sendData.ltCostList[4]);
-                        $('#ltCostSix').text(request.sendData.ltCostList[5]);
-
-                        $('#ltRepairLength').text(request.sendData.ltRepairLength);
-                        $('#repairNum').text(request.sendData.repairNum);
-                        $('#repairCost').text(request.sendData.repairCost);
-
-
-                        $('#pf_max').text(request.sendData.pf_max);
-                        $('#pf_min').text(request.sendData.pf_min);
-
-                        $('#bmax').text(request.sendData.bmax);
-                        $('#ltTargetValue').text(request.sendData.ltTargetValue);
-
-                        $('#ltRecoveryPercent').text(request.sendData.ltRecoveryPercent+"%");
-                        $('#maxYear').text(request.sendData.maxYear);
-
-                        const publicYear = request.sendData.publicYear;
-                        const $noActionHeaderTable = $('#noActionHeaderTable');
-                        let html4= "";
-                        html4 += '<tr>';
-                        html4 += '<th style="width: 57px;text-align: center">'+'Time(Years)'+'</th>';
-                        for(let i=publicYear; i<publicYear+21; i++){
-                            html4 += '<th style="text-align: center;">'+i+'</th>';
-                        }
-                        html4 += '</tr>';
-                        $noActionHeaderTable.html(html4);
-
-                        const $actionHeaderTable = $('#actionHeaderTable');
-                        let html3 = "";
-                        html3 += '<tr>';
-                        html3 += '<th style="width: 57px;text-align: center">'+'Time(Years)'+'</th>';
-                        for(let i=publicYear; i<publicYear+21; i++){
-                            html3 += '<th style="text-align: center;">'+i+'</th>';
-                        }
-                        html3 += '</tr>';
-                        $actionHeaderTable.html(html3);
-
-                        const $noActionTable = $('#noActionTable');
-                        let html = "";
-                        html += '<tr>';
-                        html += '<td style="text-align: center;">'+'PF='+'</td>';
-                        for(let i=0; i<request.sendData.pfList.length; i++){
-                            html += '<td style="text-align: right;">'+request.sendData.pfList[i].toFixed(3)+'</td>';
-                        }
-                        html += '</tr>';
-                        html += '<tr>';
-                        html += '<td style="text-align: center;">'+'B='+'</td>';
-                        for(let i=0; i<request.sendData.bList.length; i++){
-                            if(Math.floor(request.sendData.bList[i]*10)/10<request.sendData.ltTargetValue){
-                                html += '<td style="text-align: right;color: red">'+request.sendData.bList[i].toFixed(3)+'</td>';
-                            }else{
-                                html += '<td style="text-align: right;">'+request.sendData.bList[i].toFixed(3)+'</td>';
-                            }
-                        }
-                        html += '</tr>';
-                        $noActionTable.html(html);
-
-                        const $actionTable = $('#actionTable');
-                        let html2 = "";
-                        html2 += '<tr>';
-                        html2 += '<td style="text-align: center;">'+'B1='+'</td>';
-                        for(let i=0; i<request.sendData.bOneList.length; i++){
-                            html2 += '<td style="text-align: right;">'+request.sendData.bOneList[i].toFixed(3)+'</td>';
-                        }
-                        html2 += '</tr>';
-                        html2 += '<tr>';
-                        html2 += '<td style="text-align: center;">'+'B2='+'</td>';
-                        for(let i=0; i<request.sendData.bTwoList.length; i++){
-                            html2 += '<td style="text-align: right;">'+request.sendData.bTwoList[i].toFixed(3)+'</td>';
-                        }
-                        html2 += '</tr>';
-                        $actionTable.html(html2);
-
+                    }
+                    else{
+                        // 공통변수명
                         let chartName;
-                        if(request.sendData.chartName === "carbonation"){
+                        if(request.sendData.chartName === "carbonation") {
                             chartName = "탄산화에 따른 철근부식 내구성";
                         }
+                        else if(request.sendData.chartName === "hardness") {
+                            chartName = "반발경도에 따른 내구성";
+                        }
+                        else if(request.sendData.chartName === "carbonationThreePlate") {
+                            chartName = "탄산화에 따른 철근부식 내구성 바닥판 3종";
+                        }
+                        else if(request.sendData.chartName === "crack") {
+                            chartName = "균열깊이에 따른 내구성";
+                        }
+                        else if(request.sendData.chartName === "chloride") {
+                            chartName = "열화물침투량에 따른 내구성";
+                        }
 
-                        console.log("무조치 시 차트데이터 : "+request.sendData.noactionChartDataList);
-                        console.log("유지보수 시 차트데이터 : "+request.sendData.actionChartDataList);
+                        if(request.sendData.repairYn === "N"){
+                            const publicYear = request.sendData.publicYear;
+                            const $noActionHeaderTable = $('#noActionHeaderTable');
+                            let html4= "";
+                            html4 += '<tr>';
+                            html4 += '<th style="width: 60px;text-align: center">'+'Time<br/>(Years)'+'</th>';
+                            for(let i=publicYear; i<publicYear+21; i++){
+                                html4 += '<th style="text-align: center;">'+i+'</th>';
+                            }
+                            html4 += '</tr>';
+                            $noActionHeaderTable.html(html4);
 
-                        // amChart
-                        chartResult(1);
-                        chartResult(2);
-                        function chartResult(num) {
+                            const $noActionTable = $('#noActionTable');
+                            let html = "";
+                            for(let a = 1; a<4; a++){
+                                html += '<tr>';
+                                html += '<td style="text-align: center;">'+'바닥판'+a+' PF ='+'</td>';
+                                let j = 0;
+                                for(let i=publicYear; i<publicYear+21; i++){
+                                    if(a===1){
+                                        html += '<td style="text-align: right;">'+request.sendData.b_List_before_plate1[j].toFixed(3)+'</td>';
+                                    }else if(a===2){
+                                        html += '<td style="text-align: right;">'+request.sendData.b_List_before_plate2[j].toFixed(3)+'</td>';
+                                    }else if(a===3){
+                                        html += '<td style="text-align: right;">'+request.sendData.b_List_before_plate3[j].toFixed(3)+'</td>';
+                                    }
+                                    j++
+                                }
+                                html += '</tr>';
+                            }
+                            $noActionTable.html(html);
+
+                            $('#pf_name').html("생애주기 목표값<br/>(성능유지 기준값)");
+                            $('#pf_max').text(request.sendData.ltTargetValue);
+                            $('#pf_min').text(request.sendData.pf_min.toFixed(3));
+                            chartResult(1,10);
+
+                            $("#noactionResultTalkBox").css("display","block");
+                            $("#actionTalkBox").css("display","none");
+                            $("#ltRecoveryTalkBox").css("display","none");
+                        }
+                        else{
+                            $('#ltRecoveryOne').text(request.sendData.ltRecoveryList[0]);
+                            $('#ltRecoveryTwo').text(request.sendData.ltRecoveryList[1]);
+                            $('#ltRecoveryThree').text(request.sendData.ltRecoveryList[2]);
+                            $('#ltRecoveryFour').text(request.sendData.ltRecoveryList[3]);
+                            $('#ltRecoveryFive').text(request.sendData.ltRecoveryList[4]);
+                            $('#ltRecoverySix').text(request.sendData.ltRecoveryList[5]);
+
+                            $('#ltCostOne').text(request.sendData.ltCostList[0]);
+                            $('#ltCostTwo').text(request.sendData.ltCostList[1]);
+                            $('#ltCostThree').text(request.sendData.ltCostList[2]);
+                            $('#ltCostFour').text(request.sendData.ltCostList[3]);
+                            $('#ltCostFive').text(request.sendData.ltCostList[4]);
+                            $('#ltCostSix').text(request.sendData.ltCostList[5]);
+
+                            $('#ltRepairLength').text(request.sendData.ltRepairLength);
+                            $('#repairNum').text(request.sendData.repairNum);
+                            $('#repairCost').text(request.sendData.repairCost);
+
+
+                            $('#pf_max').text(request.sendData.pf_max);
+                            $('#pf_min').text(request.sendData.pf_min);
+
+                            $('#bmax').text(request.sendData.bmax);
+                            $('#ltTargetValue').text(request.sendData.ltTargetValue);
+
+                            $('#ltRecoveryPercent').text(request.sendData.ltRecoveryPercent+"%");
+                            $('#maxYear').text(request.sendData.maxYear);
+
+                            const publicYear = request.sendData.publicYear;
+                            const $noActionHeaderTable = $('#noActionHeaderTable');
+                            let html4= "";
+                            html4 += '<tr>';
+                            html4 += '<th style="width: 60px;text-align: center">'+'Time<br/>(Years)'+'</th>';
+                            for(let i=publicYear; i<publicYear+21; i++){
+                                html4 += '<th style="text-align: center;">'+i+'</th>';
+                            }
+                            html4 += '</tr>';
+                            $noActionHeaderTable.html(html4);
+
+                            const $actionHeaderTable = $('#actionHeaderTable');
+                            let html3 = "";
+                            html3 += '<tr>';
+                            html3 += '<th style="width: 60px;text-align: center">'+'Time<br/>(Years)'+'</th>';
+                            for(let i=publicYear; i<publicYear+21; i++){
+                                html3 += '<th style="text-align: center;">'+i+'</th>';
+                            }
+                            html3 += '</tr>';
+                            $actionHeaderTable.html(html3);
+
+                            const $noActionTable = $('#noActionTable');
+                            let html = "";
+                            html += '<tr>';
+                            html += '<td style="text-align: center;">'+'PF='+'</td>';
+                            for(let i=0; i<request.sendData.pfList.length; i++){
+                                html += '<td style="text-align: right;">'+request.sendData.pfList[i].toFixed(3)+'</td>';
+                            }
+                            html += '</tr>';
+                            html += '<tr>';
+                            html += '<td style="text-align: center;">'+'B='+'</td>';
+                            for(let i=0; i<request.sendData.bList.length; i++){
+                                if(Math.floor(request.sendData.bList[i]*10)/10<request.sendData.ltTargetValue){
+                                    html += '<td style="text-align: right;color: red">'+request.sendData.bList[i].toFixed(3)+'</td>';
+                                }else{
+                                    html += '<td style="text-align: right;">'+request.sendData.bList[i].toFixed(3)+'</td>';
+                                }
+                            }
+                            html += '</tr>';
+                            $noActionTable.html(html);
+
+                            const $actionTable = $('#actionTable');
+                            let html2 = "";
+                            html2 += '<tr>';
+                            html2 += '<td style="text-align: center;">'+'B1='+'</td>';
+                            for(let i=0; i<request.sendData.bOneList.length; i++){
+                                html2 += '<td style="text-align: right;">'+request.sendData.bOneList[i].toFixed(3)+'</td>';
+                            }
+                            html2 += '</tr>';
+                            html2 += '<tr>';
+                            html2 += '<td style="text-align: center;">'+'B2='+'</td>';
+                            for(let i=0; i<request.sendData.bTwoList.length; i++){
+                                html2 += '<td style="text-align: right;">'+request.sendData.bTwoList[i].toFixed(3)+'</td>';
+                            }
+                            html2 += '</tr>';
+                            $actionTable.html(html2);
+
+                            // console.log("무조치 시 차트데이터 : "+request.sendData.noactionChartDataList);
+                            // console.log("유지보수 시 차트데이터 : "+request.sendData.actionChartDataList);
+
+                            // amChart
+                            // 탄산화깊이(carbonation), 반발경도(hardness), 균열깊이(crack), 염화물침투량(chloride)
+                            if(request.sendData.chartName === "carbonation" || request.sendData.chartName === "hardness"
+                                || request.sendData.chartName === "crack" || request.sendData.chartName === "chloride") {
+                                console.log("차트만들기");
+                                console.log(request.sendData.noactionChartDataList);
+                                console.log(request.sendData.actionChartDataList);
+                                chartResult(1,1);
+                                if(request.sendData.actionChartDataList.length === 0){
+                                    $("#actionTalkBox_font").css('display','block'); // 여기에 유지보수가 필요없습니다.
+                                    $("#actionTable").css('display','none');
+                                    $("#ltRecoveryTalkBox").css('display','none'); // 보수보강비용 표도 가리기
+                                }else{
+                                    chartResult(2,2);
+                                }
+                            }
+
+                            // 탄산화깊이 바닥판3개
+                            if(request.sendData.chartName === "carbonationThreePlate") {
+                                chartResult(1,10);
+                                chartResult(2,11);
+                            }
+                        }
+
+                        function chartResult(chartNum, num) {
                             am4core.ready(function () { // am4core 시작
 
                                 // 테마설정
@@ -430,28 +697,47 @@ function lifeDetailTimeOutput(autoNum){
                                 // Y축 차트 생성
                                 let yAxis
 
-                                if (num === 1) {
+                                if(chartNum===1){
+                                    // 첫번째 차트
                                     chart = am4core.create("amChart1", am4charts.XYChart);
+                                }else{
+                                    // 두번째 차트
+                                    chart = am4core.create("amChart2", am4charts.XYChart);
+                                }
+
+                                title = chart.titles.create();
+                                xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
+                                yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+                                if (num === 1) {
+                                    title.text = chartName+" - 유지보수 무조치 시";
                                     chart.data = request.sendData.noactionChartDataList;
 
-                                    title = chart.titles.create();
-                                    title.text = chartName+" - 유지보수 무조치 시";
-
-                                    xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
-                                    yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
                                     createSeries("noaction", "무조치 시 성능지수", am4core.color("#2b2b8d"), am4core.color("#ffffff")); // 무조치 시
-                                } else {
-                                    chart = am4core.create("amChart2", am4charts.XYChart);
-                                    chart.data = request.sendData.actionChartDataList;
-
-                                    title = chart.titles.create();
+                                    yAxis.max = Number(request.sendData.bmax.toFixed(0)) + Number(1.0);
+                                }
+                                else if(num === 2) {
                                     title.text = chartName+" - 유지보수 유지보수 개입 시";
-
-                                    xAxis = chart.xAxes.push(new am4charts.CategoryAxis);
-                                    yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
+                                    chart.data = request.sendData.actionChartDataList;
                                     createSeries("action", "유지보수 개입 시 성능지수", am4core.color("#309830"), am4core.color("#ffffff")); // 유지보수 개입시
+                                    yAxis.max = Number(request.sendData.bmax.toFixed(0)) + Number(1.0);
+                                }
+
+                                // 탄산화깊이 바닥판3개
+                                else if(num === 10) {
+                                    title.text = chartName+" - 유지보수 무조치 시";
+                                    chart.data = request.sendData.noactionChartDataList;
+
+                                    createSeries("noaction_plate1", "바닥판1", am4core.color("#ff0000"), am4core.color("#ffffff")); // 무조치 시
+                                    createSeries("noaction_plate2", "바닥판2", am4core.color("#1100fd"), am4core.color("#ffffff")); // 무조치 시
+                                    createSeries("noaction_plate3", "바닥판3", am4core.color("#089f00"), am4core.color("#ffffff")); // 무조치 시
+                                    yAxis.max = Number(request.sendData.bmax2.toFixed(0)) + Number(1.0);
+                                }
+                                else if(num === 11) {
+                                    chart.data = request.sendData.actionChartDataList;
+                                    title.text = chartName+" - 유지보수 유지보수 개입 시";
+                                    createSeries("action_plate", "바닥판", am4core.color("#309830"), am4core.color("#ffffff")); // 무조치 시'
+                                    yAxis.max = Number(request.sendData.bmax.toFixed(0)) + Number(1.0);
                                 }
 
                                 // 차트 제목
@@ -465,7 +751,7 @@ function lifeDetailTimeOutput(autoNum){
                                 // Y축 차트 온셥
                                 yAxis.title.text = "성능(신뢰성) 지수";
                                 yAxis.min = 1.0;
-                                yAxis.max = Number(request.sendData.bmax.toFixed(0)) + Number(1.0);
+
 
                                 // 차트옵션 설정 + 차트설명박스(완)
                                 function createSeries(field, name, lineColor, textColor) {
@@ -544,11 +830,12 @@ function lifeDetailTimeOutput(autoNum){
                                 }];
                             });
                         }
+
                         $("#noactionLoadingBar").hide();
                         $("#actionLoadingBar").hide();
                     }
-
-                } else {
+                }
+                else {
                     if (request.err_msg2 === null) {
                         alertCaution(request.err_msg, 1);
                     } else {

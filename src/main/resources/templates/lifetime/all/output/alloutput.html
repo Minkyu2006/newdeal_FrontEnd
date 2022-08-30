@@ -52,11 +52,15 @@
 								<col />
 								<col />
 								<col />
+								<col />
+								<col />
 							</colgroup>
 							<thead>
 								<tr>
 									<th style="text-align: center">교량코드</th>
 									<th style="text-align: center">교량명</th>
+									<th style="text-align: center">교량형식</th>
+									<th style="text-align: center">현재 상태등급</th>
 									<th style="text-align: center">경간수</th>
 									<th style="text-align: center">세부부재명</th>
 								</tr>
@@ -65,6 +69,8 @@
 								<tr>
 									<td style="text-align: center" id="ltBridgeCode"></td>
 									<td style="text-align: center" id="ltBridgeName"></td>
+									<td style="text-align: center" id="ltAbsence"></td>
+									<td style="text-align: center" id="ltAllRank"></td>
 									<td style="text-align: center" id="ltSpanNum"></td>
 									<td style="text-align: center" id="ltAbsenceName"></td>
 								</tr>
@@ -114,41 +120,51 @@
 								<col />
 								<col />
 								<col />
+								<col />
 							</colgroup>
 							<thead>
 								<tr>
-									<th style="text-align: center" colspan="4">대표보수 보강공법 수행효과</th>
+									<th style="text-align: center" colspan="4">대표 보수 보강공법 수행효과</th>
+								</tr>
+								<tr>
+									<th colspan="2" style="text-align: center">보수·보강 조치 전</th>
+									<th colspan="2" style="text-align: center">보수·보강 조치 후</th>
+									<th rowspan="2" style="text-align: center">비용(원)</th>
 								</tr>
 								<tr>
 									<th style="text-align: center">등급</th>
-									<th style="text-align: center">수행 전 손상지수</th>
-									<th style="text-align: center">수행 후 손상지수</th>
-									<th style="text-align: center">비용(원)</th>
+									<th style="text-align: center">손상지수</th>
+									<th style="text-align: center">등급</th>
+									<th style="text-align: center">손상지수</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td style="text-align: center">B</td>
-									<td style="text-align: center" id="damageBRankBefore"></td>
+									<td style="text-align: center" id="damageBScoreBefore"></td>
 									<td style="text-align: center" id="damageBRankAfter"></td>
+									<td style="text-align: center" id="damageBScoreAfter"></td>
 									<td style="text-align: right" id="damageBCost"></td>
 								</tr>
 								<tr>
 									<td style="text-align: center">C</td>
-									<td style="text-align: center" id="damageCRankBefore"></td>
+									<td style="text-align: center" id="damageCScoreBefore"></td>
 									<td style="text-align: center" id="damageCRankAfter"></td>
+									<td style="text-align: center" id="damageCScoreAfter"></td>
 									<td style="text-align: right" id="damageCCost"></td>
 								</tr>
 								<tr>
 									<td style="text-align: center">D</td>
-									<td style="text-align: center" id="damageDRankBefore"></td>
+									<td style="text-align: center" id="damageDScoreBefore"></td>
 									<td style="text-align: center" id="damageDRankAfter"></td>
+									<td style="text-align: center" id="damageDScoreAfter"></td>
 									<td style="text-align: right" id="damageDCost" ></td>
 								</tr>
 								<tr>
 									<td style="text-align: center">E</td>
-									<td style="text-align: center" id="damageERankBefore"></td>
+									<td style="text-align: center" id="damageEScoreBefore"></td>
 									<td style="text-align: center" id="damageERankAfter"></td>
+									<td style="text-align: center" id="damageEScoreAfter"></td>
 									<td style="text-align: right" id="damageECost"></td>
 								</tr>
 							</tbody>
@@ -192,19 +208,19 @@
 									<th style="text-align: center">정기점검</th>
 									<td style="text-align: center" id="ltPeriodicFrequency"></td>
 									<td style="text-align: right" id="ltPeriodicCost"></td>
-									<td style="text-align: center">1년에 2회</td>
+									<td style="text-align: center" id="ltPeriodicYearNum"></td>
 								</tr>
 								<tr>
 									<th style="text-align: center">정밀점검</th>
 									<td style="text-align: center" id="ltCloseFrequency"></td>
 									<td style="text-align: right" id="ltCloseCost"></td>
-									<td style="text-align: center">2년에 1회</td>
+									<td style="text-align: center" id="ltCloseYearNum"></td>
 								</tr>
 								<tr>
 									<th style="text-align: center">정밀안전진단</th>
 									<td style="text-align: center" id="ltSafetyFrequency"></td>
 									<td style="text-align: right" id="ltSafetyCost"></td>
-									<td style="text-align: center">10년 1회 수행후 5년에 1회</td>
+									<td style="text-align: center" id="ltSafetyYearNum">5년에 1회</td>
 								</tr>
 							</tbody>
 						</table>
@@ -259,9 +275,12 @@
 				</div>
 
 				<div class="talk__box">
-					<div class="performance-output" style="font-size: 20px;font-weight: bold;">
-						결과 : <span id="result1" style="color: red"></span> 분석 결과, 무조치시 사용수명은 <span id="result2" style="color: red"></span>이고,
-						현행 유지관리 시, 총 <span id="result3" style="color: red"></span>의 보수보강을 수행하며, 생애주기비용은 <span id="result4" style="color: red"></span> 입니다.
+					<div class="performance-output" style="font-size: 20px;font-weight: bold;line-height: 1.4">
+<!--						결과 : <span id="result1" style="color: red"></span> 분석 결과, 무조치시 사용수명은 <span id="result2" style="color: red"></span>이고,-->
+<!--						선제적 유지관리 시, 총 <span id="result3" style="color: red"></span>의 보수보강을 수행하며, 생애주기비용은 <span id="result4" style="color: red"></span> 입니다.-->
+						결과 : <span id="result1" style="color: red"></span> 분석 결과, 선제적 유지관리 시, 총 <span id="result3" style="color: red"></span>의 보수보강을 수행하며, 생애주기비용은 <span id="result4" style="color: red"></span> 입니다.
+						<br/>
+						결과 : <span id="result5" style="color: red"></span> 분석 결과, 선제적 유지관리 시, 현행 유지관리 대비 <span id="result6" style="color: red"></span>의 비용을 절감할 수 있습니다.
 					</div>
 				</div>
 
@@ -321,6 +340,12 @@
 						</table>
 					</div>
 				</div>
+
+<!--				<div class="talk__box">-->
+<!--					<div class="performance-output" style="font-size: 20px;font-weight: bold;">-->
+<!--						결과 : <span style="color: red">00교</span> 분석 결과, 선제적 유지관리시, 현행 유지관리 대비 <span style="color: red">원</span>의 비용을 절감할 수 있습니다.-->
+<!--					</div>-->
+<!--				</div>-->
 
 			</div>
 		</div>

@@ -95,6 +95,8 @@ const grids = {
                 showRowNumColumn : false,
                 showStateColumn : false,
                 enableFilter : false,
+                rowHeight : 30,
+                headerHeight : 30,
             };
 
         },

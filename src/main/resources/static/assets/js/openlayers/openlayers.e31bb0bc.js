@@ -72732,7 +72732,7 @@ function initData() {
     //     none: "none"
     // };
     var apiurl = $("#backend_protocol").val() + "://" + $("#backend_url").val() + "/api/env/tunnel/list"; // 호출할 백엔드 API
-    // console.log("apiurl : "+apiurl)
+    console.log("apiurl : "+apiurl)
     $.ajax({
         url: apiurl,
         type: 'post',

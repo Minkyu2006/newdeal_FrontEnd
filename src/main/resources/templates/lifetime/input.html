@@ -22,24 +22,41 @@
 		// 평가할 열화인자 선택 후 부재생성
 		function choseServiceOnchange(num){
 			const $absence = $("#absence");
+			const $choseSelectName = $("#choseSelectName");
+			const $allChoseAbsence = $("#allChoseAbsence");
 
 			let html = '';
 			if(num === 0){
-				html += '<option value="plate">바닥판</option>';
-				html += '<option value="girder">거더</option>';
+				html += '<option value="1">RC 슬래브교</option>';
+				html += '<option value="2">라멘교</option>';
+				html += '<option value="3">PSC I형교</option>';
+				html += '<option value="4">강상자형교</option>';
+				html += '<option value="5">RC T형교</option>';
+				html += '<option value="6">PSC Box형교</option>';
+				html += '<option value="7">PSC 슬래브교</option>';
+				html += '<option value="8">Preflex형교</option>';
+
+				$choseSelectName.text("교량형식를 선택해주세요.");
+				$allChoseAbsence.css("display","block");
 			}else if(num === 1){
+
 				html += '<option value="hardness">반발경도</option>';
-				html += '<option value="carbonation">탄산화깊이</option>';
+				html += '<option value="carbonation">탄산화깊이(시스템 모델 포함)</option>';
 				html += '<option value="crack">균열깊이</option>';
-				html += '<option value="deterioration">열화물침투량</option>';
+				html += '<option value="chloride">열화물침투량</option>';
+
+				$choseSelectName.text("부재를 선택해주세요.");
+				$allChoseAbsence.css("display","none");
+				$("input:radio[name='choseAbsence']").prop('checked', false);
 			}else{
 				html += '<option value="">평가할 열화인자를 선택해주세요.</option>';
 			}
+			$("#carbonationLi").css("display","none");
 			$absence.html(html);
 		}
 
-		// 이진혁박사 인풋페이지 이동
-		function stateinput(){
+		// 이진혁박사, 권기현박사 인풋페이지 이동
+		function inputMove(){
 			let $absence = $("#absence").val();
 			const $service = $('input:radio[name="choseService"]:checked').val();
 			if($absence === null){
@@ -49,7 +66,13 @@
 			// console.log("absence : "+$absence);
 			if($absence !== ""){
 				if($service==="all"){
-					location.href = "/lifetime/stateinput/"+$absence;
+					const $choseAbsence = $('input:radio[name="choseAbsence"]:checked').val();
+					// console.log("$choseAbsence : "+$choseAbsence);
+					if($choseAbsence===undefined) {
+						alertCaution("부재를 선택해주세요.",1);
+						return false;
+					}
+					location.href = "/lifetime/all/"+$choseAbsence+"/"+$absence;
 				}else{
 					if($absence === "carbonation"){
 						const $carbonationLi = $('input:radio[name="carbonationLi"]:checked').val();
@@ -57,19 +80,24 @@
 
 						if($carbonationLi !== undefined){
 
-							if($carbonationLi === "carbonation"){
+							if($carbonationLi === "carbonation" || $carbonationLi === "carbonationPlateThree"){
 								location.href = "/lifetime/detail/"+$carbonationLi;
-							}else if($carbonationLi === "carbonationPlateThree"){
-								location.href = "/lifetime/detail/"+$carbonationLi;
-							}else{
+							} else{
 								alertCaution("해당 페이지는 개발중입니다.",1)
 							}
 
 						}else{
 							alertCaution("추가부재를 선택해주세요.",1)
 						}
+					}else if($absence === "hardness") {
+						location.href = "/lifetime/detail/"+$absence;
+					}else if($absence === "crack") {
+						location.href = "/lifetime/detail/"+$absence;
+					}else if($absence === "chloride") {
+						location.href = "/lifetime/detail/"+$absence;
 					}else{
 						alertCaution("해당 페이지는 개발중입니다.",1)
+						return false;
 					}
 				}
 			}else{
@@ -82,6 +110,8 @@
 		function absenceOnchange(){
 			if($("#absence").val() ==="carbonation"){
 				$("#carbonationLi").css("display","block");
+			}else{
+				$("#carbonationLi").css("display","none");
 			}
 		}
 
@@ -118,11 +148,35 @@
 									</li>
 								</ul>
 							</li>
-							<li>
+							<li id="allChoseAbsence">
 								<h4>부재를 선택해주세요.</h4>
+								<ul class="c-radio-group">
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="plate" name="choseAbsence" value="plate" class="c-radio__input" />
+											<label for="plate" class="c-radio__label">바닥판</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="girder" name="choseAbsence" value="girder" class="c-radio__input" />
+											<label for="girder" class="c-radio__label">거더</label>
+										</div>
+									</li>
+								</ul>
+							</li>
+							<li >
+								<h4 id="choseSelectName">교량형식을 선택해주세요.</h4>
 								<div class="c-select">
-									<select id="absence" class="c-select__input" onchange=absenceOnchange()>
-										<option value="">평가할 열화인자를 선택해주세요.</option>
+									<select id="absence" class="c-select__input" onchange="absenceOnchange()">
+										<option value="1">RC 슬래브교</option>
+										<option value="2">라멘교</option>
+										<option value="3">PSC I형교</option>
+										<option value="4">강상자형교</option>
+										<option value="5">RC T형교</option>
+										<option value="6">PSC Box형교</option>
+										<option value="7">PSC 슬래브교</option>
+										<option value="8">Preflex형교</option>
 									</select>
 								</div>
 							</li>
@@ -174,7 +228,7 @@
 				<div class="talk__console">
 					<ul>
 						<li>
-							<a onclick="stateinput()" class="c-button c-button--point">next</a>
+							<a onclick="inputMove()" class="c-button c-button--point">next</a>
 						</li>
 					</ul>
 				</div>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2" xmlns="http://www.w3.org/1999/html">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<style>
+
+	</style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+		})
+	</script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<h2 class="content__heading">안내문</h2>
+	<section class="section non-padding">
+		<div class="section__head">
+			<h3 class="section__heading">교량 관리 실행계획 수립 지원 서비스</h3>
+		</div>
+		<div class="section__content">
+			<article class="article">
+				<h4 class="article__heading">1. 서비스 개요</h4>
+				<div class="article__info">
+					<div class="article__info-step">
+						<p>가. 본 서비스는 기반시설관리법에 따라 관리주체가 매년 수립하여야 하는 “관리 실행계획” 작성을 지원합니다.</p>
+						<div class="talk__comment">제9조의2(기반시설 관리실행계획의 수립ㆍ시행) 주요조항 발췌 [본조신설 2021. 12. 7.], [시행일: 2022. 12. 8.]<br />
+							① 관리주체는 관리계획에 따라 소관 기반시설에 대한 관리실행계획(이하 “실행계획”이라 한다)을 매년 수립ㆍ시행하여야 한다.<br />
+							② 관리주체는 실행계획을 수립ㆍ변경한 경우 관리감독기관의 장에게 제출하여야 한다.<br />
+							⑤ 관리주체는 수립된 실행계획에 따라 기반시설을 유지관리하여야 한다.
+						</div>
+					</div>
+
+					<div class="article__info-step">
+						<p>나. 본 서비스의 주요 기능은 다음과 같습니다.</p>
+						<ul class="article__info-list">
+							<li>1) 교량 유지보수 사업들 간의 우선순위 선정  차기년도 예산신청 자료 작성에 활용</li>
+							<li>2) 가용예산/점검진단 순위에 따른 교량 유지보수 사업 내용 최적화  교량 관리 실행계획 수립에 활용</li>
+						</ul>
+					</div>
+
+					<div class="article__info-step">
+						<p>다. 본 서비스에 적용된 사업/공법 우선순위 평가 기법은 다음을 고려하여 개발되었습니다.</p>
+						<ul class="article__info-list">
+							<li>1) 기반시설관리법에 따른 “성능개선 공통기준”의 평가 체계</li>
+							<li>2) 시설물안전법에 따른 점검진단 우선순위 및 조례 상 조치기준</li>
+							<li>3) 국토교통부 교량관리매뉴얼에 따른 사업 우선순위 선정 지침</li>
+						</ul>
+					</div>
+					<div class="article__info-step">
+						<p>비고: 사업 평가 방법론은 한국건설기술연구원에서 자체 고안한 사항으로, 각 지자체의 판단 기준(결과)과 다를 수 있습니다. <br />평가 방법에 대한 상세 내용은 매뉴얼을 참조해 주세요.</p>
+					</div>
+				</div>
+			</article>
+
+			<article class="article">
+				<h4 class="article__heading">2. 서비스 사용 안내</h4>
+				<div class="article__info-step">
+					<p>가. 본 서비스는 독립으로 추진되는 유지보수/성능개선 사업들을 대상으로 합니다.</p>
+				</div>
+				<div class="article__info-step">
+					<p>나. 그 외 점검진단, 연간단가 계약사업, 기타 사업비, 부대비용은 직접 입력합니다.</p>
+				</div>
+				<div class="article__info-step">
+					<p>다. 사업추진 대상 교량의 일반정보와 점검진단 결과, 분석옵션 등을 플랫폼 제공 양식에 맞추어 작성하고 업로드 합니다.</p>
+				</div>
+				<div class="article__info-step">
+					<p>라. 서비스가 제공하는 주요 결과물은 다음과 같습니다.</p>
+					<ul class="article__info-list">
+						<li>1) 차기년도 교량 관리 사업계획 및 예산요청 리포트 - 사업개요, 사업별 우선순위 평가 내역, 적정 예산요청액, 조례 준수를 위한 최소 예산요청액 등</li>
+						<li>2) 가용예산 반영 유지보수 사업 최적화 및 교량 관리 실행계획 리포트 - 사업개요, 공법별 우선순위 평가 내역, 사업별 사업내용 조정결과, 실행계획 리포트</li>
+					</ul>
+				</div>
+				<div class="article__info-step">
+					<p>마. 서비스 활용과 관련된 교량 관리주체의 업무와 플랫폼의 지원 사항은 아래 그림을 참조하세요.</p>
+					<div class="article__info-img">
+						<img src="/assets/images/bridgemanagement_info.png" alt="서비스 사용 안내도">
+					</div>
+				</div>
+			</article>
+
+			<article class="article">
+				<h4 class="article__heading">3. 유의사항</h4>
+				<div class="article__info-step">
+					<p>가. 본 서비스는 기반시설관리법 상 의무적용 사항이 아니며, 활용에 대한 책임은 사용자 본인에게 있습니다.</p>
+				</div>
+				<div class="article__info-step">
+					<p>나. 더 정확한 활용을 위해 플랫폼에서 제공하는 매뉴얼을 숙지하여 주시기 바랍니다.</p>
+				</div>
+				<div class="article__info-step">
+					<p>다. 본 서비스는 초기 프로토타입 버전으로, 활용 시 발견되는 오류, 버그, 더 나은 활용을 보장하기 위한 제안은 handaeseok@kict.re.kr으로 제보해 주시기 바랍니다.</p>
+				</div>
+			</article>
+
+			<div class="article article">
+				<h4 class="article__heading">2022년 9월 Open 예정</h4>
+			</div>
+		</div>
+	</section>
+</div>
+</html>

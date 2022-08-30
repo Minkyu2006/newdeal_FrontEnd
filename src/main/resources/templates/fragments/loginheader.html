@@ -18,10 +18,17 @@
 <!--						<li class="nav__item"><a href="/admin/accountreg" onclick="readyPage()" class="nav__link">사용자 등록</a></li>-->
 						<li class="nav__item"><a href="/admin/mastercodereg" class="nav__link">마스터코드 관리</a></li>
 						<li class="nav__item"><a href="/admin/teamreg" class="nav__link">부서등록</a></li>
-						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">사용자 등록</a></li>
-						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">센서 등록</a></li>
+						<li class="nav__item"><a href="/noticelist" class="nav__link">공지사항</a></li>
+<!--						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">사용자 등록</a></li>-->
+<!--						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">센서 등록</a></li>-->
 						<li class="nav__item"><a href="/admin/lifetimeall" class="nav__link">부재별 평균열화율 수치 등록</a></li>
 						<li class="nav__item"><a href="/admin/performance" class="nav__link">성능개선 사업평가 참조 테이블</a></li>
+					</ul>
+				</li>
+				<li class="nav__item">
+					<a href="#" class="nav__link toggle">교량 관리 실행계획 수립 서비스</a>
+					<ul id="header_seven" class="nav__list-depth">
+						<li class="nav__item"><a href="/bridgemanagement/information" class="nav__link">교량 관리 실행계획 수립 지원 서비스</a></li>
 					</ul>
 				</li>
 				<li class="nav__item">
@@ -49,6 +56,7 @@
 						<li class="nav__item"><a href="/iot" class="nav__link">IoT 센서 데이터 계측</a></li>
 <!--						<li class="nav__item"><a href="/ltd/datasearch" class="nav__link">장기조사실험체 계측 데이터 공유 서비스</a></li>-->
 						<li class="nav__item"><a href="/old/input" class="nav__link">노후도 평가 및 예측</a></li>
+						<li class="nav__item"><a href="/old/newinput" class="nav__link">노후도 평가 및 예측_2022</a></li>
 					</ul>
 				</li>
 				<li class="nav__item">
@@ -58,6 +66,8 @@
 						<li id="safetyInput" style="display: none" class="nav__item"><a href="/resistance/safetyinput" class="nav__link">계측 기반 안전성 추정 데이터 제공 입력</a></li>
 						<li class="nav__item"><a href="/resistance/safetyoutput" class="nav__link">계측 기반 안전성 추정 데이터 제공 서비스</a></li>
 						<li class="nav__item"><a href="/resistance/earthquake" class="nav__link">교량의 내진성능 추정 서비스</a></li>
+						<li class="nav__item"><a href="/resistance/predictintro" class="nav__link">계측데이터의 관리기준치 설정 서비스</a></li>
+						<li class="nav__item"><a href="/resistance/costprediction" class="nav__link">유지관리 기술 선정 및 비용예측</a></li>
 						<!-- <li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">손상 확산 예측 서비스</a></li>
 						<li class="nav__item"><a href="#" onclick="readyPage()" class="nav__link">AI기반 확장 열화모델</a></li>-->
 					</ul>
@@ -175,12 +185,14 @@
 		}
 
 		function logout(){
+			setCookie("serviceAlert",null, 0);
 			setCookie("JwtAccessToken",null, 0);
 			setCookie("JwtRefreshToken",null, 0);
 			setCookie("insert_id",null, 0);
 			setCookie("username",null, 0);
 			setCookie("teamcode",null, 0);
 			setCookie("teamname",null, 0);
+			setCookie("sensorData",null, 0);
 			location.href="/login"
 		}
 	</script>

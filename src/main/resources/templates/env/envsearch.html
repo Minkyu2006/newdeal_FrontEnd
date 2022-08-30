@@ -6,11 +6,14 @@
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/assets/js/openlayers/openlayers.e31bb0bc.css">
+	<link rel="stylesheet" href="/assets/js/openlayers/ol.css">
 </th:block>
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
+	<script src="/assets/js/proj4js/proj4js-combined.min.js"></script>
+	<script src="/assets/js/openlayers/ol.js"></script>
+	<script src="/assets/js/min_js_dir/newdeal/env/envsearch.js"></script>
 	<script>
 
 		$(function(){
@@ -55,31 +58,137 @@
 					</div>
 
 					<!-- 열화환경 선택 -->
-					<div class="map__radio">
-						<ul>
+<!--					<div class="map__radio">-->
+<!--						<ul>-->
+<!--							<li>-->
+<!--								<div class="c-radio">-->
+<!--									<input type="radio" id="total" class="c-radio__input" name="layergroup" value="TOTAL_GRADE2" checked="checked">-->
+<!--									<label for="total" class="c-radio__label">종합염분환경</label>-->
+<!--								</div>-->
+<!--							</li>-->
+<!--							<li>-->
+<!--								<div class="c-radio">-->
+<!--									<input type="radio" id="nacl" class="c-radio__input" name="layergroup" value="NACL-2">-->
+<!--									<label for="nacl" class="c-radio__label">비래염분</label>-->
+<!--								</div>-->
+<!--							</li>-->
+<!--							<li>-->
+<!--								<div class="c-radio">-->
+<!--									<input type="radio" id="dm" class="c-radio__input" name="layergroup" value="Dm">-->
+<!--									<label for="dm" class="c-radio__label">제설제</label>-->
+<!--								</div>-->
+<!--							</li>-->
+<!--							<li>-->
+<!--								<div class="c-radio">-->
+<!--									<input type="radio" id="fte" class="c-radio__input" name="layergroup" value="FTe">-->
+<!--									<label for="fte" class="c-radio__label" value="">동결융해</label>-->
+<!--								</div>-->
+<!--							</li>-->
+<!--						</ul>-->
+<!--					</div>-->
+
+					<div class="map__tree">
+						<ul class="c-tree">
 							<li>
-								<div class="c-radio">
-									<input type="radio" id="total" class="c-radio__input" name="layergroup" value="TOTAL" checked="checked">
-									<label for="total" class="c-radio__label">종합염분환경</label>
+								<div class="c-tree__title">
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" id="total" name="layergroup" value="TOTAL_GRADE2" data-env="total" checked />
+										<label for="total" class="c-radio__label">종합염분환경</label>
+									</div>
 								</div>
 							</li>
 							<li>
-								<div class="c-radio">
-									<input type="radio" id="nacl" class="c-radio__input" name="layergroup" value="NACL">
-									<label for="nacl" class="c-radio__label">비래염분</label>
+								<div class="c-tree__title">
+<!--									<span class="c-tree__toggle"></span>-->
+									<div class="c-radio">
+										<input type="radio" class="c-radio__input" id="nacl" name="layergroup" value="NACL-2" data-env="nacl" />
+										<label for="nacl" class="c-radio__label">비래염분</label>
+									</div>
 								</div>
 							</li>
 							<li>
-								<div class="c-radio">
-									<input type="radio" id="dm" class="c-radio__input" name="layergroup" value="DM">
-									<label for="dm" class="c-radio__label">제설제</label>
+								<div class="c-tree__title">
+									<span class="c-tree__toggle"></span>
+									<span>제설제</span>
+<!--									<div class="c-radio">-->
+<!--										<input type="radio" class="c-radio__input" id="dm" name="layergroup" />-->
+<!--										<label for="dm" class="c-radio__label">제설제</label>-->
+<!--									</div>-->
 								</div>
+								<ul class="c-tree__nested">
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="dm0817" name="layergroup" value="2008-2017_DM" data-env="dm" />
+											<label for="dm0817" class="c-radio__label">2008-2017</label>
+										</div>
+									</li>
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="dm0918" name="layergroup" value="2009-2018_DM" data-env="dm" />
+											<label for="dm0918" class="c-radio__label">2009-2018</label>
+										</div>
+									</li>
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="dm1019" name="layergroup" value="2010-2019_DM" data-env="dm" />
+											<label for="dm1019" class="c-radio__label">2010-2019</label>
+										</div>
+									</li>
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="dm1120" name="layergroup" value="2011-2020_DM" data-env="dm" />
+											<label for="dm1120" class="c-radio__label">2011-2020</label>
+										</div>
+									</li>
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="dm1221" name="layergroup" value="2012-2021_DM" data-env="dm" />
+											<label for="dm1221" class="c-radio__label">2012-2021</label>
+										</div>
+									</li>
+								</ul>
 							</li>
 							<li>
-								<div class="c-radio">
-									<input type="radio" id="fte" class="c-radio__input" name="layergroup" value="FTe">
-									<label for="fte" class="c-radio__label">동결융해</label>
+								<div class="c-tree__title">
+									<span class="c-tree__toggle"></span>
+									<span>동결융해</span>
+<!--									<div class="c-radio">-->
+<!--										<input type="radio" class="c-radio__input" id="fte" name="layergroup" />-->
+<!--										<label for="fte" class="c-radio__label">동결융해</label>-->
+<!--									</div>-->
 								</div>
+								<ul class="c-tree__nested">
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="fte0817" name="layergroup" value="2008-2017_FTe" data-env="fte" />
+											<label for="fte0817" class="c-radio__label">2008-2017</label>
+										</div>
+									</li>
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="fte0918" name="layergroup" value="2009-2018_FTe" data-env="fte" />
+											<label for="fte0918" class="c-radio__label">2009-2018</label>
+										</div>
+									</li>
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="fte1019" name="layergroup" value="2010-2019_FTe" data-env="fte" />
+											<label for="fte1019" class="c-radio__label">2010-2019</label>
+										</div>
+									</li>
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="fte1120" name="layergroup" value="2011-2020_FTe" data-env="fte" />
+											<label for="fte1120" class="c-radio__label">2011-2020</label>
+										</div>
+									</li>
+									<li>
+										<div class="c-radio">
+											<input type="radio" class="c-radio__input" id="fte1221" name="layergroup" value="2012-2021_FTe" data-env="fte" />
+											<label for="fte1221" class="c-radio__label">2012-2021</label>
+										</div>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</div>
@@ -87,58 +196,22 @@
 
 				<!-- 원본 맵 -->
 				<div class="l-map__origin">
-					<div class="map" id="map">
-						<div id="popupTunnel" class="map-popup">
-							<h5 class="map-popup__title name"></h5>
-							<ul>
-								<li><span class="map-popup__item-title">시설명</span><span class="popup__item-value name"></span></li>
-								<li><span class="map-popup__item-title">종합등급</span><span class="popup__item-value total"></span></li>
-								<li><span class="map-popup__item-title">동해환경</span><span class="popup__item-value east"></span></li>
-								<li><span class="map-popup__item-title">제설제</span><span class="popup__item-value snow"></span></li>
-								<li><span class="map-popup__item-title">염해환경</span><span class="popup__item-value salt"></span></li>
-								<li><span class="map-popup__item-title">교통량</span><span class="popup__item-value trafficrating"></span></li>
-							</ul>
-							<a href="#" class="map-popup__close"><img src="/assets/images/icon__x.png" alt="팝업닫기"></a>
-						</div>
-
-						<div id="popupPoint" class="map-popup">
-							<h5 class="map-popup__title name"></h5>
-							<ul>
-								<li><span class="map-popup__item-title">지점명</span><span class="popup__item-value name"></span></li>
-								<li><span class="map-popup__item-title">지점번호</span><span class="popup__item-value number"></span></li>
-								<li><span class="map-popup__item-title">해발고도</span><span class="popup__item-value altitude"></span></li>
-							</ul>
-							<a href="#" class="map-popup__close"><img src="/assets/images/icon__x.png" alt="팝업닫기"></a>
-						</div>
-
-						<div id="popupBridge" class="map-popup">
-							<h5 class="map-popup__title bridgeName"></h5>
-							<ul>
-								<li><span class="map-popup__item-title">교량명</span><span class="popup__item-value bridgeName"></span></li>
-								<li><span class="map-popup__item-title">종합등급</span><span class="popup__item-value bridgeTotal"></span></li>
-								<li><span class="map-popup__item-title">동해환경</span><span class="popup__item-value bridgeEast"></span></li>
-								<li><span class="map-popup__item-title">제설제</span><span class="popup__item-value bridgeSnow"></span></li>
-								<li><span class="map-popup__item-title">염화환경</span><span class="popup__item-value bridgeSalt"></span></li>
-								<li><span class="map-popup__item-title">교통량</span><span class="popup__item-value bridgeTraffic"></span></li>
-							</ul>
-							<a href="#" class="map-popup__close"><img src="/assets/images/icon__x.png" alt="팝업닫기"></a>
-						</div>
-					</div>
+					<div class="map" id="map1"></div>
 				</div>
 
 				<div class="l-map__sub">
 					<!-- 확대 맵 -->
-					<div class="l-map__zoom"></div>
+					<div class="l-map__zoom" id="map2"></div>
 
 					<!-- 범례 -->
 					<div class="l-map__legend">
 						<div class="map__legend">
-							<div class="map__legend-total open">
+							<div class="map__legend-item map__legend-total open">
 								<span class="map__legend-total-color"></span>
 								<p>색이 진할수록 염분환경이 나쁨</p>
 							</div>
 
-							<div class="map__legend-nacl">
+							<div class="map__legend-item map__legend-nacl">
 								<table class="">
 									<colgroup>
 										<col />
@@ -177,7 +250,7 @@
 								</table>
 							</div>
 
-							<ul class="map__legend-dm">
+							<ul class="map__legend-item map__legend-dm">
 								<li>
 									<span class="color"></span><span class="legend">3일 미만</span>
 								</li>
@@ -198,7 +271,7 @@
 								</li>
 							</ul>
 
-							<ul class="map__legend-fte">
+							<ul class="map__legend-item map__legend-fte">
 								<li>
 									<span class="color"></span><span class="legend">1 미만</span>
 								</li>
@@ -223,9 +296,9 @@
 
 					<!-- 시설정보 -->
 					<div class="l-map__facility">
-						<div class="l-map__facility-item">
+						<div class="l-map__facility-item" id="pointTable">
 							<h4 class="article__head"><span id="pointName">시설명</span></h4>
-							<table class="c-table">
+							<table class="c-table c-table--border">
 								<colgroup>
 									<col style="width: 100px;" />
 									<col />
@@ -247,9 +320,9 @@
 							</table>
 						</div>
 
-						<div class="l-map__facility-item active">
+						<div class="l-map__facility-item active" id="tunnelTable">
 							<h4 class="article__head"><span id="structureName">시설명</span></h4>
-							<table class="c-table">
+							<table class="c-table c-table--border">
 								<colgroup>
 									<col style="width: 100px;" />
 									<col />
@@ -308,9 +381,9 @@
 							</table>
 						</div>
 
-						<div class="l-map__facility-item">
+						<div class="l-map__facility-item" id="bridgeTable">
 							<h4 class="article__head"><span id="bridgeName">시설명</span></h4>
-							<table class="c-table">
+							<table class="c-table c-table--border">
 								<colgroup>
 									<col style="width: 100px;" />
 									<col />
@@ -355,7 +428,7 @@
 				<!-- 설명 -->
 				<div class="l-map__descriptive">
 					<div class="l-map__info">
-						<div class="l-map__info-item active">
+						<div class="l-map__info-item l-map__info-item--fte">
 							<h3>동해 환경지도</h3>
 							<ul class="Environmental">
 								<li>
@@ -397,7 +470,7 @@
 							</table>
 						</div>
 
-						<div class="l-map__info-item">
+						<div class="l-map__info-item l-map__info-item--dm">
 							<h3>제설제 염해 환경지도</h3>
 							<ul class="Environmental">
 								<li>
@@ -443,7 +516,7 @@
 							</table>
 						</div>
 
-						<div class="l-map__info-item">
+						<div class="l-map__info-item l-map__info-item--nacl l-map__info-item--total active">
 							<h3>비래염분 염해 환경지도</h3>
 							<ul class="Environmental">
 								<li>
@@ -536,6 +609,6 @@
     </section>
 
     
-	<script src="/assets/js/openlayers/openlayers.e31bb0bc.js"></script>
+<!--	<script src="/assets/js/openlayers/openlayers.e31bb0bc.js"></script>-->
 </div>
 </html>

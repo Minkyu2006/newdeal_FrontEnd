@@ -21,7 +21,7 @@
 					<ul>
 						<li>
 							<div class="c-select">
-								<select id="weight_Category" name="weightCategory" class="c-select__input">
+								<select id="weight_Category" onchange="categoryClick(this.value,2)" name="weightCategory" class="c-select__input">
 									<option value="">유형을 선택해주세요.</option>
 									<option value="노후화대응">노후화 유형</option>
 									<option value="기준변화">기준변화 유형</option>
@@ -389,165 +389,28 @@
 	</div>
 </div>
 
-<script>
+<script type="text/javascript">
 	$(function() {
+
+		const  autoNum = $("#autoNum").val();
+		if(autoNum!==""){
+			console.log("파일업로드 데이터 호출하기");
+			const urlParams = new URL(location.href).searchParams;
+			const category = urlParams.get('category');
+			console.log("category : "+category);
+			$("#weight_Category").val(category);
+			weightRadioBtn("yes");
+			categoryClick(category,1);
+		}else{
+			$('#group2').prop("checked", true);
+		}
+
 		// 업로드할 파일명 불러오기
 		$('#excelfile').change(function() {
 			const file = $(this).val().split('\\').pop();
 			$('.c-file__input').val(file);
 		});
 
-		$('#group2').prop("checked", true);
-
-		document.getElementById("weight_Category").onchange = function(){
-			const $wightBox = $("#wightBox");
-			const $weight_Category = $("#weight_Category").val();
-			const $weightDiv = $("#weightDiv");
-
-			const $choseCategory = $("#choseCategory");
-			const $piWeightTechnicality = $("#piWeightTechnicality");
-			const $piWeightEconomy = $("#piWeightEconomy");
-			const $piWeightPolicy = $("#piWeightPolicy");
-
-			const $piWeightTechnicalityMin = $("#piWeightTechnicalityMin");
-			const $piWeightTechnicalityMax = $("#piWeightTechnicalityMax");
-
-			const $piWeightEconomyMin = $("#piWeightEconomyMin");
-			const $piWeightEconomyMax = $("#piWeightEconomyMax");
-
-			const $piWeightPolicyMin = $("#piWeightPolicyMin");
-			const $piWeightPolicyMax = $("#piWeightPolicyMax");
-
-			const $techTable = $("#techTable");
-			const $ecoTable = $("#ecoTable");
-			const $polTable = $("#polTable");
-
-			const $techUsabilityTr = $("#techUsabilityTr");
-			const $techUrgencyTr = $("#techUrgencyTr");
-			const $techGoalTr = $("#techGoalTr");
-
-			const $ecoTh1 = $("#ecoTh1");
-			const $ecoTh2 = $("#ecoTh2");
-
-			const $polComplaintTr = $("#polComplaintTr");
-
-			if($weight_Category==="노후화대응"){
-
-				weightUploadGet();
-
-				$piWeightTechnicality.attr("placeholder", "0.66");
-				$piWeightEconomy.attr("placeholder", "0.2");
-				$piWeightPolicy.attr("placeholder", "0.14");
-				$piWeightTechnicalityMin.text(0.52);
-				$piWeightTechnicalityMax.text(0.79);
-				$piWeightEconomyMin.text(0.15);
-				$piWeightEconomyMax.text(0.29);
-				$piWeightPolicyMin.text(0.07);
-				$piWeightPolicyMax.text(0.2);
-
-				$choseCategory.text("노후화대응 유형");
-
-				$wightBox.css("display","block");
-				$weightDiv.css("display","block");
-
-				$techTable.attr("rowspan",4);
-				$techUsabilityTr.css('display', 'none');
-				$techUrgencyTr.css("display","revert");
-				$techGoalTr.css("display","revert");
-
-				$ecoTable.attr("rowspan",2);
-				$ecoTh1.text("안전효용 개선 효율성");
-				$ecoTh2.text("자산가치 개선 효율성");
-
-				$polTable.attr("rowspan",3);
-				$polComplaintTr.css("display","revert");
-
-			}
-			else if($weight_Category==="기준변화") {
-
-				weightUploadGet();
-
-				$piWeightTechnicality.attr("placeholder", "0.24");
-				$piWeightEconomy.attr("placeholder", "0.48");
-				$piWeightPolicy.attr("placeholder", "0.28");
-				$piWeightTechnicalityMin.text(0.17);
-				$piWeightTechnicalityMax.text(0.3);
-				$piWeightEconomyMin.text(0.36);
-				$piWeightEconomyMax.text(0.58);
-				$piWeightPolicyMin.text(0.17);
-				$piWeightPolicyMax.text(0.39);
-
-				$wightBox.css("display","block");
-				$weightDiv.css("display","block");
-				$choseCategory.text("기준변화 유형");
-
-				$techTable.attr("rowspan",2);
-				$techUsabilityTr.css("display","none");
-				$techUrgencyTr.css("display","none");
-				$techGoalTr.css("display","none");
-
-				$ecoTable.attr("rowspan",2);
-				$ecoTh1.text("사업규모 등급");
-				$ecoTh2.text("사업효율 등급");
-
-				$polTable.attr("rowspan",2);
-				$polComplaintTr.css("display","none");
-
-			}
-			else if($weight_Category==="사용성변화") {
-
-				weightUploadGet();
-
-				$piWeightTechnicality.attr("placeholder", "0.19");
-				$piWeightEconomy.attr("placeholder", "0.39");
-				$piWeightPolicy.attr("placeholder", "0.42");
-				$piWeightTechnicalityMin.text(0.12);
-				$piWeightTechnicalityMax.text(0.29);
-				$piWeightEconomyMin.text(0.24);
-				$piWeightEconomyMax.text(0.47);
-				$piWeightPolicyMin.text(0.32);
-				$piWeightPolicyMax.text(0.5);
-
-				$wightBox.css("display","block");
-				$weightDiv.css("display","block");
-				$choseCategory.text("사용성변화 유형");
-
-				$techTable.attr("rowspan",3);
-				$techUsabilityTr.css("display","revert");
-				$techUrgencyTr.css("display","none");
-				$techGoalTr.css("display","none");
-
-				$ecoTable.attr("rowspan",2);
-				$ecoTh1.text("사업규모 등급");
-				$ecoTh2.text("사업효율 등급");
-
-				$polTable.attr("rowspan",3);
-				$polComplaintTr.css("display","revert");
-			}
-			else{
-				$wightBox.css("display","none");
-				$weightDiv.css("display","none");
-				$choseCategory.text("선택된 유형");
-				$piWeightTechnicality.val();
-				$piWeightEconomy.val();
-				$piWeightPolicy.val();
-			}
-		}
-
 	});
-
-	function formDownload(){
-		const $weight_Category = $("#weight_Category").val();
-		if($weight_Category==="노후화대응"){
-			location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%EB%85%B8%ED%9B%84%ED%99%94%EB%8C%80%EC%9D%91_%EC%9C%A0%ED%98%95_%EC%96%91%EC%8B%9D.xlsx";
-		}else if($weight_Category==="기준변화") {
-			location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%EA%B8%B0%EC%A4%80%EB%B3%80%ED%99%94_%EC%9C%A0%ED%98%95_%EC%96%91%EC%8B%9D.xlsx";
-		}else if($weight_Category==="사용성변화") {
-			location.href = "https://newdealexcel.s3.ap-northeast-2.amazonaws.com/%EC%82%AC%EC%9A%A9%EC%84%B1%EB%B3%80%ED%99%94_%EC%9C%A0%ED%98%95_%EC%96%91%EC%8B%9D.xlsx";
-		}else{
-			alertCaution("유형을 선택해주세요.",1)
-			return false;
-		}
-	}
 
 </script>

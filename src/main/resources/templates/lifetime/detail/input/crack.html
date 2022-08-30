@@ -20,39 +20,32 @@
 			$("#header_two").addClass(' show');
 			recoverySelectBox();
 
-			$('#ltYAverage').focusout(function() {
-				aSpeedCalculate($("#ltYAverage").val(),$("#ltCAverage").val());
-			});
-			$('#ltCAverage').focusout(function() {
-				aSpeedCalculate($("#ltYAverage").val(),$("#ltCAverage").val());
-			});
-
 		});
 	</script>
 </th:block>
 
 <div layout:fragment="content" class="content">
-	<input type="text" id="absence" th:value="${absence}" readonly="readonly" />
+	<input type="hidden" id="absence" th:value="${absence}" readonly="readonly" />
 	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
 	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
 	<div class="content__inner">
-		<h2 class="content__heading">생애주기 의사결정 지원 서비스 - 부재 세부부분 - 탄산화깊이</h2>
+		<h2 class="content__heading">생애주기 의사결정 지원 서비스 - 부재 세부부분 - 균열깊이</h2>
 		<div class="lifetime">
 			<div class="talk">
 
 				<form id="lifeDetailForm" enctype="multipart/form-data">
 
 				<input type="hidden" name="ltDetailAutonum" id="ltDetailAutonum" value="" class="c-text__input" readonly="readonly" />
-				<input type="hidden" name="ltDetailType" id="ltDetailType" value="2" class="c-text__input" readonly="readonly" />
+				<input type="hidden" name="ltDetailType" id="ltDetailType" value="3" class="c-text__input" readonly="readonly" />
 
 				<div class="talk__box">
 					<div class="talk__header">
-						<h3>1. 탄산화깊이 입력 변수</h3>
+						<h3>1. 균열깊이 입력 변수</h3>
 					</div>
 					<div class="talk__contents">
 						<table class="c-table c-table--border">
 							<colgroup>
-								<col />
+								<col style="width: 80px" />
 								<col />
 								<col />
 								<col />
@@ -60,7 +53,7 @@
 							</colgroup>
 							<thead>
 							<tr>
-								<th colspan="2">내구성 탄산화깊이 - 입력 변수</th>
+								<th colspan="2">내구성 균열깊이 - 입력 변수</th>
 								<th>평균값</th>
 								<th>변동계수</th>
 								<th>표준편차</th>
@@ -69,79 +62,81 @@
 							<tbody>
 								<tr>
 									<th>Td</th>
-									<th>실측피복두께</th>
+									<th>실측피복두께(mm)</th>
 									<td>
-										<div class="c-text"><input type="text" name="ltTdAverage" id="ltTdAverage" onfocusout="lifeStandardCalculate('ltTdAverage','ltTdVariance','ltTdStandard')" placeholder="ex) 75.0" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+										<div class="c-text"><input type="text" name="ltTdAverage" id="ltTdAverage" onfocusout="lifeStandardCalculate('ltTdAverage','ltTdVariance','ltTdStandard')" placeholder="ex) 121.0" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
 									</td>
                                     <td>
                                         <div class="c-text">
                                             <div class="c-text c-text--unit">
-												<input type="text" name="ltTdVariance" id="ltTdVariance" class="c-text__input" onfocusout="lifeStandardCalculate('ltTdAverage','ltTdVariance','ltTdStandard')"  placeholder="ex) 12.8" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+												<input type="text" name="ltTdVariance" id="ltTdVariance" class="c-text__input" onfocusout="lifeStandardCalculate('ltTdAverage','ltTdVariance','ltTdStandard')"  placeholder="ex) 6" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
 												<span class="c-text__unit">%</span>
 											</div>
                                         </div>
                                     </td>
 									<td>
+										<div class="c-text"><input type="text" name="ltTdStandard" id="ltTdStandard" class="c-text__input" style="color: black" readonly="readonly" placeholder="자동계산" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+								</tr>
+								<tr>
+									<th>L</th>
+									<th>발·수신자 사이의 거리(mm)</th>
+									<td>
+										<div class="c-text"><input type="text" name="ltLAverage" id="ltLAverage" class="c-text__input" onfocusout="lifeStandardCalculate('ltLAverage','ltLVariance','ltLStandard')" placeholder="ex) 200" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+									<td>
 										<div class="c-text">
-											<div class="c-text c-text--unit">
-												<input type="text" name="ltTdStandard" id="ltTdStandard" style="color: black" readonly="readonly" class="c-text__input" placeholder="자동계산" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
-												<span class="c-text__unit">%</span>
-											</div>
+											<div class="c-text c-text--unit"><input type="text" name="ltLVariance" id="ltLVariance" class="c-text__input" onfocusout="lifeStandardCalculate('ltLAverage','ltLVariance','ltLStandard')" placeholder="ex) 2" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
+										</div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltLStandard" id="ltLStandard" class="c-text__input" style="color: black" readonly="readonly" placeholder="자동계산" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+								</tr>
+								<tr>
+									<th>Tc</th>
+									<th>균열 있는경우 전달시간</th>
+									<td>
+										<div class="c-text"><input type="text" name="ltTcAverage" id="ltTcAverage" class="c-text__input" onfocusout="lifeStandardCalculate('ltTcAverage','ltTcVariance','ltTcStandard')" placeholder="ex) 76" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+                                    <td>
+                                        <div class="c-text">
+                                            <div class="c-text c-text--unit"><input type="text" name="ltTcVariance" id="ltTcVariance" class="c-text__input" onfocusout="lifeStandardCalculate('ltTcAverage','ltTcVariance','ltTcStandard')" placeholder="ex) 5" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
+                                        </div>
+                                    </td>
+									<td>
+										<div class="c-text"><input type="text" name="ltTcStandard" id="ltTcStandard" class="c-text__input" style="color: black" readonly="readonly" placeholder="자동계산" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+								</tr>
+								<tr>
+									<th>To</th>
+									<th>균열 없는경우 전달시간(km/sec)</th>
+									<td>
+										<div class="c-text"><input type="text" name="ltToAverage" id="ltToAverage" class="c-text__input" onfocusout="lifeStandardCalculate('ltToAverage','ltToVariance','ltToStandard')" placeholder="ex) 60" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+									<td>
+										<div class="c-text">
+											<div class="c-text c-text--unit"><input type="text" name="ltToVariance" id="ltToVariance" class="c-text__input" onfocusout="lifeStandardCalculate('ltToAverage','ltToVariance','ltToStandard')" placeholder="ex) 5" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
+										</div>
+									</td>
+									<td>
+										<div class="c-text"><input type="text" name="ltToStandard" id="ltToStandard" class="c-text__input" style="color: black" readonly="readonly" placeholder="자동계산" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+									</td>
+								</tr>
+
+								<tr>
+									<th colspan="4" style="text-align: center">공용연수</th>
+									<td>
+										<div class="c-text">
+											<input type="text" name="ltPublicYear" id="ltPublicYear" class="c-text__input" onkeyup="return delHangle(event)" />
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<th>Y</th>
-									<th>공용연수</th>
-									<td>
-										<div class="c-text"><input type="text" name="ltYAverage" placeholder="ex) 30" id="ltYAverage" onfocusout="lifeStandardCalculate('ltYAverage','ltYVariance','ltYStandard')" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
-									</td>
-                                    <td>
-                                        <div class="c-text">
-                                            <div class="c-text c-text--unit"><input type="text" name="ltYVariance" id="ltYVariance" onfocusout="lifeStandardCalculate('ltYAverage','ltYVariance','ltYStandard')" class="c-text__input" placeholder="ex) 2" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
-                                        </div>
-                                    </td>
-									<td>
-										<div class="c-text"><input type="text" name="ltYStandard" id="ltYStandard" style="color: black" readonly="readonly" class="c-text__input" placeholder="자동계산" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
-									</td>
-								</tr>
-								<tr>
-									<th>A</th>
-									<th>탄산화속도계수</th>
-									<td>
-										<div class="c-text"><input type="text" name="ltAAverage" id="ltAAverage" style="color: black" readonly="readonly" placeholder="자동계산" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
-									</td>
-                                    <td>
-                                        <div class="c-text">
-                                            <div class="c-text c-text--unit"><input type="text" name="ltAVariance" id="ltAVariance" onfocusout="lifeStandardCalculate('ltAAverage','ltAVariance','ltAStandard')" class="c-text__input" placeholder="ex) 10" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
-                                        </div>
-                                    </td>
-									<td>
-										<div class="c-text"><input type="text" name="ltAStandard" id="ltAStandard" style="color: black" readonly="readonly" placeholder="자동계산" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
-									</td>
-								</tr>
-								<tr>
-									<th>C</th>
-									<th>탄산화깊이</th>
-									<td>
-										<div class="c-text"><input type="text" name="ltCAverage" id="ltCAverage" class="c-text__input" onfocusout="lifeStandardCalculate('ltCAverage','ltCVariance','ltCStandard')" placeholder="ex) 40" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
-									</td>
-                                    <td>
-                                        <div class="c-text">
-                                            <div class="c-text c-text--unit"><input type="text" name="ltCVariance" id="ltCVariance" class="c-text__input" onfocusout="lifeStandardCalculate('ltCAverage','ltCVariance','ltCStandard')" placeholder="ex) 10" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /><span class="c-text__unit">%</span></div>
-                                        </div>
-                                    </td>
-									<td>
-										<div class="c-text"><input type="text" name="ltCStandard" id="ltCStandard" class="c-text__input" style="color: black" readonly="readonly" placeholder="자동계산" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
-									</td>
-								</tr>
-								<tr>
-
-								<tr>
 									<th colspan="4" style="text-align: center">시뮬레이션 횟수</th>
 									<td>
 										<div class="c-text">
-											<input type="number" name="ltSimulation" id="ltSimulation" class="c-text__input" value="50000" placeholder="기본값 : 50000" />
+											<input type="text" name="ltSimulation" id="ltSimulation" class="c-text__input" value="50000" placeholder="기본값 : 50000" readonly="readonly" />
 										</div>
 									</td>
 								</tr>

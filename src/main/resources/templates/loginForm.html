@@ -82,6 +82,7 @@
 				success: function (res) {
 					setCookie("username",res.sendData.accountData.username, 10); // 발행시간은 5시간으로설정
 					setCookie("teamcode",res.sendData.accountData.teamcode, 10); // 발행시간은 5시간으로설정
+
 					location.href="/loginindex"
 				}
 			});
@@ -109,6 +110,11 @@
 			});
 		}
 
+		function regPass(){
+			// 2022-07-27 김병철박사 -> 회원가입 막아달라 연락옴.
+			alertCaution("현재는 회원가입을 하실 수 없습니다.",1);
+		}
+
 	</script>
 </th:block>
 
@@ -131,7 +137,9 @@
 					<label><input type="password" class="login__input" id="password" name="password" placeholder="패스워드를 입력하세요." required></label>
 				</div>
 				<div><input class="login__btn" type="button" value="로그인" onclick="loginActive()" /></div>
-				<div><a class="login__btn" href="/register">회원가입</a></div>
+<!--				<div><a class="login__btn" href="/register">회원가입</a></div>-->
+				<!-- 2022-07-27 김병철박사 -> 회원가입 막아달라 연락옴. -->
+				<div><a class="login__btn" onclick="regPass()">회원가입</a></div>
 		</div>
 	</div>
 </div>

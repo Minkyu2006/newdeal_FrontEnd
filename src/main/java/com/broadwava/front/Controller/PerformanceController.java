@@ -83,7 +83,7 @@ public class PerformanceController{
 
     // 성능개선사업평가 Output
     @RequestMapping("output/{autoNum}")
-    public String output(Model model,@PathVariable String autoNum){
+    public String output(Model model, @PathVariable String autoNum){
         model.addAttribute("autoNum", autoNum);
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);

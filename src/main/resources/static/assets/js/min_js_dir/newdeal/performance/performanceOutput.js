@@ -54,8 +54,12 @@ function call_performance(autoNum){
 
                     const piBusiness = request.sendData.piBusiness;
                     const typeName = request.sendData.typeName
+                    const piFileYn = request.sendData.piFileYn
+                    $("#piFileYn").val(piFileYn);
+                    $("#category").val(piBusiness);
                     console.log("사업구분 : " + piBusiness);
                     console.log("시설유형 : "+ typeName);
+                    console.log("파일업로드여부 : "+ piFileYn);
                     console.log("");
 
                     console.log("각 데이터");
@@ -956,8 +960,8 @@ function call_performance(autoNum){
 
 // 사업내용 조정 및 재평가(수정하기) 버튼
 function backBtn(){
-    console.log("수정하기 버튼 클릭");
-    location.href = '/performance/input?autoNum='+$("#autoNum").val();
+    // console.log("수정하기 버튼 클릭");
+    location.href = '/performance/input?autoNum='+$("#autoNum").val()+'&piFileYn='+$("#piFileYn").val()+'&category='+$("#category").val();
 }
 
 

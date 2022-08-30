@@ -35,21 +35,22 @@ public class LifetimeController{
     }
 
     // 상태평가 전체부분 input
-    @RequestMapping("stateinput/{absence}")
-    public String state_input(Model model,@PathVariable String absence){
+    @RequestMapping("all/{choseAbsence}/{absence}")
+    public String state_input(Model model,@PathVariable String choseAbsence, @PathVariable String absence){
         model.addAttribute("absence", absence);
+        model.addAttribute("choseAbsence", choseAbsence);
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
-        return "lifetime/stateinput";
+        return "lifetime/all/input/allinput";
     }
     
     // 상태평가 전체부분 output
-    @RequestMapping("stateoutput/{id}")
+    @RequestMapping("all/{id}")
     public String state_output(Model model,@PathVariable Long id){
         model.addAttribute("getid", id);
         model.addAttribute("backend_url", backend_url);
         model.addAttribute("backend_protocol", backend_protocol);
-        return "lifetime/stateoutput";
+        return "lifetime/all/output/alloutput";
     }
 
     // 상태평가 세부부분 input
