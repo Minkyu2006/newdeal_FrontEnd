@@ -1,7 +1,0 @@
-@charset "utf-8";
-
-/* 세로 중앙 정렬 */
-.aui-grid-default-header,
-.aui-grid-default-column {
-    vertical-align: middle;
-}
