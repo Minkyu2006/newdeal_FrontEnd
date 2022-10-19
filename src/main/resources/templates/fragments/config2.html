@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head th:fragment="configFragment">
+		<meta charset="UTF-8" />
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" /> -->
+		<meta name="viewport" content="width=1440">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta http-equiv="p3p" content='CP="CAO DSP AND SO " policyref="/w3c/p3p.xml"' />
+
+		<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/jquery-ui.min.js"></script>
+		<script src="/assets/js/broadwave.common.js"></script>
+		<script src="/assets/js/common-pc.js"></script>
+		<script src="/assets/js/broadwave.ajax.js"></script>
+		<script src="/assets/js/charts/Chart.min.js"></script>
+		<script src="/assets/js/charts/ChartBundle.min.js"></script>
+		<script src="/assets/js/d3/d3.js"></script>
+		<script src="/assets/js/c3/c3.js"></script>
+		<script src="/assets/js/braodwave-chart.js"></script>
+
+		<!-- 차트에 필요한 JS 추가 2021.08.18 -->
+		<!-- am chart 4 -->
+		<script src="/assets/js/min_js_dir/charts/am/core.js"></script>
+		<script src="/assets/js/min_js_dir/charts/am/charts.js"></script>
+		<script src="/assets/js/min_js_dir/charts/am/material.js"></script>
+		<script src="/assets/js/min_js_dir/charts/am/ko_KR.js"></script>
+		<script src="/assets/js/min_js_dir/charts/am/animated.js"></script>
+		<script src="/assets/js/min_js_dir/charts/am/bullets.js"></script>
+
+		<!-- am chart 5 -->
+		<script src="/assets/js/amcharts5/index.js"></script>
+		<script src="/assets/js/amcharts5/xy.js"></script>
+		<script src="/assets/js/amcharts5/themes/Animated.js"></script>
+		<script src="/assets/js/amcharts5/locales/ko_KR.js"></script>
+		<!--<script src="/assets/js/amcharts5/geoData/southKoreaHigh.js"></script>-->
+		<script src="/assets/js/amcharts5/fonts/notosans-kr.js"></script>
+
+
+		<!-- AUIGrid 2022.04.06 -->
+		<link href="/assets/js/AUIGrid/AUIGrid_blue_style.css" rel="stylesheet">
+		<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+		<script type="text/javascript" src="/assets/js/AUIGrid/AUIGridLicense.js"></script>
+		<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.-->
+		<script type="text/javascript" src="/assets/js/AUIGrid/AUIGrid.js"></script>
+
+		<!-- Minkyu가 등록한 파일들 -->
+		<link rel="stylesheet" href="/assets/js/min_js_dir/alert/min_alert.css" />
+		<script src="/assets/js/min_js_dir/alert/min_alert.js"></script>
+		<script src="/assets/js/min_js_dir/token_js/jwtToken.js"></script>
+		<script src="/assets/js/min_js_dir/newdeal/min_js.js"></script>
+		<script src="/assets/js/circle-progress/circle-progress.js"></script>
+		<script src="/assets/js/min_js_dir/newdeal/index.js"></script>
+
+		<!-- Nakwon이 등록한 파일들 -->
+		<script src="/assets/js/min_js_dir/newdeal/common/CommonUI.js"></script>
+		<script src="/assets/js/min_js_dir/newdeal/common/DtoValidator.js"></script>
+
+		<!-- PDF 내보내기에 필요한 JS 추가 2021.08.19 -->
+		<!-- html2canvas : html 객체를 canvas로 변환해주는 라이브러리 -->
+		<!-- jspdf : html, 이미지, canvas 객체를 pdf로 변환해주는 라이브러리 -->
+		<script src="/assets/js/min_js_dir/pdf/html2canvas.js"></script>
+		<script src="/assets/js/min_js_dir/pdf/jspdf.min.js"></script>
+
+		<!-- 자바스크립트의 정확한에 필요한  JS 추가 2022.04.25 -->
+		<script src="/assets/js/min_js_dir/decimal/decimal.js"></script>
+
+		<!-- css -->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/component.css?202208261428" />
+		<link rel="stylesheet" href="/assets/css/nCommon.css?202208261428" />
+		<link rel="stylesheet" href="/assets/css/customGrid.css" />
+		<link rel="stylesheet" href="/assets/js/charts/Chart.min.css" />
+		<link rel="stylesheet" href="/assets/js/c3/c3.css" />
+
+		<!-- 사용자 CSS 영역이 들어감 -->
+		<th:block layout:fragment="css">
+		</th:block>
+		
+		<!-- 사용자 스크립트 영역이 들어감 -->
+		<th:block layout:fragment="script">
+		</th:block>
+	</head>
+</html>

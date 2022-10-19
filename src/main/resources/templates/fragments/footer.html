@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<footer th:fragment="footerFragment" class="footer">
+<!--    © 2022 Broadwave Corporation. All rights Reserved.-->
+    <a href="https://www.kict.re.kr" target="_blank" class="footer__logo">
+        <img src="/assets/images/logo--KICT-b.png" alt="한국건설기술연구원">
+    </a>
+
+    <ul class="footer__info">
+        <li class="footer__info-item">
+            <span>노후 교량 구조물 스마트 유지관리 플랫폼 | BRIDGE MAINTENANCE ASSISTANT PLATFORM SERVICE</span></li>
+        <li class="footer__info-item">
+            <address>10223 경기도 고양시 일산서구 고양대로 283</address>
+            <a href="mailto:bckim@kict.re.kr">bckim@kict.re.kr</a>
+        </li>
+        <li class="footer__info-item"><span>Copyright ⓒ 2019, KOREA INSTITUTE of CIVIL ENGINEERING and BUILDING TECHNOLOGY. All Rights Reserved.</span></li>
+    </ul>
+
+    <p class="footer__date">Open : <span id="openDate">2021-08-01</span>, Last modified : <span id="lastDate">2022-08-23</span></p>
+
+    <button class="c-button c-button--solid siteBtn">주요사이트 바로가기</button>
+    <div class="footer__site">
+        <ul>
+            <li>
+                <a href="https://www.kict.re.kr" class="footer__site-link" target="_blank">
+                    <img src="/assets/images/logo--KICT-b.png" alt="한국건설기술연구원" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.fms.or.kr" class="footer__site-link" target="_blank">
+                    <img src="/assets/images/logo__fms.png" alt="시설물통합정보관리시스템" />
+                </a>
+            </li>
+            <li>
+                <a href="https://nbms.kict.re.kr" class="footer__site-link" target="_blank">
+                    <img src="/assets/images/logo__nbms.png" alt="교량 및 터널 통합관리시스템" />
+                </a>
+            </li>
+            <li>
+                <a href="https://bti.kict.re.kr" class="footer__site-link" target="_blank">도로 교량 및 터널 현황정보시스템</a>
+            </li>
+            <li>
+                <a href="https://infobridge.fhwa.dot.gov" class="footer__site-link" target="_blank">
+                    <img src="/assets/images/logo__ltbp.png" alt="LTBP InfoBridge" />
+                </a>
+            </li>
+        </ul>
+        <button class="siteClose">닫기</button>
+    </div>
+</footer>
+
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+
+	<style>
+		#loader {display:none;z-index:999;width:100%;height:100%;position:fixed;top:0;left:0;background:#000;opacity:.5;}
+		#loader span {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);display: inline-block;color:#fff;font-weight:bold;}
+	</style>
+
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+
+	<script src="/assets/js/min_js_dir/newdeal/performance/performanceInput.js"></script>
+	<script src="/assets/js/min_js_dir/newdeal/performance/performanceOutput.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#header_six").addClass(' show');
+			const autoNum = $("#autoNum").val();
+			call_performance(autoNum);
+			logreg(2,"의사결정 시스템","대안Output",autoNum);
+		});
+	</script>
+
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<input type="hidden" id="autoNum" th:value="${autoNum}" />
+	<input type="hidden" id="piFileYn" />
+	<input type="hidden" id="category" />
+	<input type="hidden" id="backend_url" th:value="${backend_url}" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" />
+
+	<div id="outputPerformanceDiv" class="content__inner">
+		<div id="loader" style="font-size: 20px"><span>잠시만 기다려주세요...</span></div>
+
+		<div class="performance" id="performance"> <!--	전체 Div 시작 -->
+
+			<div class="pdfArea"> <!--	1번째 PDF area Div 시작 -->
+				<div class="talk">
+					<div class="talk__box">
+						<div class="performance-output">
+							<p id="skipText" class="performance-output__result"></p>
+						</div>
+					</div>
+				</div>
+
+				<div class="talk">
+
+					<h2 class="performance-output__heading">도로시설 성능개선 사업성 평가</h2>
+
+					<h2 class="content__heading">1. 성능개선 사업성 평가 개요</h2>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<div id="piBusinessName" class="performance-output__result"></div>
+						</div>
+					</div>
+
+					<h2 class="content__heading">2. 성능개선 대상시설 및 사업 추진대안 정보</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<div id="typeName" class="performance-output__result"></div>
+						</div>
+					</div>
+
+					<!-- 표 1 시작 -->
+					<h2 class="content__heading">표 1. 성능개선 사업 정보</h2>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>시설 정보</h3>
+							<table id="outputTableFacility" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>이용 정보</h3>
+							<table id="outputTableUsage" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>사업 정보</h3>
+							<table id="outputTableBusiness" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+				</div>
+			</div> <!--	1번째 PDF area Div 끝 -->
+
+			<div class="pdfArea" style="margin-top: 20px"> <!--	2번째 PDF area Div 시작 -->
+				<div class="talk">
+
+<!--					<div class="talk__box">-->
+<!--						<div class="performance-output">-->
+<!--							<h3>여건 정보</h3>-->
+<!--							<table id="outputTableCondition" style="text-align: center" class="c-table c-table&#45;&#45;in-border"></table>-->
+<!--						</div>-->
+<!--					</div>-->
+
+					<h2 class="content__heading">3. 성능개선 사업성 평가 내용</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<div id="explanationName" class="performance-output__result"></div>
+						</div>
+					</div>
+
+					<h2 class="content__heading">표 2. 이용자 적용 가중치 표</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>기술성</h3>
+							<table id="outputTableWeightT" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>경제성</h3>
+							<table id="outputTableWeightE" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>정책성</h3>
+							<table id="outputTableWeightP" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<h2 class="content__heading">표 3. 사업성 평가결과 부분별 요약 표</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>기술성</h3>
+							<table id="technicalityTable" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>경제성</h3>
+							<table id="economyTable" style="text-align: center" class="c-table c-table--in-border">
+							</table>
+						</div>
+					</div>
+
+				</div>
+			</div> <!--	2번째 PDF area Div 끝 -->
+
+			<div class="pdfArea" style="margin-top: 20px"> <!--	3번째 PDF area Div 시작 -->
+				<div class="talk">
+
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>정책성</h3>
+							<table id="policyTable" style="text-align: center" class="c-table c-table--in-border">
+							</table>
+						</div>
+					</div>
+
+					<h2 class="content__heading">표 4. 사업성 평가결과 요약 표</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>결과</h3>
+							<table id="allScoreRankTable" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+					<h2 class="content__heading">4. 성능개선 사업성 평가결과</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<div id="resultName" style="font-weight: bold;font-size: 18px;" class="performance-output__result"></div>
+						</div>
+					</div>
+
+					<h2 class="content__heading">5. 사업성 평가자 정보</h2>
+					<div class="talk__box">
+						<div class="performance-output">
+							<h3>평가 정보</h3>
+							<table id="outputTableEvaluation" style="text-align: center" class="c-table c-table--in-border"></table>
+						</div>
+					</div>
+
+				</div>
+			</div> <!--	3번째 PDF area Div 끝 -->
+
+		</div> <!--	전체 Div 끝 -->
+
+
+		<div class="talk__console talk__console--ticker">
+			<ul>
+				<li><a href="#performance" class="talk__console-top">top</a></li>
+				<li>
+					<button class="c-button c-button--large c-button--point" onclick="createPdf()">PDF 다운로드</button>
+				</li>
+				<li>
+					<button class="c-button c-button--large c-button--point" onclick="backBtn()">사업내용 조정 및 재평가</button>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+
+</div>
+</html>

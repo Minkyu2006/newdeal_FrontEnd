@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<style>
+		
+	</style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+ 	<script>
+		$(function() {
+			$("#header_two").addClass(' show');
+			// logreg(1,"의사결정 시스템","생애주기 의사결정 지원 서비스 Input",null);
+		});
+
+		// 평가할 열화인자 선택 후 부재생성
+		function choseServiceOnchange(num){
+			const $absence = $("#absence");
+			const $choseSelectName = $("#choseSelectName");
+			const $allChoseAbsence = $("#allChoseAbsence");
+
+			let html = '';
+			if(num === 0){
+				html += '<option value="1">RC 슬래브교</option>';
+				html += '<option value="2">라멘교</option>';
+				html += '<option value="3">PSC I형교</option>';
+				html += '<option value="4">강상자형교</option>';
+
+				$choseSelectName.text("교량형식을 선택해주세요.");
+				$allChoseAbsence.css("display","block");
+			}else if(num === 1){
+				html += '<option value="hardness">반발경도</option>';
+				html += '<option value="carbonation">탄산화깊이(시스템 모델 포함)</option>';
+				html += '<option value="crack">균열깊이</option>';
+				html += '<option value="chloride">열화물침투량</option>';
+
+				$choseSelectName.text("내구성능 평가 항목을 선택해주세요.");
+				$allChoseAbsence.css("display","none");
+				$("input:radio[name='choseAbsence']").prop('checked', false);
+			}else{
+				html += '<option value="">평가할 열화인자를 선택해주세요.</option>';
+			}
+			$("#carbonationLi").css("display","none");
+			$absence.html(html);
+		}
+
+		// 이진혁박사, 권기현박사 인풋페이지 이동
+		function inputMove(){
+			let $absence = $("#absence").val();
+			const $service = $('input:radio[name="choseService"]:checked').val();
+			if($absence === null){
+				$absence = "";
+			}
+			// console.log("service : "+$service);
+			// console.log("absence : "+$absence);
+			if($absence !== ""){
+				if($service==="all"){
+					const $choseAbsence = $('input:radio[name="choseAbsence"]:checked').val();
+					// console.log("$choseAbsence : "+$choseAbsence);
+					if($choseAbsence===undefined) {
+						alertCaution("부재를 선택해주세요.",1);
+						return false;
+					}
+					location.href = "/lifetime/all/"+$choseAbsence+"/"+$absence+"/0";
+				}else{
+					if($absence === "carbonation"){
+						const $carbonationLi = $('input:radio[name="carbonationLi"]:checked').val();
+						// console.log("$carbonationLi : "+$carbonationLi);
+
+						if($carbonationLi !== undefined){
+
+							if($carbonationLi === "carbonation" || $carbonationLi === "carbonationPlateThree"){
+								location.href = "/lifetime/detail/"+$carbonationLi;
+							} else{
+								alertCaution("해당 페이지는 개발중입니다.",1)
+							}
+
+						}else{
+							alertCaution("추가부재를 선택해주세요.",1)
+						}
+					}else if($absence === "hardness") {
+						location.href = "/lifetime/detail/"+$absence;
+					}else if($absence === "crack") {
+						location.href = "/lifetime/detail/"+$absence;
+					}else if($absence === "chloride") {
+						location.href = "/lifetime/detail/"+$absence;
+					}else{
+						alertCaution("해당 페이지는 개발중입니다.",1)
+						return false;
+					}
+				}
+			}else{
+				$('input:radio[name="choseService"]:checked').prop('checked', false);
+				choseServiceOnchange(2);
+				alertCaution("평가할 열화 인자를 선택해주세요.",1)
+			}
+		}
+
+		function absenceOnchange(){
+			if($("#absence").val() ==="carbonation"){
+				$("#carbonationLi").css("display","block");
+			}else{
+				$("#carbonationLi").css("display","none");
+			}
+		}
+
+	</script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
+	<div class="content__inner">
+		<h2 class="content__heading">생애주기 의사결정 지원서비스</h2>
+		<div class="lifetime" id="lifetime">
+			<div class="talk">
+				<div class="talk__box">
+					<div class="talk__header">
+						<h3>평가 서비스 선택</h3>
+					</div>
+					<div class="talk__contents">
+						<ul class="talk__question">
+							<li>
+								<h4>대상 교량을 평가할 성능 항목을 선택해주세요.</h4>
+								<ul class="c-radio-group">
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="allChose" onchange=choseServiceOnchange(0) name="choseService" value="all" class="c-radio__input" />
+											<label for="allChose" class="c-radio__label">상태안전성능</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="detailChose" onchange=choseServiceOnchange(1) name="choseService" value="detail" class="c-radio__input" />
+											<label for="detailChose" class="c-radio__label">내구성능</label>
+										</div>
+									</li>
+								</ul>
+							</li>
+							<li id="allChoseAbsence">
+								<h4>부재를 선택해주세요.</h4>
+								<ul class="c-radio-group">
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="plate" name="choseAbsence" value="plate" class="c-radio__input" />
+											<label for="plate" class="c-radio__label">바닥판</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="girder" name="choseAbsence" value="girder" class="c-radio__input" />
+											<label for="girder" class="c-radio__label">거더</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="bridgePavement" name="choseAbsence" value="bridgePavement" class="c-radio__input" />
+											<label for="bridgePavement" class="c-radio__label">교면포장</label>
+										</div>
+									</li>
+								</ul>
+							</li>
+							<li >
+								<h4 id="choseSelectName">교량형식을 선택해주세요.</h4>
+								<div class="c-select">
+									<select id="absence" class="c-select__input" onchange="absenceOnchange()">
+										<option value="1">RC 슬래브교</option>
+										<option value="2">라멘교</option>
+										<option value="3">PSC I형교</option>
+										<option value="4">강상자형교</option>
+									</select>
+								</div>
+							</li>
+							<li id="carbonationLi" style="display: none">
+								<h4>추가부재를 선택해주세요.</h4>
+								<ul class="c-radio-group">
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="0" name="carbonationLi" value="carbonation" class="c-radio__input" />
+											<label for="0" class="c-radio__label">기본평가</label>
+										</div>
+									</li>
+									<li class="c-radio-group__item">
+										<div class="c-radio">
+											<input type="radio" id="1" name="carbonationLi" value="carbonationPlateThree" class="c-radio__input" />
+											<label for="1" class="c-radio__label">바닥판 3개</label>
+										</div>
+									</li>
+<!--									<li class="c-radio-group__item">-->
+<!--										<div class="c-radio">-->
+<!--											<input type="radio" id="2" name="carbonationLi" value="test2" class="c-radio__input" />-->
+<!--											<label for="2" class="c-radio__label">바닥판 4개</label>-->
+<!--										</div>-->
+<!--									</li>-->
+<!--									<li class="c-radio-group__item">-->
+<!--										<div class="c-radio">-->
+<!--											<input type="radio" id="3" name="carbonationLi" value="test3" class="c-radio__input" />-->
+<!--											<label for="3" class="c-radio__label">바닥판 5개</label>-->
+<!--										</div>-->
+<!--									</li>-->
+<!--									<li class="c-radio-group__item">-->
+<!--										<div class="c-radio">-->
+<!--											<input type="radio" id="4" name="carbonationLi" value="test4" class="c-radio__input" />-->
+<!--											<label for="4" class="c-radio__label">교량 3경간 Series</label>-->
+<!--										</div>-->
+<!--									</li>-->
+<!--									<li class="c-radio-group__item">-->
+<!--										<div class="c-radio">-->
+<!--											<input type="radio" id="5" name="carbonationLi" value="test5" class="c-radio__input" />-->
+<!--											<label for="5" class="c-radio__label">교량 3경간 Parallel</label>-->
+<!--										</div>-->
+<!--									</li>-->
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="talk__console">
+					<ul>
+						<li>
+							<a onclick="inputMove()" class="c-button c-button--point">next</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+</html>

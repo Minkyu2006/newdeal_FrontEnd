@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default2">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+
+    </style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="module" src="/assets/js/min_js_dir/newdeal/old/newoutput.js"></script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+    <input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+    <input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
+    <div class="content__inner">
+        <h2 class="content__heading">노후도 평가 결과</h2>
+
+        <div class="report">
+            <div class="report__head">
+                <div class="report__logo">
+                    <h2><img src="/assets/images/logo--KICT-b.png" alt="한국건설기술연구원"></h2>
+                </div>
+
+                <div class="report__info">
+                    <div class="report__title">
+                        <h3>교량 노후도 평가<br />REPORT</h3>
+                    </div>
+                    <div class="report__info-table">
+                        <table class="c-table c-table--border">
+                            <colgroup>
+                                <col style="width: 100px;">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th>평가일</th>
+                                    <td id="" style="text-align: right;">2022-08-25</td>
+                                </tr>
+                                <tr>
+                                    <th>평가자</th>
+                                    <td id="" style="text-align: right;">고양시도로사업소</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="report__summary">
+                    <div class="report__summary-head">
+                        <h3 class="report__summary-title">최종 평가결과</h3>
+                    </div>
+                    <div class="report__summary-body">
+                        <div class="old-conclusion">
+                            <ul class="old-conclusion__list">
+                                <li class="old-conclusion__item">
+                                    <h4 class="old-conclusion__item-title">종합 노후도:</h4>
+                                    <span class="old-conclusion__item-value">
+                                        <span id="" class="red">20.1</span>년
+                                    </span>
+                                </li>
+                                <li class="old-conclusion__item">
+                                    <h4 class="old-conclusion__item-title">공용연수:</h4>
+                                    <span class="old-conclusion__item-value">
+                                        <span id="">20.1</span>년
+                                    </span>
+                                </li>
+                            </ul>
+                            <div class="old-conclusion__result">
+                                <h4 class="old-conclusion__item-title">차이:</h4>
+                                <span class="old-conclusion__item-value">
+                                    <span id="" class="red">+0.1</span>년
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report__body">
+                <div class="report__section">
+                    <div class="report__section-head">
+                        <h2>대상교량 기본 제원정보</h2>
+                    </div>
+                    <div class="report__section-body">
+                        <table class="c-table c-table--border">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th>교량명</th>
+                                    <td><span id="">효자1교</span></td>
+                                    <th>연장(m)</th>
+                                    <td><span id="">150</span></td>
+                                </tr>
+                                <tr>
+                                    <th>준공연도</th>
+                                    <td><span id="">2001년</span></td>
+                                    <th>총 폭(m)</th>
+                                    <td><span id="">12.5</span></td>
+                                </tr>
+                                <tr>
+                                    <th>구조형식</th>
+                                    <td><span id="">RA</span></td>
+                                    <th>경간 수</th>
+                                    <td><span id="">5</span></td>
+                                </tr>
+                                <tr>
+                                    <th>위치</th>
+                                    <td><span id="">경기도 고양시 덕양구 효자1동</span></td>
+                                    <th>공용연수</th>
+                                    <td><span id="">20</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="report__section">
+                    <div class="report__section-head">
+                        <h2>교량단위 노후도 평가 결과</h2>
+                    </div>
+                    <div class="report__section-body">
+                        <div class="old-progress">
+                            <div class="old-progress__item" id="progress01">
+                                <div class="old-progress__head">
+                                    <h3 class="old-progress__title">관리주체 전체 교량 중</h3>
+                                    <span class="old-progress__result">
+                                        <span class="progress-year">0</span>년, 상위 <span class="progress-percent-string">0</span>%
+                                    </span>
+                                </div>
+                                <div class="old-progress__bar-area">
+                                    <div class="old-progress__bar">
+                                        <div class="old-progress__arrow"></div>
+                                        <span class="old-progress__per old-progress__per--0">0%</span>
+                                        <span class="old-progress__per old-progress__per--100">100%</span>
+                                    </div>
+                                    <div class="old-progress__legend">노후화도</div>
+                                </div>
+                            </div>
+                            <div class="old-progress__item" id="progress02">
+                                <div class="old-progress__head">
+                                    <h3 class="old-progress__title">관리주체 전체 RA 교량 중</h3>
+                                    <span class="old-progress__result">
+                                        <span class="progress-year">0</span>년, 상위 <span class="progress-percent-string">0</span>%
+                                    </span>
+                                </div>
+                                <div class="old-progress__bar-area">
+                                    <div class="old-progress__bar">
+                                        <div class="old-progress__arrow"></div>
+                                        <span class="old-progress__per old-progress__per--0">0%</span>
+                                        <span class="old-progress__per old-progress__per--100">100%</span>
+                                    </div>
+                                    <div class="old-progress__legend">노후화도</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report__section">
+                    <div class="report__section-head">
+                        <h2>부재별 노후도 평가 결과</h2>
+                    </div>
+                    <div class="report__section-body">
+                        <table class="c-table c-table--border">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">상부부재</th>
+                                    <th></th>
+                                    <th colspan="2">하부부재</th>
+                                </tr>
+                                <tr>
+                                    <th>슬래브</th>
+                                    <th>거더</th>
+                                    <th>케이블/긴장재</th>
+                                    <th>교대</th>
+                                    <th>교각</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="bar">
+                                            <div class="bar__base">
+                                                <div id="bar1Plus" class="bar__plus" style="top: -52px; height: 50px;"></div>
+                                                <div id="bar1Minus" class="bar__minus"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="bar">
+                                            <div class="bar__base">
+                                                <div id="bar2Plus" class="bar__plus"></div>
+                                                <div id="bar2Minus" class="bar__minus" style="height: 50px;"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="bar">
+                                            <div class="bar__base">
+                                                <div id="bar3Plus" class="bar__plus"></div>
+                                                <div id="bar3Minus" class="bar__minus"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="bar">
+                                            <div class="bar__base">
+                                                <div id="bar4Plus" class="bar__plus"></div>
+                                                <div id="bar4Minus" class="bar__minus"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="bar">
+                                            <div class="bar__base">
+                                                <div id="bar5Plus" class="bar__plus" style="top: -7px; height: 5px;"></div>
+                                                <div id="bar5Minus" class="bar__minus"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="report__section">
+                    <div class="report__section-head">
+                        <h2>부재별/손상 유형별 노후도 평가 결과</h2>
+                    </div>
+                    <div class="report__section-body">
+                        <table class="c-table c-table--border">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>바닥판</th>
+                                    <th>교각</th>
+                                    <th>교대</th>
+                                    <th>거더</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1순위</th>
+                                    <td class="td--red100"><span id="">균열</span></td>
+                                    <td class="td--red75"><span id="">균열</span></td>
+                                    <td><span id="">균열</span></td>
+                                    <td><span id="">-</span></td>
+                                </tr>
+                                <tr>
+                                    <th>2순위</th>
+                                    <td class="td--red75"><span id="">손상</span></td>
+                                    <td class="td--red50"><span id="">손상</span></td>
+                                    <td><span id="">손상</span></td>
+                                    <td><span id="">-</span></td>
+                                </tr>
+                                <tr>
+                                    <th>3순위</th>
+                                    <td><span id="">누수백태</span></td>
+                                    <td><span id="">누수백태</span></td>
+                                    <td class="td--blue50"><span id="">누수백태</span></td>
+                                    <td class="td--blue75"><span id="">-</span></td>
+                                </tr>
+                                <tr>
+                                    <th>4순위</th>
+                                    <td><span id="">철근부식</span></td>
+                                    <td><span id="">철근부식</span></td>
+                                    <td class="td--blue75"><span id="">철근부식</span></td>
+                                    <td class="td--blue100"><span id="">-</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="report__section">
+                    <div class="report__section-head">
+                        <h2>노후도 평가 결과 및 예측</h2>
+                    </div>
+                    <div class="report__section-body">
+                        <table class="c-table c-table--border">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>부재</th>
+                                <th>평가지표</th>
+                                <th>단위</th>
+                                <th>전차</th>
+                                <th>현재</th>
+                                <th>10년 후</th>
+                                <th>20년 후</th>
+                                <th>30년 후</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="3">A교량 종합노후도</td>
+                                <td>년</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">상부구조 노후도</td>
+                                <td>년</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="10">상부부재</td>
+                                <td colspan="2">슬래브 노후도</td>
+                                <td rowspan="5">년</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4">슬래브</td>
+                                <td>균열 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>손상 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>누수백태 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>철근부식 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">거더 노후도</td>
+                                <td rowspan="5">년</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4">거더</td>
+                                <td>균열 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>손상 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>누수백태 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>철근부식 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">하부구조 노후도</td>
+                                <td>년</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="10">하부부재</td>
+                                <td colspan="2">교대 노후도</td>
+                                <td rowspan="5">년</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4">교대</td>
+                                <td>균열 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>손상 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>누수백태 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>철근부식 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">교각 노후도</td>
+                                <td rowspan="5">년</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4">교각</td>
+                                <td>균열 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>손상 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>누수백태 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>철근부식 평가</td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                                <td><span id="">-</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="report__section">
+                    <div class="report__section-head">
+                        <h2>노후도 평가 의견</h2>
+                    </div>
+                    <div class="report__section-body">
+                        <div class="report__opinion">
+                            <ul class="report__opinion-list">
+                                <li class="report__opinion-item">- 바닥판에서 균열에 대한 유지보수 필요</li>
+                                <li class="report__opinion-item">- 교대와 교각은 일상 점검 유지</li>
+                                <li class="report__opinion-item">- 노후도 평가 예측 정확도 향상을 위해서는 추가 점검/진단 결과 필요</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>

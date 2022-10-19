@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default2" xmlns="http://www.w3.org/1999/html">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .grid_textalign_left div{
+            text-align: left;
+            padding: 0 2px!important;
+            margin-left: 4px!important;
+            box-sizing: border-box;
+        }
+    </style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script src="/assets/js/min_js_dir/newdeal/board/list.js?22081910"></script>
+</th:block>
+
+<div layout:fragment="content" class="content content--board">
+    <input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+    <input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
+
+    <div class="section non-padding">
+        <div class="section__head">
+            <h2 class="section__heading" id="boardTitle"></h2>
+        </div>
+        <div class="section__content">
+            <div class="board-list">
+                <div class="board-list__console">
+                    <div class="board-list__date">
+                        <div class="c-date">
+                            <label for="filterFromDt" class="c-date__label">From</label>
+                            <input type="date" class="c-date__input" id="filterFromDt">
+                        </div>
+                        <div class="c-date">
+                            <label for="filterToDt" class="c-date__label">To</label>
+                            <input type="date" class="c-date__input" id="filterToDt">
+                        </div>
+                    </div>
+                    <div class="board-list__search">
+                        <div class="c-text">
+                            <input type="text" class="c-text__input" placeholder="제목 검색" id="ntTitle" />
+                        </div>
+                        <button class="c-button c-button--point" id="searchBtn">조회</button>
+                    </div>
+                </div>
+
+                <div class="board-list__grid" id="grid_list" style="height: 600px;"></div>
+
+                <div class="board__console board__console--non-padding">
+                    <a id="writeLink" href="#" class="c-button c-button--solid" style="display: none">글작성</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    <div class="board">-->
+<!--        <div class="board__header">-->
+<!--            &lt;!&ndash; 게시판에 따라 이름을 부여할 것 &ndash;&gt;-->
+<!--            <h3 id="boardTitle" class="board__title"> </h3>-->
+<!--            <div class="board-list__console">-->
+<!--                <div class="board-list__date">-->
+<!--                    <div class="c-date">-->
+<!--                        <label for="filterFromDt" class="c-date__label">From</label>-->
+<!--                        <input type="date" class="c-date__input" id="filterFromDt">-->
+<!--                    </div>-->
+<!--                    <div class="c-date">-->
+<!--                        <label for="filterToDt" class="c-date__label">To</label>-->
+<!--                        <input type="date" class="c-date__input" id="filterToDt">-->
+<!--                    </div>-->
+<!--                 </div>-->
+<!--                <div class="board-list__search">-->
+<!--                    <div class="c-text">-->
+<!--                        <input type="text" class="c-text__input" placeholder="제목 검색" id="ntTitle" />-->
+<!--                    </div>-->
+<!--                    <button class="c-button c-button&#45;&#45;point" id="searchBtn">조회</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="board__body" style="margin-top: 20px;">-->
+<!--            <div id="grid_list"></div>-->
+<!--            <div class="board__console">-->
+<!--                <a id="writeLink" href="#" class="c-button c-button&#45;&#45;solid" style="display: none">글작성</a>-->
+<!--            </div>-->
+<!--            <div id="grid_paging" class="aui-grid-paging-panel my-grid-paging-panel"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+</html>

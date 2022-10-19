@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default2" xmlns="http://www.w3.org/1999/html">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<style>
+		
+	</style>
+</th:block>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script src="/assets/js/min_js_dir/newdeal/lifetime/lifetime_detail.js"></script>
+ 	<script>
+		$(function() {
+
+			$("#header_two").addClass(' show');
+			recoverySelectBox();
+
+			$('#ltYAverage').focusout(function() {
+				aSpeedCalculate($("#ltYAverage").val(),$("#ltCAverage").val());
+			});
+			$('#ltCAverage').focusout(function() {
+				aSpeedCalculate($("#ltYAverage").val(),$("#ltCAverage").val());
+			});
+
+		});
+	</script>
+</th:block>
+
+<div layout:fragment="content" class="content">
+	<input type="hidden" id="absence" th:value="${absence}" readonly="readonly" />
+	<input type="hidden" id="backend_url" th:value="${backend_url}" readonly="readonly" />
+	<input type="hidden" id="backend_protocol" th:value="${backend_protocol}" readonly="readonly" />
+	<div class="content__inner">
+		<h2 class="content__heading">생애주기 의사결정 지원 서비스 - 부재 세부부분 - 탄산화깊이 바닥판 3개</h2>
+		<div class="lifetime">
+			<div class="talk">
+
+				<form id="lifeDetailForm" enctype="multipart/form-data">
+
+				<input type="hidden" name="ltDetailAutonum" id="ltDetailAutonum" value="" class="c-text__input" readonly="readonly" />
+				<input type="hidden" name="ltDetailType" id="ltDetailType" value="5" class="c-text__input" readonly="readonly" />
+
+				<div class="talk__box">
+					<div class="talk__header">
+						<h3>1. 탄산화깊이 입력 변수</h3>
+					</div>
+					<div class="talk__contents">
+						<table class="c-table c-table--border">
+							<colgroup>
+								<col style="width: 60px;">
+								<col style="width: 150px;">
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+							</colgroup>
+							<thead>
+							<tr>
+								<th colspan="6" style="font-weight: bold">공용연수 필수 입력 구간</th>
+								<td colspan="2">
+									<div class="c-text">
+										<div class="c-text c-text--unit">
+											<input style="text-align: center" type="number" name="ltPublicYear" id="ltPublicYear" class="c-text__input" placeholder="ex) 31" />
+											<span class="c-text__unit">년</span>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th rowspan="2" colspan="2">내구성 탄산화 깊이<br />입력 변수</th>
+								<th colspan="2">바닥판(S1)</th>
+								<th colspan="2">바닥판(S2)</th>
+								<th colspan="2">바닥판(S3)</th>
+							</tr>
+							<tr>
+								<th>표준편차</th>
+								<th>평균값</th>
+								<th>표준편차</th>
+								<th>평균값</th>
+								<th>표준편차</th>
+								<th>평균값</th>
+							</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="text-align: center">Td</td>
+									<td style="text-align: center">실측피복두께(mm)</td>
+									<td>
+										<div class="c-text">
+											<input type="text" class="c-text__input" placeholder="ex) 55" name="ltTdStandardPlate1" id="ltTdStandardPlate1" onfocusout="lifeStandardCalculate('ltTdStandardPlate1',0.13,'ltTdAveragePlate1')" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" name="ltTdAveragePlate1" id="ltTdAveragePlate1" placeholder="자동계산" class="c-text__input" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input type="text" class="c-text__input" placeholder="ex) 56" name="ltTdStandardPlate2" id="ltTdStandardPlate2" onfocusout="lifeStandardCalculate('ltTdStandardPlate2','0.13','ltTdAveragePlate2')" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input  style="color: black" type="text" name="ltTdAveragePlate2" id="ltTdAveragePlate2" placeholder="자동계산" class="c-text__input" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input  type="text" class="c-text__input" placeholder="ex) 36" name="ltTdStandardPlate3" id="ltTdStandardPlate3" onfocusout="lifeStandardCalculate('ltTdStandardPlate3','0.13','ltTdAveragePlate3')" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input  style="color: black" type="text" name="ltTdAveragePlate3" id="ltTdAveragePlate3" placeholder="자동계산" class="c-text__input" readonly />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: center">CS</td>
+									<td style="text-align: center">탄산화깊이(mm)</td>
+									<td>
+										<div class="c-text">
+											<input type="text" class="c-text__input" placeholder="ex) 35" name="ltCStandardPlate1" id="ltCStandardPlate1" onfocusout="lifeStandardCalculate('ltCStandardPlate1','0.1','ltCAveragePlate1')" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" name="ltCAveragePlate1" id="ltCAveragePlate1" placeholder="자동계산" class="c-text__input" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input type="text" class="c-text__input" placeholder="ex) 25" name="ltCStandardPlate2" id="ltCStandardPlate2" onfocusout="lifeStandardCalculate('ltCStandardPlate2','0.1','ltCAveragePlate2')" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" name="ltCAveragePlate2" id="ltCAveragePlate2" placeholder="자동계산" class="c-text__input" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input type="text" class="c-text__input" placeholder="ex) 20" name="ltCStandardPlate3" id="ltCStandardPlate3" onfocusout="lifeStandardCalculate('ltCStandardPlate3','0.1','ltCAveragePlate3')" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" name="ltCAveragePlate3" id="ltCAveragePlate3" placeholder="자동계산" class="c-text__input" readonly />
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: center">A</td>
+									<td style="text-align: center">탄산화속도계수</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" class="c-text__input" name="ltAStandardPlate1" id="ltAStandardPlate1" placeholder="자동계산" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" name="ltAAveragePlate1" id="ltAAveragePlate1" placeholder="자동계산" class="c-text__input" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" class="c-text__input" name="ltAStandardPlate2" id="ltAStandardPlate2" placeholder="자동계산" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" name="ltAAveragePlate2" id="ltAAveragePlate2" placeholder="자동계산" class="c-text__input" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" class="c-text__input" name="ltAStandardPlate3" id="ltAStandardPlate3" placeholder="자동계산" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text">
+											<input style="color: black" type="text" name="ltAAveragePlate3" id="ltAAveragePlate3" placeholder="자동계산" class="c-text__input" readonly />
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<table class="c-table c-table--border">
+							<colgroup>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>시뮬레이션 횟수</th>
+									<th>공용연수 조정계수<br />평균값 / 표준편차</th>
+									<th>보수보강 총길이(m)</th>
+									<th>생애주기 목표값<br />(성능유지 기준값)</th>
+									<th>보수·보강 회복율</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<div class="c-text">
+											<input type="text" name="ltSimulation" id="ltSimulation" value="50000" style="text-align: center" class="c-text__input" readonly="readonly" />
+										</div>
+									</td>
+									<td>
+										<div class="c-text c-text--duo c-text--symbol c-text--division">
+											<input type="text" name="ltYStandard" placeholder="ex) 1" id="ltYStandard" onfocusout="lifeStandardCalculate('ltYStandard','0.02','ltYAverage')" style="text-align: center" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+											<span>/</span>
+											<input type="text" name="ltYAverage" id="ltYAverage" style="text-align: center;color: black" class="c-text__input" placeholder="자동계산" readonly />
+										</div>
+									</td>
+									<td>
+										<div class="c-text c-text--unit">
+											<input type="text" name="ltRepairLength" id="ltRepairLength" class="c-text__input" value="10" placeholder="ex) 10" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" />
+											<span class="c-text__unit">m</span>
+										</div>
+									</td>
+									<td>
+										<div class="c-select">
+											<select name="ltTargetValue" id="ltTargetValue" class="c-select__input">
+												<option value="1.25">1.25</option>
+												<option value="1.5">1.5</option>
+												<option value="1.75">1.75</option>
+												<option value="2.0">2.0</option>
+												<option value="2.25">2.25</option>
+											</select>
+										</div>
+									</td>
+									<td>
+										<div class="c-select">
+											<select name="ltRecoveryPercent" id="ltRecoveryPercent" class="c-select__input">
+												<option value="">회복율을 입력해주세요.</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+					<div class="talk__box">
+						<div class="talk__header">
+							<h3>2. 보수보강 비용 입력표</h3>
+						</div>
+						<div class="talk__contents">
+							<table class="c-table c-table--border">
+								<colgroup>
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+									<col />
+								</colgroup>
+								<thead>
+								<tr>
+									<th></th>
+									<th>보수1</th>
+									<th>보수2</th>
+									<th>보수3</th>
+									<th>보강1</th>
+									<th>보강2</th>
+									<th>교체</th>
+								</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>회복율</th>
+										<td>
+											<div class="c-text"><input type="text" name="ltRecoveryOne" id="ltRecoveryOne" onfocusout="recoverySelectBox()" value="0.8" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltRecoveryTwo" id="ltRecoveryTwo" onfocusout="recoverySelectBox()" value="0.84" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltRecoveryThree" id="ltRecoveryThree" onfocusout="recoverySelectBox()" value="0.88" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltRecoveryFour" id="ltRecoveryFour" onfocusout="recoverySelectBox()" value="0.92" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltRecoveryFive" id="ltRecoveryFive" onfocusout="recoverySelectBox()" value="0.96" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltRecoverySix" id="ltRecoverySix" onfocusout="recoverySelectBox()" value="1.00" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="return delHangle(event)" /></div>
+										</td>
+									</tr>
+									<tr>
+										<th>비용(만원/m)</th>
+										<td>
+											<div class="c-text"><input type="text" name="ltCostOne" id="ltCostOne" value="5" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltCostTwo" id="ltCostTwo" value="10" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltCostThree" id="ltCostThree" value="20" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltCostFour" id="ltCostFour" value="25" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltCostFive" id="ltCostFive" value="30" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+										</td>
+										<td>
+											<div class="c-text"><input type="text" name="ltCostSix" id="ltCostSix" value="50" class="c-text__input" onkeypress="return isNumberKey(event,1)" onkeyup="inputNumberFormat(this)" /></div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</form>
+
+				<div class="talk__console">
+					<ul>
+						<li>
+							<button onclick="lifeDetailInputBack()" type="button" class="c-button c-button--point">뒤로</button>
+							<button onclick="lifeDetailTimeSave()" class="c-button c-button--point">완료</button>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+</div>
+</html>
